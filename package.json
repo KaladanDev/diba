@@ -1,0 +1,19 @@
+{
+  "name": "diba",
+  "version": "0.0.1",
+  "description": "UI Components for Kaladan",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KaladanDev/diba.git"
+  },
+  "author": "KaladanDev",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KaladanDev/diba/issues"
+  },
+  "homepage": "https://github.com/KaladanDev/diba#readme"
+}

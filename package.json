@@ -2,12 +2,16 @@
   "name": "@kaladan/diba",
   "version": "0.0.1",
   "description": "The UI Components for Kaladan.",
+  "keywords": [
+    "kaladan ui components",
+    "react components"
+  ],
   "author": "KaladanDev",
   "license": "MIT",
   "homepage": "https://github.com/KaladanDev/diba#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/KaladanDev/diba.git"
+    "url": "https://github.com/KaladanDev/diba.git"
   },
   "bugs": {
     "url": "https://github.com/KaladanDev/diba/issues"
@@ -18,7 +22,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "rm -rf dist/ && npm run build:esm && npm run build:cjs",
+    "build": "rm -rf dist/ && prettier --write src/ && npm run build:esm && npm run build:cjs",
     "build:esm": "tsc",
     "build:cjs": "tsc --module CommonJS --outDir dist/cjs"
   },
@@ -26,6 +30,7 @@
     "@types/node": "^17.0.24",
     "@types/react": "^18.0.5",
     "@types/react-dom": "^18.0.1",
+    "prettier": "2.6.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "typescript": "^4.6.3"

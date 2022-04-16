@@ -1,7 +1,7 @@
 {
-  "name": "diba",
+  "name": "@kaladan/diba",
   "version": "0.0.1",
-  "description": "UI Components for Kaladan",
+  "description": "The UI Components for Kaladan.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -15,5 +15,17 @@
   "bugs": {
     "url": "https://github.com/KaladanDev/diba/issues"
   },
-  "homepage": "https://github.com/KaladanDev/diba#readme"
+  "homepage": "https://github.com/KaladanDev/diba#readme",
+  "devDependencies": {
+    "@types/node": "^17.0.24",
+    "@types/react": "^18.0.5",
+    "@types/react-dom": "^18.0.1",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "typescript": "^4.6.3"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  }
 }

@@ -15,8 +15,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "changeset": "changeset",
-    "version-packages": "changeset version",
-    "release": "cd packages/tokens && bun publish --tolerate-republish && cd ../schema && bun publish --tolerate-republish && cd ../react && bun publish --tolerate-republish"
+    "version-packages": "changeset version && bun .changeset/sync-lock.mjs",
+    "release": "bun .changeset/sync-lock.mjs --check && cd packages/tokens && bun publish --tolerate-republish && cd ../schema && bun publish --tolerate-republish && cd ../react && bun publish --tolerate-republish"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.0",

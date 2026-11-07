@@ -33,6 +33,21 @@ function shipped(name: string): string[] {
 }
 
 describe.each(['tokens', 'schema', 'react'])('@kaladan/diba-%s', (name) => {
+  /**
+   * `bun publish` writes a `workspace:^` range from the version bun.lock records, and `bun
+   * install` does not refresh it: a stale record publishes a range no version answers.
+   */
+  it('is in bun.lock at its own version, so its dependents ask for it', () => {
+    const { version } = JSON.parse(readFileSync(join(packages, name, 'package.json'), 'utf8')) as {
+      version: string
+    }
+    const lock = readFileSync(join(packages, '..', 'bun.lock'), 'utf8')
+    const entry = new RegExp(
+      `\\n    "packages/${name}": \\{\\n      "name": "[^"]+",\\n      "version": "([^"]+)"`,
+    )
+    expect(entry.exec(lock)?.[1]).toBe(version)
+  })
+
   it('ships its source, and no tests, stories or docs pages', () => {
     const files = shipped(name)
     expect(files.filter((path) => path.startsWith('src/')).length).toBeGreaterThan(5)

@@ -103,4 +103,4 @@ const Map<String, DibaSpec> dibaManifest = {
 };
 
 /// The manifest version these allowlists came from.
-const String dibaManifestVersion = '0.0.0';
+const String dibaManifestVersion = '0.1.0';

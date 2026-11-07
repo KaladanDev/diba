@@ -1,6 +1,6 @@
 {
   "name": "@kaladan/diba-tokens",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "description": "Diba design tokens — one OKLCH source compiled to CSS variables, a Tailwind v4 theme layer, TS types, and a Flutter Material 3 theme.",
   "license": "SEE LICENSE IN LICENSE",
@@ -23,6 +23,7 @@
     "src",
     "!src/**/*.test.ts",
     "README.md",
+    "CHANGELOG.md",
     "LICENSE"
   ],
   "sideEffects": [

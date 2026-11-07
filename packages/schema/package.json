@@ -1,6 +1,6 @@
 {
   "name": "@kaladan/diba-schema",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "description": "Diba component manifest — the language-neutral contract; generates TS prop types, a JSON Schema for SDUI, and Dart allowlists.",
   "license": "SEE LICENSE IN LICENSE",
@@ -22,6 +22,7 @@
     "src",
     "!src/**/*.test.ts",
     "README.md",
+    "CHANGELOG.md",
     "LICENSE"
   ],
   "exports": {

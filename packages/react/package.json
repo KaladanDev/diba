@@ -1,6 +1,6 @@
 {
   "name": "@kaladan/diba-react",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "description": "Diba React components — React Aria + Tailwind v4, token-driven, RTL/FA-first.",
   "license": "SEE LICENSE IN LICENSE",
@@ -33,6 +33,7 @@
     "!src/foundations",
     "!src/patterns",
     "README.md",
+    "CHANGELOG.md",
     "LICENSE",
     "THIRD-PARTY-NOTICES.txt"
   ],

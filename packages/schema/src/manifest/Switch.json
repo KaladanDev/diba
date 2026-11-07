@@ -1,0 +1,37 @@
+{
+  "name": "Switch",
+  "category": "controls",
+  "description": "On or off, drawn as Flutter's M3 switch on both platforms. Alone it sends a boolean.",
+  "sduiSafe": true,
+  "props": {
+    "label": {
+      "type": "string",
+      "i18n": true,
+      "description": "The text beside the switch, in regular weight.",
+      "required": true
+    },
+    "isLabelHidden": {
+      "type": "boolean",
+      "default": false,
+      "description": "Hides the label from sight; it still names the field for a screen reader."
+    },
+    "description": { "type": "string", "i18n": true, "description": "Help drawn under the field." },
+    "errorMessage": {
+      "type": "string",
+      "i18n": true,
+      "description": "Set means invalid: the field shows this message under it."
+    },
+    "defaultSelected": {
+      "type": "boolean",
+      "description": "Starts at this value; the merchant changes it."
+    },
+    "isSelected": {
+      "type": "boolean",
+      "description": "Pinned: shows exactly what the server sent until the next tree."
+    },
+    "size": { "type": "enum", "values": ["sm", "md", "lg"], "default": "md" },
+    "name": { "type": "string", "description": "Names the value inside a Form block." },
+    "isDisabled": { "type": "boolean", "default": false }
+  },
+  "actions": { "onChange": { "description": "Whether it is on.", "payload": "boolean" } }
+}

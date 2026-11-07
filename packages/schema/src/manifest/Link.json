@@ -1,0 +1,16 @@
+{
+  "name": "Link",
+  "category": "navigation",
+  "description": "A text link, always underlined, in the link colour.",
+  "sduiSafe": true,
+  "props": {
+    "href": { "type": "string", "format": "url", "description": "A URL, held to isSafeUrl." },
+    "isExternal": {
+      "type": "boolean",
+      "default": false,
+      "description": "Leaves the admin; the host decides how."
+    },
+    "isDisabled": { "type": "boolean", "default": false }
+  },
+  "children": { "accepts": "text", "description": "The link's text (localizable)." }
+}

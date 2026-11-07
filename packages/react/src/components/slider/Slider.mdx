@@ -1,0 +1,175 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Slider.stories'
+import { Keys, Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# Slider
+
+A value, or a range, along a track: a discount, a price range in a filter, a stock level to be
+told at. It is Material's slider on both platforms, drawn as Flutter's.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **A value whose place in a range matters more than its digits:** a discount up to half, a
+  rating, a level.
+- **A range to filter by:** prices from and to.
+
+For an exact figure the reader types, a price or a quantity, use a NumberField.
+
+## Import
+
+```tsx
+import { Description, Label, Slider } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<Slider defaultValue={30} maxValue={50} step={10}>
+  <Label>Discount (%)</Label>
+  <Slider.Output />
+  <Slider.Track>
+    {({ state }) => (
+      <>
+        <Slider.Fill />
+        {state.values.map((_, i) => (
+          <Slider.Thumb key={i} index={i} />
+        ))}
+      </>
+    )}
+  </Slider.Track>
+  <Description>…</Description>
+</Slider>
+```
+
+<Parts
+  rows={[
+    ['Slider', 'The slider: its value or range, its least, most and step, and its format.'],
+    ['Label', 'Its name, at the start of the row above the track, 14 and medium.'],
+    [
+      'Slider.Output',
+      'Its value, at the end of the same row, in the page’s digits and its format; a range’s two values with a dash.',
+    ],
+    [
+      'Slider.Track',
+      'The track, 4 under the row: a band 20 tall holding a 4 line in the off-track shade, round at its ends; a 2 dot at each step when they are 6 or more apart.',
+    ],
+    [
+      'Slider.Fill',
+      'The part chosen, 6 tall in gilt: from the start to the thumb, or between two thumbs.',
+    ],
+    [
+      'Slider.Thumb',
+      'A thumb for each value, round and 20 across, slate-700 with a 3 gilt ring inside its edge; a circle 48 across under a hover (8%) or a drag (10%).',
+    ],
+    ['Description', 'Help under the track, 12 in the muted colour.'],
+  ]}
+/>
+
+## Examples
+
+### One value and a range
+
+A `defaultValue` or `value` of two numbers draws two thumbs; the fill lies between them, and
+neither passes the other.
+
+<Canvas of={Stories.Range} />
+
+### Steps
+
+`step` is what each move takes, 1 by default. Given one, a dot marks each step while they are 6 or
+more apart on the track; a fine step draws none.
+
+<Canvas of={Stories.Steps} />
+
+### Formats
+
+`formatOptions` are `Intl.NumberFormat`'s and write the value in the page's digits. A percent
+takes a fraction: 0.25 is 25%. Toman has no currency code: write it as a whole number and name the
+unit in the label, as «(تومان)».
+
+<Canvas of={Stories.Formats} />
+
+### Without its value, with help, disabled
+
+Leave out `Slider.Output` where the place on the track says enough, and name the slider with
+`aria-label` where it has no label. Disabled, it is drawn at half.
+
+<Canvas of={Stories.States} />
+
+## What it builds
+
+`onChange` fires as the thumb moves; `onChangeEnd` once it is let go, which is when a filter
+should ask the server.
+
+<Canvas of={Stories.PriceFilter} />
+
+## Themes, directions, sizes
+
+The least is at the start: the right on a Persian page, the fill growing leftward.
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+<PropsTable
+  rows={[
+    [
+      'value, defaultValue',
+      'number | number[]',
+      null,
+      'One value, or two for a range; controlled or at first.',
+    ],
+    ['onChange', '(value: number | number[]) => void', null, 'As a thumb moves.'],
+    ['onChangeEnd', '(value: number | number[]) => void', null, 'When a thumb is let go.'],
+    ['minValue, maxValue', 'number', '0, 100', 'Its least and most.'],
+    ['step', 'number', '1', 'What each move takes; dots mark the steps when it is given.'],
+    ['formatOptions', 'Intl.NumberFormatOptions', null, 'How its value is written.'],
+    ['isDisabled', 'boolean', 'false', 'It cannot be reached or moved; drawn at half.'],
+    ['aria-label', 'string', null, 'Its name, where it has no Label.'],
+  ]}
+/>
+
+`Slider.Thumb` takes its `index` and a `name`, which sends its value in a form. `Slider.Output`
+takes a function of the state for words of your own. Every part takes its element's own props
+too, and a `className`.
+
+## Keyboard
+
+<Keys
+  rows={[
+    ['Tab', 'To each thumb in turn.'],
+    ['Up, Down', 'A step up or down.'],
+    ['Left, Right', 'A step toward the end or the start: Left is up on a Persian page.'],
+    ['Page Up, Page Down', 'A larger step.'],
+    ['Home, End', 'Its least, and its most.'],
+  ]}
+/>
+
+## Accessibility
+
+Each thumb is a slider named by the `Label`, its value read as the output writes it, «۲۵٪». A
+range's two thumbs say which end each is before the label, «کمترین» and «بیشترین», Minimum and
+Maximum; a thumb's own `aria-label` says otherwise. The track takes a press too, moving the nearest
+thumb there.
+
+## Styling
+
+`.slider` with `__output`, `__track`, `__fill`, `__thumb` and `__steps`; `[data-dragging]`,
+`[data-focus-visible]` and `[data-disabled]`. The ring is `--slider-thumb-ring`.
+
+## As a block
+
+A tree draws the same slider, on the web and in Flutter, `isRange` giving two thumbs, and writes
+its value as the NumberField does: `formatStyle` `percent` a share of the range, `currency: "IRT"`
+toman with its word.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="Slider" />

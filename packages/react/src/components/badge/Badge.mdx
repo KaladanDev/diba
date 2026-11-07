@@ -1,0 +1,197 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Badge.stories'
+import { Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# Badge
+
+A count, a word or a dot on the corner of something: unread messages on an icon, a tick on an
+avatar, "New" on a product's picture. It sits a quarter outside its corner, ringed in the page's
+colour so it stands clear of what it is on.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **How many new things wait behind an icon:** messages, notifications, orders.
+- **A dot for something unread or something on,** where the number does not matter.
+- **One short word on a picture,** such as "New" or "20% off".
+
+For a count or a status among words, in a tab or a table, use a Chip: a badge always sits on a
+corner. For whether a person is online, use the Avatar's own presence dot.
+
+## Import
+
+```tsx
+import { Badge } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<Badge.Anchor>
+  <Button isIconOnly variant="secondary" aria-label="Messages, 3 new">
+    <MessageSquare aria-hidden />
+  </Button>
+  <Badge color="danger" placement="top-right" aria-hidden>
+    3
+  </Badge>
+</Badge.Anchor>
+```
+
+<Parts
+  rows={[
+    ['Badge.Anchor', 'What the badge sits on, and the badge: it gives the badge its corners.'],
+    [
+      'Badge',
+      'The circle or pill: at least 16, 28 or 32 across, 1 of the page’s colour round it, a quarter outside its corner.',
+    ],
+    [
+      'Badge.Label',
+      'Its words, 2 in from each side. A string or a number is wrapped in one for you.',
+    ],
+  ]}
+/>
+
+## Examples
+
+### A count, words, an icon or a dot
+
+Write a count in the reader's digits, and past a ceiling as the ceiling and a plus: "99+". With
+no children it is a dot; at `sm`, 16 across, it reads as one.
+
+```tsx
+const digits = new Intl.NumberFormat(locale)
+const count = n > 99 ? `${digits.format(99)}+` : digits.format(n)
+```
+
+<Canvas of={Stories.Content} />
+
+### Sizes
+
+`sm`, `md` and `lg`: at least 16, 28 and 32 across. Match it to what it sits on.
+
+<Canvas of={Stories.Sizes} />
+
+### Colours and variants
+
+`primary` is the colour, solid; `secondary` the colour's text on the neutral fill; `soft` the
+colour's tint. `danger` for what wants attention, `accent` for what is new, `success` for what is
+done.
+
+<Canvas of={Stories.ColoursAndVariants} />
+
+### Placements
+
+`placement` is one of the page's four corners, `top-right` by default. They are the left and the
+right whatever the language, so turn them by the page's direction: on a Persian page the end is
+the left.
+
+```tsx
+const { direction } = useLocale()
+const end = direction === 'rtl' ? 'top-left' : 'top-right'
+```
+
+<Canvas of={Stories.Placements} />
+
+### Dots
+
+<Canvas of={Stories.Dots} />
+
+### Named, or part of a name
+
+<Canvas of={Stories.Accessible} />
+
+## What it builds
+
+<Canvas of={Stories.AdminHeader} />
+<Canvas of={Stories.ProductPictures} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+### Badge
+
+<PropsTable
+  rows={[
+    [
+      'color',
+      "'default' | 'accent' | 'success' | 'warning' | 'danger'",
+      "'default'",
+      'Its colour.',
+    ],
+    [
+      'variant',
+      "'primary' | 'secondary' | 'soft'",
+      "'primary'",
+      'Solid, the colour’s text on the neutral fill, or the colour’s tint.',
+    ],
+    ['size', "'sm' | 'md' | 'lg'", "'md'", 'At least 16, 28 or 32 across.'],
+    [
+      'placement',
+      "'top-right' | 'top-left' | 'bottom-right' | 'bottom-left'",
+      "'top-right'",
+      'Its corner of the anchor, a quarter outside it.',
+    ],
+    [
+      'render',
+      '(props) => ReactElement',
+      null,
+      'Draws a span of yours in its place; pass its props and ref through.',
+    ],
+    ['className', 'string', null, 'Classes after the badge’s own.'],
+    ['children', 'ReactNode', null, 'A count, words or an icon; none for a dot.'],
+  ]}
+/>
+
+### Badge.Anchor
+
+<PropsTable
+  rows={[
+    ['children', 'ReactNode', null, 'What the badge sits on, and the badge.'],
+    ['render', '(props) => ReactElement', null, 'Draws a span of yours in its place.'],
+    ['className', 'string', null, 'Classes after the anchor’s own.'],
+  ]}
+/>
+
+### Badge.Label
+
+<PropsTable
+  rows={[
+    ['children', 'ReactNode', null, 'Its words.'],
+    ['className', 'string', null, 'Classes after the label’s own.'],
+  ]}
+/>
+
+Every part takes its element's own props too: `id`, `style`, `aria-*`.
+
+## Accessibility
+
+A badge's number or colour means nothing on its own. Say it in the name of what it sits on, "Messages,
+3 new", and hide the badge with `aria-hidden`. Where what it sits on is not named in words, name
+the badge itself: `role="img"` and an `aria-label` such as "3 new messages". A dot needs a name as
+much as a count does.
+
+## Styling
+
+`.badge` with `.badge--default` to `--danger`, `--primary`, `--secondary`, `--soft`, `--sm`,
+`--md`, `--lg` and `--top-right` to `--bottom-left`; `.badge__label`; `.badge-anchor`. Its fill,
+text and ring are `--badge-bg`, `--badge-fg` and `--badge-border`.
+
+## As a block
+
+A tree draws the same badge on the block it holds, on the web and in Flutter. It writes a number
+in the reader's digits and past `max` as "99+", and turns `start` and `end` by the page's direction
+for you. Its `label` names the badge, as an image, in place of its digits. Its `color` is `danger`
+unless the tree says otherwise.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="Badge" />

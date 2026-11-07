@@ -1,0 +1,50 @@
+{
+  "name": "TagGroup",
+  "category": "controls",
+  "description": "Tags to choose or remove, drawn as Flutter's chips.",
+  "sduiSafe": true,
+  "props": {
+    "label": { "type": "string", "i18n": true, "description": "The field's name, drawn above it." },
+    "isLabelHidden": {
+      "type": "boolean",
+      "default": false,
+      "description": "Hides the label from sight; it still names the field for a screen reader."
+    },
+    "description": { "type": "string", "i18n": true, "description": "Help drawn under the field." },
+    "errorMessage": {
+      "type": "string",
+      "i18n": true,
+      "description": "Set means invalid: the field shows this message under it."
+    },
+    "selectionMode": {
+      "type": "enum",
+      "values": ["none", "single", "multiple"],
+      "default": "none"
+    },
+    "defaultSelectedKeys": {
+      "type": "string[]",
+      "description": "Starts at this value; the merchant changes it."
+    },
+    "selectedKeys": {
+      "type": "string[]",
+      "description": "Pinned: shows exactly what the server sent until the next tree."
+    },
+    "disallowEmptySelection": { "type": "boolean", "default": false },
+    "size": { "type": "enum", "values": ["sm", "md", "lg"], "default": "md" },
+    "variant": {
+      "type": "enum",
+      "values": ["default", "surface"],
+      "default": "default",
+      "description": "surface is for tags on a grey card."
+    },
+    "emptyMessage": { "type": "string", "i18n": true, "description": "\"No keywords yet.\"" }
+  },
+  "children": { "accepts": ["Tag"] },
+  "actions": {
+    "onSelectionChange": { "description": "The selected ids.", "payload": "Key[]" },
+    "onRemove": {
+      "description": "A tag's remove button pressed; declaring it shows the buttons. Its value is the tag's id: send it with call's value.",
+      "payload": "Key"
+    }
+  }
+}

@@ -1,0 +1,204 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Toast.stories'
+import { Keys, PropsTable } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# Toast
+
+A short word that something happened, at the edge of the page: saved, sent, failed. It goes by
+itself after a few seconds and leaves the page as it was; a button in it can take the work back or
+lead on.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **What a button just did,** such as a product saved or a label printed.
+- **Something done that can be taken back,** with an Undo in it, such as a product deleted.
+- **How a piece of work went,** a spinner while it runs, then saved or not.
+
+Not for something the reader must answer: use an AlertDialog. Not for something that stays true
+while the page is open, such as a trial ending: use an Alert on the page. Not for an error in a
+field: say it under the field.
+
+## Import
+
+```tsx
+import { Toast, toast } from '@kaladan/diba-react'
+```
+
+## Showing one
+
+A page has one `Toast.Provider`, the region its toasts stand in, once near its root. Anything on the
+page then shows a toast by calling `toast`:
+
+```tsx
+;<Toast.Provider placement="bottom" />
+
+toast.success('Product saved', { description: 'Buyers see it from now on.' })
+
+toast('“Silk scarf” deleted', {
+  actionProps: { children: 'Undo', onPress: restore },
+  timeout: 8000,
+})
+
+toast.promise(save(), { loading: 'Saving…', success: 'Saved', error: 'Not saved' })
+```
+
+`toast()` is the default variant; `toast.info()` is the accent, and `toast.success()`,
+`toast.warning()` and `toast.danger()` the rest. Each returns the toast's key, which
+`toast.update()` and `toast.close()` take; `toast.clear()` closes them all.
+
+## Its look
+
+On the page's surface with the overlay's shadow, 24 round, 16 in across and 12 down: its mark at the
+start, its title and a line under it, a button at the end, and a close button on its corner that
+shows under the pointer or when the keyboard reaches it. From 640 wide it is at least 460 across, 16 from the window's edge; on a
+narrower window it is the window's width less 16 each side. Up to 768 wide its button goes under its
+words.
+
+## Examples
+
+Each example is its own frame with its own region: the main ones show a toast as they load, and
+their buttons show more.
+
+### Variants
+
+<Canvas of={Stories.Variants} />
+
+### What it says
+
+A title alone, a title and a line under it, and a button that does something, such as Undo.
+
+<Canvas of={Stories.Content} />
+
+### Its mark
+
+The variant's mark by default; `indicator` puts an icon of yours in its place, `indicator: null`
+leaves it out, and `isLoading` shows a spinner.
+
+<Canvas of={Stories.Indicators} />
+
+### Following a piece of work
+
+`toast.promise` shows a spinner while the work runs, then success or failure in the same place, and
+only then starts counting down.
+
+<Canvas of={Stories.FollowingWork} />
+
+### How long it stays
+
+Four seconds by default; `timeout` sets another, and `0` keeps it until it is closed. While the
+pointer or the focus is on the region, or the page is hidden, no toast goes.
+
+<Canvas of={Stories.Timeouts} />
+
+### Several at once
+
+The newest stands in front and the older ones close behind it, smaller; three show, and the rest
+wait. Under the pointer or the focus, the stack spreads out so each can be read.
+
+<Canvas of={Stories.Stacking} />
+
+### Where the region stands
+
+`placement` on the provider: the bottom by default, or the top, at the middle, the start or the
+end. Start and end follow the page's direction.
+
+<Canvas of={Stories.Placements} />
+
+## What it says
+
+<Canvas of={Stories.UndoDelete} />
+<Canvas of={Stories.AddedToCart} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.Dark} />
+<Canvas of={Stories.LeftToRight} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+### toast(title, options)
+
+<PropsTable
+  rows={[
+    ['title', 'ReactNode', null, 'What happened: the first argument.'],
+    ['description', 'ReactNode', null, 'A line under the title.'],
+    [
+      'variant',
+      "'default' | 'accent' | 'success' | 'warning' | 'danger'",
+      "'default'",
+      'Its colour and mark; toast.success() and the rest set it.',
+    ],
+    ['actionProps', 'ButtonProps', null, 'A button in it: its children are its words.'],
+    ['indicator', 'ReactNode | null', 'the variant’s mark', 'An icon of yours; null for none.'],
+    ['isLoading', 'boolean', 'false', 'A spinner in place of the mark.'],
+    ['timeout', 'number', '4000', 'Milliseconds before it goes; 0 keeps it.'],
+    ['onClose', '() => void', null, 'Called as it goes.'],
+  ]}
+/>
+
+### Toast.Provider
+
+<PropsTable
+  rows={[
+    [
+      'placement',
+      "'bottom' | 'bottom start' | 'bottom end' | 'top' | 'top start' | 'top end'",
+      "'bottom'",
+      'Where the region stands.',
+    ],
+    ['width', 'number | string', '460', 'Its width from 640 wide.'],
+    ['maxVisibleToasts', 'number', '3', 'How many show in the stack.'],
+    ['gap', 'number', '12', 'The space between toasts, spread out.'],
+    ['isExpanded', 'boolean', 'false', 'Always spread out, not only under the pointer.'],
+    ['hotkey', 'string[]', "['altKey', 'KeyT']", 'The keys that take the focus to the region.'],
+    ['queue', 'ToastQueue', 'the page’s', 'A queue of its own, for a second region.'],
+    [
+      'children',
+      '(props) => ReactNode',
+      null,
+      'Draws each toast yourself, from Toast and its parts.',
+    ],
+  ]}
+/>
+
+### Drawing one yourself
+
+`Toast`, `Toast.Indicator`, `Toast.Content`, `Toast.Title`, `Toast.Description`,
+`Toast.ActionButton` and `Toast.CloseButton` are the parts the provider draws each toast with; give
+the provider a function as its child to lay them out another way.
+
+## Accessibility
+
+The region is a landmark, which F6 or Alt and T reach; a new toast is read out as it comes, without
+taking the focus. Each toast's button and close button are reached with Tab once the focus is in the
+region, and Escape folds a spread stack.
+
+<Keys
+  rows={[
+    ['Alt T', 'Takes the focus to the region.'],
+    ['F6', 'To the region among the page’s landmarks.'],
+    ['Tab', 'To a toast’s next button.'],
+    ['Escape', 'Folds the spread stack and leaves it.'],
+  ]}
+/>
+
+## Styling
+
+`.toast-region` and its `--bottom`, `--bottom-start` to `--top-end`; `.toast` with `--default`,
+`--accent`, `--success`, `--warning`, `--danger` and `[data-placement]`; `.toast__indicator`,
+`__content`, `__title`, `__description`, `__action` and `__close-button`.
+
+## As an action
+
+A tree does not draw a toast as a block: it asks for one as an action, `{"do": "toast"}`, with a
+`status`, a `title` and a `description`, on the web and in Flutter. An `actionLabel` with an
+`onAction` gives it a button, such as Undo; `onAction` may not ask for another toast. A host that
+draws its own toasts is handed the same words instead.
+
+<Canvas of={Stories.ServerDriven} />

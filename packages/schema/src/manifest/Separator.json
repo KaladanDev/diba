@@ -1,0 +1,26 @@
+{
+  "name": "Separator",
+  "category": "layout",
+  "description": "A line between sections of a card, across or down.",
+  "sduiSafe": true,
+  "props": {
+    "orientation": {
+      "type": "enum",
+      "values": [
+        "horizontal",
+        "vertical"
+      ],
+      "default": "horizontal"
+    },
+    "variant": {
+      "type": "enum",
+      "values": [
+        "default",
+        "secondary",
+        "tertiary"
+      ],
+      "default": "default",
+      "description": "Its colour for the surface under it: secondary and tertiary are darker, for a card inside a card."
+    }
+  }
+}

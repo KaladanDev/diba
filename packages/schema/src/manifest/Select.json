@@ -1,0 +1,65 @@
+{
+  "name": "Select",
+  "category": "controls",
+  "description": "Choose one option, or several, from a menu.",
+  "sduiSafe": true,
+  "props": {
+    "label": {
+      "type": "string",
+      "i18n": true,
+      "description": "The field's name, drawn above it.",
+      "required": true
+    },
+    "isLabelHidden": {
+      "type": "boolean",
+      "default": false,
+      "description": "Hides the label from sight; it still names the field for a screen reader."
+    },
+    "description": { "type": "string", "i18n": true, "description": "Help drawn under the field." },
+    "errorMessage": {
+      "type": "string",
+      "i18n": true,
+      "description": "Set means invalid: the field shows this message under it."
+    },
+    "isRequired": { "type": "boolean", "default": false },
+    "isDisabled": { "type": "boolean", "default": false },
+    "name": { "type": "string", "description": "Names the value inside a Form block." },
+    "isReadOnly": { "type": "boolean", "default": false },
+    "variant": {
+      "type": "enum",
+      "values": ["primary", "secondary"],
+      "default": "primary",
+      "description": "secondary is for a field on a grey surface."
+    },
+    "fullWidth": {
+      "type": "boolean",
+      "default": true,
+      "description": "false takes the natural field width token."
+    },
+    "selectionMode": { "type": "enum", "values": ["single", "multiple"], "default": "single" },
+    "defaultSelectedKey": {
+      "type": "string",
+      "description": "Starts at this value; the merchant changes it. For single."
+    },
+    "selectedKey": {
+      "type": "string",
+      "description": "Pinned: shows exactly what the server sent until the next tree. For single."
+    },
+    "defaultSelectedKeys": {
+      "type": "string[]",
+      "description": "Starts at this value; the merchant changes it. For multiple."
+    },
+    "selectedKeys": {
+      "type": "string[]",
+      "description": "Pinned: shows exactly what the server sent until the next tree. For multiple."
+    },
+    "placeholder": { "type": "string", "i18n": true }
+  },
+  "children": { "accepts": ["ListBoxItem", "ListBoxSection"], "description": "The options." },
+  "actions": {
+    "onSelectionChange": {
+      "description": "The selected id, or ids for multiple.",
+      "payload": "Key | Key[]"
+    }
+  }
+}

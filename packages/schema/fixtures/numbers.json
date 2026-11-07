@@ -1,0 +1,123 @@
+{
+  "$comment": "What the browser prints (Node v24.15.0, full ICU, generated 2026-10-16). Both platforms format these numbers and must print exactly this. IRT is the amount in whole numbers, a space, and the word. Invisible characters are escaped: \u200e is a left-to-right mark, \u00a0 a no-break space.",
+  "cases": [
+    {
+      "value": 1234567.891,
+      "locale": "fa",
+      "style": "decimal",
+      "expected": "۱٬۲۳۴٬۵۶۷٫۸۹۱"
+    },
+    {
+      "value": 1234567.891,
+      "locale": "en",
+      "style": "decimal",
+      "expected": "1,234,567.891"
+    },
+    {
+      "value": 0.153,
+      "locale": "fa",
+      "style": "percent",
+      "expected": "۱۵٪"
+    },
+    {
+      "value": 0.153,
+      "locale": "en",
+      "style": "percent",
+      "expected": "15%"
+    },
+    {
+      "value": 1234.5,
+      "locale": "fa",
+      "style": "currency",
+      "currency": "USD",
+      "expected": "\u200e$۱٬۲۳۴٫۵۰"
+    },
+    {
+      "value": 1234.5,
+      "locale": "en",
+      "style": "currency",
+      "currency": "USD",
+      "expected": "$1,234.50"
+    },
+    {
+      "value": 1250000,
+      "locale": "fa",
+      "style": "currency",
+      "currency": "IRR",
+      "expected": "\u200eریال\u00a0۱٬۲۵۰٬۰۰۰"
+    },
+    {
+      "value": 1250000,
+      "locale": "en",
+      "style": "currency",
+      "currency": "IRR",
+      "expected": "IRR\u00a01,250,000"
+    },
+    {
+      "value": 1250000,
+      "locale": "fa",
+      "style": "currency",
+      "currency": "IRT",
+      "expected": "۱٬۲۵۰٬۰۰۰ تومان"
+    },
+    {
+      "value": 1250000,
+      "locale": "en",
+      "style": "currency",
+      "currency": "IRT",
+      "expected": "1,250,000 Toman"
+    },
+    {
+      "value": 1234.6,
+      "locale": "fa",
+      "style": "currency",
+      "currency": "IRT",
+      "expected": "۱٬۲۳۵ تومان"
+    },
+    {
+      "value": 1234.6,
+      "locale": "en",
+      "style": "currency",
+      "currency": "IRT",
+      "expected": "1,235 Toman"
+    },
+    {
+      "value": -42,
+      "locale": "fa",
+      "style": "decimal",
+      "expected": "\u200e−۴۲"
+    },
+    {
+      "value": -42,
+      "locale": "en",
+      "style": "decimal",
+      "expected": "-42"
+    },
+    {
+      "value": 12.345,
+      "locale": "fa",
+      "style": "decimal",
+      "maximumFractionDigits": 0,
+      "expected": "۱۲"
+    },
+    {
+      "value": 12.345,
+      "locale": "en",
+      "style": "decimal",
+      "maximumFractionDigits": 0,
+      "expected": "12"
+    },
+    {
+      "value": 0.5,
+      "locale": "fa",
+      "style": "percent",
+      "expected": "۵۰٪"
+    },
+    {
+      "value": 0.5,
+      "locale": "en",
+      "style": "percent",
+      "expected": "50%"
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+{
+  "modal": {
+    "radius": { "$type": "dimension", "$value": "{radius.lg}" }
+  }
+}

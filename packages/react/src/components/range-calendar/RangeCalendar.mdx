@@ -1,0 +1,181 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './RangeCalendar.stories'
+import { Keys, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# RangeCalendar
+
+A month to pick a span of days from, drawn in the page: a first press starts it, a second ends
+it, and the days between are filled. It counts in the reader's calendar, and has the Calendar's
+parts.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **A span the reader picks by looking at the month:** a sale's run, a report's period, days away.
+- **Where the calendar can stay open** on the page, beside a few ready periods.
+
+For a span in a form, use a DateRangePicker: a field that opens a range calendar. For one day, use
+a Calendar.
+
+## Import
+
+```tsx
+import { RangeCalendar } from '@kaladan/diba-react'
+import { parseDate } from '@internationalized/date'
+```
+
+## Anatomy
+
+A RangeCalendar has a Calendar's parts, under its own name: `RangeCalendar.Header`,
+`RangeCalendar.NavButton`, `RangeCalendar.YearPickerTrigger` with its heading, `RangeCalendar.Grid`
+with its header cells and cells, `RangeCalendar.YearPickerGrid`, `RangeCalendar.MonthPickerGrid`
+and `RangeCalendar.TodayButton`. See the Calendar's page for what each is.
+
+```tsx
+<RangeCalendar
+  aria-label="Sale period"
+  defaultValue={{ start: parseDate('2026-10-17'), end: parseDate('2026-10-23') }}
+>
+  <RangeCalendar.Header>
+    <RangeCalendar.NavButton slot="previous" />
+    <RangeCalendar.YearPickerTrigger>
+      <RangeCalendar.YearPickerTriggerHeading />
+    </RangeCalendar.YearPickerTrigger>
+    <RangeCalendar.NavButton slot="next" />
+  </RangeCalendar.Header>
+  <RangeCalendar.Grid>
+    <RangeCalendar.GridHeader>
+      {(day) => <RangeCalendar.HeaderCell>{day}</RangeCalendar.HeaderCell>}
+    </RangeCalendar.GridHeader>
+    <RangeCalendar.GridBody>{(date) => <RangeCalendar.Cell date={date} />}</RangeCalendar.GridBody>
+  </RangeCalendar.Grid>
+  <RangeCalendar.YearPickerGrid>
+    <RangeCalendar.YearPickerGridBody>
+      {({ year }) => <RangeCalendar.YearPickerCell year={year} />}
+    </RangeCalendar.YearPickerGridBody>
+  </RangeCalendar.YearPickerGrid>
+  <RangeCalendar.MonthPickerGrid />
+  <RangeCalendar.TodayButton />
+</RangeCalendar>
+```
+
+## Values
+
+A range is `{ start, end }`, two of `@internationalized/date`'s days. Each one's `toString()` is
+Gregorian ISO 8601 whatever calendar drew it: keep and send those.
+
+## Examples
+
+### Picking a range
+
+<Canvas of={Stories.PickingARange} />
+
+### Persian and Gregorian
+
+As with a Calendar, the locale chooses: `fa-IR-u-ca-gregory` in React Aria's `I18nProvider` draws
+Gregorian on a Persian page.
+
+<Canvas of={Stories.Calendars} />
+
+### Limits and unavailable days
+
+`minValue` and `maxValue` end the calendar. A range cannot run across a day `isDateUnavailable`
+names, unless `allowsNonContiguousRanges` lets it: a sale over a week with a holiday in it.
+
+<Canvas of={Stories.Limits} />
+
+### Disabled, read-only and invalid
+
+<Canvas of={Stories.States} />
+
+## What it builds
+
+<Canvas of={Stories.ReportPeriod} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+<PropsTable
+  rows={[
+    ['value', '{ start, end } | null', null, 'The range picked, controlled.'],
+    ['defaultValue', '{ start, end } | null', null, 'The range picked at first.'],
+    [
+      'onChange',
+      '(value: { start, end }) => void',
+      null,
+      'When a range is picked: on its second press.',
+    ],
+    ['minValue, maxValue', 'DateValue', null, 'The first and last days that can be reached.'],
+    [
+      'isDateUnavailable',
+      '(date: DateValue) => boolean',
+      null,
+      'Days within the limits that cannot be picked.',
+    ],
+    ['allowsNonContiguousRanges', 'boolean', 'false', 'A range may run across unavailable days.'],
+    [
+      'focusedValue, defaultFocusedValue',
+      'DateValue',
+      null,
+      'The day with the focus, and so the month shown, without a value.',
+    ],
+    [
+      'firstDayOfWeek',
+      "'sun' | 'mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat'",
+      'the language’s',
+      'The day a week starts on.',
+    ],
+    [
+      'isYearPickerOpen, defaultYearPickerOpen',
+      'boolean',
+      'false',
+      'Whether the years show in place of the days.',
+    ],
+    ['onYearPickerOpenChange', '(isOpen: boolean) => void', null, 'When the years open or close.'],
+    ['isDisabled', 'boolean', 'false', 'Nothing can be focused or picked.'],
+    ['isReadOnly', 'boolean', 'false', 'The days can be looked at, not picked.'],
+    ['isInvalid', 'boolean', 'false', 'Drawn as wrong; say why in an ErrorMessage inside it.'],
+    ['aria-label', 'string', null, 'What the span is for.'],
+  ]}
+/>
+
+## Keyboard
+
+<Keys
+  rows={[
+    ['Arrow keys', 'The day before or after, the week before or after.'],
+    ['Page Up, Page Down', 'The month before or after; with Shift, the year.'],
+    ['Home, End', 'The month’s first or last day.'],
+    ['Enter or Space', 'Starts the range on the day with the focus, then ends it.'],
+    ['Escape', 'Drops a range begun and not ended.'],
+  ]}
+/>
+
+## Accessibility
+
+Each day is read with its full date and whether it is in the range, its start or its end. Name the
+calendar with `aria-label` for what the span is for.
+
+## Styling
+
+`.range-calendar` with the Calendar's elements under its own name; a cell's `[data-selected]`,
+`[data-selection-start]` and `[data-selection-end]` round the range's ends. The band is
+`--range-band`, the brand's saffron-200 (800 in dark).
+
+## As a block
+
+A tree draws the same range calendar, on the web and in Flutter, its two days Gregorian ISO 8601
+on the wire.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="RangeCalendar" />

@@ -1,0 +1,17 @@
+{
+  "name": "Tag",
+  "category": "controls",
+  "description": "One tag of a TagGroup.",
+  "sduiSafe": true,
+  "props": {
+    "id": { "type": "string", "description": "Its key.", "required": true },
+    "isDisabled": { "type": "boolean", "default": false },
+    "icon": { "type": "token", "token": "icon", "description": "A name from the icon list." },
+    "href": {
+      "type": "string",
+      "format": "url",
+      "description": "Opens a filtered view. A URL, held to isSafeUrl."
+    }
+  },
+  "children": { "accepts": "text", "description": "The tag's text (localizable)." }
+}

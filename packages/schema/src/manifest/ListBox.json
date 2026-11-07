@@ -1,0 +1,37 @@
+{
+  "name": "ListBox",
+  "category": "controls",
+  "description": "A list on the page. Its choices are marked with a radio or a checkbox at the start.",
+  "sduiSafe": true,
+  "props": {
+    "label": {
+      "type": "string",
+      "i18n": true,
+      "description": "The accessible name; never drawn. A heading is a Text block.",
+      "required": true
+    },
+    "selectionMode": {
+      "type": "enum",
+      "values": ["none", "single", "multiple"],
+      "default": "single",
+      "description": "none is a list of rows to press."
+    },
+    "defaultSelectedKeys": {
+      "type": "string[]",
+      "description": "Starts at this value; the merchant changes it."
+    },
+    "selectedKeys": {
+      "type": "string[]",
+      "description": "Pinned: shows exactly what the server sent until the next tree."
+    },
+    "emptyMessage": { "type": "string", "i18n": true }
+  },
+  "children": { "accepts": ["ListBoxItem", "ListBoxSection"] },
+  "actions": {
+    "onSelectionChange": { "description": "The selected ids.", "payload": "Key[]" },
+    "onAction": {
+      "description": "A row pressed. Its value is the row's id: send it with call's value.",
+      "payload": "Key"
+    }
+  }
+}

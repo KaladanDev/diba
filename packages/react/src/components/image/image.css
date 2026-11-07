@@ -1,0 +1,131 @@
+/**
+ * Image — a picture that holds its place before it exists.
+ *
+ * The same idea as Avatar's, at page scale: the box is sized from a ratio the
+ * caller gives, the skeleton lives underneath, and the picture fades in over
+ * it. Nothing is swapped, so a slow image never leaves a hole and a broken one
+ * never leaves a torn glyph.
+ *
+ * A picture whose height is only known once it has loaded is the single largest
+ * cause of a page jumping under someone's thumb, which is why `ratio` is the
+ * prop this component is really about.
+ */
+
+@layer components {
+  .db-image {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    background-color: var(--db-surface-2);
+  }
+
+  .db-image__img {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: var(--db-image-fit, cover);
+    opacity: 0;
+    transition: opacity var(--db-duration-slow) var(--db-easing-out);
+  }
+
+  .db-image__img[data-loaded] {
+    opacity: 1;
+  }
+
+  /* What is underneath: the skeleton's own sweep, so a loading picture and a
+     loading paragraph shimmer the same way rather than two ways. */
+  .db-image__placeholder {
+    position: absolute;
+    inset: 0;
+  }
+
+  .db-image__img[data-loaded] + .db-image__placeholder,
+  .db-image__placeholder:has(+ .db-image__img[data-loaded]) {
+    opacity: 0;
+  }
+
+  /* A picture that failed. Not a broken-image glyph — a quiet mark that says
+     "there was meant to be something here" without pretending to be it. */
+  .db-image__fallback {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    color: var(--db-fg-muted);
+    font-size: var(--db-text-sm);
+    text-align: center;
+    padding: var(--db-space-3);
+  }
+
+  .db-image--contain {
+    --db-image-fit: contain;
+  }
+
+  /* The block's radii, on both platforms. The box clips the picture to them. */
+  .db-image--radius-none {
+    border-radius: 0;
+  }
+
+  .db-image--radius-sm {
+    border-radius: 8px;
+  }
+
+  .db-image--radius-md {
+    border-radius: 12px;
+  }
+
+  .db-image--radius-lg {
+    border-radius: 16px;
+  }
+
+  .db-image--radius-full {
+    border-radius: 9999px;
+  }
+
+  /* Its own shape: in the flow, so a picture that fails still shows its words. */
+  .db-image[data-ratio='auto'] .db-image__fallback {
+    position: relative;
+  }
+
+  /* Opened: the whole picture, as large as the dialog lets it be. */
+  .db-image__enlarged {
+    display: block;
+    max-inline-size: 100%;
+    max-block-size: 75vh;
+    margin-inline: auto;
+    object-fit: contain;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .db-image__img {
+      transition: none;
+    }
+  }
+}
+
+/*
+ * A picture that opens larger on a press, as Flutter's does: the whole box is the button, its ring
+ * the Modal trigger's own, round as the box is. Outside the sublayer above, so it wins over the
+ * trigger's inline block and pointer, which sit in the components layer itself.
+ */
+.db-image__zoom {
+  display: block;
+  border-radius: 12px;
+  cursor: zoom-in;
+
+  &:has(.db-image--radius-none) {
+    border-radius: 0;
+  }
+
+  &:has(.db-image--radius-sm) {
+    border-radius: 8px;
+  }
+
+  &:has(.db-image--radius-lg) {
+    border-radius: 16px;
+  }
+
+  &:has(.db-image--radius-full) {
+    border-radius: 9999px;
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "$comment": "Diba's email and URL rules, the same on both platforms. Each pattern is written so JavaScript's RegExp and Dart's RegExp read it identically; flags 'i' means case-insensitive. Every 'valid' case must match and every 'invalid' one must not, on both platforms.",
+  "email": {
+    "pattern": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$",
+    "flags": "",
+    "valid": ["a@kaladan.shop", "nilufar.rostami@example.co.ir", "sales+orders@shop.example.com"],
+    "invalid": ["", "not-an-email", "a@b", "a b@kaladan.shop", "@kaladan.shop", "a@@kaladan.shop"]
+  },
+  "url": {
+    "pattern": "^https?://([^\\s/?#@:.]+\\.)+[^\\s/?#@:.]+(:\\d{1,5})?([/?#]\\S*)?$",
+    "flags": "i",
+    "valid": [
+      "https://kaladan.shop",
+      "http://a.b/c?d=1#e",
+      "https://shop.example.com:8443/products",
+      "HTTPS://KALADAN.SHOP/",
+      "https://کالادان.ir"
+    ],
+    "invalid": [
+      "",
+      "kaladan.shop",
+      "ftp://kaladan.shop",
+      "https://",
+      "https://localhost",
+      "https://bad host.com",
+      "javascript:alert(1)",
+      "https://user@kaladan.shop"
+    ]
+  }
+}

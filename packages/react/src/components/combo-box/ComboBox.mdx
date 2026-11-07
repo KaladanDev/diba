@@ -1,0 +1,206 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './ComboBox.stories'
+import { Keys, Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# ComboBox
+
+A field the reader types into to find an option: a city among dozens, a customer, a product. As
+they type, the menu under it narrows to the options that hold their words.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **One of a long list the reader knows by name:** a city, a province, a customer.
+- **A value that may be one of a list or the reader's own:** a colour, a district.
+
+For a short list to pick from without typing, use a Select; to search a page and send the words,
+a SearchField.
+
+## Import
+
+```tsx
+import { ComboBox, Description, FieldError, Input, Label, ListBox } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<ComboBox>
+  <Label>City</Label>
+  <ComboBox.InputGroup>
+    <Input placeholder="Type a city" />
+    <ComboBox.Trigger />
+  </ComboBox.InputGroup>
+  <ComboBox.Popover>
+    <ListBox>
+      <ListBox.Item id="tehran">Tehran</ListBox.Item>
+      <ListBox.Item id="isfahan">Isfahan</ListBox.Item>
+    </ListBox>
+  </ComboBox.Popover>
+  <Description>For the delivery fee.</Description>
+  <FieldError />
+</ComboBox>
+```
+
+<Parts
+  rows={[
+    [
+      'ComboBox',
+      'The field: the chosen option, the words typed, how it filters and opens, its checks and its state.',
+    ],
+    ['Label', 'Its name, above it, 14 and medium; a star after it when required.'],
+    [
+      'ComboBox.InputGroup',
+      'The field, 36 tall (40 under 640 wide), holding the input and the chevron.',
+    ],
+    ['Input', 'The words, as a TextField’s input; the variant is the ComboBox’s.'],
+    ['ComboBox.Trigger', 'The chevron at the field’s end, which opens the whole list.'],
+    ['ComboBox.Popover', 'The menu, as the Select’s: 8 under the field and as wide as it.'],
+    [
+      'ListBox, ListBox.Item',
+      'The options, the chosen one on the neutral fill. See the ListBox page.',
+    ],
+    ['Description, FieldError', 'Help under it, and what is wrong in its place.'],
+  ]}
+/>
+
+## Examples
+
+### Typing narrows it
+
+The menu opens as the reader types and keeps the options whose words hold theirs, anywhere in
+them, ignoring case and accents. Choosing one writes its words in the field. Give each option
+`textValue`, the words it is found by, when it holds more than text.
+
+<Canvas of={Stories.Filtering} />
+
+### Sections, and nothing found
+
+`ListBox.Section` with a `Header` titles a group of options, which stays while any of its options
+match. With `allowsEmptyCollection`, the menu stays open when nothing matches and the list's
+`renderEmptyState` says so.
+
+<Canvas of={Stories.Sections} />
+
+### Words of the reader's own
+
+`allowsCustomValue` lets what is typed stand when no option matches: the field keeps it, and
+`selectedKey` is `null`. Without it, leaving the field puts back the chosen option's words.
+Choosing an option writes its words in. Control the words, or the choice, or neither: with both
+controlled, React Aria leaves the words to you, and `onSelectionChange` must write them.
+
+<Canvas of={Stories.CustomValue} />
+
+### Disabled, read-only, invalid, on a grey surface
+
+Read-only, its words can be read and copied; the menu does not open.
+
+<Canvas of={Stories.States} />
+
+### In a form
+
+Its `name` sends the chosen option's `id`, or the words when it allows its own. A required one
+left empty stops the form and says so under it, «این فیلد الزامی است.», in the page's language.
+
+<Canvas of={Stories.InAForm} />
+
+## What it builds
+
+<Canvas of={Stories.Address} />
+
+## Themes, directions, sizes
+
+The chevron is at the field's end: the left on a Persian page.
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+<PropsTable
+  rows={[
+    [
+      'selectedKey, defaultSelectedKey',
+      'Key | null',
+      null,
+      'The chosen option’s id, controlled or at first.',
+    ],
+    ['onSelectionChange', '(key: Key | null) => void', null, 'When another is chosen.'],
+    [
+      'inputValue, defaultInputValue',
+      'string',
+      null,
+      'The words in the field, controlled or at first.',
+    ],
+    ['onInputChange', '(value: string) => void', null, 'As the reader types.'],
+    [
+      'menuTrigger',
+      "'input' | 'focus' | 'manual'",
+      "'input'",
+      'When the menu opens: typing, focus, or only the chevron and the arrow keys.',
+    ],
+    ['allowsCustomValue', 'boolean', 'false', 'Words that match no option may stand.'],
+    [
+      'allowsEmptyCollection',
+      'boolean',
+      'false',
+      'The menu stays open with nothing in it, to say so.',
+    ],
+    [
+      'defaultFilter',
+      '(text: string, input: string) => boolean',
+      'contains',
+      'How an option is matched to the words.',
+    ],
+    ['disabledKeys', 'Iterable<Key>', null, 'Options that cannot be chosen.'],
+    [
+      'variant',
+      "'primary' | 'secondary'",
+      "'primary'",
+      'secondary on a grey surface; its input takes it.',
+    ],
+    ['fullWidth', 'boolean', 'false', 'As wide as its column.'],
+    ['isRequired, validate, validationBehavior', 'as a TextField’s', null, 'Its checks.'],
+    ['isInvalid, isDisabled, isReadOnly', 'boolean', 'false', 'Its state.'],
+    ['name', 'string', null, 'The chosen id’s name in a form.'],
+  ]}
+/>
+
+Every part takes its element's own props too, and a `className`.
+
+## Keyboard
+
+<Keys
+  rows={[
+    ['Tab', 'Into the field, and on.'],
+    ['A letter', 'Types it, narrowing the menu.'],
+    ['Down, Up', 'Opens the menu; in it, the next or the previous option.'],
+    ['Enter', 'Chooses the option with the focus and closes the menu.'],
+    ['Escape', 'Closes the menu.'],
+  ]}
+/>
+
+## Accessibility
+
+The field is a combo box named by its `Label`; the menu is a list box, and the option the arrow
+keys are on is read as they move, the focus staying in the field.
+
+## Styling
+
+`.combo-box` with `--full-width`; `__input-group`, `__trigger` and `__popover`; `[data-open]`,
+`[data-invalid]` and `[data-disabled]`. The options are the ListBox's.
+
+## As a block
+
+A tree draws the same field, on the web and in Flutter, its options `ListBoxItem`s and titled
+`ListBoxSection`s; `emptyMessage` says when nothing matches. It sends the chosen id, and the words
+as they are typed.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="ComboBox" />

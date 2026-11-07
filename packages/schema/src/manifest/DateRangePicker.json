@@ -1,0 +1,103 @@
+{
+  "name": "DateRangePicker",
+  "category": "form",
+  "description": "A range of dates, or of dates and times: two date fields' worth in one, «۲۵ مهر – ۲ آبان ۱۴۰۵» at rest, its icon opening the range calendar.",
+  "sduiSafe": true,
+  "props": {
+    "label": {
+      "type": "string",
+      "i18n": true,
+      "description": "The field's name, drawn above it.",
+      "required": true
+    },
+    "isLabelHidden": {
+      "type": "boolean",
+      "default": false,
+      "description": "Hides the label from sight; it still names the field for a screen reader."
+    },
+    "description": {
+      "type": "string",
+      "i18n": true,
+      "description": "Help drawn under the field."
+    },
+    "errorMessage": {
+      "type": "string",
+      "i18n": true,
+      "description": "Set means invalid: the field shows this message under it."
+    },
+    "isRequired": {
+      "type": "boolean",
+      "default": false
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "name": {
+      "type": "string",
+      "description": "Names the value inside a Form block."
+    },
+    "isReadOnly": {
+      "type": "boolean",
+      "default": false
+    },
+    "variant": {
+      "type": "enum",
+      "values": ["primary", "secondary"],
+      "default": "primary",
+      "description": "secondary is for a field on a grey surface."
+    },
+    "fullWidth": {
+      "type": "boolean",
+      "default": true,
+      "description": "false takes the natural field width token."
+    },
+    "defaultValue": {
+      "type": "string[]",
+      "description": "Starts with this range; the merchant changes it. The first and last, two values in Gregorian ISO 8601, whatever calendarSystem draws; with a Z or an offset it is zoned."
+    },
+    "value": {
+      "type": "string[]",
+      "description": "Pinned: shows exactly what the server sent until the next tree. The first and last, two values in Gregorian ISO 8601, whatever calendarSystem draws; with a Z or an offset it is zoned."
+    },
+    "granularity": {
+      "type": "enum",
+      "values": ["day", "hour", "minute"],
+      "default": "day"
+    },
+    "minValue": {
+      "type": "string",
+      "description": "Gregorian ISO 8601, whatever calendarSystem draws; with a Z or an offset it is zoned."
+    },
+    "maxValue": {
+      "type": "string",
+      "description": "Gregorian ISO 8601, whatever calendarSystem draws; with a Z or an offset it is zoned."
+    },
+    "unavailableDates": {
+      "type": "string[]",
+      "description": "Days that cannot be picked, as Gregorian ISO 8601 dates: a booked day, a holiday. Drawn at half; unlike days past the bounds, not struck through."
+    },
+    "hourCycle": {
+      "type": "enum",
+      "values": [12, 24],
+      "default": 24
+    },
+    "hideTimeZone": {
+      "type": "boolean",
+      "default": true,
+      "description": "Only means something for a zoned value."
+    },
+    "calendarSystem": {
+      "type": "enum",
+      "values": ["auto", "persian", "gregorian"],
+      "default": "auto",
+      "description": "auto follows the locale: Persian on fa, Gregorian on en."
+    }
+  },
+  "actions": {
+    "onChange": {
+      "description": "The first and last, two values in Gregorian ISO 8601, whatever calendarSystem draws; with a Z or an offset it is zoned.",
+      "payload": "string[]"
+    }
+  }
+}

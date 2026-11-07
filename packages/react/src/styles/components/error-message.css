@@ -1,0 +1,16 @@
+/*
+ * Third-party code under the Apache License 2.0; see THIRD-PARTY-NOTICES.txt in this package.
+ */
+/* Base error message styles */
+.error-message {
+  @apply h-auto text-xs wrap-break-word text-danger;
+
+  /**
+   * Transitions
+   * CRITICAL: motion-reduce must be AFTER transition for correct override specificity
+   */
+  transition:
+    opacity 150ms var(--ease-out),
+    height 350ms var(--ease-smooth);
+  @apply motion-reduce:transition-none;
+}

@@ -1,0 +1,115 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Stack.stories'
+import { PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# Stack
+
+Blocks in a column or a row, a set gap apart: a page's header, a card's lines, a row of tags. The
+gap is on a scale of 4, so spaces across a page agree. It draws with its own styles, so a page
+needs no utility classes for it.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **Anything laid out one after another,** a column of fields or a row of buttons.
+- **A title and its actions,** spread to the two ends of a row.
+- **Tags or chips that run onto the next line** when the row is full.
+
+Not for a grid of cards: use CSS grid. Not for one gap that differs from the rest: put a Spacer in
+it.
+
+## Import
+
+```tsx
+import { Stack } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<Stack direction="horizontal" gap={2} align="center" justify="between">
+  <Title />
+  <Actions />
+</Stack>
+```
+
+## Examples
+
+### A column or a row
+
+A column by default; `direction="horizontal"` is a row, which runs as the page reads: from the
+right on a Persian page.
+
+<Canvas of={Stories.ColumnAndRow} />
+
+### Gaps
+
+A step of 4: `1` is 4, `2` is 8, `4` is 16, the default, up to `16`, which is 64.
+
+<Canvas of={Stories.Gaps} />
+
+### Across it
+
+`align`: a row's blocks at its top, its middle, its bottom, stretched to its height (the default),
+or on their words' line.
+
+<Canvas of={Stories.Alignment} />
+
+### Along it
+
+`justify`, when there is room to spare: at its start (the default), middle or end, `between` the
+two ends, or `around` each block.
+
+<Canvas of={Stories.Justify} />
+
+### Onto the next line
+
+`wrap` lets a full row run on.
+
+<Canvas of={Stories.Wrapping} />
+
+## What it lays out
+
+<Canvas of={Stories.PageHeader} />
+<Canvas of={Stories.ProductRow} />
+
+## Directions and sizes
+
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+<PropsTable
+  rows={[
+    ['direction', "'vertical' | 'horizontal'", "'vertical'", 'A column, or a row.'],
+    ['gap', '0 | 1 | 2 | 3 | 4 | 5 | 6 | 8 | 10 | 12 | 16', '4', 'The space between, a step of 4.'],
+    [
+      'align',
+      "'start' | 'center' | 'end' | 'stretch' | 'baseline'",
+      "'stretch'",
+      'Across the stack.',
+    ],
+    ['justify', "'start' | 'center' | 'end' | 'between' | 'around'", "'start'", 'Along the stack.'],
+    ['wrap', 'boolean', 'false', 'A full row runs onto the next line.'],
+    ['as', 'ElementType', "'div'", 'Draws another element, such as a ul or a section.'],
+    ['className', 'string', null, 'Classes after its own.'],
+  ]}
+/>
+
+## Accessibility
+
+It is only layout: it says nothing to a screen reader. Use `as` to make it the element its
+content is, such as a list.
+
+## As a block
+
+A tree's Stack draws the same gaps, alignment and wrapping, on the web and in Flutter.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="Stack" />

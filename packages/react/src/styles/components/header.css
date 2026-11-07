@@ -1,0 +1,10 @@
+/*
+ * Third-party code under the Apache License 2.0; see THIRD-PARTY-NOTICES.txt in this package.
+ */
+/* ==========================================================================
+   Base header styles
+   ========================================================================== */
+
+.header {
+  @apply w-full px-2 pt-1.5 pb-1 text-start text-xs font-medium text-muted;
+}

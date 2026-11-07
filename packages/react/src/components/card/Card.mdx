@@ -1,0 +1,148 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Card.stories'
+import { Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# Card
+
+A surface that holds one thing's blocks together: an order, a figure, a section of settings, a
+product. Its header names it, its content holds it, and its footer carries what to do with it.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **One thing at a glance,** such as an order's summary or the day's sales.
+- **A section of a page,** such as a settings section, with a card inside it for each detail.
+- **A product in a storefront's grid,** its picture to the edges.
+
+Not for a thing's every field to edit: use a Form, in a card if you like. Not for rows of records:
+use a Table.
+
+## Import
+
+```tsx
+import { Card } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<Card>
+  <Card.Header>
+    <Card.Title>Order 1041</Card.Title>
+    <Card.Description>5 Nov, 18:20</Card.Description>
+  </Card.Header>
+  <Card.Content>{/* the order */}</Card.Content>
+  <Card.Footer>
+    <Button size="sm">Print label</Button>
+  </Card.Footer>
+</Card>
+```
+
+<Parts
+  rows={[
+    [
+      'Card',
+      'The surface, 24 round and 16 in, with a soft shadow in light and none in dark; its parts 12 apart.',
+    ],
+    ['Card.Header', 'Its title and description, 4 apart; an action may sit at its end.'],
+    ['Card.Title', 'Its name, 14 on 24 and medium; an h3.'],
+    ['Card.Description', 'A line under the title, 14 on 20 and muted.'],
+    ['Card.Content', 'What it holds, its blocks 4 apart.'],
+    ['Card.Footer', 'What to do with it, under the content.'],
+  ]}
+/>
+
+## Examples
+
+### Surfaces
+
+`default` is the page's card, on the surface. `secondary` is a card inside a card, on the second
+surface, and `tertiary` a step further. `transparent` keeps a card's spacing with no surface at
+all.
+
+On either grey the muted text is a step darker, or lighter in dark, so a description or a note
+keeps its contrast there. Everything in the card that is muted follows it.
+
+<Canvas of={Stories.Variants} />
+
+### Its parts
+
+A header alone, content alone, or all three; leave out what it does not need, rather than leaving
+a part empty, which would still take its 12.
+
+<Canvas of={Stories.Parts} />
+
+### Edge to edge
+
+With no padding and `overflow: hidden`, a picture or a table reaches its edges and takes its
+rounding; pad the words under it yourself.
+
+<Canvas of={Stories.Flush} />
+
+### As a link
+
+A card that opens a page goes inside a link: the whole card is pressed, the hand shows over it,
+and Enter opens it. Do not put buttons inside a linked card.
+
+<Canvas of={Stories.AsALink} />
+
+## What it builds
+
+<Canvas of={Stories.Figures} />
+<Canvas of={Stories.Settings} />
+<Canvas of={Stories.Product} />
+<Canvas of={Stories.OrderSummary} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+### Card
+
+<PropsTable
+  rows={[
+    [
+      'variant',
+      "'default' | 'secondary' | 'tertiary' | 'transparent'",
+      "'default'",
+      'Its surface, or none.',
+    ],
+    ['render', '(props) => ReactElement', null, 'Draws another element, such as an article.'],
+    ['className', 'string', null, 'Classes after the card’s own.'],
+  ]}
+/>
+
+### The rest
+
+`Card.Header`, `.Title`, `.Description`, `.Content` and `.Footer` take their element's props and a
+`className`; `Card.Title` is an `h3` and `Card.Description` a `p`.
+
+## Accessibility
+
+A card is a group of what it holds, not a landmark: its title is a heading, so a screen reader can
+jump to it. A linked card is one link, named by what it says or its `aria-label`.
+
+## Styling
+
+`.card` with `--default`, `--secondary`, `--tertiary` and `--transparent`; `.card__header`,
+`__title`, `__description`, `__content` and `__footer`. Its surfaces are the theme's `--surface`,
+`--surface-secondary` and `--surface-tertiary`, its shadow `--surface-shadow`. A grey card sets
+`--muted` for what it holds from `--db-muted-secondary` or `--db-muted-tertiary`.
+
+## As a block
+
+A tree draws the same card, on the web and in Flutter: its title and description, a button in its
+`action` slot at the header's end, its blocks, and its `footer`. `isFlush` takes its padding away,
+and `href` makes the whole card a link; a card with an `href` holds nothing to press.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="Card" />

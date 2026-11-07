@@ -1,0 +1,344 @@
+{
+  "$comment": "The icon list: Lucide names, as for left-to-right. A mirrored icon turns to face the other way under right-to-left. Seeded from the icons admin-web and hub-web import from lucide-react, and the few the blocks draw themselves. The build emits the Flutter table (icons.g.dart); a name Lucide lacks fails that build.",
+  "icons": [
+    {
+      "name": "arrow-down"
+    },
+    {
+      "name": "arrow-left",
+      "mirrored": true
+    },
+    {
+      "name": "arrow-right",
+      "mirrored": true
+    },
+    {
+      "name": "arrow-up"
+    },
+    {
+      "name": "badge-check"
+    },
+    {
+      "name": "bell"
+    },
+    {
+      "name": "blocks"
+    },
+    {
+      "name": "bold"
+    },
+    {
+      "name": "box"
+    },
+    {
+      "name": "calendar"
+    },
+    {
+      "name": "chart-no-axes-column"
+    },
+    {
+      "name": "check"
+    },
+    {
+      "name": "chevron-down"
+    },
+    {
+      "name": "chevron-left",
+      "mirrored": true
+    },
+    {
+      "name": "chevron-right",
+      "mirrored": true
+    },
+    {
+      "name": "chevron-up"
+    },
+    {
+      "name": "chevrons-left",
+      "mirrored": true
+    },
+    {
+      "name": "chevrons-right",
+      "mirrored": true
+    },
+    {
+      "name": "chevrons-up-down"
+    },
+    {
+      "name": "circle"
+    },
+    {
+      "name": "circle-alert"
+    },
+    {
+      "name": "circle-check"
+    },
+    {
+      "name": "circle-help"
+    },
+    {
+      "name": "circle-minus"
+    },
+    {
+      "name": "circle-user-round"
+    },
+    {
+      "name": "circle-x"
+    },
+    {
+      "name": "clock"
+    },
+    {
+      "name": "copy"
+    },
+    {
+      "name": "credit-card"
+    },
+    {
+      "name": "download"
+    },
+    {
+      "name": "ellipsis"
+    },
+    {
+      "name": "ellipsis-vertical"
+    },
+    {
+      "name": "external-link"
+    },
+    {
+      "name": "eye"
+    },
+    {
+      "name": "eye-off"
+    },
+    {
+      "name": "file"
+    },
+    {
+      "name": "file-archive"
+    },
+    {
+      "name": "file-image"
+    },
+    {
+      "name": "file-spreadsheet"
+    },
+    {
+      "name": "file-text"
+    },
+    {
+      "name": "file-video"
+    },
+    {
+      "name": "filter"
+    },
+    {
+      "name": "gift"
+    },
+    {
+      "name": "heading-2"
+    },
+    {
+      "name": "heading-3"
+    },
+    {
+      "name": "heart"
+    },
+    {
+      "name": "history"
+    },
+    {
+      "name": "hourglass"
+    },
+    {
+      "name": "house"
+    },
+    {
+      "name": "image-off"
+    },
+    {
+      "name": "image-plus"
+    },
+    {
+      "name": "images"
+    },
+    {
+      "name": "info"
+    },
+    {
+      "name": "italic"
+    },
+    {
+      "name": "languages"
+    },
+    {
+      "name": "layers"
+    },
+    {
+      "name": "layout-dashboard"
+    },
+    {
+      "name": "layout-grid"
+    },
+    {
+      "name": "link"
+    },
+    {
+      "name": "link-2"
+    },
+    {
+      "name": "list",
+      "mirrored": true
+    },
+    {
+      "name": "list-ordered",
+      "mirrored": true
+    },
+    {
+      "name": "loader-circle"
+    },
+    {
+      "name": "lock"
+    },
+    {
+      "name": "log-out",
+      "mirrored": true
+    },
+    {
+      "name": "mail"
+    },
+    {
+      "name": "map-pin"
+    },
+    {
+      "name": "megaphone"
+    },
+    {
+      "name": "menu"
+    },
+    {
+      "name": "message-circle"
+    },
+    {
+      "name": "minus"
+    },
+    {
+      "name": "package"
+    },
+    {
+      "name": "palette"
+    },
+    {
+      "name": "panels-top-left"
+    },
+    {
+      "name": "pencil"
+    },
+    {
+      "name": "percent"
+    },
+    {
+      "name": "phone"
+    },
+    {
+      "name": "plus"
+    },
+    {
+      "name": "printer"
+    },
+    {
+      "name": "quote"
+    },
+    {
+      "name": "receipt"
+    },
+    {
+      "name": "redo-2",
+      "mirrored": true
+    },
+    {
+      "name": "refresh-cw"
+    },
+    {
+      "name": "rotate-ccw"
+    },
+    {
+      "name": "rss"
+    },
+    {
+      "name": "search"
+    },
+    {
+      "name": "send",
+      "mirrored": true
+    },
+    {
+      "name": "settings"
+    },
+    {
+      "name": "share-2"
+    },
+    {
+      "name": "shield-check"
+    },
+    {
+      "name": "shopping-cart"
+    },
+    {
+      "name": "sliders-horizontal"
+    },
+    {
+      "name": "sparkles"
+    },
+    {
+      "name": "star"
+    },
+    {
+      "name": "store"
+    },
+    {
+      "name": "strikethrough"
+    },
+    {
+      "name": "tag"
+    },
+    {
+      "name": "ticket-percent"
+    },
+    {
+      "name": "trash-2"
+    },
+    {
+      "name": "triangle-alert"
+    },
+    {
+      "name": "truck"
+    },
+    {
+      "name": "underline"
+    },
+    {
+      "name": "undo-2",
+      "mirrored": true
+    },
+    {
+      "name": "upload"
+    },
+    {
+      "name": "user"
+    },
+    {
+      "name": "users"
+    },
+    {
+      "name": "wallet"
+    },
+    {
+      "name": "x"
+    },
+    {
+      "name": "zap"
+    }
+  ]
+}

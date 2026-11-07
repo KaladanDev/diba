@@ -1,0 +1,155 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Switch.stories'
+import { Keys, Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# Switch
+
+A setting on or off that takes effect as it is turned: the shop open, test mode, a product shown.
+It is Material's switch on both platforms, drawn and moving as Flutter's does.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **A setting that applies at once,** with no form to send: the shop open or closed, a product
+  shown or hidden in a list.
+
+For a choice sent with a form, or agreeing to something, use a Checkbox; for several related
+settings, a SwitchGroup.
+
+## Import
+
+```tsx
+import { Description, Label, Switch } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<Switch>
+  <Switch.Content>
+    <Switch.Control>
+      <Switch.Thumb />
+    </Switch.Control>
+    <Label>The shop is open</Label>
+  </Switch.Content>
+  <Description>Closed, buyers only see the products.</Description>
+</Switch>
+```
+
+<Parts
+  rows={[
+    [
+      'Switch',
+      'The switch: on or off, its value in a form, and one target as wide as what it holds, so a press anywhere on it turns it.',
+    ],
+    ['Switch.Content', 'The track and its words in a row, 12 apart.'],
+    [
+      'Switch.Control',
+      'The track, a pill with no outline: gilt when on, the off-track shade when off; 42 by 26 at md.',
+    ],
+    [
+      'Switch.Thumb',
+      'The thumb: round, 13 when off and 19 when on at md, slate-700 on gilt; stretched into a pill on its way across, and grown while the switch is pressed. A circle around it under a hover or a press.',
+    ],
+    ['Switch.Icon', 'A mark in the thumb, of your own; none by default.'],
+    ['Label', 'Its words, 14 and regular, after the track; long words wrap beside it.'],
+    ['Description', 'Help under the words, 12 in the muted colour.'],
+  ]}
+/>
+
+## Examples
+
+### Sizes
+
+`size` scales Material's switch: 0.69 at `sm`, 0.8 at `md` and 0.91 at `lg`, as Flutter's renderer
+draws it. `sm` suits a row in a list.
+
+<Canvas of={Stories.Sizes} />
+
+### Off, on, disabled, read-only
+
+Disabled, the whole switch is drawn at half, its thumb keeping its colour. Read-only, it can be
+reached and not turned.
+
+<Canvas of={Stories.States} />
+
+### Label and help
+
+Long words wrap beside the track. A switch with no words, a row's in a list, is named with
+`aria-label`: say what it turns on, not "on" or "off".
+
+<Canvas of={Stories.LabelAndHelp} />
+
+### In a form
+
+On, it sends its `value` under its `name`, `on` unless it says otherwise; off, nothing.
+
+<Canvas of={Stories.InAForm} />
+
+## What it builds
+
+<Canvas of={Stories.ProductVisibility} />
+
+## Themes, directions, sizes
+
+On is toward the end of the track: the right on an English page, the left on a Persian one.
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+<PropsTable
+  rows={[
+    ['isSelected, defaultSelected', 'boolean', 'false', 'On, controlled or at first.'],
+    ['onChange', '(isSelected: boolean) => void', null, 'When it is turned.'],
+    ['size', "'sm' | 'md' | 'lg'", "'md'", 'Material’s switch at 0.69, 0.8 or 0.91.'],
+    ['isDisabled', 'boolean', 'false', 'It cannot be reached or turned; drawn at half.'],
+    ['isReadOnly', 'boolean', 'false', 'It can be reached, not turned.'],
+    [
+      'isRequired',
+      'boolean',
+      'false',
+      'It must be on for the form to go; a FieldError under it says so.',
+    ],
+    ['validate, validationBehavior', 'as a TextField’s', null, 'Its own check, and when it shows.'],
+    ['name, value', 'string', "value 'on'", 'What a form is sent while it is on.'],
+    ['aria-label', 'string', null, 'Its name, where it has no words.'],
+  ]}
+/>
+
+Every part takes its element's own props too, and a `className`.
+
+## Keyboard
+
+<Keys
+  rows={[
+    ['Tab', 'To the switch, and on.'],
+    ['Space', 'Turns it.'],
+  ]}
+/>
+
+## Accessibility
+
+A screen reader meets a switch named by its words and read as on or off. The whole switch takes
+the pointer, its words and help included.
+
+## Styling
+
+`.switch` with `--sm`, `--md` and `--lg`; `__content`, `__control`, `__thumb` and `__icon`;
+`[data-selected]`, `[data-pressed]` and `[data-disabled]`. The track is `--db-control-track` off
+and `--db-control-fill` on.
+
+## As a block
+
+A tree draws the same switch, on the web and in Flutter. Alone it sends `true` or `false`; an
+`errorMessage` is drawn under it.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="Switch" />

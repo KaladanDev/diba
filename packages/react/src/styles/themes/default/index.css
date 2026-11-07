@@ -1,0 +1,11 @@
+/*
+ * Third-party code under the Apache License 2.0; see THIRD-PARTY-NOTICES.txt in this package.
+ */
+/* Declares the theme variables - @see https://tailwindcss.com/docs/theme */
+@import "../shared/theme.css";
+
+/* Default Theme */
+@import "./variables.css" layer(theme);
+
+/* Component customizations for default theme */
+@import "./components/index.css" layer(components);

@@ -1,0 +1,625 @@
+/**
+ * Diba schema codegen — ONE manifest source → the cross-platform contract.
+ *
+ *   src/manifest/*.json  (language-neutral component manifest)
+ *   src/icons.json       (the icon list)
+ *        │
+ *        ▼  build.ts
+ *   dist/manifest.json   merged manifest (single source of truth)
+ *   dist/schema.json     JSON Schema (2020-12) validating an SDUI document tree
+ *   dist/index.js/.d.ts  typed: per-component Props, the DibaNode union, the manifest
+ *   ../flutter/lib/src/manifest.g.dart  the Flutter renderer's allowlists
+ *   ../flutter/lib/src/sdui/icons.g.dart  the Flutter icon table
+ */
+import { readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs'
+import { join } from 'node:path'
+import type {
+  ComponentManifest,
+  IconSpec,
+  PropSpec,
+  PropType,
+  SlotSpec,
+} from './src/manifest-types'
+
+const MANIFEST_DIR = 'src/manifest'
+const ICONS = 'src/icons.json'
+const OUT = 'dist'
+
+// ---- load + validate -------------------------------------------------------
+
+const PROP_TYPES: readonly PropType[] = [
+  'string',
+  'number',
+  'boolean',
+  'enum',
+  'node',
+  'token',
+  'string[]',
+  '[number, number]',
+]
+
+const components: ComponentManifest[] = readdirSync(MANIFEST_DIR)
+  .filter((f) => f.endsWith('.json'))
+  .map((f) => {
+    const c = JSON.parse(readFileSync(join(MANIFEST_DIR, f), 'utf8')) as ComponentManifest
+    // The file name is the component's name, case and all. Windows and macOS
+    // will happily keep `Listbox.json` holding `ListBox`, and a Linux checkout
+    // then has two components where the author meant one.
+    if (f !== `${c.name}.json`) throw new Error(`${f} holds "${c.name}"; name the file after it`)
+    return c
+  })
+  .sort((a, b) => a.name.localeCompare(b.name))
+
+const icons = (JSON.parse(readFileSync(ICONS, 'utf8')) as { icons: IconSpec[] }).icons
+{
+  const seen = new Set<string>()
+  for (const icon of icons) {
+    if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(icon.name))
+      throw new Error(`icons.json: "${icon.name}" is not a kebab-case Lucide name`)
+    if (seen.has(icon.name)) throw new Error(`icons.json: "${icon.name}" is listed twice`)
+    seen.add(icon.name)
+  }
+}
+
+const typesOf = (p: PropSpec): PropType[] => (Array.isArray(p.type) ? p.type : [p.type])
+
+for (const c of components) {
+  if (!c.name) throw new Error(`Manifest missing "name": ${JSON.stringify(c)}`)
+  if (typeof c.sduiSafe !== 'boolean') throw new Error(`${c.name}: "sduiSafe" must be a boolean`)
+  for (const [key, p] of Object.entries(c.props ?? {})) {
+    const where = `${c.name}.${key}`
+    const types = typesOf(p)
+    for (const t of types) {
+      if (!PROP_TYPES.includes(t)) throw new Error(`${where}: unknown type "${t}"`)
+    }
+    if (types.includes('enum') && !(p.values && p.values.length)) {
+      throw new Error(`${where}: enum prop needs non-empty "values"`)
+    }
+    if (p.default !== undefined && p.values && !(p.values as unknown[]).includes(p.default)) {
+      throw new Error(`${where}: default "${p.default}" is not one of its values`)
+    }
+    if (p.required && p.default !== undefined) {
+      throw new Error(`${where}: a required prop has no default`)
+    }
+    if (p.format && !(types.length === 1 && types[0] === 'string')) {
+      throw new Error(`${where}: only a string carries a format`)
+    }
+  }
+}
+
+const sdui = components.filter((c) => c.sduiSafe)
+
+/**
+ * A component may only name components that exist.
+ *
+ * `children.accepts` and a slot's `accepts` are lists of component names, and
+ * nothing checked they resolved. Table said it took TableHeader and TableBody,
+ * Navbar said NavbarBar and NavbarMenu, Listbox said ListboxSection — and none
+ * of those were in the manifest at all. A Table in a tree therefore had no
+ * legal child it could name, which is an empty table, and no error anywhere
+ * said so.
+ *
+ * Checked at build rather than in a test because it is a property of the
+ * source, and a manifest that cannot describe itself should not produce a
+ * contract at all.
+ */
+{
+  const known = new Set(sdui.map((c) => c.name))
+  const broken: string[] = []
+
+  const check = (component: string, where: string, accepts: string[] | '*' | 'text') => {
+    if (accepts === '*' || accepts === 'text') return
+    for (const name of accepts) {
+      if (!known.has(name))
+        broken.push(`${component}.${where} names "${name}", which is not an SDUI component`)
+    }
+  }
+
+  for (const c of sdui) {
+    if (c.children) check(c.name, 'children', c.children.accepts)
+    for (const [slot, spec] of Object.entries(c.slots ?? {}))
+      check(c.name, `slots.${slot}`, spec.accepts)
+  }
+
+  if (broken.length) {
+    throw new Error(`Manifest references components that do not exist:\n  ${broken.join('\n  ')}`)
+  }
+}
+const pkgVersion = (JSON.parse(readFileSync('package.json', 'utf8')) as { version: string }).version
+
+const header = (what: string, source = 'src/manifest/**') =>
+  `// GENERATED by @kaladan/diba-schema — DO NOT EDIT. Source: ${source}. ${what}\n`
+
+mkdirSync(OUT, { recursive: true })
+
+// ---- 1. merged manifest ----------------------------------------------------
+
+const manifest = {
+  version: pkgVersion,
+  components: Object.fromEntries(components.map((c) => [c.name, c])),
+  icons,
+}
+writeFileSync(join(OUT, 'manifest.json'), JSON.stringify(manifest, null, 2) + '\n')
+
+// ---- 2. JSON Schema (SDUI document validation) -----------------------------
+
+type Json = Record<string, unknown>
+
+const STATUSES = ['default', 'accent', 'success', 'warning', 'danger']
+
+function singleSchema(p: PropSpec, t: PropType): Json {
+  switch (t) {
+    case 'string':
+      return { type: 'string' }
+    case 'number':
+      return { type: 'number' }
+    case 'boolean':
+      return { type: 'boolean' }
+    case 'enum':
+      return { enum: p.values ?? [] }
+    case 'string[]':
+      return { type: 'array', items: { type: 'string' } }
+    case '[number, number]':
+      return {
+        type: 'array',
+        prefixItems: [{ type: 'number' }, { type: 'number' }],
+        minItems: 2,
+        maxItems: 2,
+      }
+    case 'token':
+      return p.token === 'space'
+        ? { type: 'number' }
+        : p.token === 'icon'
+          ? { $ref: '#/$defs/DibaIcon' }
+          : { type: 'string' }
+    case 'node':
+      return { $ref: '#/$defs/DibaNode' }
+  }
+}
+
+function propSchema(p: PropSpec): Json {
+  const types = typesOf(p)
+  const base: Json =
+    types.length === 1
+      ? singleSchema(p, types[0]!)
+      : { anyOf: types.map((t) => singleSchema(p, t)) }
+  if (p.description) base.description = p.description
+  return base
+}
+
+/** A node of one of these components, or of any when the answer is `*`. */
+const nodeOf = (accepts: string[] | '*'): Json =>
+  accepts === '*'
+    ? { $ref: '#/$defs/DibaNode' }
+    : accepts.length === 1
+      ? { $ref: `#/$defs/${accepts[0]}` }
+      : { oneOf: accepts.map((n) => ({ $ref: `#/$defs/${n}` })) }
+
+function nodeDef(c: ComponentManifest): Json {
+  const properties: Json = { type: { const: c.name } }
+  const required = ['type']
+  const propEntries = Object.entries(c.props ?? {})
+  if (propEntries.length) {
+    const props: Json = {}
+    const requiredProps: string[] = []
+    for (const [key, p] of propEntries) {
+      props[key] = propSchema(p)
+      if (p.required) requiredProps.push(key)
+    }
+    properties.props = {
+      type: 'object',
+      properties: props,
+      additionalProperties: false,
+      ...(requiredProps.length ? { required: requiredProps } : {}),
+    }
+    // A required prop inside an optional `props` is not required: a TextField
+    // with no props at all validated, label and all.
+    if (requiredProps.length) required.push('props')
+  }
+  if (c.children) {
+    const { accepts, text } = c.children
+    const list = accepts === 'text' ? null : { type: 'array', items: nodeOf(accepts) }
+    properties.children =
+      list === null ? { type: 'string' } : text ? { anyOf: [{ type: 'string' }, list] } : list
+  }
+  /*
+   * Named single nodes, beside `children`.
+   *
+   * Ten components declare slots and none of them reached the contract: a tree
+   * could not express a Dialog's trigger, a Card's media, or an Alert's icon,
+   * because this emitted `type`, `props`, `children` and `actions` and stopped.
+   * The visible cost was that every overlay in a tree was unopenable on both
+   * platforms — the manifest had said how to open one since the beginning and
+   * the codegen dropped it on the floor.
+   *
+   * One node per slot rather than a list. A slot is a position, not a
+   * container, and anything wanting several things in one can put a Stack
+   * there — where the slot takes any node.
+   */
+  if (c.slots && Object.keys(c.slots).length) {
+    properties.slots = {
+      type: 'object',
+      properties: Object.fromEntries(
+        Object.entries(c.slots).map(([s, spec]: [string, SlotSpec]) => [s, nodeOf(spec.accepts)]),
+      ),
+      additionalProperties: false,
+    }
+  }
+  if (c.actions && Object.keys(c.actions).length) {
+    properties.actions = {
+      type: 'object',
+      properties: Object.fromEntries(
+        Object.keys(c.actions).map((a) => [a, { $ref: '#/$defs/DibaEvent' }]),
+      ),
+      additionalProperties: false,
+    }
+  }
+  return {
+    type: 'object',
+    properties,
+    required,
+    additionalProperties: false,
+  }
+}
+
+/**
+ * The six things an SDUI tree is allowed to ask for.
+ *
+ * This is the whole event vocabulary and it is deliberately closed: no verb
+ * runs code, and no field carries any. An extension says "call `cart.add`" — a
+ * name the host looks up — and never "call this function".
+ *
+ * One shape per verb rather than `do` plus anything. As a single loose object
+ * the schema could only reject an unknown verb: `{ do: 'navigate' }` with no
+ * destination and `{ do: 'call' }` with no action name both validated, which
+ * left the renderer checking for fields the contract had promised. Validating
+ * an untrusted tree is worth little if the renderer still has to ask.
+ *
+ * An event holds one of these or an ordered list of them: each waits for
+ * the one before, and a failed `call` stops the list. "Save, then close" is
+ * `[{ do: 'call', … }, { do: 'close' }]`.
+ */
+interface Field {
+  schema: Json
+  ts: string
+  required?: boolean
+}
+interface Verb {
+  verb: string
+  doc: string
+  fields: Record<string, Field>
+  /** Extra JSON Schema keywords for the verb's object. */
+  extra?: Json
+}
+
+const ACTION_VERBS: Verb[] = [
+  {
+    verb: 'setState',
+    doc: "Record the event's value under `key`, in the surface's own state. It never leaves the surface, which is what keeps typing and toggling responsive.",
+    fields: { key: { schema: { type: 'string' }, ts: 'string', required: true } },
+  },
+  {
+    verb: 'navigate',
+    doc: 'Go somewhere. `to` is a URL, held to isSafeUrl; the host decides which schemes it will follow.',
+    fields: { to: { schema: { type: 'string' }, ts: 'string', required: true } },
+  },
+  {
+    verb: 'open',
+    doc: "Ask the host for one of its own destinations by name. It never opens a tree's overlay; those open only from their trigger.",
+    fields: { target: { schema: { type: 'string' }, ts: 'string', required: true } },
+  },
+  {
+    verb: 'call',
+    doc: "Ask the extension's server to do something. `action` names it in the extension's own vocabulary; `with` lists state keys to send along, and `value` names the key the event's own value is sent under. It resolves when the host has the answer, so a pending state or a toast can follow it.",
+    fields: {
+      action: { schema: { type: 'string' }, ts: 'string', required: true },
+      with: { schema: { type: 'array', items: { type: 'string' } }, ts: 'string[]' },
+      value: { schema: { type: 'string' }, ts: 'string' },
+    },
+  },
+  {
+    verb: 'toast',
+    doc: 'The host shows a toast, its own, where its toasts go. `actionLabel` with `onAction` gives an "Undo"; `onAction` holds actions of its own, but no toast.',
+    fields: {
+      status: { schema: { enum: STATUSES }, ts: STATUSES.map((s) => `'${s}'`).join(' | ') },
+      title: { schema: { type: 'string' }, ts: 'string' },
+      description: { schema: { type: 'string' }, ts: 'string' },
+      actionLabel: { schema: { type: 'string' }, ts: 'string' },
+      onAction: { schema: { $ref: '#/$defs/DibaUndoEvent' }, ts: 'DibaUndoEvent' },
+    },
+    extra: {
+      anyOf: [{ required: ['title'] }, { required: ['description'] }],
+      dependentRequired: { actionLabel: ['onAction'], onAction: ['actionLabel'] },
+    },
+  },
+  {
+    verb: 'close',
+    doc: 'Close the innermost overlay that this tree opened, and nothing else. With none open, it is refused.',
+    fields: {},
+  },
+]
+
+const pascal = (s: string) => s[0]!.toUpperCase() + s.slice(1)
+
+const verbSchema = (v: Verb): Json => ({
+  type: 'object',
+  properties: {
+    do: { const: v.verb },
+    ...Object.fromEntries(Object.entries(v.fields).map(([name, f]) => [name, f.schema])),
+  },
+  required: [
+    'do',
+    ...Object.entries(v.fields)
+      .filter(([, f]) => f.required)
+      .map(([n]) => n),
+  ],
+  additionalProperties: false,
+  ...v.extra,
+})
+
+const eventOf = (action: string): Json => ({
+  anyOf: [
+    { $ref: `#/$defs/${action}` },
+    { type: 'array', items: { $ref: `#/$defs/${action}` }, minItems: 1 },
+  ],
+})
+
+const actionTypesSrc =
+  ACTION_VERBS.map((v) => {
+    const fields = Object.entries(v.fields)
+      .map(([name, f]) => `  ${name}${f.required ? '' : '?'}: ${f.ts}`)
+      .join('\n')
+    return `/** ${v.doc} */\nexport interface Diba${pascal(v.verb)}Action {\n  do: '${v.verb}'\n${fields ? fields + '\n' : ''}}`
+  }).join('\n\n') +
+  '\n\n/** Every action an SDUI tree can express. */\nexport type DibaAction =\n' +
+  ACTION_VERBS.map((v) => `  | Diba${pascal(v.verb)}Action`).join('\n') +
+  '\n\n/** What an event holds: one action, or an ordered list of them. */\n' +
+  'export type DibaEvent = DibaAction | DibaAction[]\n\n' +
+  '/** A toast\'s "Undo": actions of its own, but no toast. */\n' +
+  'export type DibaUndoEvent = Exclude<DibaAction, DibaToastAction> | Exclude<DibaAction, DibaToastAction>[]\n\n'
+
+const schema = {
+  $schema: 'https://json-schema.org/draft/2020-12/schema',
+  $id: 'https://diba.kaladan.dev/schema/sdui.json',
+  title: 'Diba SDUI document',
+  description:
+    'Validates a Server-Driven UI tree of Diba components. Unknown components/props are rejected.',
+  $ref: '#/$defs/DibaNode',
+  $defs: {
+    DibaNode: { oneOf: sdui.map((c) => ({ $ref: `#/$defs/${c.name}` })) },
+    DibaAction: { oneOf: ACTION_VERBS.map(verbSchema) },
+    DibaEvent: eventOf('DibaAction'),
+    DibaUndoAction: { oneOf: ACTION_VERBS.filter((v) => v.verb !== 'toast').map(verbSchema) },
+    DibaUndoEvent: eventOf('DibaUndoAction'),
+    DibaIcon: { enum: icons.map((i) => i.name), description: 'A name from the icon list.' },
+    ...Object.fromEntries(sdui.map((c) => [c.name, nodeDef(c)])),
+  },
+}
+writeFileSync(join(OUT, 'schema.json'), JSON.stringify(schema, null, 2) + '\n')
+
+// ---- 3. TS types + runtime manifest ---------------------------------------
+
+function tsSingle(p: PropSpec, t: PropType): string {
+  switch (t) {
+    case 'string':
+      return 'string'
+    case 'number':
+      return 'number'
+    case 'boolean':
+      return 'boolean'
+    case 'enum':
+      return (
+        (p.values ?? []).map((v) => (typeof v === 'string' ? `'${v}'` : String(v))).join(' | ') ||
+        'never'
+      )
+    case 'string[]':
+      return 'string[]'
+    case '[number, number]':
+      return '[number, number]'
+    case 'token':
+      return p.token === 'space' ? 'number' : p.token === 'icon' ? 'DibaIconName' : 'string'
+    case 'node':
+      return 'DibaNode[]'
+  }
+}
+
+const tsType = (p: PropSpec): string =>
+  typesOf(p)
+    .map((t) => tsSingle(p, t))
+    .join(' | ')
+
+function propsInterface(c: ComponentManifest): string {
+  const entries = Object.entries(c.props ?? {})
+  if (!entries.length) return `export interface ${c.name}Props {}`
+  const body = entries
+    .map(([key, p]) => {
+      const doc = p.description ? `  /** ${p.description} */\n` : ''
+      return `${doc}  ${key}${p.required ? '' : '?'}: ${tsType(p)}`
+    })
+    .join('\n')
+  return `export interface ${c.name}Props {\n${body}\n}`
+}
+
+function nodeMember(c: ComponentManifest): string {
+  const parts = [`type: '${c.name}'`]
+  const props = Object.values(c.props ?? {})
+  if (props.length) parts.push(`props${props.some((p) => p.required) ? '' : '?'}: ${c.name}Props`)
+  if (c.children) {
+    const { accepts, text } = c.children
+    parts.push(
+      `children?: ${accepts === 'text' ? 'string' : text ? 'string | DibaNode[]' : 'DibaNode[]'}`,
+    )
+  }
+  if (c.slots && Object.keys(c.slots).length) {
+    const named = Object.keys(c.slots)
+      .map((s) => `'${s}'`)
+      .join(' | ')
+    parts.push(`slots?: Partial<Record<${named}, DibaNode>>`)
+  }
+  if (c.actions && Object.keys(c.actions).length) {
+    const keys = Object.keys(c.actions)
+      .map((a) => `'${a}'`)
+      .join(' | ')
+    parts.push(`actions?: Partial<Record<${keys}, DibaEvent>>`)
+  }
+  return `  | { ${parts.join('; ')} }`
+}
+
+const manifestTypesSrc = readFileSync(join('src', 'manifest-types.ts'), 'utf8').replace(
+  /^\/\*[\s\S]*?\*\/\n/,
+  '',
+) // drop the leading block comment
+
+const dts =
+  header('Contract types.') +
+  '\n' +
+  manifestTypesSrc.trimEnd() +
+  '\n\n' +
+  `/** A name from the icon list. */\nexport type DibaIconName =\n${icons.map((i) => `  | '${i.name}'`).join('\n')}\n\n` +
+  actionTypesSrc +
+  components.map(propsInterface).join('\n\n') +
+  '\n\n' +
+  `/** A node in an SDUI tree — only SDUI-safe components. */\nexport type DibaNode =\n${sdui.map(nodeMember).join('\n')}\n\n` +
+  `export interface DibaManifest {\n  version: string\n  components: Record<string, ComponentManifest>\n  icons: IconSpec[]\n}\n\n` +
+  `export declare const manifest: DibaManifest\n` +
+  `export declare const componentNames: readonly string[]\n` +
+  `export declare const sduiComponentNames: readonly string[]\n` +
+  `export declare const iconNames: readonly DibaIconName[]\n` +
+  `export declare const mirroredIconNames: readonly DibaIconName[]\n`
+
+const js =
+  header('Runtime manifest.') +
+  '\n' +
+  `export const manifest = ${JSON.stringify(manifest, null, 2)}\n\n` +
+  `export const componentNames = ${JSON.stringify(components.map((c) => c.name))}\n\n` +
+  `export const sduiComponentNames = ${JSON.stringify(sdui.map((c) => c.name))}\n\n` +
+  `export const iconNames = ${JSON.stringify(icons.map((i) => i.name))}\n\n` +
+  `export const mirroredIconNames = ${JSON.stringify(icons.filter((i) => i.mirrored).map((i) => i.name))}\n`
+
+writeFileSync(join(OUT, 'index.d.ts'), dts)
+writeFileSync(join(OUT, 'index.js'), js)
+
+// ---- 4. the same allowlists, for Dart -------------------------------------
+
+/**
+ * What the Flutter renderer is allowed to forward.
+ *
+ * Only the names, not the types — a tree is validated against schema.json
+ * before it reaches either renderer, so by the time a prop is being forwarded
+ * the only open question is whether the component declares it at all. Emitting
+ * names keeps this file small enough to read. The one exception is a URL's
+ * format, because the renderer holds those props to a rule by value.
+ *
+ * Generated for the same reason the React side derives its allowlists from the
+ * manifest rather than restating them: two renderers that disagree about which
+ * props are permitted is a security bug on whichever one is more generous.
+ */
+const dartSet = (names: string[]) =>
+  names.length ? `{${names.map((n) => `'${n}'`).join(', ')}}` : 'const {}'
+
+const dartFormats = (c: ComponentManifest) => {
+  const formats = Object.entries(c.props ?? {}).filter(([, p]) => p.format)
+  return formats.length
+    ? `, formats: {${formats.map(([k, p]) => `'${k}': '${p.format}'`).join(', ')}}`
+    : ''
+}
+
+const dartManifest =
+  header('Component allowlists for the SDUI renderer.') +
+  `\n/// What a component will accept from a tree: nothing else is forwarded.\nclass DibaSpec {\n` +
+  `  const DibaSpec({\n    this.props = const {},\n    this.actions = const {},\n    this.slots = const {},\n    this.formats = const {},\n  });\n\n` +
+  `  /// Prop names the manifest declares.\n  final Set<String> props;\n\n` +
+  `  /// Event names the manifest declares.\n  final Set<String> actions;\n\n` +
+  `  /// Named positions a node may be placed in, beside its children.\n  final Set<String> slots;\n\n` +
+  `  /// The props that carry a URL, by format: \`url\` (a link, held to\n` +
+  `  /// isSafeUrl) or \`image-url\` (a picture, held to isSafeImageUrl). Every\n` +
+  `  /// other string is plain text and is not checked by value.\n` +
+  `  final Map<String, String> formats;\n}\n\n` +
+  `/// Every component that may appear in a tree, and what it may carry.\n` +
+  `const Map<String, DibaSpec> dibaManifest = {\n` +
+  sdui
+    .map((c) => {
+      const props = dartSet(Object.keys(c.props ?? {}))
+      const actions = dartSet(Object.keys(c.actions ?? {}))
+      const slots = dartSet(Object.keys(c.slots ?? {}))
+      return `  '${c.name}': DibaSpec(props: ${props}, actions: ${actions}, slots: ${slots}${dartFormats(c)}),`
+    })
+    .join('\n') +
+  `\n};\n\n/// The manifest version these allowlists came from.\nconst String dibaManifestVersion = '${pkgVersion}';\n`
+
+/**
+ * The icon table, for Dart.
+ *
+ * Dart cannot look a member up by name: `LucideIcons` is a class of
+ * constants, and the only way from `'trash-2'` to `LucideIcons.trash2` is a
+ * table. A const table is also what lets the icon font be tree-shaken to the
+ * icons listed. The mapping is mechanical: the camelCase of the kebab-case
+ * name, and the `…Dir` constant, which carries `matchTextDirection`, for an
+ * icon that mirrors.
+ */
+const camel = (name: string) => name.replace(/-([a-z0-9])/g, (_, ch: string) => ch.toUpperCase())
+
+const dartIcons =
+  header('The icon list.', 'src/icons.json') +
+  `\nimport 'package:flutter/widgets.dart';\nimport 'package:lucide_icons_flutter/lucide_icons.dart';\n\n` +
+  `/// The icon list, by Lucide's kebab-case names.\n` +
+  `const Map<String, IconData> dibaIcons = {\n` +
+  icons
+    .map((i) => `  '${i.name}': LucideIcons.${camel(i.name)}${i.mirrored ? 'Dir' : ''},`)
+    .join('\n') +
+  `\n};\n\n` +
+  `/// The icons that mirror under right-to-left. Trees name icons as for\n` +
+  `/// left-to-right: \`arrow-right\` means "next" on both pages, and turns to\n` +
+  `/// point left on a Persian one.\n` +
+  `const Set<String> dibaMirroredIcons = {\n` +
+  icons
+    .filter((i) => i.mirrored)
+    .map((i) => `  '${i.name}',`)
+    .join('\n') +
+  `\n};\n`
+
+const FLUTTER_LIB = join('..', 'flutter', 'lib', 'src')
+if (existsSync(FLUTTER_LIB)) {
+  writeFileSync(join(FLUTTER_LIB, 'manifest.g.dart'), dartManifest)
+  writeFileSync(join(FLUTTER_LIB, 'sdui', 'icons.g.dart'), dartIcons)
+}
+
+// ---- 5. the icon table, for React ------------------------------------------
+
+/**
+ * The same list for the web, imported by name so a bundle carries only these
+ * icons: a lookup through `lucide-react`'s whole namespace would ship them
+ * all. The `…Icon` exports, because the bare names include `File`, `Image`
+ * and `Link`, which shadow the DOM's own.
+ */
+const lucideName = (name: string) => `${pascal(camel(name))}Icon`
+
+const tsIcons =
+  header('The icon list.', 'src/icons.json') +
+  `import type { LucideIcon } from 'lucide-react'\n` +
+  `import {\n${icons.map((i) => `  ${lucideName(i.name)},`).join('\n')}\n} from 'lucide-react'\n\n` +
+  `/** The icon list, by Lucide's kebab-case names. */\n` +
+  `export const dibaIcons: Readonly<Record<string, LucideIcon>> = {\n` +
+  icons
+    .map(
+      (i) =>
+        `  ${/^[a-z][a-z0-9]*$/.test(i.name) ? i.name : `'${i.name}'`}: ${lucideName(i.name)},`,
+    )
+    .join('\n') +
+  `\n}\n\n` +
+  `/**\n * The icons that mirror under right-to-left. Trees name icons as for left-to-right:\n * \`arrow-right\` means "next" on both pages, and turns to point left on a Persian one.\n */\n` +
+  `export const dibaMirroredIcons: ReadonlySet<string> = new Set([\n` +
+  icons
+    .filter((i) => i.mirrored)
+    .map((i) => `  '${i.name}',`)
+    .join('\n') +
+  `\n])\n`
+
+const REACT_SDUI = join('..', 'react', 'src', 'sdui')
+if (existsSync(REACT_SDUI)) {
+  writeFileSync(join(REACT_SDUI, 'icons.g.ts'), tsIcons)
+}
+
+console.log(
+  `✓ diba-schema built → dist/ (${components.length} components, ${sdui.length} SDUI-safe, ${icons.length} icons) · manifest.json · schema.json · index.js/.d.ts · manifest.g.dart · icons.g.dart · icons.g.ts`,
+)

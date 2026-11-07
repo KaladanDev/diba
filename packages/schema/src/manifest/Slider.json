@@ -1,0 +1,64 @@
+{
+  "name": "Slider",
+  "category": "controls",
+  "description": "A value, or a range, along a track. Drawn as Flutter's M3 slider on both platforms.",
+  "sduiSafe": true,
+  "props": {
+    "label": {
+      "type": "string",
+      "i18n": true,
+      "description": "The field's name, drawn above it.",
+      "required": true
+    },
+    "isLabelHidden": {
+      "type": "boolean",
+      "default": false,
+      "description": "Hides the label from sight; it still names the field for a screen reader."
+    },
+    "description": { "type": "string", "i18n": true, "description": "Help drawn under the field." },
+    "errorMessage": {
+      "type": "string",
+      "i18n": true,
+      "description": "Set means invalid: the field shows this message under it."
+    },
+    "defaultValue": {
+      "type": ["number", "[number, number]"],
+      "description": "Starts at this value; the merchant changes it. A pair when isRange."
+    },
+    "value": {
+      "type": ["number", "[number, number]"],
+      "description": "Pinned: shows exactly what the server sent until the next tree. A pair when isRange."
+    },
+    "isRange": {
+      "type": "boolean",
+      "default": false,
+      "description": "Two thumbs: a price range filter."
+    },
+    "minValue": { "type": "number", "default": 0 },
+    "maxValue": { "type": "number", "default": 100 },
+    "step": { "type": "number", "default": 1 },
+    "showValue": { "type": "boolean", "default": true },
+    "formatStyle": {
+      "type": "enum",
+      "values": ["decimal", "percent", "currency"],
+      "default": "decimal",
+      "description": "percent is the fraction of the range."
+    },
+    "currency": {
+      "type": "string",
+      "description": "An ISO 4217 code, or IRT for toman, drawn as the amount and «تومان»."
+    },
+    "isDisabled": { "type": "boolean", "default": false },
+    "name": { "type": "string", "description": "Names the value inside a Form block." }
+  },
+  "actions": {
+    "onChange": {
+      "description": "The value while dragging.",
+      "payload": "number | [number, number]"
+    },
+    "onChangeEnd": {
+      "description": "The value when the thumb is released: save it.",
+      "payload": "number | [number, number]"
+    }
+  }
+}

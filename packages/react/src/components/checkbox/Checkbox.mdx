@@ -1,0 +1,175 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Checkbox.stories'
+import { Keys, Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# Checkbox
+
+One thing on or off, with its words beside it: track the stock, wrap it as a gift, accept the
+terms. It is Material's checkbox on both platforms, drawn and moving as Flutter's does.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **A setting that is on or off,** saved with the rest of a form: track stock, charge tax.
+- **Agreeing to something** before going on: the shop's terms.
+- **Choosing rows** in a list or a table, several at a time.
+
+For several options under one name, use a CheckboxGroup; for one choice among them, a RadioGroup;
+for a setting that takes effect the moment it is turned, a Switch.
+
+## Import
+
+```tsx
+import { Checkbox, Description, FieldError, Label } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<Checkbox>
+  <Checkbox.Content>
+    <Checkbox.Control>
+      <Checkbox.Indicator />
+    </Checkbox.Control>
+    <Label>Track stock</Label>
+  </Checkbox.Content>
+  <Description>Each sale takes one from the stock.</Description>
+  <FieldError />
+</Checkbox>
+```
+
+<Parts
+  rows={[
+    [
+      'Checkbox',
+      'The option: its state, its value in a form, and one target as wide as what it holds, so a press anywhere on it chooses.',
+    ],
+    ['Checkbox.Content', 'The box and its words in a row, 12 apart.'],
+    [
+      'Checkbox.Control',
+      'The box, 18 with 2 corners and a 2 edge in the muted colour; a circle 40 across behind it under a hover, a press or the keyboard’s focus.',
+    ],
+    [
+      'Checkbox.Indicator',
+      'What is drawn in it: on, gilt with a slate-700 tick; mixed, a dash. Painted as Flutter’s, the tick’s short stroke then its long one.',
+    ],
+    ['Label', 'Its words, 14 and regular on a 20 line, after the box; long words wrap beside it.'],
+    ['Description', 'Help under the words, 12 in the muted colour, 4 below them and 28 in.'],
+    ['FieldError', 'What is wrong, in the help’s place, in the danger colour.'],
+  ]}
+/>
+
+## Examples
+
+### Off, on and mixed
+
+`isIndeterminate` draws a dash: some of what it stands for is chosen. It is drawn so whatever
+`isSelected` says, until the app clears it. Disabled, the whole option is drawn at half.
+
+<Canvas of={Stories.States} />
+
+### Label and help
+
+Long words wrap beside the box. A checkbox with no words, a row's in a table, is named with
+`aria-label`.
+
+<Canvas of={Stories.LabelAndHelp} />
+
+### Choosing all
+
+An "all" box above a list is on when every one is, off when none is, and mixed between; pressing
+it chooses all, or none when all were chosen.
+
+<Canvas of={Stories.SelectAll} />
+
+### Validation
+
+`isInvalid` with a `FieldError` says what is wrong under it, in the help's place. The words keep
+their colour; the box's edge turns the danger colour.
+
+<Canvas of={Stories.Validation} />
+
+### On a grey surface
+
+`variant="secondary"` fills the box with the surface inside its edge, so an empty one shows on a
+grey card; chosen, it is gilt as any.
+
+<Canvas of={Stories.OnASurface} />
+
+### In a form
+
+On, it sends its `value` under its `name`; off, nothing. A required one left off stops the form
+and says so under it, «این فیلد الزامی است.», in the page's language whatever the browser's.
+
+<Canvas of={Stories.InAForm} />
+
+## What it builds
+
+<Canvas of={Stories.StockSettings} />
+
+## Themes, directions, sizes
+
+The box is at the start on either page, its words after it.
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+<PropsTable
+  rows={[
+    ['isSelected, defaultSelected', 'boolean', 'false', 'On, controlled or at first.'],
+    ['onChange', '(isSelected: boolean) => void', null, 'When it is turned.'],
+    ['isIndeterminate', 'boolean', 'false', 'Drawn mixed, whatever isSelected says.'],
+    [
+      'variant',
+      "'primary' | 'secondary'",
+      "'primary'",
+      'secondary on a grey surface; a CheckboxGroup’s otherwise.',
+    ],
+    ['isRequired', 'boolean', 'false', 'It must be on for the form to go.'],
+    ['isInvalid', 'boolean', 'false', 'Drawn as wrong, with its FieldError.'],
+    ['validate, validationBehavior', 'as a TextField’s', null, 'Its own check, and when it shows.'],
+    ['isDisabled', 'boolean', 'false', 'It cannot be reached or turned; drawn at half.'],
+    ['isReadOnly', 'boolean', 'false', 'It can be reached, not turned.'],
+    ['name, value', 'string', "value 'on'", 'What a form is sent while it is on.'],
+    ['aria-label', 'string', null, 'Its name, where it has no words.'],
+  ]}
+/>
+
+Every part takes its element's own props too, and a `className`. `Checkbox.Indicator` takes your
+own mark as its child, or a function of the state.
+
+## Keyboard
+
+<Keys
+  rows={[
+    ['Tab', 'To the box, and on.'],
+    ['Space', 'Turns it.'],
+  ]}
+/>
+
+## Accessibility
+
+A screen reader meets a checkbox named by its words, described by its help, and read as checked,
+not checked or mixed. The whole option takes the pointer, words and help included, so a small box
+is not the only target.
+
+## Styling
+
+`.checkbox` with `--primary` and `--secondary`; `__content`, `__control` and `__indicator`;
+`[data-selected]`, `[data-indeterminate]`, `[data-invalid]` and `[data-disabled]`.
+
+## As a block
+
+A tree draws the same checkbox, on the web and in Flutter. Alone it sends `true` or `false`; in
+a CheckboxGroup, the group sends the chosen values.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="Checkbox" />

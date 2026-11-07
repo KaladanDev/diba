@@ -1,0 +1,224 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './DateField.stories'
+import { Keys, Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# DateField
+
+A date, or a date and a time, typed part by part. At rest it reads as a date is written, «۲۵ مهر
+۱۴۰۵، ۱۴:۳۰», in the reader's calendar; in focus, its day, month, year, hour and minute can each be
+typed or stepped.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **A date the reader knows and types:** a birthday, an invoice's date, a document's.
+- **A date and a time together,** to the hour or the minute.
+
+When the reader picks a day by looking at the month, use a DatePicker: this field with a calendar
+behind an icon. For a time alone, use a TimeField; for a span, a DateRangePicker.
+
+## Import
+
+```tsx
+import { DateField, Description, FieldError, Label } from '@kaladan/diba-react'
+import { parseDate } from '@internationalized/date'
+```
+
+## Anatomy
+
+```tsx
+<DateField defaultValue={parseDate('2026-10-17')}>
+  <Label>Delivery date</Label>
+  <DateField.Group fullWidth>
+    <DateField.Prefix>…</DateField.Prefix>
+    <DateField.Input>{(segment) => <DateField.Segment segment={segment} />}</DateField.Input>
+    <DateField.Suffix>…</DateField.Suffix>
+  </DateField.Group>
+  <Description>The day the parcel leaves the warehouse.</Description>
+  <FieldError />
+</DateField>
+```
+
+<Parts
+  rows={[
+    ['DateField', 'The field: its value, how fine it counts, its limits and its state.'],
+    ['Label', 'Its name, above it.'],
+    [
+      'DateField.Group',
+      'The box, 36 tall: primary on a page, secondary on a grey surface; fullWidth to fill its column.',
+    ],
+    [
+      'DateField.Input',
+      'The date: at rest, as it is written; in focus, its segments, one DateField.Segment each.',
+    ],
+    ['DateField.Prefix, DateField.Suffix', 'Anything before or after the date: an icon, a button.'],
+    ['Description', 'Help under it.'],
+    ['FieldError', 'What is wrong, in the help’s place, while it is invalid.'],
+  ]}
+/>
+
+## Values
+
+A field's values are `@internationalized/date`'s: `parseDate('2026-10-17')` for a day,
+`parseDateTime('2026-10-17T14:30')` for a day and a time, `parseZonedDateTime(…)` for a moment in a
+zone. Whatever calendar draws it, its `toString()` is Gregorian ISO 8601: keep and send that. In a
+form, its `name` sends the same string.
+
+## Examples
+
+### At rest and typing
+
+At rest, the field shows its date with the month's name, as Flutter's does. Pressed or tabbed
+into, it shows its segments: type the digits, or step each with the arrow keys. On a Persian page
+they read as a written date does, the day at the right, «روز/ماه/سال», and a time as a clock after
+it.
+
+<Canvas of={Stories.AtRest} />
+
+### Granularity
+
+`granularity` is the smallest part it asks: `day`, `hour` or `minute`. `hourCycle` gives a 12-hour
+clock with AM and PM, or 24 hours.
+
+<Canvas of={Stories.Granularity} />
+
+### Persian and Gregorian
+
+The locale chooses the calendar: `fa-IR-u-ca-gregory` in React Aria's `I18nProvider` draws
+Gregorian on a Persian page.
+
+<Canvas of={Stories.Calendars} />
+
+### Time zones
+
+A zoned value is shown in its own zone. `hideTimeZone` leaves the zone's name out, for a page
+whose readers all share one.
+
+<Canvas of={Stories.TimeZones} />
+
+### Label, help and error
+
+<Canvas of={Stories.LabelHelpError} />
+
+### Before and after
+
+`DateField.Prefix` and `DateField.Suffix` hold what goes with the date inside its box.
+
+<Canvas of={Stories.PrefixAndSuffix} />
+
+### Disabled, read-only and on a grey surface
+
+<Canvas of={Stories.States} />
+
+### First and last day
+
+`minValue` and `maxValue` make a date outside them invalid. With `validationBehavior="aria"` it
+says so at once; by default it waits for the form to be sent. Left empty, `FieldError` says it in
+the page's words and calendar, the limit named as the field shows a date: «باید ۲۵ آبان ۱۴۰۵ یا
+پیش از آن باشد». Give it your own words, or a `validate` of your own, which goes first.
+
+<Canvas of={Stories.Limits} />
+
+### In a form
+
+<Canvas of={Stories.InAForm} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+### DateField
+
+<PropsTable
+  rows={[
+    ['value', 'DateValue | null', null, 'The date, controlled.'],
+    ['defaultValue', 'DateValue | null', null, 'The date at first.'],
+    ['onChange', '(value: DateValue | null) => void', null, 'When the date changes.'],
+    [
+      'granularity',
+      "'day' | 'hour' | 'minute' | 'second'",
+      "'day', or 'minute' for a time value",
+      'The smallest part it asks.',
+    ],
+    ['hourCycle', '12 | 24', 'the language’s', 'A 12-hour clock or 24 hours.'],
+    ['hideTimeZone', 'boolean', 'false', 'Leaves a zoned value’s zone out.'],
+    [
+      'placeholderValue',
+      'DateValue',
+      'today',
+      'Where an empty field’s segments start when stepped.',
+    ],
+    ['minValue, maxValue', 'DateValue', null, 'Outside them, the date is invalid.'],
+    ['isDateUnavailable', '(date: DateValue) => boolean', null, 'Days that are invalid.'],
+    ['isRequired', 'boolean', 'false', 'It needs a date.'],
+    ['isInvalid', 'boolean', 'false', 'Drawn as wrong, with its FieldError.'],
+    ['validate', '(value) => string | string[] | true | null', null, 'Your own check.'],
+    [
+      'validationBehavior',
+      "'native' | 'aria'",
+      "'native'",
+      'native waits for the form to be sent; aria shows what is wrong at once.',
+    ],
+    ['isDisabled', 'boolean', 'false', 'It cannot be reached or changed.'],
+    ['isReadOnly', 'boolean', 'false', 'It can be read and focused, not changed.'],
+    ['name', 'string', null, 'Its value’s name in a form: Gregorian ISO 8601.'],
+    ['autoFocus', 'boolean', null, 'Focused when it first shows.'],
+  ]}
+/>
+
+### DateField.Group
+
+<PropsTable
+  rows={[
+    ['variant', "'primary' | 'secondary'", "'primary'", 'secondary for a field on a grey surface.'],
+    ['fullWidth', 'boolean', 'false', 'As wide as its column.'],
+  ]}
+/>
+
+Every part takes its element's own props too, and a `className`.
+
+## Keyboard
+
+<Keys
+  rows={[
+    ['Tab, Shift + Tab', 'The next or previous segment, and out of the field.'],
+    ['Left, Right', 'The segment before or after, in the reading order.'],
+    ['Up, Down', 'The segment one more or one less.'],
+    [
+      'Page Up, Page Down',
+      'The segment a bigger step: a year by five, a day by seven, a minute by fifteen.',
+    ],
+    ['Home, End', 'The segment’s least or most.'],
+    ['Digits', 'Type the segment, and go on to the next.'],
+    ['Backspace', 'Clears the segment.'],
+  ]}
+/>
+
+## Accessibility
+
+Each segment is read with its name, «روز», «ماه», «سال», and its value; the field is named by its
+`Label`, described by its `Description`, and its error is read while it is invalid.
+
+## Styling
+
+`.date-field`; `.date-input-group` with `--secondary` and `--full-width`;
+`.date-input-group__input`, `__segment`, `__prefix` and `__suffix`; at rest,
+`.date-input-group__resting`. `[data-invalid]`, `[data-disabled]` and `[data-focus-within]` on the
+group.
+
+## As a block
+
+A tree's DateField block is this field with a calendar behind an icon: what the DatePicker page
+shows. Its dates are Gregorian ISO 8601 on the wire, whatever calendar draws them.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="DateField" />

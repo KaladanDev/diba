@@ -1,0 +1,71 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Trees.stories'
+
+<Meta of={Stories} />
+
+# Trees
+
+A tree is nodes, each one block of Diba's: a `Stack`, a `TextField`, a `Table`. Each example
+below shows the tree, what it draws, what reached the host, and what the schema says of it.
+
+## A node
+
+A node has at most five keys, and nothing else: the schema refuses an `id` or a `key` on a node.
+
+| Key        | What it holds                                                                                      |
+| ---------- | -------------------------------------------------------------------------------------------------- |
+| `type`     | The block's name, from the manifest. Required.                                                     |
+| `props`    | Its props, by name: only those the manifest declares. Required when the block has a required prop. |
+| `children` | Words, or a list of nodes, as the block takes.                                                     |
+| `slots`    | Named places for one node each: a card's `action` and `footer`, an overlay's `trigger`.            |
+| `actions`  | What its events do: one action or a list, by event name.                                           |
+
+<Canvas of={Stories.Anatomy} />
+
+## Children
+
+A block takes words (`Text`, `Button`, `Chip`), a list of any blocks (`Stack`, `Card`, `Form`), a
+list of particular ones (`Table` takes `TableHeader`, `TableBody` and `TableFooter`), or nothing
+(`TextField`). A table's `Cell` takes either words or blocks.
+
+<Canvas of={Stories.Children} />
+
+## Slots
+
+A slot holds one node, not a list. The blocks that have them:
+
+| Block                                | Slots               |
+| ------------------------------------ | ------------------- |
+| `Card`                               | `action`, `footer`  |
+| `Alert`                              | `actions`           |
+| `Modal`, `Drawer`, `Sheet`           | `trigger`, `footer` |
+| `AlertDialog`, `Popover`, `Dropdown` | `trigger`           |
+
+## Props
+
+A prop is one of a few kinds, each checked by the schema: words, a number, a flag (`isDisabled`),
+one of a list (`variant: "secondary"`), a list of words (`colors`), a pair of numbers (a range
+slider's `[20, 80]`), a step of space (a Stack's `gap`, 4 a step), or an icon by name (`printer`,
+from the 109 the manifest lists). An address is words held to the address rule (see Safety).
+
+<Canvas of={Stories.Props} />
+
+## Defaults
+
+A prop the tree leaves out takes the manifest's default: a `Button` with no props is secondary and
+small. Send only what differs.
+
+<Canvas of={Stories.Defaults} />
+
+## Words
+
+The server sends the words, final, in the merchant's language: there are no translation keys. What
+Diba says itself, a field's check, a close button's name, it says in the page's language, from the
+same table on both platforms. Press Save with the field empty, then with "a@".
+
+<Canvas of={Stories.Words} />
+
+## Limits
+
+A tree deeper than 32 levels or larger than 500 nodes is refused whole, and draws nothing. A
+host may set its own with `limits`.

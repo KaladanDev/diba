@@ -1,0 +1,110 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Separator.stories'
+import { PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# Separator
+
+A line between sections: across, between a list's lines and its total, or down, between things in
+a row. It says the two sides belong apart, and a screen reader hears it as a separator.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **Between a list and what sums it,** such as a checkout's lines and its total.
+- **Between a card's sections,** such as an order's details and its history.
+- **Between groups of controls in a row,** such as a toolbar's.
+
+Not for room alone: use a gap, or a Spacer. Not between every row of a list: a list's rows are
+spaced, not ruled.
+
+## Import
+
+```tsx
+import { Separator } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<Separator />
+<Separator orientation="vertical" />
+```
+
+## Examples
+
+### Across
+
+1 thick and as wide as what holds it.
+
+<Canvas of={Stories.Horizontal} />
+
+### Down
+
+1 across and as tall as its row, at least 8; give the row `align-items: center` and a gap.
+
+<Canvas of={Stories.Vertical} />
+
+### For the surface under it
+
+`default` is the separator's colour, for a page's card. On a card inside a card, `secondary` is a
+step darker, and `tertiary` a step further, so the line still shows on a darker surface: each is
+the surface's own colour mixed toward its text.
+
+<Canvas of={Stories.Variants} />
+
+## Where it goes
+
+In a Toolbar a separator runs across the toolbar, whatever it is told: down in a row of buttons,
+across in a column.
+
+<Canvas of={Stories.InAToolbar} />
+<Canvas of={Stories.InACard} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+<PropsTable
+  rows={[
+    [
+      'orientation',
+      "'horizontal' | 'vertical'",
+      "'horizontal', or across a Toolbar",
+      'Across or down.',
+    ],
+    [
+      'variant',
+      "'default' | 'secondary' | 'tertiary'",
+      "'default'",
+      'Its colour, for its surface.',
+    ],
+    ['className', 'string', null, 'Classes after its own.'],
+  ]}
+/>
+
+## Accessibility
+
+It is a `separator`, with its orientation, so a screen reader says where one section ends. It holds
+nothing and takes no focus.
+
+## Styling
+
+`.separator` with `--horizontal`, `--vertical`, `--default`, `--secondary` and `--tertiary`. Its
+colour is the theme's `--separator`.
+
+## As a block
+
+A tree draws the same line, on the web and in Flutter, across or down; in a Toolbar block it runs
+across the toolbar.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="Separator" />

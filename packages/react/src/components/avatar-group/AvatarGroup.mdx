@@ -1,0 +1,170 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './AvatarGroup.stories'
+import { Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# AvatarGroup
+
+Several people at once: avatars stacked, each a quarter over the next, or set out in a grid. After
+the first few, a count says how many more, in the reader's digits.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **Who is on something:** the staff handling an order, the people with access to a store.
+- **How many have done something,** a few of them shown: the buyers who reviewed a product.
+- **A team at a glance,** in a grid.
+
+To name each person, list them with their avatars beside their names instead.
+
+## Import
+
+```tsx
+import { Avatar, AvatarGroup } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<AvatarGroup max={3} size="sm" role="group" aria-label="Who handles this order">
+  <Avatar role="img" aria-label="Niloufar Rostami">
+    <Avatar.Image src="/staff/niloufar.jpg" alt="" />
+    <Avatar.Fallback aria-hidden>NR</Avatar.Fallback>
+  </Avatar>
+  {/* …more avatars */}
+  <AvatarGroup.Count>+5 more</AvatarGroup.Count>
+</AvatarGroup>
+```
+
+<Parts
+  rows={[
+    [
+      'AvatarGroup',
+      'The row or the grid: how many it draws, and the size, colour and variant of the avatars that leave them out.',
+    ],
+    [
+      'Avatar',
+      'Each person, as its own page describes. Only the group’s direct children take its look.',
+    ],
+    [
+      'AvatarGroup.Count',
+      'The count after the last avatar: a pill 8 shorter than the avatars, 6 after them, always in the brand’s hue.',
+    ],
+  ]}
+/>
+
+## Examples
+
+### Overlap
+
+A stack sets each avatar a quarter of its width over the next. `clip` cuts each one round the
+next, leaving a clear seam on any ground; `ring` rings each in the page's colour instead.
+
+<Canvas of={Stories.Overlap} />
+
+### Max and the count
+
+With `max`, the group draws that many and then the count, `+5` in the reader's digits. Give an
+`AvatarGroup.Count` of your own for words, "+5 more", or for a total the page knows but has not
+drawn.
+
+<Canvas of={Stories.MaxAndCount} />
+
+### Sizes
+
+The group's `size` sizes its avatars and its count alike.
+
+<Canvas of={Stories.Sizes} />
+
+### The group's look
+
+`size`, `color` and `variant` fill in what each avatar left out; an avatar's own wins. Without a
+group colour, each named avatar keeps its own hue.
+
+<Canvas of={Stories.GroupLook} />
+
+### Grid
+
+`isGrid` sets them out 12 apart, wrapping as the room runs out. `overlap` does nothing here.
+
+<Canvas of={Stories.TeamGrid} />
+
+## What it builds
+
+<Canvas of={Stories.OrderTeam} />
+<Canvas of={Stories.Reviewers} />
+<Canvas of={Stories.StaffHeader} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+### AvatarGroup
+
+<PropsTable
+  rows={[
+    ['max', 'number', null, 'How many avatars to draw before the count; all of them without it.'],
+    ['size', "'sm' | 'md' | 'lg'", "'md'", 'For the avatars that have none, and the count.'],
+    [
+      'color',
+      "'default' | 'accent' | 'success' | 'warning' | 'danger'",
+      null,
+      'For the avatars that have none.',
+    ],
+    ['variant', "'default' | 'soft'", null, 'For the avatars that have none.'],
+    [
+      'overlap',
+      "'clip' | 'ring'",
+      "'clip'",
+      'How a stack’s avatars meet: cut round, or ringed in the page’s colour.',
+    ],
+    ['isGrid', 'boolean', 'false', 'A grid, 12 apart, instead of a stack.'],
+    [
+      'render',
+      '(props) => ReactElement',
+      null,
+      'Draws a div of yours in its place; pass its props and ref through.',
+    ],
+    ['className', 'string', null, 'Classes after the group’s own.'],
+    ['children', 'ReactNode', null, 'Its avatars, and a count of your own.'],
+  ]}
+/>
+
+### AvatarGroup.Count
+
+<PropsTable
+  rows={[
+    ['children', 'ReactNode', null, 'What it says: "+5 more", or a total.'],
+    ['size', "'sm' | 'md' | 'lg'", 'the group’s', 'Its own, apart from the group’s.'],
+  ]}
+/>
+
+Every part takes its element's own props too: `id`, `style`, `aria-*`.
+
+## Accessibility
+
+A group says nothing of itself. Give it `role="group"` and a name for what the people have in
+common, "Who handles this order", and name each avatar. Where the words beside it already say it,
+"24 people left a review", hide the group (`aria-hidden`) instead. A presence dot and a ring are
+for one person at a time: in a stack they would be covered, so leave them out.
+
+## Styling
+
+`.avatar-group` with `.avatar-group--clip`, `--ring` and `--grid`; `.avatar-group__count`. The
+overlap is `--avatar-group-overlap`, a quarter of `--avatar-size`.
+
+## As a block
+
+A tree draws the same group, on the web and in Flutter: avatars as its children, each from a name,
+and the count in words, "+3 more", in the reader's digits.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="AvatarGroup" />

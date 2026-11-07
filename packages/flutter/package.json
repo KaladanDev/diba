@@ -1,0 +1,10 @@
+{
+  "name": "@kaladan/diba-flutter",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Diba for Flutter — generated tokens, the Material 3 theme, and the SDUI renderer.",
+  "scripts": {
+    "analyze": "flutter analyze",
+    "test:flutter": "flutter test"
+  }
+}

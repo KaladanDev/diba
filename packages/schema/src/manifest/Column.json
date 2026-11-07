@@ -1,0 +1,22 @@
+{
+  "name": "Column",
+  "category": "data",
+  "description": "One column's header.",
+  "sduiSafe": true,
+  "props": {
+    "id": { "type": "string", "description": "Its key, which sortColumn names.", "required": true },
+    "isRowHeader": {
+      "type": "boolean",
+      "default": false,
+      "description": "Its cells name their rows."
+    },
+    "allowsSorting": { "type": "boolean", "default": false },
+    "align": {
+      "type": "enum",
+      "values": ["start", "center", "end"],
+      "default": "start",
+      "description": "Diba's own: the column's cells too."
+    }
+  },
+  "children": { "accepts": "text", "description": "The header's text (localizable)." }
+}

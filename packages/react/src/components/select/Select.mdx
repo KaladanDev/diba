@@ -1,0 +1,216 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Select.stories'
+import { Keys, Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# Select
+
+One option, or several, from a menu that opens under a field: a product's category, an order's
+status, a filter. Closed, it shows what is chosen; open, the options, the chosen one highlighted.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **One of a known list too long to show at once,** four to about twenty: a category, a status,
+  a carrier.
+- **A filter above a list,** where the label is the list's own.
+
+For two to six options the reader should compare, use a RadioGroup; for a list to search or type
+into, a ComboBox; for actions rather than a value, a Dropdown.
+
+## Import
+
+```tsx
+import { Description, FieldError, Label, ListBox, Select } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<Select placeholder="Choose a category">
+  <Label>Category</Label>
+  <Select.Trigger>
+    <Select.Value />
+    <Select.Indicator />
+  </Select.Trigger>
+  <Select.Popover>
+    <ListBox>
+      <ListBox.Item id="scarf">Scarves</ListBox.Item>
+      <ListBox.Item id="bag">Bags</ListBox.Item>
+    </ListBox>
+  </Select.Popover>
+  <Description>The product is shown in it.</Description>
+  <FieldError />
+</Select>
+```
+
+<Parts
+  rows={[
+    [
+      'Select',
+      'The field: what is chosen, whether one or several may be, its checks and its state.',
+    ],
+    ['Label', 'Its name, above it, 14 and medium; a star after it when required.'],
+    [
+      'Select.Trigger',
+      'The field, 36 tall (40 under 640 wide) with a 1 edge, 12 in; it opens the menu.',
+    ],
+    [
+      'Select.Value',
+      'What is chosen, 14; the placeholder in the muted colour while nothing is; several, joined with commas.',
+    ],
+    [
+      'Select.ClearButton',
+      'A cross before the chevron that empties it, while something is chosen; optional.',
+    ],
+    ['Select.Indicator', 'The chevron, 16, at the field’s end.'],
+    [
+      'Select.Popover',
+      'The menu, 8 under the field and as wide as it, rounded 24 with a soft shadow; it opens above when there is no room below.',
+    ],
+    [
+      'ListBox, ListBox.Item',
+      'The options, 36 tall, rounded 16, 10 in; the chosen one on the neutral fill, one under the pointer half of it. See the ListBox page.',
+    ],
+    ['Description, FieldError', 'Help under it, and what is wrong in its place.'],
+  ]}
+/>
+
+## Examples
+
+### Open
+
+The chosen option is on the neutral fill, with no tick, as Flutter's menu marks it; an option
+under the pointer is half that fill, so the two never look alike.
+
+<Canvas of={Stories.Open} />
+
+### Placeholder, one and several
+
+`placeholder` shows while nothing is chosen. `selectionMode="multiple"` lets several be chosen,
+the menu staying open between them; the field shows them joined with commas, cut with an ellipsis
+when they run past it.
+
+<Canvas of={Stories.Values} />
+
+### Sections, icons and descriptions
+
+`ListBox.Section` with a `Header` titles a group of options. An option may lead with an icon and
+hold a `Label` and a `Description` for a second line; give it `textValue`, the words it is found
+and announced by, when it holds more than words. Closed, the field shows the chosen option's icon,
+16, before its words on one line, and leaves its second line in the menu.
+
+<Canvas of={Stories.Sections} />
+
+### Clearable
+
+A `Select.ClearButton` in the trigger empties it while something is chosen; Backspace or Delete
+on the field does the same from the keyboard.
+
+<Canvas of={Stories.Clearable} />
+
+### Disabled, invalid, on a grey surface
+
+`disabledKeys` keeps options from being chosen; they are drawn at half.
+
+<Canvas of={Stories.States} />
+
+### In a form
+
+Its `name` sends the chosen option's `id`. A required select left empty stops the form and says
+so under it, «این فیلد الزامی است.», in the page's language whatever the browser's.
+
+<Canvas of={Stories.InAForm} />
+
+## What it builds
+
+A filter above a list names itself with `aria-label`: the list says what it filters.
+
+<Canvas of={Stories.OrderFilters} />
+
+## Themes, directions, sizes
+
+The chevron is at the field's end: the left on a Persian page.
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+<PropsTable
+  rows={[
+    [
+      'value, defaultValue',
+      'Key | Key[] | null',
+      null,
+      'What is chosen, controlled or at first: an id, or ids when several may be.',
+    ],
+    ['onChange', '(value) => void', null, 'When the choice changes.'],
+    [
+      'selectionMode',
+      "'single' | 'multiple'",
+      "'single'",
+      'One, or several with the menu staying open.',
+    ],
+    ['placeholder', 'string', null, 'Shown while nothing is chosen.'],
+    ['disabledKeys', 'Iterable<Key>', null, 'Options that cannot be chosen.'],
+    [
+      'isOpen, defaultOpen, onOpenChange',
+      'boolean',
+      null,
+      'The menu open, controlled or at first.',
+    ],
+    ['variant', "'primary' | 'secondary'", "'primary'", 'secondary on a grey surface.'],
+    ['fullWidth', 'boolean', 'false', 'As wide as its column.'],
+    ['isRequired', 'boolean', 'false', 'Something must be chosen; the label says so.'],
+    ['validate, validationBehavior', 'as a TextField’s', null, 'Its own check, and when it shows.'],
+    ['isInvalid', 'boolean', 'false', 'Drawn as wrong, with its FieldError.'],
+    ['isDisabled', 'boolean', 'false', 'It cannot be reached or opened.'],
+    ['name', 'string', null, 'The chosen id’s name in a form.'],
+  ]}
+/>
+
+`Select.Popover` takes a `placement`. Every part takes its element's own props too, and a
+`className`.
+
+## Keyboard
+
+<Keys
+  rows={[
+    ['Tab', 'To the field, and on.'],
+    ['Space, Enter, Down, Up', 'Opens the menu on the chosen option.'],
+    ['Down, Up', 'In the menu, the next or the previous option.'],
+    ['A letter', 'The next option that begins with it.'],
+    [
+      'Enter',
+      'Chooses the option and closes the menu, or keeps it open when several may be chosen.',
+    ],
+    ['Escape', 'Closes the menu, choosing nothing.'],
+    ['Backspace, Delete', 'Empties it, when it has a Select.ClearButton.'],
+  ]}
+/>
+
+## Accessibility
+
+The field is a button named by its `Label`, saying what is chosen; the menu is a list box, each
+option read with its place and whether it is chosen. A `Select.ClearButton` is for the pointer:
+the keyboard empties the field with Backspace.
+
+## Styling
+
+`.select` with `--primary`, `--secondary` and `--full-width`; `__trigger`, `__value`, `__indicator`,
+`__clear-button` and `__popover`; `[data-open]`, `[data-invalid]` and `[data-disabled]`. The
+options are the ListBox's.
+
+## As a block
+
+A tree draws the same select, on the web and in Flutter, its options `ListBoxItem`s and titled
+`ListBoxSection`s; an option's `icon` or `image` shows in the closed field beside its words.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="Select" />

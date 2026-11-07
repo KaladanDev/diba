@@ -1,0 +1,61 @@
+{
+  "name": "Table",
+  "category": "data",
+  "description": "Rows of records under named columns, chosen, sorted and opened as the server says.",
+  "sduiSafe": true,
+  "props": {
+    "label": {
+      "type": "string",
+      "i18n": true,
+      "description": "The accessible name; never drawn.",
+      "required": true
+    },
+    "variant": { "type": "enum", "values": ["primary", "secondary"], "default": "primary" },
+    "selectionMode": {
+      "type": "enum",
+      "values": ["none", "single", "multiple"],
+      "default": "none"
+    },
+    "defaultSelectedKeys": {
+      "type": "string[]",
+      "description": "Starts at this value; the merchant changes it."
+    },
+    "selectedKeys": {
+      "type": "string[]",
+      "description": "Pinned: shows exactly what the server sent until the next tree."
+    },
+    "sortColumn": {
+      "type": "string",
+      "description": "A column id. Pinned: shows exactly what the server sent until the next tree."
+    },
+    "sortDirection": {
+      "type": "enum",
+      "values": ["ascending", "descending"],
+      "description": "Pinned: shows exactly what the server sent until the next tree."
+    },
+    "defaultSortColumn": {
+      "type": "string",
+      "description": "A column id. Starts at this value; the merchant changes it."
+    },
+    "defaultSortDirection": {
+      "type": "enum",
+      "values": ["ascending", "descending"],
+      "description": "Starts at this value; the merchant changes it."
+    },
+    "emptyMessage": { "type": "string", "i18n": true },
+    "isLoadingMore": { "type": "boolean", "default": false }
+  },
+  "children": { "accepts": ["TableHeader", "TableBody", "TableFooter"] },
+  "actions": {
+    "onSelectionChange": { "description": "The selected row ids.", "payload": "Key[]" },
+    "onSortChange": {
+      "description": "Its value is {column, direction}: send it with call's value, and answer with sorted rows.",
+      "payload": "SortDescriptor"
+    },
+    "onRowAction": {
+      "description": "A row pressed. Its value is the row's id: send it with call's value.",
+      "payload": "Key"
+    },
+    "onLoadMore": { "description": "The end of the list reached." }
+  }
+}

@@ -1,0 +1,23 @@
+/*
+ * Third-party code under the Apache License 2.0; see THIRD-PARTY-NOTICES.txt in this package.
+ */
+/* Time field styles */
+.time-field {
+  @apply flex flex-col gap-1;
+
+  &[data-invalid="true"],
+  &[aria-invalid="true"] {
+    [data-slot="description"] {
+      @apply hidden;
+    }
+  }
+
+  [data-slot="label"] {
+    @apply w-fit;
+  }
+}
+
+/* Full width modifier */
+.time-field--full-width {
+  @apply w-full;
+}

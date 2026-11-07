@@ -1,0 +1,147 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './TimePickerDialog.stories'
+import { Keys, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# TimePickerDialog
+
+A time picked on a clock's dial, in a dialog over the page: the hour, then the minute, with OK to
+keep it. It asks a time as Flutter's does, so an app's web and phone ask it alike, and it can be
+typed instead with the keyboard button.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **A time picked rather than typed,** from a button or a field that shows it: a delivery slot, a
+  reminder.
+- **After a day,** to ask its time, as a date picker at a minute does in a tree.
+
+To type a time in the page, use a TimeField.
+
+## Import
+
+```tsx
+import { TimePickerDialog, type TimeOfDay } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+The dialog is one component, open while `isOpen` is true:
+
+```tsx
+const [open, setOpen] = useState(false)
+const [time, setTime] = useState<TimeOfDay | null>({ hour: 14, minute: 30 })
+
+<Button onPress={() => setOpen(true)}>14:30</Button>
+<TimePickerDialog
+  isOpen={open}
+  onOpenChange={setOpen}
+  value={time}
+  onConfirm={(picked) => {
+    setTime(picked)
+    setOpen(false)
+  }}
+/>
+```
+
+It holds the words over the clock, the hour and the minute in two boxes, AM and PM on a 12-hour
+clock, the dial, and Cancel and OK; the keyboard button swaps the dial for two fields to type in.
+
+## Values
+
+A time here is `{ hour, minute }`, the hour 0 to 23 whatever clock draws it. To keep it as
+`@internationalized/date`'s `Time`, `new Time(hour, minute)`.
+
+## Examples
+
+### Lying
+
+A window wider than tall lays it on its side: the hour and minute at the start, the dial at the end.
+
+<Canvas of={Stories.Lying} />
+
+### Standing, on a phone
+
+A window taller than wide stands it up: the hour and minute over the dial. In a window too small
+for it, a phone 360 wide, it is drawn down to fit, and its dial still picks what is under a
+finger.
+
+<Canvas of={Stories.Standing} />
+
+### A 12-hour clock
+
+`hourCycle={12}` puts AM and PM beside the hour and minute, and the dial's twelve hours. At 24, the
+dial takes the hours on two rings.
+
+<Canvas of={Stories.TwelveHours} />
+
+### Two times, one after the other
+
+The dialog does not close itself on OK: `onConfirm` decides. So a range can ask its last time as
+its first closes, each with its own `helpText`.
+
+<Canvas of={Stories.TwoTimes} />
+
+### Dark, and English
+
+<Canvas of={Stories.Dark} />
+<Canvas of={Stories.LeftToRight} />
+
+## API
+
+<PropsTable
+  rows={[
+    ['isOpen', 'boolean', null, 'Whether it is open.'],
+    [
+      'onOpenChange',
+      '(isOpen: boolean) => void',
+      null,
+      'When it closes without a time: Cancel, Escape or a press outside it.',
+    ],
+    ['value', '{ hour, minute } | null', 'now', 'The time it opens on.'],
+    ['hourCycle', '12 | 24', '24', 'A 12-hour clock with AM and PM, or 24 hours.'],
+    ['helpText', 'string', '«انتخاب ساعت»', 'The words over the clock.'],
+    [
+      'onConfirm',
+      '(time: { hour, minute }) => void',
+      null,
+      'The time picked with OK. Close it here, with isOpen.',
+    ],
+  ]}
+/>
+
+## Keyboard
+
+<Keys
+  rows={[
+    [
+      'Tab',
+      'The hour and minute boxes, AM and PM on a 12-hour clock, the dial, the keyboard button, Cancel and OK.',
+    ],
+    ['Arrow keys on the dial', 'One hour, or one minute, more or less.'],
+    ['Enter in a typed field', 'OK.'],
+    ['Escape', 'Cancel.'],
+  ]}
+/>
+
+## Accessibility
+
+The dialog is named by its words, «انتخاب ساعت», and takes the focus when it opens. The dial is a
+slider, read with what it picks and its value; the boxes and the keyboard button have their names.
+A typed time that is not one says so at once.
+
+## Styling
+
+`.time-picker`, its theme the page's: the dial and the picked hour in the brand's colours.
+
+## As a block
+
+A tree's TimeField block is a field reading «۱۴:۳۰» whose press opens this dialog; a DateField or
+DateRangePicker block at an hour or a minute opens it after its days.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="TimeField" />

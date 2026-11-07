@@ -1,0 +1,2161 @@
+/*
+ * The component overrides Diba's theme makes, after the components they override.
+ */
+
+/*
+ * A secondary button's text is the secondary role's own text colour, slate-700 or slate-200.
+ * The original draws it in the accent's soft text, which for a gilt accent is a brown on grey.
+ */
+.button--secondary {
+  --button-fg: var(--default-foreground);
+}
+
+/*
+ * On a grey card the muted text is a step stronger, so its notes keep 4.5:1: slate-600 on
+ * either grey in light, slate-300 on the third surface in dark. Everything in the card that reads
+ * the muted colour takes it: a description, a line's name, an empty box's edge, a tag's text.
+ */
+.card--secondary,
+.surface--secondary {
+  --muted: var(--db-muted-secondary);
+}
+
+.card--tertiary,
+.surface--tertiary {
+  --muted: var(--db-muted-tertiary);
+}
+
+/*
+ * A selected toggle is gilt with slate-700 on it, in both themes, as a checked box and an on
+ * switch are. The original's soft fill was 1.05:1 against a light card, which left the
+ * selection to the text colour alone, and that text was a copper since retired.
+ */
+.toggle-button {
+  --toggle-button-bg-selected: var(--accent);
+  --toggle-button-bg-selected-hover: var(--accent-hover);
+  --toggle-button-bg-selected-pressed: var(--accent-hover);
+  --toggle-button-fg-selected: var(--db-control-on-fill);
+}
+
+/*
+ * Choices draw their state in the same roles, in both themes. The fill is gilt, the accent. What
+ * sits on it (a checkbox's tick, a radio's dot, an on switch's thumb) is slate-700, because gilt
+ * does not flip, where the original uses the accent's foreground. An off switch's thumb is the
+ * secondary button's text, and an off or empty track is the secondary button's hover shade.
+ */
+.checkbox,
+.radio,
+.switch,
+.slider {
+  --accent: var(--db-control-fill);
+  --accent-foreground: var(--db-control-on-fill);
+}
+
+/*
+ * The checkbox and the radio are Flutter's, on both platforms. v3's were a white box and
+ * ring with a soft shadow, which on a white card fell below the 3:1 a control needs.
+ *
+ * Their default indicators draw them: one SVG each, painted every frame by a port of Flutter's
+ * `_CheckboxPainter` and `_RadioPainter` (src/utils/toggle-motion.ts), from Flutter's 200ms toggle
+ * on easeIn and easeOut. So the check draws its short stroke then its long one, the box squeezes
+ * by a stroke at mid-turn, and a radio's dot grows from the centre, as Flutter's do. Here the
+ * control only holds the SVG: the original's own fill, edge and outline are switched off by emptying
+ * the colours they read, and its press scale is undone.
+ *
+ * - A checkbox is 18px with 2px corners and a 2px edge in the muted text colour (slate-500, or
+ *   slate-400 in dark); checked, gilt with a 2px slate-700 tick.
+ * - A radio is 16px with a 2px slate-500 ring; chosen, a gilt disc with a 9px slate-700 dot.
+ * - The state layer is Flutter's (`paintRadialReaction`): a circle 40 across behind the control.
+ *   Under a hover it is 8% of gilt when on and of the text colour when off; under keyboard focus,
+ *   10%. While the pointer is down it takes the pressed colour of the state being left, which
+ *   previews the next: an empty box 10% gilt, a checked one gilt at Flutter's reaction alpha
+ *   (0x1F); a radio its slate-500 or slate-700 at that alpha. Colours switch at once, as Flutter's
+ *   do; only a press without a hover (a touch) grows the circle, over 100ms.
+ *   An empty box's edge turns the text colour under a hover, a press or keyboard focus, as M3's.
+ */
+/*
+ * An option is one target, on both platforms: its control with the
+ * state layer's circle, its label and its description, wrapped to their width. Anywhere on it the
+ * pointer is the hand, the circle shows and a press chooses; off it, none of the three.
+ *
+ * The original's option stretched to its row's width and showed the hand and the circle across all of
+ * it, while only the label (the control and its words) took a press: the rest of the row, the
+ * description and the circle's rim answered a hover and ignored a click. So the option wraps its
+ * content, and the label's ::before is laid over the whole option, description and error
+ * included, so a press anywhere on it lands on the label. A switch's thumb circle answers too
+ * (its ::before, below); a checkbox's or a radio's circle reaches past the option and does not
+ * (below). A disabled option takes no pointer anywhere, as the original already has it.
+ */
+.checkbox,
+.radio,
+.switch {
+  position: relative;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.checkbox > .checkbox__content,
+.radio > .radio__content,
+.switch > .switch__content {
+  position: static;
+
+  &::before {
+    position: absolute;
+    inset: 0;
+    content: '';
+  }
+}
+
+.checkbox {
+  --choice-outline: var(--muted);
+}
+
+/* M3 darkens an empty box's edge to the text colour under a hover, a press or keyboard focus. */
+.checkbox:is(
+  :hover,
+  :has([data-slot='checkbox-content'][data-hovered='true']),
+  :has([data-slot='checkbox-content'][data-pressed='true']),
+  :has([data-slot='checkbox-content'][data-focus-visible='true'])
+) {
+  --choice-outline: var(--foreground);
+}
+
+.checkbox,
+.radio {
+  --choice-layer: transparent;
+  --choice-layer-scale: 0;
+  --choice-on: var(--db-control-fill);
+  --choice-off: var(--foreground);
+}
+
+.checkbox:is([aria-checked='true'], [data-selected='true'], [data-indeterminate='true']),
+.radio:is([data-selected], :has(input:checked)) {
+  --choice-off: var(--choice-on);
+}
+
+.checkbox:is([data-invalid='true'], [aria-invalid='true']) {
+  --choice-on: var(--db-danger);
+  --choice-off: var(--db-danger);
+}
+
+.checkbox:is(:hover, :has([data-slot='checkbox-content'][data-hovered='true'])),
+.radio:is(:hover, :has([data-slot='radio-content'][data-hovered='true'])) {
+  --choice-layer: color-mix(in srgb, var(--choice-off) 8%, transparent);
+  --choice-layer-scale: 1;
+}
+
+.checkbox:has([data-slot='checkbox-content'][data-focus-visible='true']),
+.radio:has([data-slot='radio-content'][data-focus-visible='true']) {
+  --choice-layer: color-mix(in srgb, var(--choice-off) 10%, transparent);
+  --choice-layer-scale: 1;
+}
+
+/* Pressed: the colour of the state being left, at Flutter's alphas. */
+.checkbox:has([data-slot='checkbox-content'][data-pressed='true']) {
+  --choice-layer: color-mix(in srgb, var(--choice-on) 10%, transparent);
+  --choice-layer-scale: 1;
+}
+
+.checkbox:is([aria-checked='true'], [data-selected='true'], [data-indeterminate='true']):has(
+    [data-slot='checkbox-content'][data-pressed='true']
+  ) {
+  --choice-layer: color-mix(in srgb, var(--choice-on) 12.16%, transparent);
+}
+
+.radio:has([data-slot='radio-content'][data-pressed='true']) {
+  --choice-layer: color-mix(in srgb, var(--db-slate-500) 12.16%, transparent);
+  --choice-layer-scale: 1;
+}
+
+.radio:is([data-selected], :has(input:checked)):has(
+    [data-slot='radio-content'][data-pressed='true']
+  ) {
+  --choice-layer: color-mix(in srgb, var(--db-control-on-fill) 12.16%, transparent);
+}
+
+.checkbox .checkbox__control,
+.radio .radio__control {
+  --accent: transparent;
+  --accent-hover: transparent;
+  --danger: transparent;
+  --field-background: transparent;
+  --field-border: transparent;
+  --field-border-hover: transparent;
+  isolation: isolate;
+  overflow: visible;
+  border-width: 0;
+  background-color: transparent;
+  box-shadow: none;
+  scale: none;
+  transform: none;
+
+  /*
+   * The original drew its fill with this ::before. The circle's rim is not part of the option: with the
+   * box flush at the start of a 20px row (2026-10-22, Diba's spacing on both platforms) the 40px
+   * circle reaches past the option, where Flutter cannot take a pointer, so neither does the web.
+   * The circle shows while the pointer is on the option, and nowhere answers that it does not.
+   */
+  &::before {
+    display: none;
+  }
+
+  &::after {
+    position: absolute;
+    z-index: -1;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    margin: -20px;
+    border-radius: 9999px;
+    background-color: var(--choice-layer);
+    content: '';
+    pointer-events: none;
+    scale: var(--choice-layer-scale);
+    /* A touch grows the circle over Flutter's 100ms; a mouse shows and hides it at once. */
+    transition: scale 100ms cubic-bezier(0.4, 0, 0.2, 1);
+    @apply motion-reduce:transition-none;
+
+    @media (hover: hover) {
+      transition: none;
+    }
+  }
+}
+
+.checkbox .checkbox__control {
+  width: 18px;
+  height: 18px;
+  border-radius: 2px;
+}
+
+.radio .radio__control {
+  width: 16px;
+  height: 16px;
+  border-radius: 9999px;
+}
+
+.checkbox .checkbox__indicator,
+.radio .radio__indicator {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+
+  & > svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+/* The shadow the original gives a secondary box, and its hover edge, have nothing to draw on. */
+.checkbox.checkbox--secondary .checkbox__control {
+  --checkbox-control-bg: transparent;
+  box-shadow: none;
+}
+
+/*
+ * A secondary checkbox or radio is for a grey card, and is filled with the surface inside its edge,
+ * as Flutter's is, so an empty one does not vanish into the card; chosen, the gilt covers it.
+ * The fill lies on the SVG, over the hover's circle, as Flutter paints the box over its reaction.
+ */
+.checkbox.checkbox--secondary .checkbox__indicator > svg {
+  border-radius: 2px;
+  background-color: var(--surface);
+}
+
+.radio-group--secondary .radio .radio__indicator > svg {
+  border-radius: 9999px;
+  background-color: var(--surface);
+}
+
+/*
+ * The switch is Flutter's M3 switch, on both platforms, in those roles. A pill track 52 by
+ * 32 with no outline; a round thumb, 16 when off, 24 when on and 28 while the switch itself is
+ * pressed, its centre half a track's height in from either end; and a state layer 40 across
+ * around the thumb under a hover (8%) or a press (10%), in gilt when on and the text colour when
+ * off. It moves as Flutter's does, painted from one 300ms controller (src/utils/switch-motion.ts):
+ * the thumb stretches into a 34-by-22 pill on its way and lands round, a little past its end, and
+ * the colours change mostly at first.
+ *
+ * The sizes are Flutter's as Diba's renderer draws them: it fits the 60-by-40 switch into a
+ * box of 52 by the size's track height, which scales it by that height over 35, 0.8 at md. So
+ * md's track is 41.6 by 25.6, sm's 0.69 of M3's and lg's 0.91. The original's track lightening under a
+ * hover is undone, since M3 shows a hover on the state layer alone, and so is its faded thumb
+ * when disabled: the whole switch fades, and its thumb keeps its role, as Flutter's does.
+ *
+ * The thumb's selectors name the control too. The original positions a selected sm or lg thumb with
+ * `.switch[aria-checked] :is(.switch--lg .switch__thumb)`, four classes deep.
+ */
+.switch {
+  --switch-k: 0.8;
+  --switch-thumb-size: calc(16px * var(--switch-k));
+  --switch-thumb-centre: calc(16px * var(--switch-k));
+  --switch-layer-ink: var(--foreground);
+  --switch-layer-alpha: 0%;
+  --switch-control-bg: var(--db-control-track);
+  --switch-control-bg-hover: var(--switch-control-bg);
+  --switch-control-bg-pressed: var(--switch-control-bg);
+  --switch-control-bg-checked-hover: var(--switch-control-bg-checked);
+}
+
+.switch--sm {
+  --switch-k: calc(24 / 35);
+}
+
+.switch--lg {
+  --switch-k: calc(32 / 35);
+}
+
+.switch:is([aria-checked='true'], [data-selected='true']) {
+  --switch-thumb-size: calc(24px * var(--switch-k));
+  --switch-thumb-centre: calc(36px * var(--switch-k));
+  --switch-layer-ink: var(--db-control-fill);
+}
+
+.switch:hover,
+.switch:has([data-slot='switch-content'][data-hovered='true']) {
+  --switch-layer-alpha: 8%;
+}
+
+.switch:active,
+.switch[data-pressed='true'],
+.switch:has([data-slot='switch-content'][data-pressed='true']) {
+  --switch-layer-alpha: 10%;
+}
+
+/*
+ * A press on the switch itself grows the thumb to 28 once it has lasted 100ms, at once, and a
+ * release shrinks it at once, as Flutter's thumb does when its reaction completes. A press on the
+ * words chooses without growing it: Flutter's switch does not know of those.
+ */
+.switch .switch__control:active {
+  --switch-thumb-size: calc(28px * var(--switch-k));
+}
+
+.switch .switch__control:active .switch__thumb {
+  transition:
+    width 0s 100ms,
+    height 0s 100ms,
+    margin-inline-start 0s 100ms;
+}
+
+/*
+ * The thumb's place, its size on the way and the colours of the thumb and the track are painted
+ * each frame while the switch turns, as Flutter's `_SwitchPainter` paints them
+ * (src/utils/switch-motion.ts): the thumb stretches into a pill as it goes and lands round, a
+ * little past its end. So none of them has a transition here; at rest these rules draw it.
+ */
+.switch .switch__control {
+  width: calc(52px * var(--switch-k));
+  height: calc(32px * var(--switch-k));
+  overflow: visible;
+  isolation: isolate;
+  border-radius: 9999px;
+  transition: none;
+}
+
+.switch .switch__control .switch__thumb,
+.switch:is([aria-checked='true'], [data-selected='true']) .switch__control .switch__thumb {
+  position: relative;
+  width: var(--switch-thumb-size);
+  height: var(--switch-thumb-size);
+  flex: none;
+  margin-inline-start: calc(var(--switch-thumb-centre) - var(--switch-thumb-size) / 2);
+  border-radius: 9999px;
+  background-color: var(--db-control-thumb-off);
+  box-shadow: none;
+  transition: none;
+
+  /*
+   * The state layer: a circle 40 across on the thumb's centre, round while the thumb is a pill,
+   * travelling with it. It is part of the label, so the pointer on its rim, past the track,
+   * hovers and presses the switch (see the option rule above); a disabled switch takes no
+   * pointer there.
+   */
+  &::before {
+    position: absolute;
+    z-index: -1;
+    top: 50%;
+    left: 50%;
+    width: calc(40px * var(--switch-k));
+    height: calc(40px * var(--switch-k));
+    border-radius: 9999px;
+    background-color: color-mix(
+      in oklab,
+      var(--switch-layer-ink) var(--switch-layer-alpha),
+      transparent
+    );
+    content: '';
+    pointer-events: inherit;
+    translate: -50% -50%;
+    transition: background-color 100ms linear;
+    @apply motion-reduce:transition-none;
+  }
+}
+
+.switch:is([aria-checked='true'], [data-selected='true']) .switch__control .switch__thumb {
+  background-color: var(--db-control-on-fill);
+}
+
+/*
+ * The slider is Flutter's M3 slider, on both platforms: a 4px track in the off-track shade,
+ * a 6px fill in gilt, and a round 20px thumb in slate-700 with a 3px gilt ring inside its edge,
+ * which keeps it apart from the dark track. `--slider-thumb-ring` sets the
+ * ring, on both platforms. A slider given a step has a 2px dot at each one,
+ * slate-700 on the fill and the off thumb's colour on the track. The original's pill thumb, drawn as
+ * the thumb's ::after, and its gilt track ends are undone; the track keeps its 20px height.
+ *
+ * The track is the thumb's run, half a thumb in from each end of the slider, held there by its
+ * margins. The original held it there with transparent
+ * borders, which React Aria measures as track: a press put the thumb's centre up to 10px from the
+ * pointer, and a dragged thumb moved 20px less than the pointer over the run, a 328px slider's
+ * thumb 6% short. Flutter's thumb follows the pointer exactly. Past the run, where the thumb's
+ * half overhangs, the track's ::after still takes a press, as the borders did: the thumb goes to
+ * that end.
+ */
+.slider {
+  --slider-thumb-size: 1.25rem;
+}
+
+.slider[data-orientation] .slider__track,
+.slider[data-orientation] .slider__track[data-fill-start='true'],
+.slider[data-orientation] .slider__track[data-fill-end='true'] {
+  border-color: transparent;
+  background-color: transparent;
+}
+
+.slider .slider__track::before {
+  position: absolute;
+  border-radius: 9999px;
+  background-color: var(--db-control-track);
+  content: '';
+  pointer-events: none;
+}
+
+.slider .slider__fill {
+  border-radius: 9999px;
+  background-color: var(--db-control-fill);
+}
+
+.slider .slider__steps {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  pointer-events: none;
+}
+
+.slider .slider__step {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  margin: -1px;
+  border-radius: 9999px;
+  background-color: var(--db-control-thumb-off);
+
+  &[data-active='true'] {
+    background-color: var(--db-control-on-fill);
+  }
+}
+
+.slider[data-orientation] .slider__thumb {
+  z-index: 2;
+  width: var(--slider-thumb-size);
+  height: var(--slider-thumb-size);
+  border: var(--slider-thumb-ring, 3px) solid var(--db-control-fill);
+  border-radius: 9999px;
+  background-color: var(--db-control-on-fill);
+  box-shadow:
+    0 0 0 calc((48px - var(--slider-thumb-size)) / 2) var(--slider-layer),
+    0 1px 2px 0 rgb(0 0 0 / 0.3);
+  transition: box-shadow 100ms linear;
+  @apply motion-reduce:transition-none;
+  --slider-layer: transparent;
+
+  &::after {
+    display: none;
+  }
+
+  /*
+   * The pointer counts as on the thumb within 24 of its centre along the track, as within
+   * Flutter's state layer, and within the track's 20px: a transparent band, part of the thumb, so
+   * it hovers and grabs there too, and a press on it takes the thumb where it is. It was a circle
+   * 48 across, reaching over the label's row; Flutter's slider is as high as its thumb, and
+   * cannot take a pointer past that, so neither does this.
+   */
+  &::before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 48px;
+    height: var(--slider-thumb-size);
+    content: '';
+    pointer-events: inherit;
+    translate: -50% -50%;
+  }
+
+  &[data-focus-visible='true'] {
+    @apply status-focused;
+  }
+}
+
+/*
+ * Flutter's state layer on the thumb: a circle 48
+ * across, gilt at 8% under a hover and 10% while dragged or focused, fading in over 100ms. Drawn
+ * as a spread of the thumb's shadow, so it stays round and lies over the track, under the thumb.
+ */
+.slider[data-orientation] .slider__thumb:is(:hover, [data-hovered='true']) {
+  --slider-layer: color-mix(in srgb, var(--db-control-fill) 8%, transparent);
+}
+
+.slider[data-orientation] .slider__thumb:is([data-dragging='true'], [data-focus-visible='true']) {
+  --slider-layer: color-mix(in srgb, var(--db-control-fill) 10%, transparent);
+}
+
+/*
+ * The open hand over the whole slider, its track as well as its thumb, since a press on the track
+ * moves the thumb there and drags it; the closed one while it is dragged. The track showed the
+ * plain pointer though it took a press. Flutter's slider shows the same.
+ */
+.slider[data-orientation] .slider__track,
+.slider[data-orientation] .slider__thumb {
+  cursor: grab;
+}
+
+.slider[data-orientation]:has(.slider__thumb[data-dragging='true'])
+  :is(.slider__track, .slider__thumb) {
+  cursor: grabbing;
+}
+
+.slider[data-orientation='horizontal'] {
+  .slider__track {
+    width: auto;
+    height: var(--slider-thumb-size);
+    margin-inline: calc(var(--slider-thumb-size) / 2);
+    border-inline-width: 0;
+  }
+
+  .slider__track::after {
+    position: absolute;
+    inset-block: 0;
+    inset-inline: calc(var(--slider-thumb-size) / -2);
+    content: '';
+  }
+
+  .slider__track::before {
+    inset-inline: 0;
+    top: 50%;
+    height: 4px;
+    translate: 0 -50%;
+  }
+
+  .slider__fill {
+    top: 50%;
+    height: 6px;
+    translate: 0 -50%;
+  }
+
+  .slider__step {
+    top: 50%;
+  }
+}
+
+.slider[data-orientation='vertical'] {
+  .slider__track {
+    width: var(--slider-thumb-size);
+    height: auto;
+    margin-block: calc(var(--slider-thumb-size) / 2);
+    border-block-width: 0;
+  }
+
+  .slider__track::after {
+    position: absolute;
+    inset-inline: 0;
+    inset-block: calc(var(--slider-thumb-size) / -2);
+    content: '';
+  }
+
+  /* The thumb's band runs along the track. */
+  .slider__thumb::before {
+    width: var(--slider-thumb-size);
+    height: 48px;
+  }
+
+  .slider__track::before {
+    inset-block: 0;
+    left: 50%;
+    width: 4px;
+    translate: -50% 0;
+  }
+
+  .slider__fill {
+    left: 50%;
+    width: 6px;
+    translate: -50% 0;
+  }
+
+  .slider__step {
+    left: 50%;
+  }
+}
+
+/*
+ * A progress bar's empty track is the off-track shade, as a slider's and a switch's are:
+ * slate-300 or slate-700, where the original's is the secondary fill, slate-200 or slate-800.
+ *
+ * The rest is Flutter's: the label 14 and medium on a 1.35
+ * line beside the value, 14 and regular on a 1.5 line, centred on each other and 4 over the track;
+ * the track 4, 8 or 20 tall by size and round at its ends; the fill square at its leading end, in
+ * the status's solid colour, the neutral fill for default, as Flutter's status tones give it. An
+ * indeterminate bar runs Material's two lines over 1.8s, each end on its own curve, where the original
+ * slid one block across.
+ */
+.progress-bar {
+  align-items: center;
+}
+
+.progress-bar .progress-bar__track {
+  height: 8px;
+  border-radius: 9999px;
+  background-color: var(--db-control-track);
+}
+
+.progress-bar.progress-bar--sm .progress-bar__track {
+  height: 4px;
+  border-radius: 9999px;
+}
+
+.progress-bar.progress-bar--lg .progress-bar__track {
+  height: 20px;
+  border-radius: 9999px;
+}
+
+.progress-bar .progress-bar__fill {
+  border-radius: 0;
+}
+
+.progress-bar [data-slot='label'] {
+  font-size: 14px;
+  line-height: 1.35;
+  font-weight: 500;
+  color: var(--foreground);
+}
+
+.progress-bar .progress-bar__output {
+  font-size: 14px;
+  line-height: 1.5;
+  font-weight: 400;
+  font-variant-numeric: normal;
+  color: var(--foreground);
+}
+
+.progress-bar.progress-bar--default {
+  --progress-bar-fill: var(--default);
+}
+
+/* A bar's, a meter's and a ring's fill is told from its track: the accent and the warning take the
+   theme's indicator colours, their emphasis in light (variables.css). */
+.progress-bar.progress-bar--accent {
+  --progress-bar-fill: var(--db-indicator-accent);
+}
+
+.progress-bar.progress-bar--warning {
+  --progress-bar-fill: var(--db-indicator-warning);
+}
+
+.meter.meter--accent {
+  --meter-fill: var(--db-indicator-accent);
+}
+
+.meter.meter--warning {
+  --meter-fill: var(--db-indicator-warning);
+}
+
+.progress-circle.progress-circle--accent {
+  --progress-circle-stroke: var(--db-indicator-accent);
+}
+
+.progress-circle.progress-circle--warning {
+  --progress-circle-stroke: var(--db-indicator-warning);
+}
+
+.progress-bar:not([aria-valuenow]) .progress-bar__track::before,
+.progress-bar:not([aria-valuenow]) .progress-bar__track::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  inset-inline: 0 100%;
+  background-color: var(--progress-bar-fill);
+  animation-duration: 1.8s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+.progress-bar:not([aria-valuenow]) .progress-bar__track::before {
+  animation-name: diba-progress-line-1-head, diba-progress-line-1-tail;
+}
+
+.progress-bar:not([aria-valuenow]) .progress-bar__track::after {
+  animation-name: diba-progress-line-2-head, diba-progress-line-2-tail;
+}
+
+.progress-bar:not([aria-valuenow]) .progress-bar__fill {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .progress-bar:not([aria-valuenow]) .progress-bar__track::before,
+  .progress-bar:not([aria-valuenow]) .progress-bar__track::after {
+    content: none;
+  }
+
+  .progress-bar:not([aria-valuenow]) .progress-bar__fill {
+    display: block;
+  }
+}
+
+/* Material's LinearProgressIndicator: each end of each line on its own interval and curve. */
+@keyframes diba-progress-line-1-head {
+  0% {
+    inset-inline-end: 100%;
+    animation-timing-function: cubic-bezier(0.2, 0, 0.8, 1);
+  }
+  41.667%,
+  100% {
+    inset-inline-end: 0%;
+  }
+}
+
+@keyframes diba-progress-line-1-tail {
+  0%,
+  18.5% {
+    inset-inline-start: 0%;
+    animation-timing-function: cubic-bezier(0.4, 0, 1, 1);
+  }
+  60.167%,
+  100% {
+    inset-inline-start: 100%;
+  }
+}
+
+@keyframes diba-progress-line-2-head {
+  0%,
+  55.556% {
+    inset-inline-end: 100%;
+    animation-timing-function: cubic-bezier(0, 0, 0.65, 1);
+  }
+  87.056%,
+  100% {
+    inset-inline-end: 0%;
+  }
+}
+
+@keyframes diba-progress-line-2-tail {
+  0%,
+  70.389% {
+    inset-inline-start: 0%;
+    animation-timing-function: cubic-bezier(0.1, 0, 0.45, 1);
+  }
+  100% {
+    inset-inline-start: 100%;
+  }
+}
+
+/*
+ * Fields have Flutter's 1px edge, in both themes. It is `--field-shadow`, set in
+ * variables.css as the field's hairline, so nothing changes size: slate-200 in light, where the original's
+ * soft shadow left an empty field nearly invisible on a white card, and slate-700 in dark. A
+ * secondary field keeps it too, as Flutter's does under its fill, and takes Flutter's fill:
+ * the second surface, a slate step further under a hover. The original's neutral fill was the
+ * edge's own slate-200 in light, and hid it. A one-time code's boxes are fields too, and take the
+ * same.
+ */
+.input--secondary,
+.input-group--secondary,
+.textarea--secondary,
+.number-field--secondary .number-field__group,
+.select--secondary .select__trigger,
+.search-field--secondary .search-field__group,
+.date-input-group--secondary,
+.input-otp--secondary .input-otp__slot {
+  @apply shadow-field;
+  /* Its placeholder a step darker on the second surface, so it keeps 4.5:1 there. */
+  --field-placeholder: var(--db-field-secondary-placeholder);
+}
+
+.input--secondary {
+  --input-bg: var(--db-field-secondary);
+  --input-bg-hover: var(--db-field-secondary-hover);
+  --input-bg-focus: var(--db-field-secondary);
+}
+
+.input-group--secondary {
+  --input-group-bg: var(--db-field-secondary);
+  --input-group-bg-hover: var(--db-field-secondary-hover);
+  --input-group-bg-focus: var(--db-field-secondary);
+}
+
+.textarea--secondary {
+  --textarea-bg: var(--db-field-secondary);
+  --textarea-bg-hover: var(--db-field-secondary-hover);
+  --textarea-bg-focus: var(--db-field-secondary);
+}
+
+.number-field--secondary .number-field__group {
+  --number-field-group-bg: var(--db-field-secondary);
+  --number-field-group-bg-hover: var(--db-field-secondary-hover);
+  --number-field-group-bg-focus: var(--db-field-secondary);
+}
+
+.select--secondary .select__trigger {
+  --select-trigger-bg: var(--db-field-secondary);
+  --select-trigger-bg-hover: var(--db-field-secondary-hover);
+  --select-trigger-bg-focus: var(--db-field-secondary);
+}
+
+/*
+ * A select's value stays on one line, cut with an ellipsis, as a text field's does and as a tree's
+ * select's is: the original let it wrap, so in a narrow field a long choice, or several, broke to a
+ * second line and the field grew from 36 to 56.
+ */
+.select__value {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/*
+ * An option's icon comes with its words into a select's field: 16, 8 before them, on the same line,
+ * as a tree's select draws it. The original gave it a line of its own at its own size, 24 for a Lucide
+ * icon, so the field grew to 60.
+ */
+.select__value:has(> svg) {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  & > svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  & > :not(svg) {
+    min-width: 0;
+    overflow: hidden;
+  }
+}
+
+.search-field--secondary .search-field__group {
+  --search-field-group-bg: var(--db-field-secondary);
+  --search-field-group-bg-hover: var(--db-field-secondary-hover);
+  --search-field-group-bg-focus: var(--db-field-secondary);
+}
+
+.date-input-group--secondary {
+  --date-input-group-bg: var(--db-field-secondary);
+  --date-input-group-bg-hover: var(--db-field-secondary-hover);
+  --date-input-group-bg-focus: var(--db-field-secondary);
+}
+
+.input-otp--secondary .input-otp__slot {
+  --input-otp-slot-bg: var(--db-field-secondary);
+  --input-otp-slot-bg-hover: var(--db-field-secondary-hover);
+  --input-otp-slot-bg-focus: var(--db-field-secondary);
+}
+
+/*
+ * A search field's or an input group's text shrinks with its field, as a number field's does.
+ * The original let it keep a browser input's own width, about 180px, so in a narrow field it ran
+ * past the edge and pushed the clear button out of sight.
+ */
+.search-field__input,
+.input-group__input {
+  min-width: 0;
+}
+
+/*
+ * Under 640 wide a field is 40 tall, as a text field's 16px line makes it there. The original
+ * held a search, number or date field at 36 and clipped its 40-tall input inside.
+ */
+@media (width < 40rem) {
+  .search-field__group,
+  .number-field__group,
+  .date-input-group {
+    height: 2.5rem;
+  }
+}
+
+/*
+ * An alert is tinted in its status, as Flutter's is, with no edge and no shadow: the status
+ * colour at 12% over the surface (22% in dark), the brand's soft fill for accent and the second
+ * surface for default. The icon and title are in the status's emphasis tone, which holds its
+ * contrast on the tint, and the description is in the text colour.
+ */
+.alert {
+  --alert-tint-share: 12%;
+  --alert-tint: var(--surface-secondary);
+  --alert-ink: var(--foreground);
+  background-color: var(--alert-tint);
+  box-shadow: none;
+}
+
+.dark .alert,
+[data-theme='dark'] .alert {
+  --alert-tint-share: 22%;
+}
+
+.alert.alert--accent {
+  --alert-tint: var(--db-primary-soft);
+  --alert-ink: var(--db-primary-emphasis);
+}
+
+.alert.alert--success {
+  --alert-tint: color-mix(in srgb, var(--db-success) var(--alert-tint-share), var(--surface));
+  --alert-ink: var(--db-success-emphasis);
+}
+
+.alert.alert--warning {
+  --alert-tint: color-mix(in srgb, var(--db-warning) var(--alert-tint-share), var(--surface));
+  --alert-ink: var(--db-warning-emphasis);
+}
+
+.alert.alert--danger {
+  --alert-tint: color-mix(in srgb, var(--db-danger) var(--alert-tint-share), var(--surface));
+  --alert-ink: var(--db-danger-emphasis);
+}
+
+.alert .alert__indicator,
+.alert .alert__title {
+  color: var(--alert-ink);
+}
+
+.alert .alert__description {
+  color: var(--foreground);
+}
+
+/*
+ * The mark is 20 across in its 24 box: at 16 it read small beside a title and its detail. Its
+ * own icon or the status's, alike.
+ */
+.alert .alert__indicator {
+  padding: 2px;
+}
+
+.alert .alert__indicator > svg {
+  box-sizing: content-box;
+  width: 20px;
+  height: 20px;
+}
+
+/*
+ * An alert dialog's mark is beside its heading, 12 before it and centred on it, where it stood
+ * over it; the words run under both, the dialog's whole width. A close button in the corner keeps
+ * 24 clear of the heading.
+ */
+.alert-dialog__header:has(> .alert-dialog__icon) {
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
+
+.alert-dialog__dialog:has(> .alert-dialog__close-trigger) .alert-dialog__heading {
+  padding-inline-end: 24px;
+}
+
+/*
+ * A trail runs onto the next line when it has no room, 4 under the first, as Flutter's does: on
+ * a phone a few steps were wider than the page and ran off its side.
+ */
+.breadcrumbs {
+  flex-wrap: wrap;
+  row-gap: 4px;
+}
+
+/*
+ * A column of buttons is as wide as its widest, each button stretched to it, as Flutter's is: at
+ * each its own width, a longer one stood out past the rest at its square corners. An icon-only
+ * button keeps its square: stretched, it had lost its width and shrunk to its icon.
+ */
+.button-group.button-group--vertical {
+  align-items: stretch;
+}
+
+.button-group.button-group--vertical > .button:not(.button--icon-only) {
+  inline-size: auto;
+}
+
+/*
+ * A column of toggles is the same, as wide as its widest and each stretched to it, as Flutter's is:
+ * The original centred each at its own width, so the column's edges were ragged. An icon-only toggle keeps
+ * its square, as an icon-only button does.
+ */
+.toggle-button-group.toggle-button-group--vertical {
+  align-items: stretch;
+}
+
+.toggle-button-group.toggle-button-group--vertical > .toggle-button:not(.toggle-button--icon-only) {
+  inline-size: auto;
+}
+
+/*
+ * A chip is Flutter's: 24, 28 or 32 tall by size and round,
+ * a third of its height in from each end; its icon 0.55 of its height and 4 from its words; the
+ * words 12 (14 at lg) and medium, on the font's own line, as Flutter sets them. Its colours are the
+ * status tones Flutter's chips take, the alert's: soft is the status at 12% over the surface
+ * (22% in dark) with the emphasis ink, the brand's soft fill for accent and the second surface for
+ * default; primary is the solid fill with its own text; secondary the second surface with the ink;
+ * tertiary clear inside a hairline. The original's chip was 20 or 24 tall, its label 2 in, its soft
+ * colours its own mixes.
+ */
+.chip {
+  --chip-h: 24px;
+  --chip-tint-share: 12%;
+  --chip-tint: var(--surface-secondary);
+  --chip-ink: var(--foreground);
+  --chip-solid: var(--default);
+  --chip-on-solid: var(--default-foreground);
+  height: var(--chip-h);
+  gap: 4px;
+  padding: 0 calc(var(--chip-h) / 3);
+  border-radius: calc(var(--chip-h) / 2);
+  font-size: 12px;
+  line-height: normal;
+  font-weight: 500;
+}
+
+.dark .chip,
+[data-theme='dark'] .chip {
+  --chip-tint-share: 22%;
+}
+
+.chip.chip--md {
+  --chip-h: 28px;
+}
+
+.chip.chip--lg {
+  --chip-h: 32px;
+  font-size: 14px;
+}
+
+.chip .chip__label {
+  padding: 0;
+}
+
+.chip > svg {
+  flex-shrink: 0;
+  width: calc(var(--chip-h) * 0.55);
+  height: calc(var(--chip-h) * 0.55);
+}
+
+.chip.chip--accent {
+  --chip-tint: var(--db-primary-soft);
+  --chip-ink: var(--db-primary-emphasis);
+  --chip-solid: var(--db-primary);
+  --chip-on-solid: var(--db-primary-fg);
+}
+
+.chip.chip--success {
+  --chip-tint: color-mix(in srgb, var(--db-success) var(--chip-tint-share), var(--surface));
+  --chip-ink: var(--db-success-emphasis);
+  --chip-solid: var(--db-success);
+  --chip-on-solid: var(--db-success-fg);
+}
+
+.chip.chip--warning {
+  --chip-tint: color-mix(in srgb, var(--db-warning) var(--chip-tint-share), var(--surface));
+  --chip-ink: var(--db-warning-emphasis);
+  --chip-solid: var(--db-warning);
+  --chip-on-solid: var(--db-warning-fg);
+}
+
+.chip.chip--danger {
+  --chip-tint: color-mix(in srgb, var(--db-danger) var(--chip-tint-share), var(--surface));
+  --chip-ink: var(--db-danger-emphasis);
+  --chip-solid: var(--db-danger);
+  --chip-on-solid: var(--db-danger-fg);
+}
+
+.chip.chip--soft {
+  --chip-bg: var(--chip-tint);
+  --chip-fg: var(--chip-ink);
+}
+
+.chip.chip--primary {
+  --chip-bg: var(--chip-solid);
+  --chip-fg: var(--chip-on-solid);
+}
+
+.chip.chip--secondary {
+  --chip-bg: var(--surface-secondary);
+  --chip-fg: var(--chip-ink);
+}
+
+.chip.chip--tertiary {
+  --chip-bg: transparent;
+  --chip-fg: var(--chip-ink);
+  border: 1px solid var(--border);
+}
+
+/*
+ * Errors as Flutter shows them: a label keeps its colour when its field is invalid, and the
+ * error itself is red, under a checkbox, a radio or a switch too, where the original greys it. The
+ * field's own edge or control still turns the danger colour.
+ */
+.label--invalid,
+[data-invalid='true'] .label,
+[aria-invalid='true'] .label {
+  color: var(--foreground);
+}
+
+.checkbox > [data-slot='field-error'],
+.radio > [data-slot='field-error'],
+.switch > [data-slot='field-error'] {
+  color: var(--danger);
+}
+
+/*
+ * A required group's star is on the group's label only. The original meant to keep it off each
+ * option, but its rule names the radio's old anatomy, so every option's label repeated it.
+ */
+.radio[data-required='true'] > .radio__content[data-required='true'] > .label::after {
+  content: none;
+}
+
+/*
+ * A horizontal radio group keeps its label above its options and its description under them, as
+ * a horizontal checkbox group does and as Flutter draws both. The original turned the whole group into a
+ * row, label and all, so the label sat beside the first option, 16 away. The row stays, for radios
+ * placed straight in the group; anything else in it (the label, the description, the options' own
+ * row) takes a line of its own, and each radio the original's 16px above it, as in every other group.
+ */
+.radio-group[data-orientation='horizontal'] {
+  row-gap: 0;
+
+  > :not([data-slot='radio']) {
+    flex-basis: 100%;
+  }
+
+  [data-slot='radio'] {
+    margin-top: 1rem;
+  }
+}
+
+/*
+ * Options placed straight in a group, one under another, are 24 apart, the rhythm a tree's groups
+ * have on both platforms. The original's 16 held between options composed straight
+ * in a CheckboxGroup or a vertical RadioGroup, where a tree's, laid in a row of their own, were 24.
+ * The first stays 16 under the group's label.
+ */
+.checkbox-group > [data-slot='checkbox'] + [data-slot='checkbox'],
+.radio-group[data-orientation='vertical'] > [data-slot='radio'] + [data-slot='radio'] {
+  margin-top: 1.5rem;
+}
+
+/*
+ * An option's label, beside a checkbox, a radio or a switch, is regular weight, as Flutter's is.
+ * A field's label above it stays medium, as on both platforms.
+ */
+.checkbox .checkbox__content,
+.radio .radio__content,
+.switch .switch__content,
+.checkbox .checkbox__content .label,
+.radio .radio__content .label,
+.switch .switch__content .label {
+  @apply font-normal;
+}
+
+/* A number field with both steppers centres its value between them, as Flutter's does. */
+.number-field__group:has([slot='decrement']):has([slot='increment']) .number-field__input {
+  text-align: center;
+}
+
+/*
+ * A text field's prefix and suffix are in the muted colour: the original's were the placeholder
+ * colour, 2.6:1 on a white field, under AA.
+ */
+.input-group__prefix,
+.input-group__suffix {
+  color: var(--muted);
+}
+
+/*
+ * A toman field's word sits beside its figure, as a text field's suffix does: 14 in the
+ * muted colour, 12 from the figure and from the field's end or its plus. The original's grid had no
+ * column for it, so it fell to a row of its own under the field, which hid it.
+ */
+.number-field__group:has([data-slot='unit']) {
+  grid-template-columns: 1fr auto;
+
+  &:has([slot='decrement']) {
+    grid-template-columns: 40px 1fr auto;
+  }
+
+  &:has([slot='increment']) {
+    grid-template-columns: 1fr auto 40px;
+  }
+
+  &:has([slot='decrement']):has([slot='increment']) {
+    grid-template-columns: 40px 1fr auto 40px;
+  }
+
+  .number-field__input {
+    padding-inline-end: 0;
+  }
+}
+
+.number-field__group [data-slot='unit'] {
+  padding-inline: 0.75rem;
+  color: var(--muted);
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
+  white-space: nowrap;
+}
+
+/*
+ * A menu's chosen options are highlighted, as Flutter's menu marks its choice, where the original drew a
+ * tick: in a select's, a combo box's or a dropdown's menu a chosen option
+ * is the neutral fill, and one under the pointer half of it, so the two never look alike. A list
+ * on a page keeps its radio or checkbox and the original's hover.
+ */
+:is(.select__popover, .combo-box__popover) .list-box-item,
+.dropdown__popover .menu-item {
+  @media (hover: hover) {
+    &:hover,
+    &[data-hovered='true'] {
+      background-color: color-mix(in oklab, var(--default) 50%, transparent);
+    }
+  }
+
+  &[data-selected='true'],
+  &[aria-selected='true'],
+  &[aria-checked='true'] {
+    background-color: var(--default);
+  }
+}
+
+/*
+ * A submenu's chevron points the way its menu opens, toward the page's end: the left on a Persian
+ * page, where the original's pointed right on both.
+ */
+[data-slot='submenu-indicator']:dir(rtl) > svg {
+  scale: -1 1;
+}
+
+/* A chosen menu item's tick is Lucide's check, filling its 16 square, where the original's was 10. */
+.menu-item__indicator [data-slot='menu-item-indicator--checkmark'] {
+  width: 16px;
+  height: 16px;
+}
+
+/*
+ * An icon leading a list's, a menu's or a dropdown's item is 16, as a button's and a tag's are and
+ * as a tree's item draws one; the original left it at its own size, 24 for a Lucide icon.
+ */
+.list-box-item > svg,
+.menu-item > svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/*
+ * A list on a page marks its selection as Flutter's list tiles do: an indicator of kind
+ * `choice` is Flutter's radio when the list takes one choice and its checkbox when it takes
+ * several, at the item's start.
+ */
+.list-box-item:has(.list-box-item__indicator[data-kind]) {
+  padding-inline-start: 2.5rem;
+  padding-inline-end: 0.5rem;
+}
+
+.list-box-item .list-box-item__indicator[data-kind] {
+  inset-inline-start: 0.75rem;
+  inset-inline-end: auto;
+  width: 18px;
+  height: 18px;
+  transition: none;
+
+  & > svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.list-box-item .list-box-item__indicator[data-kind='single'] {
+  width: 16px;
+  height: 16px;
+  inset-inline-start: calc(0.75rem + 1px);
+}
+
+/*
+ * A tag is Flutter's chip, Flutter's in every part, measured off its
+ * InputChip. 28, 32 or 36 tall, with 2, 4 or 6 above and below it where Flutter keeps its tap
+ * target, 8 apart; 8px corners, 1px edge; 14px medium text on a 1.35 line, 16 in from each edge
+ * past the edge. A tag lies on the second surface, or the surface outlined in the border colour for
+ * `surface`, whether or not it does anything (Flutter's InputChip had faded one with nothing
+ * to press as if disabled). A chosen one is gilt with slate-700 on it, as a chosen toggle is
+ * (Material's iris soft fill was all but the unchosen one's, so a click seemed to do nothing).
+ * An icon, the tick of a chosen tag among several and the remove button each take a square as wide
+ * as the line, 8 from the edge and 8 from the words; the tick is Material's, and takes the icon's
+ * square. A disabled tag lies on the surface, its words and marks at 38%. Hovered, focused and pressed are Flutter's washes over the fill, its theme's own (the
+ * state-hover, -focus and -press tokens): black at 4%, 12% and a 40% grey (white at 4% and 12%, and
+ * a 25% grey, in dark), and no ring.
+ */
+.tag {
+  --tag-line: calc(14px * 1.35);
+  --tag-fill: var(--surface-secondary);
+  --tag-ink: var(--muted);
+  --tag-mark: var(--muted);
+  --tag-hover: transparent;
+  --tag-focus: transparent;
+  --tag-press: transparent;
+  --tag-hover-wash: var(--db-state-hover);
+  --tag-focus-wash: var(--db-state-focus);
+  --tag-press-wash: var(--db-state-press);
+  box-sizing: border-box;
+  min-height: 32px;
+  margin-block: 4px;
+  gap: 8px;
+  padding: 0 16px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background-image:
+    linear-gradient(var(--tag-press) 0 0), linear-gradient(var(--tag-focus) 0 0),
+    linear-gradient(var(--tag-hover) 0 0);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.35;
+  cursor: default;
+  transition: background-color 195ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  & svg {
+    width: 16px;
+    height: 16px;
+    margin-inline: calc((var(--tag-line) - 16px) / 2);
+    color: var(--tag-mark);
+  }
+
+  /* A leading icon or tick: 8 from the edge, so the edge's 16 less the gap. */
+  & > [role='gridcell'] > svg:first-child:not([data-slot='tag-check']) {
+    margin-inline-start: calc((var(--tag-line) - 16px) / 2 - 8px);
+  }
+}
+
+.tag.tag--sm {
+  min-height: 28px;
+  margin-block: 2px;
+  padding: 0 16px;
+}
+
+.tag.tag--lg {
+  min-height: 36px;
+  margin-block: 6px;
+  padding: 0 16px;
+  border-radius: 8px;
+}
+
+.tag-group .tag-group__list {
+  gap: 8px;
+}
+
+/* A group with no tags says so as Flutter's does: 14px on a 1.5 line, in the muted colour. */
+.tag-group .tag-group__empty {
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+/*
+ * Painted from the variables over every state of the original's: this sits in the components layer with
+ * The original's tag, the most specific rule of which, a hovered tag neither chosen nor disabled, is
+ * (0,4,0).
+ */
+.tag.tag:is(.tag--sm, .tag--md, .tag--lg):is(.tag--default, .tag--surface) {
+  background-color: var(--tag-fill);
+  color: var(--tag-ink);
+}
+
+.tag.tag--surface {
+  --tag-fill: var(--surface);
+  border-color: var(--border);
+}
+
+.tag:is([data-selected='true'], [aria-selected='true']) {
+  --tag-fill: var(--db-control-fill);
+  --tag-ink: var(--db-control-on-fill);
+  --tag-mark: var(--db-control-on-fill);
+}
+
+.tag:is([data-disabled='true'], [aria-disabled='true']) {
+  --tag-fill: var(--surface);
+  --tag-ink: color-mix(in srgb, var(--foreground) 38%, transparent);
+  --tag-mark: var(--tag-ink);
+  opacity: 1;
+}
+
+.tag:is([data-disabled='true'], [aria-disabled='true']):is(
+    [data-selected='true'],
+    [aria-selected='true']
+  ) {
+  --tag-fill: var(--db-control-fill);
+}
+
+/*
+ * Hover and press wash only a tag the body of which does something. A tag that opens a page is one:
+ * a tree's says so with [data-link], and React Aria marks any with an href [data-href], which a
+ * page's own tags had lacked, so they took the plain pointer and no wash.
+ */
+.tag:is([data-selection-mode], [data-link], [data-href]):not([data-disabled='true']) {
+  cursor: var(--cursor-interactive);
+
+  &:is(:hover, [data-hovered='true']) {
+    --tag-hover: var(--tag-hover-wash);
+  }
+
+  &:is(:active, [data-pressed='true']) {
+    --tag-press: var(--tag-press-wash);
+  }
+}
+
+/*
+ * Focus is the 12% wash, on any tag the keyboard reaches. Flutter's chip that does nothing takes no
+ * focus at all; React Aria's grid lets the keys through every tag, so each must show it has it.
+ */
+.tag:is(:focus-visible, [data-focus-visible='true']) {
+  --tag-focus: var(--tag-focus-wash);
+  outline: none;
+  box-shadow: none;
+}
+
+/*
+ * Material's tick, in a square as wide as the line: from 0.2375, 0.4625 through 0.425, 0.65 to
+ * 0.7625, 0.3125 of it, a stroke a twelfth of it wide. It grows in over 150ms and draws itself
+ * after 45ms, as the fill changes over 195ms.
+ */
+.tag [data-slot='tag-check'] {
+  width: var(--tag-line);
+  height: var(--tag-line);
+  margin-inline: -8px 0;
+  color: var(--tag-mark);
+  transition: width 150ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  @starting-style {
+    width: 0;
+  }
+
+  & path {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 150ms cubic-bezier(0.4, 0, 0.2, 1) 45ms;
+
+    @starting-style {
+      stroke-dashoffset: 1;
+    }
+  }
+}
+
+/* A chosen tag with an icon: the tick takes its square. */
+.tag [data-slot='tag-check'] + svg {
+  display: none;
+}
+
+.tag .tag__remove-button {
+  width: var(--tag-line);
+  height: var(--tag-line);
+  margin-inline-end: -8px;
+  padding: 0;
+  border-radius: 9999px;
+  background: none;
+  color: var(--tag-mark);
+
+  &:is(:hover, [data-hovered='true'], :active, [data-pressed='true']) {
+    background: none;
+  }
+
+  & svg {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tag,
+  .tag [data-slot='tag-check'],
+  .tag [data-slot='tag-check'] path {
+    transition: none;
+  }
+}
+
+/* A spinner's arc runs over a track ring, the off-track shade, as Flutter's does. */
+.spinner [data-slot='spinner-track'] {
+  stroke: var(--db-control-track);
+}
+
+/*
+ * A link is always underlined, as Flutter's is: 1px in the link's own colour, so it is told
+ * apart without relying on colour. The original underlined it only under a hover, in a faded grey. A link
+ * drawn as a button is not underlined at all; `:where` leaves the rule as specific as a bare
+ * `.link`, so a breadcrumb's step, a link too, keeps its own underline under the pointer only.
+ */
+.link:where(:not(.button)),
+.link:where(:not(.button)):is(:hover, [data-hovered='true'], :active, [data-pressed='true']) {
+  text-decoration-line: underline;
+  text-decoration-color: currentColor;
+  text-decoration-thickness: 1px;
+}
+
+/*
+ * A link's icon stands 4 from its words, on their middle. The arrow of a link to another site does
+ * too, turned on a right-to-left page so it points away from the words it follows, as iOS turns its
+ * own. The original set only that arrow apart, raised over the words like a footnote and pointing back
+ * across them on a Persian page; any other icon touched its words.
+ */
+.link {
+  column-gap: 4px;
+}
+
+.link .link__icon[data-default-icon='true'] {
+  margin-inline-start: 0;
+  padding-bottom: 0;
+}
+
+.link:is([dir='rtl'], [dir='rtl'] *) .link__icon[data-default-icon='true'] svg {
+  scale: -1 1;
+}
+
+/*
+ * A link drawn as a button, with `buttonVariants`, is drawn as the button: its icon 8 from its
+ * words, as a Button's is, where the original's link stylesheet set no gap and the icon touched them.
+ */
+.link.button {
+  column-gap: 8px;
+}
+
+/*
+ * A table's chosen rows and totals. A chosen row is tinted with the brand at 8%, as Material
+ * tints one; the original's tint was all but invisible. Rows in Table.Foot (a `<tfoot>`) are
+ * totals: on the table's grey, as its head is, in the semibold weight, lined up with their
+ * columns, and at full colour even when disabled so that a selection skips them.
+ */
+.table__row[data-selected='true'] .table__cell {
+  background-color: color-mix(in srgb, var(--db-primary) 8%, var(--surface));
+}
+
+.table__foot .table__row {
+  border-bottom-width: 0;
+  opacity: 1;
+}
+
+.table__foot .table__cell {
+  border-bottom-width: 0;
+  background-color: transparent;
+  font-weight: 600;
+}
+
+/*
+ * A column's alignment, Diba's own: `align` on Table.Column and Table.Cell, as the Column block's,
+ * puts its heading and its cells at the start, the middle or the end. A sortable heading at the end
+ * keeps its words over its figures, the chevron just before them; the original put the words at the start
+ * and the chevron at the end whatever the column's alignment, so a sorted sum's heading stood over
+ * nothing. Flutter's does the same.
+ */
+.table__column[data-align='center'],
+.table__cell[data-align='center'] {
+  text-align: center;
+}
+
+.table__column[data-align='end'],
+.table__cell[data-align='end'] {
+  text-align: end;
+}
+
+.table__column[data-align='center'] .table__sortable-column-header {
+  justify-content: center;
+  column-gap: 4px;
+}
+
+.table__column[data-align='end'] .table__sortable-column-header {
+  flex-direction: row-reverse;
+  justify-content: flex-start;
+  column-gap: 4px;
+}
+
+/*
+ * A pager on a grey card, or in a primary table's footer, marks its page with the surface, as a
+ * table's rows lie on it. Its neutral fill elsewhere is the second surface's own colour in dark,
+ * slate-800 on slate-800, and the third's in light, slate-200 on slate-200, and the page shown had
+ * no mark there.
+ */
+:is(.card--secondary, .card--tertiary, .surface--secondary, .surface--tertiary)
+  .pagination__link[data-active='true'],
+.table-root--primary .table__footer .pagination__link[data-active='true'] {
+  --pagination-link-bg: var(--surface);
+}
+
+/*
+ * A table with no rows says so as Flutter's does: its message in the middle in the muted
+ * colour, 24 above and below it, and in primary on the white body, 16 round. The original leaves React
+ * Aria's empty cell unstyled, which put the words flush against the grey frame.
+ */
+.table__empty {
+  padding: 24px 16px;
+  text-align: center;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--muted);
+}
+
+.table-root--primary .table__empty {
+  background-color: var(--surface);
+  border-radius: min(32px, var(--radius-2xl));
+}
+
+/*
+ * A date field at rest shows its value as Flutter's does: the day, the month's name and the
+ * year, with the time as hours and minutes, drawn over the typed segments. Once the field has focus
+ * the segments come back to be typed into; a click lands on them through the drawn text. The
+ * segments stay what a screen reader reads.
+ */
+.date-input-group__resting {
+  position: relative;
+  display: flex;
+  flex: 1 1 0%;
+  align-self: stretch;
+  min-width: 0;
+  /*
+   * A half too narrow for its date and time scrolls within itself while typed, rather than its
+   * segments spilling over the next half and the calendar button, which they took the press of.
+   */
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+}
+
+.date-input-group__display {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding-inline: 0.75rem;
+  color: var(--field-foreground);
+  font-size: var(--text-base);
+  white-space: nowrap;
+  pointer-events: none;
+
+  @media (width >= 40rem) {
+    font-size: var(--text-sm);
+  }
+
+  .date-input-group:has([data-slot='date-input-group-prefix']) & {
+    padding-inline-start: 0.5rem;
+  }
+
+  .date-input-group:has([data-slot='date-input-group-suffix']) & {
+    padding-inline-end: 0.5rem;
+  }
+}
+
+/*
+ * A Persian date's typed segments run left to right, as a date written in Persian digits does: its
+ * day at the right, «روز/ماه/سال», and a time as a clock reads it, «۱۴:۳۰». Reversed rather than
+ * turned left to right, so the field keeps its direction: they stay at its start, the right, and
+ * its paddings where they were. The arrow keys move by where a segment is drawn, so they follow.
+ */
+.date-input-group__input:dir(rtl) {
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+
+/*
+ * With a time, the date stays at the right and the time comes after it, to its left, as in «۲۵ مهر
+ * ۱۴۰۵، ۱۴:۳۰»: the time's segments and their colons are ordered before the date's, the comma
+ * between them after the time, and a half of the day, «ب.ظ.», before the time, as it is written.
+ */
+.date-input-group__input:dir(rtl) {
+  &
+    > :is(
+      [data-type='hour'],
+      [data-type='minute'],
+      [data-type='second'],
+      [data-type='timeZoneName']
+    ),
+  &
+    > [data-type='literal']:is(
+      :has(+ [data-type='hour']),
+      [data-type='hour'] + *,
+      [data-type='minute'] + *,
+      [data-type='second'] + *,
+      :has(+ [data-type='timeZoneName'])
+    ) {
+    order: -2;
+  }
+
+  & > [data-type='literal']:has(+ [data-type='literal'] + [data-type='hour']) {
+    order: -1;
+  }
+
+  & > [data-type='dayPeriod'] {
+    order: -4;
+  }
+
+  & > [data-type='literal']:has(+ [data-type='dayPeriod']) {
+    order: -3;
+  }
+}
+
+.date-input-group:not([data-focus-within='true'], :focus-within)
+  .date-input-group__resting:has(.date-input-group__display)
+  .date-input-group__segment {
+  opacity: 0;
+}
+
+.date-input-group:is([data-focus-within='true'], :focus-within) .date-input-group__display {
+  display: none;
+}
+
+/*
+ * An empty date field's placeholders keep their colours when it is invalid, as an empty text
+ * field's placeholder does. The original turned them the danger colour; the field's edge and
+ * its error already say it.
+ */
+.date-input-group__segment[data-invalid='true'][data-placeholder='true'] {
+  color: var(--field-placeholder);
+}
+
+.date-input-group__segment[data-invalid='true'][data-type='literal'] {
+  color: var(--muted);
+}
+
+/*
+ * A range's second date sits 12 after the dash while it is empty or typed, as it does at rest and
+ * as the first sits from the field's edge; the original set it against the dash.
+ */
+.date-input-group:has(.date-range-picker__range-separator) .date-input-group__input[slot='end'] {
+  padding-inline-start: 0.75rem;
+}
+
+/* The calendar button's icon is 20px in the muted colour, as Flutter's suffix icon is. */
+.date-picker .date-picker__trigger-indicator,
+.date-range-picker .date-range-picker__trigger-indicator {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: var(--muted);
+
+  & svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+}
+
+/*
+ * The calendar in the choices' roles: the picked day gilt with slate-700 on it, as a checked box is;
+ * today, the month arrows and the year switch in the text colour, where the original drew them in the
+ * copper since taken out of the components.
+ */
+:is(.calendar, .range-calendar) {
+  --accent: var(--db-control-fill);
+  --accent-hover: var(--db-control-fill);
+  --accent-foreground: var(--db-control-on-fill);
+  --accent-soft-foreground: var(--foreground);
+}
+
+/*
+ * The calendar's title between its arrows, previous at the start and next at the end, where
+ * The original put the title at the start and both arrows at the end. The title is a pill in the neutral
+ * fill, darker under a hover, saying it opens the years and then the months, where the original drew a
+ * chevron beside it; while they show it is gilt with slate-700 on it, as a chosen toggle is.
+ * It reads «مهر ۱۴۰۵», 14px and medium.
+ */
+:is(.calendar .calendar__header, .range-calendar .range-calendar__header) {
+  justify-content: space-between;
+  gap: 8px;
+}
+
+/* A heading alone, where a calendar has no year picker, is centred between the arrows as the pill is. */
+:is(.calendar .calendar__heading, .range-calendar .range-calendar__heading) {
+  text-align: center;
+}
+
+/*
+ * A range's days between its ends lie on a band in a saturated tint of the brand, saffron-200
+ * (saffron-800 in dark): its soft fill, saffron-50, was all but white beside the gilt ends.
+ */
+.range-calendar {
+  --range-band: var(--db-saffron-200);
+}
+
+.dark .range-calendar,
+[data-theme='dark'] .range-calendar {
+  --range-band: var(--db-saffron-800);
+}
+
+.range-calendar .range-calendar__cell[data-selected='true']:not([data-outside-month='true']) {
+  background-color: var(--range-band);
+}
+
+/* Today, under the days, in the same pill. */
+:is(.calendar, .range-calendar) .calendar__footer {
+  display: flex;
+  justify-content: center;
+  padding-top: 12px;
+}
+
+:is(.calendar, .range-calendar) :is(.calendar-year-picker__trigger, .calendar__today) {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  justify-content: center;
+  height: 28px;
+  padding-inline: 12px;
+  border-radius: 9999px;
+  background-color: var(--default);
+  color: var(--default-foreground);
+  transition:
+    background-color 150ms var(--ease-out),
+    color 150ms var(--ease-out),
+    scale 100ms var(--ease-out);
+
+  @media (hover: hover) {
+    /* No weight from the :not, so the open pill's gilt below still wins under the pointer. */
+    &:is(:hover, [data-hovered='true']):not(:where(:disabled, [data-disabled='true'])) {
+      background-color: var(--default-hover);
+    }
+  }
+
+  &:is(:active, [data-pressed='true']) {
+    scale: 0.97;
+  }
+
+  &[data-open='true'] {
+    background-color: var(--db-control-fill);
+    color: var(--db-control-on-fill);
+  }
+
+  & .calendar-year-picker__trigger-heading {
+    color: inherit;
+  }
+
+  /* Off with the calendar, or today past its bounds: at half. */
+  &:is(:disabled, [data-disabled='true']) {
+    opacity: 0.5;
+    cursor: var(--cursor-disabled);
+  }
+}
+
+:is(.calendar, .range-calendar) .calendar__today {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  cursor: var(--cursor-interactive);
+
+  &:is(:focus-visible, [data-focus-visible='true']) {
+    @apply status-focused;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(.calendar, .range-calendar) :is(.calendar-year-picker__trigger, .calendar__today) {
+    transition: none;
+  }
+}
+
+/*
+ * In a right-to-left calendar the month arrows point the way they move: previous to the right,
+ * next to the left. The original turns them back inside a date picker's popover, so they pointed the
+ * wrong way in Persian.
+ */
+.date-picker__popover:dir(rtl) .calendar__nav-button-icon,
+.date-range-picker__popover:dir(rtl) .range-calendar__nav-button-icon {
+  rotate: 180deg;
+}
+
+/*
+ * Diba's avatar. A circle 32, 40 or 48 across, its initials 12, 14 or 17 and medium. Without
+ * a colour of its own or its group's, a named avatar takes its name's hue (`data-hue`): the hue
+ * 18% over the surface (30% in dark), its initials the hue 62% into the text colour (55% in
+ * dark). A colour from the tree is Diba's status tone, as an alert's and a chip's are: on the
+ * neutral fill in its emphasis ink, or, soft, on its tint (12% over the surface, 22% in dark).
+ * A presence dot sits at the bottom of the end side, ringed in the surface; `data-ringed` draws
+ * a gilt ring 2 outside it, 2 clear. Neither is drawn in a stack (the block leaves them out).
+ */
+.avatar {
+  --avatar-size: 40px;
+  --avatar-tint-share: 18%;
+  --avatar-ink-share: 62%;
+  --avatar-status-share: 12%;
+  inline-size: var(--avatar-size);
+  block-size: var(--avatar-size);
+  border-radius: 9999px;
+  background-color: transparent;
+  overflow: visible;
+}
+
+.dark .avatar,
+[data-theme='dark'] .avatar {
+  --avatar-tint-share: 30%;
+  --avatar-ink-share: 55%;
+  --avatar-status-share: 22%;
+}
+
+/* The face carries the fill; the root only holds it, the photo and the dot. */
+.avatar .avatar__fallback {
+  --avatar-fill: var(--default);
+  --avatar-ink: var(--default-foreground);
+  background-color: var(--avatar-fill);
+  color: var(--avatar-ink);
+}
+
+.avatar .avatar__fallback--accent {
+  --avatar-ink: var(--db-primary-emphasis);
+}
+
+.avatar .avatar__fallback--success {
+  --avatar-ink: var(--db-success-emphasis);
+}
+
+.avatar .avatar__fallback--warning {
+  --avatar-ink: var(--db-warning-emphasis);
+}
+
+.avatar .avatar__fallback--danger {
+  --avatar-ink: var(--db-danger-emphasis);
+}
+
+.avatar.avatar--soft .avatar__fallback--default {
+  --avatar-fill: var(--surface-secondary);
+  --avatar-ink: var(--foreground);
+}
+
+.avatar.avatar--soft .avatar__fallback--accent {
+  --avatar-fill: var(--db-primary-soft);
+}
+
+.avatar.avatar--soft .avatar__fallback--success {
+  --avatar-fill: color-mix(in srgb, var(--db-success) var(--avatar-status-share), var(--surface));
+}
+
+.avatar.avatar--soft .avatar__fallback--warning {
+  --avatar-fill: color-mix(in srgb, var(--db-warning) var(--avatar-status-share), var(--surface));
+}
+
+.avatar.avatar--soft .avatar__fallback--danger {
+  --avatar-fill: color-mix(in srgb, var(--db-danger) var(--avatar-status-share), var(--surface));
+}
+
+.avatar.avatar--sm {
+  --avatar-size: 32px;
+}
+
+.avatar.avatar--lg {
+  --avatar-size: 48px;
+}
+
+.avatar .avatar__fallback,
+.avatar .avatar__image {
+  border-radius: inherit;
+}
+
+.avatar .avatar__image {
+  object-fit: cover;
+}
+
+.avatar .avatar__fallback {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.avatar.avatar--sm .avatar__fallback {
+  font-size: 12px;
+}
+
+.avatar.avatar--lg .avatar__fallback {
+  font-size: 17px;
+}
+
+/* An icon, half the avatar across. */
+.avatar .avatar__fallback svg {
+  inline-size: 50%;
+  block-size: 50%;
+}
+
+.avatar[data-hue] {
+  --avatar-hue: var(--db-saffron-600);
+}
+
+.avatar[data-hue='garnet'] {
+  --avatar-hue: var(--db-garnet-500);
+}
+
+.avatar[data-hue='emerald'] {
+  --avatar-hue: var(--db-emerald-600);
+}
+
+.avatar[data-hue='sky'] {
+  --avatar-hue: var(--db-sky-600);
+}
+
+.avatar[data-hue='iris'] {
+  --avatar-hue: var(--db-iris-500);
+}
+
+/* After the soft rules: a named avatar in a soft group still takes its name's hue. */
+.avatar[data-hue] .avatar__fallback {
+  --avatar-fill: color-mix(in srgb, var(--avatar-hue) var(--avatar-tint-share), var(--surface));
+  --avatar-ink: color-mix(in srgb, var(--avatar-hue) var(--avatar-ink-share), var(--foreground));
+}
+
+.avatar .avatar__presence {
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline-end: 0;
+  box-sizing: border-box;
+  inline-size: 12px;
+  block-size: 12px;
+  border: 2px solid var(--surface);
+  border-radius: 9999px;
+  background-color: var(--success);
+}
+
+.avatar.avatar--sm .avatar__presence {
+  inline-size: 10px;
+  block-size: 10px;
+}
+
+.avatar.avatar--lg .avatar__presence {
+  inline-size: 14px;
+  block-size: 14px;
+}
+
+.avatar .avatar__presence[data-presence='away'] {
+  background-color: var(--warning);
+}
+
+.avatar .avatar__presence[data-presence='busy'] {
+  background-color: var(--danger);
+}
+
+.avatar .avatar__presence[data-presence='offline'] {
+  background-color: var(--muted);
+}
+
+.avatar[data-ringed] {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/*
+ * A stack overlaps by a quarter of an avatar; a grid sets them 12 apart. The count after the
+ * first few is a pill in the brand's hue, as a saffron avatar is tinted, 8 shorter than the avatars
+ * and 6 after them, reading "+3 more" («+۳ نفر»).
+ */
+.avatar-group > .avatar {
+  --avatar-group-overlap: calc(var(--avatar-size) / 4);
+}
+
+.avatar-group.avatar-group--grid {
+  gap: 12px;
+}
+
+.avatar-group .avatar-group__count {
+  --avatar-hue: var(--db-saffron-600);
+  inline-size: auto;
+  block-size: calc(var(--avatar-size) - 8px);
+  border-radius: 9999px;
+  background-color: color-mix(in srgb, var(--avatar-hue) var(--avatar-tint-share), var(--surface));
+  box-shadow: none;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+.avatar-group:not(.avatar-group--grid) > .avatar + .avatar-group__count {
+  margin-inline-start: 6px;
+}
+
+.avatar-group .avatar-group__count .avatar__fallback {
+  padding-inline: 10px;
+  background-color: transparent;
+  color: color-mix(in srgb, var(--avatar-hue) var(--avatar-ink-share), var(--foreground));
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.avatar-group .avatar-group__count.avatar--sm .avatar__fallback {
+  padding-inline: 8px;
+}
+
+.avatar-group .avatar-group__count.avatar--lg .avatar__fallback {
+  padding-inline: 12px;
+  font-size: 14px;
+}
+
+/* The last face before the count has nothing over it to cut round. */
+.avatar-group.avatar-group--clip > .avatar:has(+ .avatar-group__count) {
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+/*
+ * A tooltip wraps between words. The original's `break-all` broke Persian words in the middle,
+ * «رایگان ا / ست»; a word longer than the line still breaks.
+ */
+.tooltip {
+  word-break: normal;
+  overflow-wrap: anywhere;
+}
+
+/*
+ * A code reads left to right on a Persian page too, its slots at the page's start, as Flutter's do.
+ */
+.input-otp {
+  direction: ltr;
+}
+
+.input-otp:dir(rtl) {
+  justify-content: flex-end;
+}
+
+/* Pages too many for the row wrap onto the next, as Flutter's do, where the original's ran off the
+   page's edge. */
+.pagination__content {
+  flex-wrap: wrap;
+}
+
+/*
+ * A toast's close button shows when the keyboard reaches it, as it does under the pointer.
+ * The original reveals it on :hover only, so Tab focused a button no one could see.
+ */
+.toast:not([data-exiting='true']) .toast__close-button[data-focus-visible='true'] {
+  pointer-events: auto;
+  opacity: 1;
+}
+
+/*
+ * A fieldset's fields are 24 under its legend when no description stands between.
+ * A rendered legend is no flex item, so the fieldset's gap never reached it and the
+ * fields sat flush on it; a description stays right under it.
+ */
+.fieldset > .fieldset__legend + :is(.fieldset__field-group, .fieldset__actions) {
+  margin-block-start: 24px;
+}
+
+/*
+ * An icon in a tab is 16 and 8 before its label, as a tree's tab draws it:
+ * The original left a Lucide icon at its own 24, against the label.
+ */
+.tabs__tab > svg {
+  inline-size: 16px;
+  block-size: 16px;
+  flex-shrink: 0;
+}
+
+.tabs__tab:has(> svg) {
+  column-gap: 8px;
+}

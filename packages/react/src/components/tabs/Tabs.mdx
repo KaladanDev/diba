@@ -1,0 +1,186 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Tabs.stories'
+import { Keys, Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# Tabs
+
+Sections of one thing, one shown at a time: a product's details, pictures and stock; the orders by
+status. The tabs name the sections and stay; the panel under them changes.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **One thing's sections,** each worth a look on its own, such as a product's details and stock.
+- **One list seen several ways,** such as the orders by status, each tab with its count.
+
+Not for steps that follow one another: the reader needs to see where they are. Not for pages of
+their own: use links. Not for two or three choices that change a value: use a ToggleButtonGroup.
+
+## Import
+
+```tsx
+import { Tabs } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<Tabs>
+  <Tabs.ListContainer>
+    <Tabs.List aria-label="Product sections">
+      <Tabs.Tab id="details">
+        Details
+        <Tabs.Indicator />
+      </Tabs.Tab>
+      <Tabs.Tab id="stock">
+        Stock
+        <Tabs.Indicator />
+      </Tabs.Tab>
+    </Tabs.List>
+  </Tabs.ListContainer>
+  <Tabs.Panel id="details">…</Tabs.Panel>
+  <Tabs.Panel id="stock">…</Tabs.Panel>
+</Tabs>
+```
+
+<Parts
+  rows={[
+    ['Tabs', 'Which tab is chosen, its look and its orientation.'],
+    [
+      'Tabs.ListContainer',
+      'Holds the row, scrolling it with arrows at its ends when it is too long.',
+    ],
+    ['Tabs.List', 'The tabs: a tablist, named by its aria-label.'],
+    [
+      'Tabs.Tab',
+      'A tab, 32 tall: its label 14 on 20 and medium, the chosen in the text’s colour and the rest muted.',
+    ],
+    [
+      'Tabs.Indicator',
+      'What marks the chosen tab: the pill, or the line under it; it slides between them.',
+    ],
+    ['Tabs.Panel', 'A tab’s section, 8 under the row, shown while its tab is chosen.'],
+    ['Tabs.Separator', 'A line between two tabs, when you want one.'],
+  ]}
+/>
+
+## Examples
+
+### Two looks
+
+`primary`, the default, is a 40 tall track on the neutral fill, the tabs sharing it and the chosen
+one a pill on the surface. `secondary` is a row over a line, the chosen tab's line in the accent
+colour.
+
+<Canvas of={Stories.Variants} />
+
+### Icons
+
+An icon before a label is 16, 8 before it.
+
+<Canvas of={Stories.WithIcons} />
+
+### A column
+
+`orientation="vertical"` puts the tabs in a column beside the panel; the up and down arrows move
+along it.
+
+<Canvas of={Stories.Vertical} />
+
+### Off
+
+`isDisabled` on a tab leaves it out of reach, drawn at half; on the Tabs, all of them.
+
+<Canvas of={Stories.Disabled} />
+
+### More than fit
+
+The row scrolls, with arrows at the ends that have more.
+
+<Canvas of={Stories.ManyTabs} />
+
+### Controlled
+
+Hold the chosen tab with `selectedKey` and `onSelectionChange`, to open a page on a given tab.
+
+<Canvas of={Stories.Controlled} />
+
+## What they split
+
+<Canvas of={Stories.OrderStatuses} />
+<Canvas of={Stories.ProductPage} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+### Tabs
+
+<PropsTable
+  rows={[
+    ['variant', "'primary' | 'secondary'", "'primary'", 'A pill on a track, or a line under it.'],
+    ['orientation', "'horizontal' | 'vertical'", "'horizontal'", 'A row, or a column.'],
+    ['selectedKey', 'Key', null, 'The chosen tab, controlled.'],
+    ['defaultSelectedKey', 'Key', 'the first', 'The chosen tab at first.'],
+    ['onSelectionChange', '(key: Key) => void', null, 'Called as another tab is chosen.'],
+    ['disabledKeys', 'Iterable<Key>', null, 'Tabs that are off.'],
+    ['isDisabled', 'boolean', 'false', 'Every tab is off.'],
+    [
+      'keyboardActivation',
+      "'automatic' | 'manual'",
+      "'automatic'",
+      'Whether an arrow key chooses the tab it reaches, or Enter does.',
+    ],
+  ]}
+/>
+
+### Tabs.Tab
+
+<PropsTable
+  rows={[
+    ['id', 'Key', null, 'Matches its panel’s id.'],
+    ['isDisabled', 'boolean', 'false', 'It cannot be chosen.'],
+    ['href', 'string', null, 'Makes it a link to a page.'],
+  ]}
+/>
+
+### The rest
+
+`Tabs.List` takes an `aria-label`; `Tabs.Panel` an `id` that matches its tab. Each takes a
+`className`.
+
+## Accessibility
+
+The row is a `tablist` and each tab a `tab`, controlling its `tabpanel`. Tab reaches the chosen tab
+only; the arrows move between tabs and choose them as they go.
+
+<Keys
+  rows={[
+    ['ArrowRight ArrowLeft', 'To the next or the previous tab, as the page reads.'],
+    ['ArrowDown ArrowUp', 'The same, in a column.'],
+    ['Home End', 'To the first or the last tab.'],
+    ['Tab', 'Into the panel.'],
+  ]}
+/>
+
+## Styling
+
+`.tabs` with `--secondary`, `--align-start`, `--align-end` and `[data-orientation]`;
+`.tabs__list-container`, `__list`, `__tab`, `__indicator`, `__panel` and `__separator`.
+
+## As a block
+
+A tree draws the same tabs, on the web and in Flutter: each Tab block carries its label, an icon,
+and the blocks of its panel; `onChange` is told the chosen tab's id.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="Tabs" />

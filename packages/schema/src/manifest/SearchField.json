@@ -1,0 +1,58 @@
+{
+  "name": "SearchField",
+  "category": "form",
+  "description": "A text field for searching, with a search icon and a clear button that a tree cannot remove.",
+  "sduiSafe": true,
+  "props": {
+    "label": {
+      "type": "string",
+      "i18n": true,
+      "description": "The field's name, drawn above it.",
+      "required": true
+    },
+    "isLabelHidden": {
+      "type": "boolean",
+      "default": true,
+      "description": "Hides the label from sight; it still names the field for a screen reader."
+    },
+    "description": { "type": "string", "i18n": true, "description": "Help drawn under the field." },
+    "errorMessage": {
+      "type": "string",
+      "i18n": true,
+      "description": "Set means invalid: the field shows this message under it."
+    },
+    "isRequired": { "type": "boolean", "default": false },
+    "isDisabled": { "type": "boolean", "default": false },
+    "name": { "type": "string", "description": "Names the value inside a Form block." },
+    "isReadOnly": { "type": "boolean", "default": false },
+    "variant": {
+      "type": "enum",
+      "values": ["primary", "secondary"],
+      "default": "primary",
+      "description": "secondary is for a field on a grey surface."
+    },
+    "fullWidth": {
+      "type": "boolean",
+      "default": true,
+      "description": "false takes the natural field width token."
+    },
+    "defaultValue": {
+      "type": "string",
+      "description": "Starts at this value; the merchant changes it."
+    },
+    "value": {
+      "type": "string",
+      "description": "Pinned: shows exactly what the server sent until the next tree. Pair it with isReadOnly: rewriting a field on every keystroke fights a Persian keyboard."
+    },
+    "placeholder": { "type": "string", "i18n": true }
+  },
+  "fixed": {
+    "searchIcon": { "value": true, "description": "The search icon at the start." },
+    "clearButton": { "value": true, "description": "The clear button, shown while there is text." }
+  },
+  "actions": {
+    "onChange": { "description": "The text, as typed.", "payload": "string" },
+    "onSubmit": { "description": "Enter pressed.", "payload": "string" },
+    "onClear": { "description": "The clear button pressed." }
+  }
+}

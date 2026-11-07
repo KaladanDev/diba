@@ -1,0 +1,186 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Alert.stories'
+import { Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# Alert
+
+A message that stays on the page: what happened, what is about to, or what to do about it. Its
+status, one of five, sets its tint, its mark and its title's colour, so the reader knows how much
+it matters before reading a word.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **Something the reader should know while on this page:** a trial ending, stock running low, a
+  payment that failed.
+- **What a form or an action left wrong,** listed above it.
+- **A note that belongs with something,** such as the buyer's request on an order.
+
+For a message that passes, use a Toast. To ask before something that cannot be undone, use an
+AlertDialog.
+
+## Import
+
+```tsx
+import { Alert, CloseButton } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<Alert status="warning">
+  <Alert.Indicator />
+  <Alert.Content>
+    <Alert.Title>Running low</Alert.Title>
+    <Alert.Description>Only 3 silk scarves are left.</Alert.Description>
+  </Alert.Content>
+  <CloseButton aria-label="Close" />
+</Alert>
+```
+
+<Parts
+  rows={[
+    ['Alert', 'The box: its status, its tint, 24 round, 12 above and below and 16 across.'],
+    [
+      'Alert.Indicator',
+      "The status's mark, 20 in a 24 box, 16 before the words; or any icon of yours.",
+    ],
+    ['Alert.Content', 'The words and what follows them, in a column.'],
+    ['Alert.Title', "14 on 24, medium, in the status's colour."],
+    ['Alert.Description', 'The detail: 14 on 20 in the text colour, any content.'],
+    ['CloseButton', 'Not a part, but the one an alert takes at its end, 16 from the words.'],
+  ]}
+/>
+
+## Examples
+
+### Statuses
+
+`default` for a neutral note, `accent` for something to act on, `success`, `warning` and `danger`
+for what they say.
+
+<Canvas of={Stories.Statuses} />
+
+### A title, a description, or both
+
+<Canvas of={Stories.Content} />
+
+### Actions
+
+Buttons under the words, 8 below them, small: what to do about it.
+
+<Canvas of={Stories.WithActions} />
+
+### Dismissible
+
+A close button at its end takes it away; the page decides whether it comes back.
+
+<Canvas of={Stories.Dismissible} />
+
+### A custom mark
+
+Any icon in `Alert.Indicator` takes its place and colour; leave the indicator out for none.
+
+<Canvas of={Stories.CustomIndicator} />
+
+### Long content
+
+<Canvas of={Stories.LongContent} />
+
+### Announced
+
+An alert that appears while the reader is on the page should be announced: `role="alert"` for
+what is urgent, which interrupts, and `role="status"` for the rest, which waits.
+
+<Canvas of={Stories.Announced} />
+
+## What it builds
+
+<Canvas of={Stories.PageBanner} />
+<Canvas of={Stories.FormErrors} />
+<Canvas of={Stories.InACard} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+### Alert
+
+<PropsTable
+  rows={[
+    [
+      'status',
+      "'default' | 'accent' | 'success' | 'warning' | 'danger'",
+      "'default'",
+      'Its tint, its mark and its title’s colour.',
+    ],
+    [
+      'role',
+      "'alert' | 'status'",
+      null,
+      'Announces it as it appears: alert interrupts, status waits.',
+    ],
+    ['className', 'string', null, 'Classes after the alert’s own.'],
+    ['children', 'ReactNode', null, 'Its indicator, content and close button.'],
+  ]}
+/>
+
+### Alert.Indicator
+
+<PropsTable
+  rows={[
+    [
+      'children',
+      'ReactNode',
+      'the status’s mark',
+      'Your own icon, in the mark’s place and colour.',
+    ],
+    ['className', 'string', null, 'Classes after the indicator’s own.'],
+  ]}
+/>
+
+### Alert.Content, Alert.Title and Alert.Description
+
+<PropsTable
+  rows={[
+    [
+      'children',
+      'ReactNode',
+      null,
+      'The words, and for Content anything under them: actions, a list.',
+    ],
+    ['className', 'string', null, 'Classes after the part’s own.'],
+  ]}
+/>
+
+Every part takes its element's own props too: `id`, `style`, `aria-*`.
+
+## Accessibility
+
+The marks are decorative, hidden from a screen reader: the title says what the status means. An
+alert drawn with the page is read with it; one that appears later needs a role to be announced.
+Give a close button a name, such as "Close".
+
+## Styling
+
+`.alert` and `.alert--default`, `--accent`, `--success`, `--warning`, `--danger`;
+`.alert__indicator`, `.alert__content`, `.alert__title`, `.alert__description`. Its tint is
+`--alert-tint`, mixed from the status's colour and the surface, so a theme that changes either
+changes it.
+
+## As a block
+
+A tree draws the same alert, on the web and in Flutter, with its actions in a slot and a close
+button when `isDismissible`.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="Alert" />

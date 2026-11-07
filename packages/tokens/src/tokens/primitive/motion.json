@@ -1,0 +1,39 @@
+{
+  "duration": {
+    "0":      { "$type": "duration", "$value": "0ms" },
+    "enter":  { "$type": "duration", "$value": "200ms" },
+    "exit":   { "$type": "duration", "$value": "100ms" },
+    "normal": { "$type": "duration", "$value": "250ms" },
+    "slow":   { "$type": "duration", "$value": "400ms" }
+  },
+
+  "easing": {
+    "default":     { "$type": "cubicBezier", "$value": "cubic-bezier(0.36, 0.66, 0.4, 1)" },
+    "in":          { "$type": "cubicBezier", "$value": "cubic-bezier(0.4, 0, 1, 1)" },
+    "out":         { "$type": "cubicBezier", "$value": "cubic-bezier(0, 0, 0.2, 1)" },
+    "in-out":      { "$type": "cubicBezier", "$value": "cubic-bezier(0.4, 0, 0.2, 1)" },
+    "spring":      { "$type": "cubicBezier", "$value": "cubic-bezier(0.155, 1.105, 0.295, 1.12)" },
+    "spring-soft": { "$type": "cubicBezier", "$value": "cubic-bezier(0.16, 1.11, 0.3, 1.02)" },
+    "spring-out":  { "$type": "cubicBezier", "$value": "cubic-bezier(0.57, -0.15, 0.62, 0.07)" }
+  },
+
+  "anim": {
+    "appearance-in":  { "$type": "duration", "$value": "250ms" },
+    "appearance-out": { "$type": "duration", "$value": "60ms" },
+    "spinner":        { "$type": "duration", "$value": "800ms" },
+    "drip":           { "$type": "duration", "$value": "420ms" },
+    "sway":           { "$type": "duration", "$value": "750ms" },
+    "fade-out":       { "$type": "duration", "$value": "1200ms" },
+    "blink":          { "$type": "duration", "$value": "1400ms" },
+    "indeterminate":  { "$type": "duration", "$value": "1500ms" },
+    "shimmer":        { "$type": "duration", "$value": "2000ms" }
+  },
+
+  "scale": {
+    "press":        { "$type": "number", "$value": "0.97" },
+    "enter-from":   { "$type": "number", "$value": "0.95" },
+    "exit-to":      { "$type": "number", "$value": "0.85" },
+    "overshoot":    { "$type": "number", "$value": "1.05" },
+    "trigger-open": { "$type": "number", "$value": "0.97" }
+  }
+}

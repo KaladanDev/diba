@@ -1,0 +1,66 @@
+{
+  "name": "Drawer",
+  "category": "feedback",
+  "description": "A panel that slides in from an edge: a record's details. Opened by its trigger, and only by it, as a Modal is.",
+  "sduiSafe": true,
+  "props": {
+    "title": {
+      "type": "string",
+      "i18n": true,
+      "description": "The drawer's name.",
+      "required": true
+    },
+    "placement": {
+      "type": "enum",
+      "values": [
+        "bottom",
+        "top",
+        "start",
+        "end"
+      ],
+      "default": "bottom",
+      "description": "The edge it slides in from; start and end follow the page's direction."
+    },
+    "backdrop": {
+      "type": "enum",
+      "values": [
+        "opaque",
+        "blur",
+        "transparent"
+      ],
+      "default": "opaque"
+    },
+    "isDismissable": {
+      "type": "boolean",
+      "default": true,
+      "description": "Pressing outside closes it."
+    }
+  },
+  "children": {
+    "accepts": "*"
+  },
+  "slots": {
+    "trigger": {
+      "accepts": [
+        "Button"
+      ],
+      "description": "The button that opens it."
+    },
+    "footer": {
+      "accepts": "*",
+      "description": "The actions. A Cancel button's onPress is {do: close}."
+    }
+  },
+  "actions": {
+    "onOpenChange": {
+      "description": "Opened or closed.",
+      "payload": "boolean"
+    }
+  },
+  "fixed": {
+    "closeButton": {
+      "value": true,
+      "description": "The close button in the corner."
+    }
+  }
+}

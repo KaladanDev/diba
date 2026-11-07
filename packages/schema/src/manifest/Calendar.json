@@ -1,0 +1,58 @@
+{
+  "name": "Calendar",
+  "category": "form",
+  "description": "A month to pick a day from, drawn in the page: the date field's calendar without the field. Counts in the reader's calendar, Jalali in Persian, unless told otherwise.",
+  "sduiSafe": true,
+  "props": {
+    "label": {
+      "type": "string",
+      "i18n": true,
+      "description": "Names the calendar for a screen reader; it is not drawn."
+    },
+    "defaultValue": {
+      "type": "string",
+      "description": "Starts with this day picked; the merchant changes it. A Gregorian ISO 8601 date, whatever calendarSystem draws."
+    },
+    "value": {
+      "type": "string",
+      "description": "Pinned: shows exactly what the server sent until the next tree. A Gregorian ISO 8601 date, whatever calendarSystem draws."
+    },
+    "minValue": {
+      "type": "string",
+      "description": "The first day that can be picked. A Gregorian ISO 8601 date."
+    },
+    "maxValue": {
+      "type": "string",
+      "description": "The last day that can be picked. A Gregorian ISO 8601 date."
+    },
+    "unavailableDates": {
+      "type": "string[]",
+      "description": "Days that cannot be picked, as Gregorian ISO 8601 dates: a booked day, a holiday. Drawn at half; unlike days past the bounds, not struck through."
+    },
+    "calendarSystem": {
+      "type": "enum",
+      "values": ["auto", "persian", "gregorian"],
+      "default": "auto",
+      "description": "auto follows the locale: Persian on fa, Gregorian on en."
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "isReadOnly": {
+      "type": "boolean",
+      "default": false
+    },
+    "errorMessage": {
+      "type": "string",
+      "i18n": true,
+      "description": "Set means invalid: the calendar shows this message under it."
+    }
+  },
+  "actions": {
+    "onChange": {
+      "description": "The day picked, a Gregorian ISO 8601 date.",
+      "payload": "string"
+    }
+  }
+}

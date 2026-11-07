@@ -1,0 +1,180 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './ListBox.stories'
+import { Keys, Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# ListBox
+
+A list of options on the page: the columns of an export, a sort order, a panel's actions. It is
+also the menu of a Select and a ComboBox, where its choice is highlighted instead of marked.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **A choice from a list always in sight,** in a side panel or a dialog: one sort order, several
+  columns.
+- **A short list of actions** in a panel, each an item.
+
+For a choice that takes little room, use a Select; for a few options in a form, a RadioGroup or a
+CheckboxGroup; for actions behind a button, a Dropdown.
+
+## Import
+
+```tsx
+import { Header, ListBox } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<ListBox aria-label="Columns to export" selectionMode="multiple">
+  <ListBox.Section>
+    <Header>Product</Header>
+    <ListBox.Item id="name" textValue="Product name">
+      <ListBox.ItemIndicator kind="choice" />
+      Product name
+    </ListBox.Item>
+  </ListBox.Section>
+</ListBox>
+```
+
+<Parts
+  rows={[
+    ['ListBox', 'The list: what is chosen and how many may be, or the action each item does.'],
+    [
+      'ListBox.Item',
+      'An option, 36 tall and rounded 16, 4 apart, a fill under the pointer. Its words 14; an icon 16 before them; a Label and a Description for two lines.',
+    ],
+    [
+      'ListBox.ItemIndicator',
+      'With kind="choice", at the option’s start: Flutter’s radio, 16, when one may be chosen, its checkbox, 18, when several. With no kind, a tick at its end; a Select’s or a ComboBox’s menu leaves it out and marks its choice with the neutral fill.',
+    ],
+    [
+      'ListBox.Section, Header',
+      'A titled group of options; the title 12 and medium in the muted colour.',
+    ],
+  ]}
+/>
+
+## Examples
+
+### One choice and several
+
+On a page, mark each option with `ListBox.ItemIndicator kind="choice"`: a radio for
+`selectionMode="single"`, a checkbox for `multiple`, as Flutter's list tiles mark them. The chosen
+option has no fill of its own; its mark says so.
+
+<Canvas of={Stories.Choices} />
+
+### Actions
+
+With no `selectionMode`, each item is an action, and `onAction` says which was pressed. An icon
+leads each; `variant="danger"` draws one in the danger colour, last, for what cannot be undone.
+
+<Canvas of={Stories.Actions} />
+
+### Sections and disabled options
+
+`disabledKeys` keeps options from being chosen or pressed; they are drawn at half.
+
+<Canvas of={Stories.Sections} />
+
+### Nothing in it
+
+`renderEmptyState` says what a list with no options holds.
+
+<Canvas of={Stories.Empty} />
+
+## What it builds
+
+<Canvas of={Stories.ExportColumns} />
+
+## Themes, directions, sizes
+
+The mark is at each option's start: the right on a Persian page.
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+### ListBox
+
+<PropsTable
+  rows={[
+    [
+      'selectionMode',
+      "'none' | 'single' | 'multiple'",
+      "'none'",
+      'Nothing chosen, one, or several.',
+    ],
+    [
+      'selectedKeys, defaultSelectedKeys',
+      "Iterable<Key> | 'all'",
+      null,
+      'What is chosen, controlled or at first.',
+    ],
+    ['onSelectionChange', '(keys: Selection) => void', null, 'When the choice changes.'],
+    ['onAction', '(key: Key) => void', null, 'When an item is pressed, as an action.'],
+    ['disabledKeys', 'Iterable<Key>', null, 'Options that cannot be chosen or pressed.'],
+    ['disallowEmptySelection', 'boolean', 'false', 'One always stays chosen.'],
+    ['renderEmptyState', '() => ReactNode', null, 'What an empty list shows.'],
+    ['aria-label', 'string', null, 'Its name; required, as it has no label of its own.'],
+  ]}
+/>
+
+### ListBox.Item
+
+<PropsTable
+  rows={[
+    ['id', 'Key', null, 'Its key; required.'],
+    [
+      'textValue',
+      'string',
+      'its text',
+      'The words it is found and announced by, when it holds more than text.',
+    ],
+    ['variant', "'default' | 'danger'", "'default'", 'danger for an action that cannot be undone.'],
+    ['isDisabled', 'boolean', 'false', 'This one cannot be chosen or pressed.'],
+    ['href', 'string', null, 'A page it opens, as a link.'],
+  ]}
+/>
+
+Every part takes its element's own props too, and a `className`.
+
+## Keyboard
+
+<Keys
+  rows={[
+    ['Tab', 'Into the list, at the chosen option or the first; then out of it.'],
+    ['Down, Up', 'The next or the previous option.'],
+    ['Home, End', 'The first or the last.'],
+    ['A letter', 'The next option that begins with it.'],
+    ['Space, Enter', 'Chooses the option, or does its action.'],
+  ]}
+/>
+
+## Accessibility
+
+The list is a list box named by its `aria-label`; each option is read with its place, and whether
+it is chosen. A choice's mark is drawn, not read twice: the option itself is chosen.
+
+## Styling
+
+`.list-box`; `.list-box-item` with `--default` and `--danger`, and `__indicator`;
+`.list-box-section`; `[data-selected]`, `[data-focus-visible]`, `[data-hovered]` and
+`[data-disabled]`.
+
+## As a block
+
+A tree draws the same list, on the web and in Flutter, its marks those of its `selectionMode`; an
+item's `icon` or `image` leads it, its `description` is a second line, and `emptyMessage` says
+when it holds nothing.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="ListBox" />

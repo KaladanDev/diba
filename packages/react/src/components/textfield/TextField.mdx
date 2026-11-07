@@ -1,0 +1,245 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './TextField.stories'
+import { Keys, Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# TextField
+
+One line of text with its name above it: a product's name, an email, a price. It holds its parts,
+a label, the input or an input group with words or an icon either side, help under it, and what is
+wrong in the help's place.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **One line the reader types:** a name, an address, a code, a price.
+- **A value with a unit or a fixed part,** with an InputGroup: «تومان» after a price, `https://`
+  before an address.
+
+For several lines, use a TextArea; for a number stepped and formatted, a NumberField; for a search,
+a SearchField.
+
+## Import
+
+```tsx
+import { Description, FieldError, Input, InputGroup, Label, TextField } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<TextField isRequired>
+  <Label>Product name</Label>
+  <Input placeholder="For example, Silk scarf" />
+  <Description>As the buyer sees it.</Description>
+  <FieldError />
+</TextField>
+
+<TextField>
+  <Label>Price</Label>
+  <InputGroup>
+    <InputGroup.Prefix>…</InputGroup.Prefix>
+    <InputGroup.Input dir="ltr" />
+    <InputGroup.Suffix>toman</InputGroup.Suffix>
+  </InputGroup>
+</TextField>
+```
+
+<Parts
+  rows={[
+    ['TextField', 'The field: its value, its kind, its checks and its state, given to its parts.'],
+    ['Label', 'Its name, above it, 14 and medium; a star after it when required.'],
+    [
+      'Input',
+      'The box, 36 tall and 12 in, with a 1 edge; primary on a page, secondary on a grey surface.',
+    ],
+    [
+      'InputGroup',
+      'The box with InputGroup.Prefix and InputGroup.Suffix inside it, either side of InputGroup.Input: words in the muted colour, an icon, a button.',
+    ],
+    ['Description', 'Help under it, 12 in the muted colour.'],
+    ['FieldError', 'What is wrong, in the help’s place, in the danger colour.'],
+  ]}
+/>
+
+## Examples
+
+### Label, placeholder and help
+
+A placeholder shows what to write and goes as the reader types: keep what they must know in the
+label or the help. Without a visible label, name the field with `aria-label`.
+
+<Canvas of={Stories.LabelAndHelp} />
+
+### Types
+
+`type` is the kind of text: `email`, `tel`, `url` or `password`. A phone shows the keyboard for
+it; `inputMode` asks for one alone, `numeric` for digits.
+
+<Canvas of={Stories.Types} />
+
+### Direction of the text
+
+A Persian page's field takes Latin text too. `dir="auto"` on the input turns it with the value's
+first letter; `dir="ltr"` keeps an address, a phone or a code left to right whatever is typed.
+
+<Canvas of={Stories.Direction} />
+
+### Before and after the value
+
+An InputGroup holds words, an icon or a button either side of the value, inside the field. Give
+the group `dir="ltr"` for a Latin value, so `https://` stays before it on a Persian page.
+
+<Canvas of={Stories.PrefixAndSuffix} />
+
+### Validation
+
+`validate` returns what is wrong, or nothing: shown at once with `validationBehavior="aria"`, after
+the form is sent by default. `isInvalid` with your own `FieldError` words shows what the server
+said. Left empty, `FieldError` says what the field's own checks found, in the page's language
+whatever the browser's: a required field left empty, too few or too many letters as a reader
+counts them, an email or a web address that is not one, text not in its `pattern`'s form. They are
+a block's checks and words: a web address starts with `http://` or `https://`. Your `validate`
+goes first. With `validationBehavior="aria"` the field makes none of its own checks: say what is
+wrong with `validate`.
+
+<Canvas of={Stories.Validation} />
+
+### Disabled, read-only, on a grey surface, at its own width
+
+In a column a field fills it. In a row it is as wide as its input, about 180, and `fullWidth`
+gives it what the rest of the row leaves.
+
+<Canvas of={Stories.States} />
+
+### In a form
+
+Its `name` sends the value. A required field left empty stops the form and says so under it.
+
+<Canvas of={Stories.InAForm} />
+
+## What it builds
+
+<Canvas of={Stories.ProductDetails} />
+<Canvas of={Stories.ContactField} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+### TextField
+
+<PropsTable
+  rows={[
+    ['value, defaultValue', 'string', null, 'The text, controlled or at first.'],
+    ['onChange', '(value: string) => void', null, 'When the text changes.'],
+    [
+      'type',
+      "'text' | 'email' | 'tel' | 'url' | 'password' | 'search'",
+      "'text'",
+      'The kind of text.',
+    ],
+    [
+      'inputMode',
+      "'text' | 'numeric' | 'decimal' | 'tel' | 'email' | 'url'",
+      null,
+      'The keyboard a phone shows.',
+    ],
+    [
+      'variant',
+      "'primary' | 'secondary'",
+      "'primary'",
+      'secondary for a field on a grey surface; its parts take it.',
+    ],
+    [
+      'fullWidth',
+      'boolean',
+      'false',
+      'In a row, the width the rest of the row leaves; in a column it already fills it.',
+    ],
+    ['isRequired', 'boolean', 'false', 'It needs a value; the label says so.'],
+    ['minLength, maxLength', 'number', null, 'The fewest and most letters.'],
+    ['pattern', 'string', null, 'A regular expression the value must match.'],
+    ['validate', '(value: string) => string | string[] | true | null', null, 'Your own check.'],
+    [
+      'validationBehavior',
+      "'native' | 'aria'",
+      "'native'",
+      'native waits for the form to be sent; aria shows what is wrong at once.',
+    ],
+    ['isInvalid', 'boolean', 'false', 'Drawn as wrong, with its FieldError.'],
+    ['isDisabled', 'boolean', 'false', 'It cannot be reached or changed.'],
+    ['isReadOnly', 'boolean', 'false', 'It can be read, selected and copied, not changed.'],
+    ['name', 'string', null, 'Its value’s name in a form.'],
+    [
+      'autoComplete',
+      'string',
+      null,
+      'What the browser may fill in: email, tel, name, one-time-code.',
+    ],
+    ['onBlur, onFocus, onKeyDown', 'function', null, 'As an input’s.'],
+  ]}
+/>
+
+### Input and InputGroup
+
+<PropsTable
+  rows={[
+    ['placeholder', 'string', null, 'Shown while empty.'],
+    [
+      'dir',
+      "'auto' | 'ltr' | 'rtl'",
+      'the page’s',
+      'The value’s direction; on the group for a Latin value.',
+    ],
+    ['variant', "'primary' | 'secondary'", 'the field’s', 'Its own, apart from the field’s.'],
+    [
+      'fullWidth',
+      'boolean',
+      'false',
+      'On its own, as wide as its column; in a TextField it already is.',
+    ],
+    ['spellCheck, autoCapitalize', 'as an input’s', null, 'Off for codes, handles and addresses.'],
+  ]}
+/>
+
+`InputGroup.Prefix` and `InputGroup.Suffix` take any content. Every part takes its element's own
+props too, and a `className`.
+
+## Keyboard
+
+<Keys
+  rows={[
+    ['Tab', 'Into the field, and out of it.'],
+    ['Enter', 'Sends the form it is in.'],
+  ]}
+/>
+
+## Accessibility
+
+The field is named by its `Label`, described by its `Description`, and its `FieldError` is read
+while it is invalid. Icons in a group are decorative, `aria-hidden`; a button in one needs its
+name.
+
+## Styling
+
+`.textfield`; `.input` with `--primary`, `--secondary` and `--full-width`; `.input-group` with
+`__input`, `__prefix` and `__suffix`; `[data-invalid]`, `[data-disabled]` and `[data-focus-visible]`.
+The edge is `--field-shadow`, the fill `--field-background`.
+
+## As a block
+
+A tree draws the same field, on the web and in Flutter, with `prefix` and `suffix` words and `dir`
+for a Latin value. Its own checks, required, email and url, are written in the page's language,
+whatever the browser's.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="TextField" />

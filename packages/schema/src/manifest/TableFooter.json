@@ -1,0 +1,7 @@
+{
+  "name": "TableFooter",
+  "category": "data",
+  "description": "One row of totals, under their columns. In a table that selects, it is disabled so a selection skips it.",
+  "sduiSafe": true,
+  "children": { "accepts": ["Row"] }
+}

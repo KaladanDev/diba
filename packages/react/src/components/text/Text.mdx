@@ -1,0 +1,122 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Text.stories'
+import { PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# Text
+
+Words in the type scale: a size, a weight and a colour that mean the same wherever they are used,
+so a note is a note and a figure a figure on every page.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **Words outside a component that sets its own,** such as a figure on a card or a note under a
+  heading.
+- **A heading of your own,** with `as="h2"` and a size.
+
+Not for a field's label or description: Label and Description set theirs. Not for a link: use a
+Link.
+
+## Import
+
+```tsx
+import { Text } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<Text size="sm" tone="muted">Sales today</Text>
+<Text as="h2" size="xl" weight="semibold">Today's orders</Text>
+```
+
+## Examples
+
+### Sizes
+
+`md`, 16 on 24, by default; from `xs`, 12 on 16, to `5xl`, 48 on 48. Each size has its own
+line, as a tree's Text has; `leading` sets another.
+
+<Canvas of={Stories.Sizes} />
+
+### Weights
+
+<Canvas of={Stories.Weights} />
+
+### Colours
+
+`default` is the text's colour and `muted` a note's. `accent`, `success`, `warning` and `danger`
+are a status's colour as it reads on a surface, not its fill; `primary` is the accent's.
+
+<Canvas of={Stories.Tones} />
+
+### One line
+
+`truncate` keeps it on one line, cut with an ellipsis.
+
+<Canvas of={Stories.Truncated} />
+
+### As a heading
+
+A span by default; `as` draws a heading, a paragraph or anything else, so a screen reader hears it
+for what it is.
+
+<Canvas of={Stories.AsAHeading} />
+
+## What it says
+
+<Canvas of={Stories.Figure} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+<PropsTable
+  rows={[
+    [
+      'size',
+      "'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl'",
+      "'md'",
+      'Its size on the type scale.',
+    ],
+    ['weight', "'normal' | 'medium' | 'semibold' | 'bold'", "'normal'", 'Its weight.'],
+    [
+      'tone',
+      "'default' | 'muted' | 'accent' | 'success' | 'warning' | 'danger' | 'primary'",
+      "'default'",
+      'Its colour.',
+    ],
+    ['align', "'start' | 'center' | 'end'", null, 'Start and end follow the page.'],
+    [
+      'leading',
+      "'tight' | 'snug' | 'normal' | 'relaxed'",
+      "'normal'",
+      'The space between its lines.',
+    ],
+    ['truncate', 'boolean', 'false', 'One line, with an ellipsis.'],
+    ['as', 'ElementType', "'span'", 'The element it draws.'],
+  ]}
+/>
+
+## Accessibility
+
+Its element is what a screen reader hears: a heading with `as="h2"`, a paragraph with `as="p"`.
+Don't make words a heading only for their size.
+
+## As a block
+
+It draws with its own styles, so a page needs no utility classes for it. A tree's Text draws the
+same scale and colours, on the web and in Flutter. It also shows a
+`number` in the reader's digits and currency, clamps to `maxLines`, and takes a `headingLevel`.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="Text" />

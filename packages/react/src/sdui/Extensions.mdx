@@ -1,0 +1,72 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Extensions.stories'
+
+<Meta of={Stories} />
+
+# Extensions
+
+A third-party app draws a panel in the admin through `DibaExtension`. The host names the place, a
+surface such as `order.detail.sidebar`, and says what it already knows, the order's id; the
+extension's server answers with a tree; the host validates and draws it; and when the merchant
+presses something, the call goes back to the same server, whose answer replaces the panel.
+
+```tsx
+import { DibaExtension } from '@kaladan/diba-react/sdui'
+import { validateTree } from '@kaladan/diba-schema/validate'
+
+export function ShippingPanel({ orderId }: { orderId: string }) {
+  return (
+    <DibaExtension
+      surface="order.detail.sidebar"
+      context={{ orderId }}
+      transport={(request) => proxy.post(`/apps/${appId}/surface`, request)}
+      validate={validateTree}
+      handlers={{ navigate, open, toast }}
+      onEffect={(effect) => effect.title && toast(effect)}
+      onRefuse={(reason) => log.warn(reason)}
+      pending={<Spinner />}
+      fallback={(reasons) => <Alert status="danger">…</Alert>}
+    />
+  )
+}
+```
+
+## The round trip
+
+The first request carries the surface and the context. A press's `call` carries them too, with
+the action's name and payload. Each answer may hold a tree, which replaces the panel, and an
+effect, a toast's words or an address to go to, which goes to `onEffect` for the host to show:
+the extension says what happened, the host decides how.
+
+<Canvas of={Stories.RoundTrip} />
+
+| Request                                  | Response                                                   |
+| ---------------------------------------- | ---------------------------------------------------------- |
+| `surface`: the place, by name            | `tree`: the panel, replacing the one shown; none leaves it |
+| `context`: what the host already knows   | `effect`: `status`, `title`, `description`, `navigate`     |
+| `action`: `{ name, payload }`, on a call |                                                            |
+
+## The transport
+
+`transport` is the host's: a function from a request to a response. The host keeps the app's
+authentication, its timeouts and its proxy in it, and none of it reaches the tree. It is injected,
+not a URL, so a page like this one runs against a fake server with no network at all.
+
+`validate` is required, not defaulted: skipping validation is the one mistake with no symptom.
+
+## When it fails
+
+A tree the schema refuses, or a server that does not answer, shows the `fallback`, with the
+reasons; each reason goes to `onRefuse` too. A call that fails, unanswered or answered with a tree
+that may not be drawn, stops its list, so nothing after it pretends it worked. While the first tree
+is on its way, `pending` shows. A new surface or a new context asks again: the host moving to
+another order gets that order's panel.
+
+<Canvas of={Stories.AnInvalidTree} />
+<Canvas of={Stories.NoAnswer} />
+
+## Surfaces
+
+A surface is a name the host gives a place, `order.detail.sidebar` here. The host decides which
+places it offers and what context each carries; the kit knows none of them and treats the name as
+words to send.

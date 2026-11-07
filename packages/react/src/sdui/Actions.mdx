@@ -1,0 +1,83 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Actions.stories'
+
+<Meta of={Stories} />
+
+# Actions and state
+
+A block's events, a press, a change, a submit, are wired to actions in its `actions`. An action is
+one of six verbs, and a list of them runs in order. Nothing else can happen: there is no code in a
+tree, only these.
+
+| `do`       | Its fields                                                     | What it does                                                                  |
+| ---------- | -------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| `setState` | `key`                                                          | Keeps the event's value in the surface under `key`. It never leaves the page. |
+| `call`     | `action`, and `with` (keys) or `value` (a name)                | Sends `action` to the host with the kept values `with` names, and waits.      |
+| `navigate` | `to`                                                           | Goes to an address, held to the address rule.                                 |
+| `open`     | `target`                                                       | Opens a place the host names, such as `customer.edit`.                        |
+| `toast`    | `status`, `title`, `description`, `actionLabel` and `onAction` | Shows a toast: the host's, or Diba's own.                                     |
+| `close`    | none                                                           | Closes the innermost overlay the tree opened.                                 |
+
+## `setState` and `call`
+
+What the merchant types or picks stays in the surface until a `call` sends it: `with` lists the
+keys, and only those are sent, `null` for one never set. A default the merchant left alone was
+never an event, so it was never kept: press Save at once, then again after changing the carrier.
+
+<Canvas of={Stories.SetStateAndCall} />
+
+## `call` with the event's value
+
+`value` names the event's own value in the payload, for a control whose change is the thing to
+send. A switch sends a flag, a field its words, a number field a number, a list its chosen keys, a
+date an ISO date, a range a pair.
+
+<Canvas of={Stories.CallWithValue} />
+
+## `navigate` and `open`
+
+`navigate` goes to an address and `open` to a place inside the host by name, which keeps the tree
+from knowing the host's routes. Both are the host's to carry out.
+
+<Canvas of={Stories.NavigateAndOpen} />
+
+## `toast`
+
+A status (`default`, `accent`, `success`, `warning`, `danger`), a title or a description or both,
+and optionally a way back: `actionLabel` with its own actions in `onAction`, which may not show
+another toast. With no `toast` handler, Diba's own toast shows it, under a `ToastProvider`.
+
+<Canvas of={Stories.Toasts} />
+
+## `close`
+
+An overlay a tree opens, a `Modal`, `Drawer`, `Sheet`, `Popover` or `AlertDialog`, is closed by its
+own button or by `close`, which a footer's buttons end with.
+
+<Canvas of={Stories.Close} />
+
+## Pinned and default values
+
+Each field has two props for its value. The default (`defaultValue`, `defaultSelected`,
+`defaultSelectedKey`) is where the merchant starts, and theirs to change. The pinned one (`value`,
+`isSelected`, `selectedKey`) shows exactly what the server sent until the next tree: the event
+still fires, and the server answers with a new tree if it agrees. Press both.
+
+<Canvas of={Stories.ValuePairs} />
+
+## Forms
+
+A `Form` checks its fields when it is submitted, in the page's language: a required field left
+empty, too few or too many letters, an address or an email that is not one, a number out of
+bounds, a group with none chosen. A server's `errorMessage` on a field says what it found instead.
+Once they pass, `onSubmit` sends every named field by its name; a `reset` button clears them.
+
+<Canvas of={Stories.Forms} />
+
+## A list of actions
+
+A list runs in order, each step seeing what the one before kept. A `call` the host rejects stops
+it there, so what was to follow, a toast saying it worked, never shows; any other refused step is
+skipped and the list goes on.
+
+<Canvas of={Stories.Lists} />

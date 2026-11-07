@@ -1,0 +1,81 @@
+{
+  "name": "ComboBox",
+  "category": "controls",
+  "description": "A text field that filters a menu of options.",
+  "sduiSafe": true,
+  "props": {
+    "label": {
+      "type": "string",
+      "i18n": true,
+      "description": "The field's name, drawn above it.",
+      "required": true
+    },
+    "isLabelHidden": {
+      "type": "boolean",
+      "default": false,
+      "description": "Hides the label from sight; it still names the field for a screen reader."
+    },
+    "description": { "type": "string", "i18n": true, "description": "Help drawn under the field." },
+    "errorMessage": {
+      "type": "string",
+      "i18n": true,
+      "description": "Set means invalid: the field shows this message under it."
+    },
+    "isRequired": { "type": "boolean", "default": false },
+    "isDisabled": { "type": "boolean", "default": false },
+    "name": { "type": "string", "description": "Names the value inside a Form block." },
+    "isReadOnly": { "type": "boolean", "default": false },
+    "variant": {
+      "type": "enum",
+      "values": ["primary", "secondary"],
+      "default": "primary",
+      "description": "secondary is for a field on a grey surface."
+    },
+    "fullWidth": {
+      "type": "boolean",
+      "default": true,
+      "description": "false takes the natural field width token."
+    },
+    "defaultSelectedKey": {
+      "type": "string",
+      "description": "Starts at this value; the merchant changes it."
+    },
+    "selectedKey": {
+      "type": "string",
+      "description": "Pinned: shows exactly what the server sent until the next tree."
+    },
+    "defaultInputValue": {
+      "type": "string",
+      "description": "Starts at this value; the merchant changes it."
+    },
+    "inputValue": {
+      "type": "string",
+      "description": "Pinned: shows exactly what the server sent until the next tree. Pair it with isReadOnly."
+    },
+    "placeholder": { "type": "string", "i18n": true },
+    "emptyMessage": {
+      "type": "string",
+      "i18n": true,
+      "description": "Shown when nothing matches."
+    },
+    "menuTrigger": {
+      "type": "enum",
+      "values": ["input", "focus"],
+      "default": "input",
+      "description": "focus shows the options before typing."
+    },
+    "allowsCustomValue": {
+      "type": "boolean",
+      "default": false,
+      "description": "Keeps typed text that matches no option."
+    }
+  },
+  "children": { "accepts": ["ListBoxItem", "ListBoxSection"], "description": "The options." },
+  "actions": {
+    "onSelectionChange": { "description": "The selected id.", "payload": "Key" },
+    "onInputChange": {
+      "description": "The text, as typed: filter on the server.",
+      "payload": "string"
+    }
+  }
+}

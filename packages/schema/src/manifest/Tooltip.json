@@ -1,0 +1,40 @@
+{
+  "name": "Tooltip",
+  "category": "feedback",
+  "description": "A few words about what is under the pointer or the focus: a term, an icon, drawn as an icon-only button's own.",
+  "sduiSafe": true,
+  "props": {
+    "content": {
+      "type": "string",
+      "i18n": true,
+      "required": true,
+      "description": "The words."
+    },
+    "placement": {
+      "type": "enum",
+      "values": [
+        "top",
+        "bottom"
+      ],
+      "default": "top",
+      "description": "Above the block or below it; Material's tooltip has no sides."
+    },
+    "delay": {
+      "type": "number",
+      "default": 500,
+      "description": "Milliseconds under the pointer before it shows."
+    },
+    "showArrow": {
+      "type": "boolean",
+      "default": false
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "children": {
+    "accepts": "*",
+    "description": "What it describes: one block."
+  }
+}

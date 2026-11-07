@@ -1,0 +1,199 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './TagGroup.stories'
+import { Keys, Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# TagGroup
+
+Tags in a row that wraps: a product's keywords, a list's filters, the labels a product carries.
+They may only show, be chosen, one or several, or be removed. A tag is Flutter's chip on both
+platforms.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **Short words a reader adds and removes:** keywords, the sizes a product comes in.
+- **Quick filters over a list,** several on at once.
+- **Labels that only show:** new, handmade, a category that opens its page.
+
+For a choice in a form, use a CheckboxGroup or a RadioGroup; for a status, a Chip.
+
+## Import
+
+```tsx
+import { Label, Tag, TagGroup } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<TagGroup selectionMode="multiple" onRemove={(keys) => …}>
+  <Label>Filters</Label>
+  <TagGroup.List>
+    <Tag id="sale">On sale</Tag>
+    <Tag id="gift">
+      <Gift />
+      Gift
+    </Tag>
+  </TagGroup.List>
+  <Description>…</Description>
+</TagGroup>
+```
+
+<Parts
+  rows={[
+    [
+      'TagGroup',
+      'The group: what is chosen and how many may be, what removing does, and its size and variant, given to its tags.',
+    ],
+    ['Label', 'Its name, above it, 14 and medium.'],
+    ['TagGroup.List', 'The tags, 8 apart, wrapping; what it says when empty.'],
+    [
+      'Tag',
+      'A chip 28, 32 or 36 tall, with 8 corners and a 1 edge, 16 in; its words 14 and medium. On the second surface, or the surface outlined for surface; chosen, gilt with slate-700 on it and a tick in its icon’s place.',
+    ],
+    [
+      'Tag.RemoveButton',
+      'A cross at its end, named «حذف برچسب», Remove tag, shown when the group takes onRemove.',
+    ],
+    ['Description, ErrorMessage', 'Help under the tags, and what is wrong under it.'],
+  ]}
+/>
+
+## Examples
+
+### Sizes
+
+`sm`, `md` and `lg` are 28, 32 and 36 tall, with Flutter's room for a tap above and below.
+
+<Canvas of={Stories.Sizes} />
+
+### Choosing
+
+With no `selectionMode`, tags only show, and take no hover. One chosen, or several: a chosen
+tag is gilt, a tick at its start. `disallowEmptySelection` keeps one chosen.
+
+<Canvas of={Stories.Choosing} />
+
+### Removing
+
+`onRemove` gives each tag a remove button; it takes the keys to remove. Backspace or Delete
+removes the tag with the focus. `renderEmptyState` on the list says what an empty group holds.
+
+<Canvas of={Stories.Removing} />
+
+### Icons and links
+
+An icon, 16, leads a tag's words; chosen, the tick takes its place. A tag with an `href` opens its
+page, and takes the hand and a wash under the pointer as a chosen one does.
+
+<Canvas of={Stories.IconsAndLinks} />
+
+### Help and an error
+
+A `Description` under the tags helps; an `ErrorMessage` says what is wrong, shown while it is.
+
+<Canvas of={Stories.HelpAndError} />
+
+### On a grey surface
+
+`variant="surface"` lays tags on the surface, outlined, for a grey card.
+
+<Canvas of={Stories.OnASurface} />
+
+## What it builds
+
+<Canvas of={Stories.Keywords} />
+
+## Themes, directions, sizes
+
+The tags run from the page's start and wrap; on a phone they wrap sooner.
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+### TagGroup
+
+<PropsTable
+  rows={[
+    [
+      'selectionMode',
+      "'none' | 'single' | 'multiple'",
+      "'none'",
+      'Tags that only show, or one chosen, or several.',
+    ],
+    [
+      'selectedKeys, defaultSelectedKeys',
+      'Iterable<Key>',
+      null,
+      'What is chosen, controlled or at first.',
+    ],
+    ['onSelectionChange', '(keys: Selection) => void', null, 'When the choice changes.'],
+    ['disallowEmptySelection', 'boolean', 'false', 'One always stays chosen.'],
+    [
+      'onRemove',
+      '(keys: Set<Key>) => void',
+      null,
+      'Gives each tag a remove button; takes the keys to remove.',
+    ],
+    ['disabledKeys', 'Iterable<Key>', null, 'Tags that cannot be chosen or removed.'],
+    ['size', "'sm' | 'md' | 'lg'", "'md'", '28, 32 or 36 tall.'],
+    ['variant', "'default' | 'surface'", "'default'", 'surface for tags on a grey card.'],
+    ['aria-label', 'string', null, 'Its name, where it has no Label.'],
+  ]}
+/>
+
+### Tag
+
+<PropsTable
+  rows={[
+    ['id', 'Key', null, 'Its key; required.'],
+    [
+      'textValue',
+      'string',
+      'its text',
+      'The words it is announced by, when it holds more than text.',
+    ],
+    ['isDisabled', 'boolean', 'false', 'It cannot be chosen or removed; drawn at half.'],
+    ['href', 'string', null, 'A page it opens.'],
+  ]}
+/>
+
+`TagGroup.List` takes `renderEmptyState`. Every part takes its element's own props too, and a
+`className`.
+
+## Keyboard
+
+<Keys
+  rows={[
+    ['Tab', 'Into the tags, at the chosen one or the first; then out of them.'],
+    ['Left, Right', 'The next or the previous tag: Left is the next on a Persian page.'],
+    ['Space', 'Chooses the tag, or lets it go.'],
+    ['Backspace, Delete', 'Removes the tag, when the group takes onRemove.'],
+  ]}
+/>
+
+## Accessibility
+
+The group is a grid of tags named by its `Label`; each tag is read with whether it is chosen. Its
+remove button is named «حذف برچسب» with the tag's own words after it.
+
+## Styling
+
+`.tag-group` and `__list`; `.tag` with `--sm`, `--md`, `--lg`, `--default` and `--surface`;
+`[data-selected]`, `[data-focus-visible]`, `[data-disabled]` and `[data-href]`.
+
+## As a block
+
+A tree draws the same group, on the web and in Flutter; its remove buttons show when it takes
+`onRemove`, which sends each removed tag's id. Its help and error are drawn under it.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="TagGroup" />

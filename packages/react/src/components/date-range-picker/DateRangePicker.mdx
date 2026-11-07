@@ -1,0 +1,181 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './DateRangePicker.stories'
+import { Keys, Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# DateRangePicker
+
+Two dates in one field, the first and the last, with a range calendar behind an icon at its end.
+At rest it reads «۲۵ مهر ۱۴۰۵ – ۱ آبان ۱۴۰۵», in the reader's calendar.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **A span in a form:** a sale's run, days off, a report's period.
+- **A span of days and times,** from an hour on one day to an hour on another.
+
+For one date, use a DatePicker. For a range calendar open on the page, a RangeCalendar.
+
+## Import
+
+```tsx
+import {
+  DateField,
+  DateRangePicker,
+  Description,
+  FieldError,
+  Label,
+  RangeCalendar,
+} from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<DateRangePicker>
+  <Label>Sale period</Label>
+  <DateField.Group fullWidth>
+    <DateField.Input slot="start">
+      {(segment) => <DateField.Segment segment={segment} />}
+    </DateField.Input>
+    <DateRangePicker.RangeSeparator />
+    <DateField.Input slot="end">
+      {(segment) => <DateField.Segment segment={segment} />}
+    </DateField.Input>
+    <DateField.Suffix>
+      <DateRangePicker.Trigger aria-label="Pick dates">
+        <DateRangePicker.TriggerIndicator />
+      </DateRangePicker.Trigger>
+    </DateField.Suffix>
+  </DateField.Group>
+  <Description>The sale’s first and last days.</Description>
+  <FieldError />
+  <DateRangePicker.Popover>
+    <RangeCalendar aria-label="Sale period">{/* the RangeCalendar's parts */}</RangeCalendar>
+  </DateRangePicker.Popover>
+</DateRangePicker>
+```
+
+<Parts
+  rows={[
+    ['DateRangePicker', 'The picker: its range, how fine it counts, its limits and its state.'],
+    [
+      'DateField.Input slot="start", slot="end"',
+      'The first and last dates, each typed by its segments, read as words at rest.',
+    ],
+    ['DateRangePicker.RangeSeparator', 'The dash between them.'],
+    ['DateRangePicker.Trigger', 'The button at the field’s end that opens the range calendar.'],
+    ['DateRangePicker.Popover', 'The range calendar’s popover, under the field.'],
+    ['RangeCalendar', 'The range calendar inside it.'],
+  ]}
+/>
+
+## Values
+
+A range is `{ start, end }`, two of `@internationalized/date`'s values. Each one's `toString()` is
+Gregorian ISO 8601 whatever calendar draws it; in a form, `startName` and `endName` send them.
+
+## Examples
+
+### Open
+
+<Canvas of={Stories.Open} />
+
+### Persian and Gregorian
+
+<Canvas of={Stories.Calendars} />
+
+### Dates and times
+
+At a `granularity` of `hour` or `minute`, each date asks its time, typed in its segments.
+
+<Canvas of={Stories.DatesAndTimes} />
+
+### Limits and unavailable days
+
+<Canvas of={Stories.Limits} />
+
+### Disabled, read-only and on a grey surface
+
+<Canvas of={Stories.States} />
+
+### In a form
+
+<Canvas of={Stories.InAForm} />
+
+## What it builds
+
+<Canvas of={Stories.ReportPeriod} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+It takes a DatePicker's props, for a range, and:
+
+<PropsTable
+  rows={[
+    ['value, defaultValue', '{ start, end } | null', null, 'The range.'],
+    ['onChange', '(value: { start, end } | null) => void', null, 'When the range changes.'],
+    ['allowsNonContiguousRanges', 'boolean', 'false', 'A range may run across unavailable days.'],
+    ['startName, endName', 'string', null, 'The two dates’ names in a form.'],
+    [
+      'granularity, hourCycle, hideTimeZone',
+      'as a DateField’s',
+      null,
+      'How fine each date counts, and how its time reads.',
+    ],
+    [
+      'minValue, maxValue, isDateUnavailable',
+      'as a DatePicker’s',
+      null,
+      'The days that can be picked.',
+    ],
+    [
+      'isOpen, defaultOpen, onOpenChange',
+      'as a DatePicker’s',
+      null,
+      'Whether the calendar is open.',
+    ],
+  ]}
+/>
+
+Every part takes its element's own props too, and a `className`.
+
+## Keyboard
+
+<Keys
+  rows={[
+    ['Tab', 'The first date’s segments, the last date’s, then the calendar button.'],
+    ['In a date', 'A DateField’s keys: the arrows, digits, Backspace.'],
+    ['In the calendar', 'A RangeCalendar’s keys: Enter starts the range and then ends it.'],
+    ['Alt + Down', 'Opens the calendar from the field.'],
+    ['Escape', 'Closes the calendar, back to the field.'],
+  ]}
+/>
+
+## Accessibility
+
+The field is named by its `Label`, and each date says whether it is the start or the end. Name the
+trigger, "Pick dates", since it is an icon alone.
+
+## Styling
+
+The DateField's classes, and `.date-range-picker`, `__trigger`, `__trigger-indicator`,
+`__range-separator` and `__popover`.
+
+## As a block
+
+A tree draws the same picker, on the web and in Flutter. At an hour or a minute, the two days it
+picks then ask their times in the time picker, the first's and then the last's.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="DateRangePicker" />

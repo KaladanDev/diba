@@ -1,0 +1,68 @@
+{
+  "name": "Sheet",
+  "category": "feedback",
+  "description": "An overlay from an edge that the hand swipes away, or to the stops it is given. Opened by its trigger, and only by it, as a Drawer is; drawn by the drawer's numbers.",
+  "sduiSafe": true,
+  "props": {
+    "title": {
+      "type": "string",
+      "i18n": true,
+      "required": true,
+      "description": "The sheet's name."
+    },
+    "placement": {
+      "type": "enum",
+      "values": ["bottom", "top", "start", "end"],
+      "default": "bottom",
+      "description": "The edge it comes from; start and end follow the page's direction."
+    },
+    "snapPoints": {
+      "type": "string[]",
+      "description": "Where it stops on the way, each a share of its height, such as '33%'; it opens at the first, and all of it is always the last."
+    },
+    "isDetached": {
+      "type": "boolean",
+      "default": false,
+      "description": "Floats 8 from the edge, round all round."
+    },
+    "isDismissable": {
+      "type": "boolean",
+      "default": true,
+      "description": "Swiping it away or pressing outside closes it."
+    },
+    "backdrop": {
+      "type": "enum",
+      "values": ["opaque", "blur", "transparent"],
+      "default": "opaque"
+    }
+  },
+  "children": {
+    "accepts": "*"
+  },
+  "slots": {
+    "trigger": {
+      "accepts": ["Button"],
+      "description": "The button that opens it."
+    },
+    "footer": {
+      "accepts": "*",
+      "description": "The actions. A Cancel button's onPress is {do: close}."
+    }
+  },
+  "actions": {
+    "onOpenChange": {
+      "description": "Opened or closed.",
+      "payload": "boolean"
+    }
+  },
+  "fixed": {
+    "closeButton": {
+      "value": true,
+      "description": "The close button in the corner."
+    },
+    "handle": {
+      "value": true,
+      "description": "The handle on the edge it is dragged by."
+    }
+  }
+}

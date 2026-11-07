@@ -1,0 +1,193 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Dropdown.stories'
+import { Keys, Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# Dropdown
+
+A menu behind a button: a product's actions, a row's, the columns a table shows. It opens from its
+button, and only from it; an item does its action and closes it.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **Actions that would crowd a toolbar or a row:** edit, duplicate, export, delete.
+- **A quick choice that is not a form's value:** which columns show, a sort order.
+
+For a value sent with a form, use a Select; for actions always in sight, a Menu or buttons.
+
+## Import
+
+```tsx
+import { Button, Dropdown, Header, Label } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<Dropdown>
+  <Button variant="secondary">Actions</Button>
+  <Dropdown.Popover placement="bottom end">
+    <Dropdown.Menu onAction={(key) => …}>
+      <Dropdown.Item id="edit" textValue="Edit">
+        <Pencil />
+        <Label>Edit</Label>
+      </Dropdown.Item>
+      <Dropdown.Section>
+        <Header>Danger</Header>
+        <Dropdown.Item id="delete" variant="danger">Delete</Dropdown.Item>
+      </Dropdown.Section>
+    </Dropdown.Menu>
+  </Dropdown.Popover>
+</Dropdown>
+```
+
+<Parts
+  rows={[
+    ['Dropdown', 'The menu’s trigger and whether it is open; its first child, a Button, opens it.'],
+    [
+      'Dropdown.Trigger',
+      'A bare pressable to open it, for a trigger of your own; a Button does the same.',
+    ],
+    [
+      'Dropdown.Popover',
+      'The menu’s card, 8 from the button, 220 wide at the least, rounded 24 with a soft shadow; it flips when there is no room.',
+    ],
+    ['Dropdown.Menu', 'The items: actions, or one choice or several.'],
+    [
+      'Dropdown.Item',
+      'An item, 36 tall, rounded 16; an icon 16 before its words, a Label and a Description for two lines. danger in the danger colour.',
+    ],
+    ['Dropdown.Section, Header', 'A titled group of items; the title 12 in the muted colour.'],
+    [
+      'Dropdown.SubmenuTrigger, Dropdown.SubmenuIndicator',
+      'An item that opens a menu of its own, with a chevron toward the page’s end.',
+    ],
+  ]}
+/>
+
+## Examples
+
+### Open
+
+`placement="bottom end"` lines the menu's end up with the button's, the usual place for a
+toolbar's last button or a row's actions.
+
+<Canvas of={Stories.Open} />
+
+### Choosing
+
+With `selectionMode` on the menu, its items are choices: each chosen one is on the neutral fill,
+with no tick, as Flutter's menu marks it. With `multiple`, the menu stays open between them.
+
+<Canvas of={Stories.Choosing} />
+
+### A submenu
+
+`Dropdown.SubmenuTrigger` holds an item and the popover it opens; the item takes a
+`Dropdown.SubmenuIndicator`.
+
+<Canvas of={Stories.Submenu} />
+
+### From an icon button
+
+A row's actions sit behind an icon button, named for the row: "Actions for Silk scarf".
+
+<Canvas of={Stories.IconTrigger} />
+
+## What it builds
+
+<Canvas of={Stories.OrderRows} />
+
+## Themes, directions, sizes
+
+On a Persian page the menu opens leftward from a button's end, and a submenu toward the left.
+
+<Canvas of={Stories.Dark} />
+<Canvas of={Stories.LeftToRight} />
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+### Dropdown
+
+<PropsTable
+  rows={[
+    ['isOpen, defaultOpen, onOpenChange', 'boolean', null, 'Open, controlled or at first.'],
+    ['trigger', "'press' | 'longPress'", "'press'", 'What opens it.'],
+  ]}
+/>
+
+### Dropdown.Popover and Dropdown.Menu
+
+<PropsTable
+  rows={[
+    [
+      'placement',
+      "'bottom start' | 'bottom end' | 'top start' | 'top end' | …",
+      "'bottom'",
+      'Where the menu opens against its button.',
+    ],
+    ['onAction', '(key: Key) => void', null, 'When an item is pressed.'],
+    ['selectionMode', "'none' | 'single' | 'multiple'", "'none'", 'Actions, or choices.'],
+    ['selectedKeys, defaultSelectedKeys', 'Iterable<Key>', null, 'What is chosen.'],
+    ['onSelectionChange', '(keys: Selection) => void', null, 'When the choice changes.'],
+    ['disabledKeys', 'Iterable<Key>', null, 'Items that cannot be pressed.'],
+  ]}
+/>
+
+### Dropdown.Item
+
+<PropsTable
+  rows={[
+    ['id', 'Key', null, 'Its key; required.'],
+    [
+      'textValue',
+      'string',
+      'its text',
+      'The words it is found and announced by, when it holds more than text.',
+    ],
+    ['variant', "'default' | 'danger'", "'default'", 'danger for what cannot be undone.'],
+    ['isDisabled', 'boolean', 'false', 'This one cannot be pressed.'],
+    ['href', 'string', null, 'A page it opens, as a link.'],
+  ]}
+/>
+
+Every part takes its element's own props too, and a `className`.
+
+## Keyboard
+
+<Keys
+  rows={[
+    ['Space, Enter, Down', 'On the button, opens the menu at its first item; Up, at its last.'],
+    ['Down, Up', 'The next or the previous item.'],
+    ['A letter', 'The next item that begins with it.'],
+    ['Enter, Space', 'Does the item’s action, or chooses it.'],
+    ['Right, Left', 'Opens or closes a submenu: Left opens one on a Persian page.'],
+    ['Escape', 'Closes the menu, the focus back on its button.'],
+  ]}
+/>
+
+## Accessibility
+
+The button says it opens a menu; the menu is named by it, and each item read with its place. An
+icon-only button needs its name, and a row's should say which row.
+
+## Styling
+
+`.dropdown`, `__trigger`, `__popover` and `__menu`; `.menu-item` with `--default` and `--danger`;
+`[data-open]`, `[data-selected]`, `[data-focus-visible]` and `[data-disabled]`.
+
+## As a block
+
+A tree draws the same dropdown, on the web and in Flutter, its `trigger` slot a Button, its items
+`DropdownItem`s with an `icon` and a `description`, and titled `DropdownSection`s.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="Dropdown" />

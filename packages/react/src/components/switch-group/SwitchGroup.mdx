@@ -1,0 +1,104 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './SwitchGroup.stories'
+import { PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# SwitchGroup
+
+Switches laid out together: a page's related settings, each its own value. It lays them out, 24
+apart down the page or 16 across it, and says they belong together.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **Related settings that each apply at once:** which alerts the seller gets, which messages the
+  buyer is sent.
+
+Each switch keeps its own value. For options that make one value, sent with a form, use a
+CheckboxGroup.
+
+## Import
+
+```tsx
+import { Fieldset, Label, Switch, SwitchGroup } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<Fieldset>
+  <Fieldset.Legend>Tell me about</Fieldset.Legend>
+  <SwitchGroup>
+    <Switch name="order">…</Switch>
+    <Switch name="stock">…</Switch>
+  </SwitchGroup>
+</Fieldset>
+```
+
+## Examples
+
+### Down and across
+
+Down the page they are 24 apart, as a checkbox group's options are; across, 16, and on a narrow
+page each switch's words wrap rather than run off it.
+
+<Canvas of={Stories.Orientation} />
+
+### With a name
+
+The group has no label of its own. Put it in a `Fieldset` whose `Fieldset.Legend` names it, with
+help under it; or name it with `aria-label`.
+
+<Canvas of={Stories.Named} />
+
+## What it builds
+
+<Canvas of={Stories.Notifications} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+<PropsTable
+  rows={[
+    [
+      'orientation',
+      "'vertical' | 'horizontal'",
+      "'vertical'",
+      'Down the page, 24 apart, or across it, 16 apart.',
+    ],
+    ['aria-label', 'string', null, 'Its name, where no Fieldset gives one.'],
+    ['children', 'Switch elements', null, 'The switches, each with its own value.'],
+  ]}
+/>
+
+It takes a `div`'s own props too, and a `className`.
+
+## Keyboard
+
+Tab goes to each switch in turn, and Space turns it.
+
+## Accessibility
+
+The group is a group, named by its `aria-label` or by the Fieldset's legend around it; each
+switch is named by its own words and read as on or off.
+
+## Styling
+
+`.switch-group` with `--vertical` and `--horizontal`, and `__items`; its switches as on the Switch
+page.
+
+## As a block
+
+A tree draws the same group, on the web and in Flutter: its switches each send their own value.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="SwitchGroup" />

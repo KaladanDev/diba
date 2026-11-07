@@ -1,0 +1,164 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './ButtonGroup.stories'
+import { Keys, Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# ButtonGroup
+
+Buttons joined into one: their inner corners squared, the two ends round, a thin separator between
+them if you like. For actions that belong together, such as previous and next, or a main action and
+a menu of the others.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **Two directions of one move:** previous and next, zoom out and in.
+- **A row's few actions,** close together: edit, duplicate, delete.
+- **A split button:** the main action, and a menu of the others beside it.
+
+To choose one or several of a set, where the choice stays pressed, use a ToggleButtonGroup. For a
+bar of mixed controls that the arrow keys move along, use a Toolbar.
+
+## Import
+
+```tsx
+import { Button, ButtonGroup } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<ButtonGroup aria-label="Pages" variant="secondary">
+  <Button>Previous</Button>
+  <Button>
+    <ButtonGroup.Separator />
+    Next
+  </Button>
+</ButtonGroup>
+```
+
+<Parts
+  rows={[
+    [
+      'ButtonGroup',
+      'The row or the column: the size, variant and disabling of the buttons that leave them out.',
+    ],
+    [
+      'Button',
+      'Each action, as its own page describes. Only the group’s direct children take its look.',
+    ],
+    [
+      'ButtonGroup.Separator',
+      'A line at the start of a button, half its height, between it and the one before. Hidden from a screen reader.',
+    ],
+  ]}
+/>
+
+## Examples
+
+### Joined
+
+<Canvas of={Stories.Joined} />
+
+### Separators
+
+Put a `ButtonGroup.Separator` first in each button after the first. Without it, the buttons meet
+edge to edge.
+
+<Canvas of={Stories.Separators} />
+
+### Variants
+
+<Canvas of={Stories.Variants} />
+
+### Sizes
+
+<Canvas of={Stories.Sizes} />
+
+### Vertical
+
+`orientation="vertical"` joins them down the page: the top and bottom ends round, and every
+button as wide as the widest; an icon-only button keeps its square.
+
+<Canvas of={Stories.Vertical} />
+
+### The group's look
+
+`size`, `variant` and `isDisabled` fill in what each button left out; a button's own wins.
+
+<Canvas of={Stories.GroupLook} />
+
+### Full width
+
+<Canvas of={Stories.FullWidth} />
+
+## What it builds
+
+<Canvas of={Stories.TablePager} />
+<Canvas of={Stories.SplitButton} />
+<Canvas of={Stories.Zoom} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+### ButtonGroup
+
+<PropsTable
+  rows={[
+    ['orientation', "'horizontal' | 'vertical'", "'horizontal'", 'Across the page, or down it.'],
+    [
+      'variant',
+      "'primary' | 'secondary' | 'tertiary' | 'outline' | 'ghost' | 'danger' | 'danger-soft'",
+      null,
+      'Its buttons’ variant, where a button sets none.',
+    ],
+    ['size', "'sm' | 'md' | 'lg'", null, 'Its buttons’ size, where a button sets none.'],
+    ['isDisabled', 'boolean', 'false', 'Every button in it.'],
+    ['fullWidth', 'boolean', 'false', 'As wide as its container, its buttons sharing it.'],
+    ['aria-label', 'string', null, 'What its buttons have in common, for a screen reader.'],
+    ['className', 'string', null, 'Classes after the group’s own.'],
+    ['children', 'ReactNode', null, 'Its buttons.'],
+  ]}
+/>
+
+### ButtonGroup.Separator
+
+<PropsTable rows={[['className', 'string', null, 'Classes after the separator’s own.']]} />
+
+Every part takes its element's own props too: `id`, `style`, `aria-*`.
+
+## Keyboard
+
+<Keys
+  rows={[
+    ['Tab', 'The next button in the group, as any button: each is a stop of its own.'],
+    ['Enter or Space', 'Presses the focused button.'],
+  ]}
+/>
+
+## Accessibility
+
+A group is a `group` to a screen reader: name it with `aria-label` for what its buttons have in
+common, "Pages", and each icon-only button for what it does. The separators are hidden.
+
+## Styling
+
+`.button-group` with `.button-group--horizontal`, `--vertical` and `--full-width`;
+`.button-group__separator`.
+
+## As a block
+
+A tree draws the same group, on the web and in Flutter, its Buttons as its children. Its `variant`
+is `secondary` and its `size` `sm` unless the tree says otherwise, as a Button's are.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="ButtonGroup" />

@@ -1,0 +1,17 @@
+{
+  "name": "Radio",
+  "category": "controls",
+  "description": "One option of a RadioGroup.",
+  "sduiSafe": true,
+  "props": {
+    "value": { "type": "string", "description": "Its value in the group.", "required": true },
+    "label": {
+      "type": "string",
+      "i18n": true,
+      "description": "The text beside the radio, in regular weight.",
+      "required": true
+    },
+    "description": { "type": "string", "i18n": true },
+    "isDisabled": { "type": "boolean", "default": false }
+  }
+}

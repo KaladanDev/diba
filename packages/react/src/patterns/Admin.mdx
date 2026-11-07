@@ -1,0 +1,54 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Admin.stories'
+
+<Meta of={Stories} />
+
+# Admin pages
+
+The admin's pages, composed from Diba's basics: a page's head, the day's figures, a list to work
+through, a settings section and a record's page. Each is written out to copy.
+
+## A page's head
+
+`Breadcrumbs` back up, the title as the page's heading (`Text` at `2xl`, semibold) with what it is
+under it in the muted colour, and its actions at the end: one primary way on, a LinkButton when it
+goes to another page, the rest quieter. On a phone the actions wrap under the title.
+
+<Canvas of={Stories.PageHeads} />
+
+## The day's figures
+
+Each figure on its own `Card`: what it counts, muted, with its icon; its value at `2xl`; and how it
+moved, a soft `Chip` in the success's or the danger's tone. A plan's limit is a `Meter` with a
+`Link` to raise it.
+
+<Canvas of={Stories.Figures} />
+
+## A list to work through
+
+The page's head, a `SearchField` and a `ToggleButtonGroup` to narrow the list, a `Table` whose
+statuses are soft `Chip`s and whose sums sit at the end, and the rows shown and the pages in
+`Table.Footer`. When nothing matches, the body says so.
+
+<Canvas of={Stories.ListPage} />
+
+## A settings section
+
+A `Card` with its title and what it governs; `Switch`es with a `Description` of what each does, a
+`TextField` and a `Select`, a `Separator` between groups, and the way to save at the card's foot,
+cancel quieter than save.
+
+<Canvas of={Stories.Settings} />
+
+## A record's page
+
+Its head with its status and its main action, then what was ordered, a secondary `Table` with its
+total in `Table.Foot`, beside who ordered it, an `Avatar` and their number, and where it goes.
+
+<Canvas of={Stories.RecordPage} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />

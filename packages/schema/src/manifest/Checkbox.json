@@ -1,0 +1,44 @@
+{
+  "name": "Checkbox",
+  "category": "controls",
+  "description": "A checkbox and its label, drawn as Flutter's on both platforms. Alone it sends a boolean.",
+  "sduiSafe": true,
+  "props": {
+    "label": {
+      "type": "string",
+      "i18n": true,
+      "description": "The text beside the box, in regular weight.",
+      "required": true
+    },
+    "isLabelHidden": {
+      "type": "boolean",
+      "default": false,
+      "description": "Hides the label from sight; it still names the field for a screen reader."
+    },
+    "description": { "type": "string", "i18n": true, "description": "Help drawn under the field." },
+    "errorMessage": {
+      "type": "string",
+      "i18n": true,
+      "description": "Set means invalid: the field shows this message under it."
+    },
+    "defaultSelected": {
+      "type": "boolean",
+      "description": "Starts at this value; the merchant changes it."
+    },
+    "isSelected": {
+      "type": "boolean",
+      "description": "Pinned: shows exactly what the server sent until the next tree."
+    },
+    "isIndeterminate": {
+      "type": "boolean",
+      "default": false,
+      "description": "\"Some selected\". The look stays until the tree changes."
+    },
+    "isRequired": { "type": "boolean", "default": false, "description": "Accept the terms." },
+    "value": { "type": "string", "description": "Its value inside a CheckboxGroup." },
+    "name": { "type": "string", "description": "Names the value inside a Form block." },
+    "variant": { "type": "enum", "values": ["primary", "secondary"], "default": "primary" },
+    "isDisabled": { "type": "boolean", "default": false }
+  },
+  "actions": { "onChange": { "description": "Whether it is checked.", "payload": "boolean" } }
+}

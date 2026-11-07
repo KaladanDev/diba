@@ -1,0 +1,263 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Modal.stories'
+import { Keys, Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# Modal
+
+A panel over the page for a task of its own: a short form, a detail, a choice. The page under it
+waits until it is closed, by its buttons, its close button, a press outside or Escape.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **A short form that belongs to the page,** such as editing an address or inviting a staff
+  member, where leaving the page would lose its place.
+- **A detail worth a closer look,** such as a size guide or a product's quick view.
+- **A choice before going on,** with more to say than a yes or a no.
+
+Not for a question before something that cannot be undone: use an AlertDialog. Not for a record's
+details beside a list: use a Drawer, or a Sheet on a phone. Not for a few words about a control:
+use a Tooltip or a Popover.
+
+## Import
+
+```tsx
+import { Button, Modal } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<Modal>
+  <Button variant="secondary">Edit address</Button>
+  <Modal.Backdrop>
+    <Modal.Container>
+      <Modal.Dialog>
+        {({ close }) => (
+          <>
+            <Modal.CloseTrigger />
+            <Modal.Header>
+              <Modal.Icon>
+                <MapPin />
+              </Modal.Icon>
+              <Modal.Heading>Edit address</Modal.Heading>
+            </Modal.Header>
+            <Modal.Body>{/* the form */}</Modal.Body>
+            <Modal.Footer>
+              <Button variant="tertiary" onPress={close}>
+                Cancel
+              </Button>
+              <Button onPress={close}>Save</Button>
+            </Modal.Footer>
+          </>
+        )}
+      </Modal.Dialog>
+    </Modal.Container>
+  </Modal.Backdrop>
+</Modal>
+```
+
+<Parts
+  rows={[
+    ['Modal', 'Whether it is open: its first child, a Button, opens it.'],
+    [
+      'Modal.Trigger',
+      'Makes anything else its trigger, such as a picture: pressable and focusable.',
+    ],
+    ['Modal.Backdrop', 'What lies under it, and whether a press outside or Escape closes it.'],
+    ['Modal.Container', 'Its size, where it opens, and what scrolls.'],
+    [
+      'Modal.Dialog',
+      'The panel: the overlay’s paper and shadow, 24 round, 24 in. Its children may be a function given close.',
+    ],
+    [
+      'Modal.CloseTrigger',
+      'The close button: a 24 circle in the default fill, 16 from the top and the end.',
+    ],
+    ['Modal.Header', 'The icon over the heading, 12 apart.'],
+    ['Modal.Icon', 'A 40 box for an icon of yours.'],
+    ['Modal.Heading', 'Its name, 16 on 24 and medium: the dialog’s name to a screen reader.'],
+    [
+      'Modal.Body',
+      'The content, 8 under the heading, 14 on 20 and muted; it scrolls when it is too long.',
+    ],
+    ['Modal.Footer', 'The answers, 20 under the body, at the end, 8 apart.'],
+  ]}
+/>
+
+## Examples
+
+Each example is its own frame: press its button to open it. The main ones open as they load.
+
+### Sizes
+
+`md`, 448 wide, by default; `xs` is 320, `sm` 384 and `lg` 512. `cover` fills the window inside its
+margin, and `full` is the whole window, square.
+
+<Canvas of={Stories.Sizes} />
+
+### Placements
+
+`auto` opens it at the bottom of a phone, 16 from the edges where a thumb reaches, and in the
+middle from 640 wide, 40 from them.
+
+<Canvas of={Stories.Placements} />
+
+### Backdrops
+
+<Canvas of={Stories.Backdrops} />
+
+### A long body
+
+With `scroll="inside"`, the default, the panel stays in the window and its body scrolls between the
+heading and the answers. With `scroll="outside"` the panel grows as long as its body and the page
+under it scrolls.
+
+<Canvas of={Stories.Scrolling} />
+
+### Controlled
+
+Hold whether it is open with `isOpen` and `onOpenChange`, to open it from anywhere and know when it
+closes.
+
+<Canvas of={Stories.Controlled} />
+
+### What closes it
+
+A press outside, Escape, its close button and whatever calls `close`. `isDismissable={false}` on
+the backdrop keeps a press outside from closing it, and `isKeyboardDismissDisabled` keeps Escape
+from doing so: for a form that would lose its words, leave only its buttons.
+
+<Canvas of={Stories.Dismissing} />
+
+### From any element
+
+A Button is its trigger as it is. Anything else, such as a product's picture, goes in
+`Modal.Trigger`, which makes it pressable and lets the keyboard reach it: give it an `aria-label`
+when it has no words.
+
+<Canvas of={Stories.CustomTrigger} />
+
+### Its icon and close button
+
+<Canvas of={Stories.IconAndCloseButton} />
+
+## What it holds
+
+<Canvas of={Stories.EditAddress} />
+<Canvas of={Stories.InviteStaff} />
+<Canvas of={Stories.SizeGuide} />
+<Canvas of={Stories.QuickView} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.Dark} />
+<Canvas of={Stories.LeftToRight} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+### Modal
+
+<PropsTable
+  rows={[
+    ['isOpen', 'boolean', null, 'Open, controlled.'],
+    ['defaultOpen', 'boolean', 'false', 'Open at first, uncontrolled.'],
+    ['onOpenChange', '(isOpen: boolean) => void', null, 'Called as it opens and closes.'],
+    ['children', 'ReactNode', null, 'Its trigger, then its Backdrop.'],
+  ]}
+/>
+
+### Modal.Backdrop
+
+<PropsTable
+  rows={[
+    [
+      'variant',
+      "'opaque' | 'blur' | 'transparent'",
+      "'opaque'",
+      'The page under it: dimmed, blurred, or as it is.',
+    ],
+    ['isDismissable', 'boolean', 'true', 'A press outside closes it.'],
+    ['isKeyboardDismissDisabled', 'boolean', 'false', 'Escape does not close it.'],
+    ['className', 'string | (state) => string', null, 'Classes after the backdrop’s own.'],
+  ]}
+/>
+
+### Modal.Container
+
+<PropsTable
+  rows={[
+    ['size', "'xs' | 'sm' | 'md' | 'lg' | 'cover' | 'full'", "'md'", 'How wide it is.'],
+    [
+      'placement',
+      "'auto' | 'top' | 'center' | 'bottom'",
+      "'auto'",
+      'Where it opens; auto is the bottom of a phone and the middle from 640.',
+    ],
+    [
+      'scroll',
+      "'inside' | 'outside'",
+      "'inside'",
+      'Whether a long body scrolls inside the panel, or the page scrolls the panel.',
+    ],
+    ['className', 'string | (state) => string', null, 'Classes after the container’s own.'],
+  ]}
+/>
+
+### Modal.Dialog
+
+<PropsTable
+  rows={[
+    [
+      'children',
+      'ReactNode | ({ close }) => ReactNode',
+      null,
+      'Its parts; as a function it is given close.',
+    ],
+    ['aria-label', 'string', null, 'Its name, when it has no Heading.'],
+    ['className', 'string', null, 'Classes after the panel’s own.'],
+  ]}
+/>
+
+### The rest
+
+`Modal.Header`, `.Icon`, `.Heading`, `.Body` and `.Footer` take their element's props and a
+`className`. `Modal.CloseTrigger` is a CloseButton, named “Close” in the page's language. `Modal.Trigger`
+takes a `div`'s props.
+
+## Accessibility
+
+It is a `dialog`, named by its heading. Focus moves into it as it opens, stays in it while open,
+and returns to its trigger when it closes; the page under it is hidden from a screen reader and
+does not scroll.
+
+<Keys
+  rows={[
+    ['Tab', 'To its next control.'],
+    ['Shift Tab', 'To the control before.'],
+    ['Escape', 'Closes it, unless isKeyboardDismissDisabled.'],
+  ]}
+/>
+
+## Styling
+
+`.modal__backdrop` and its `--opaque`, `--blur`, `--transparent`; `.modal__container` with
+`--scroll-outside` and `--full`; `.modal__dialog` with `--xs` to `--lg`, `--cover`, `--full` and
+`[data-placement]`; `.modal__header`, `__icon`, `__heading`, `__body`, `__footer`,
+`__close-trigger` and `__trigger`. Its paper is the theme's `--overlay`, its shadow
+`--overlay-shadow`.
+
+## As a block
+
+A tree opens the same modal, on the web and in Flutter, from the Button in its `trigger` slot and
+only from it. It always has its close button; a footer button closes it with `{ "do": "close" }`.
+A block's modal is `lg` unless the tree says otherwise.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="Modal" />

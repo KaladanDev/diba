@@ -1,0 +1,209 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Pagination.stories'
+import { Keys, Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# Pagination
+
+The way through a long list a page at a time: back, the pages near this one and at the ends, and
+on. Under the admin's orders, and under a storefront's search.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **A list too long for one page,** such as the orders, twenty at a time.
+- **Results a reader moves through,** such as a storefront's search.
+
+Not for a list read to its end in one go, such as a feed: load more as it scrolls instead. Not for
+steps of one task: show which step it is.
+
+## Import
+
+```tsx
+import { Pagination, pageItems } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<Pagination aria-label="Order pages">
+  <Pagination.Summary>1 to 20 of 234</Pagination.Summary>
+  <Pagination.Content>
+    <Pagination.Item>
+      <Pagination.Previous isDisabled={page === 1} onPress={() => setPage(page - 1)}>
+        <Pagination.PreviousIcon />
+        Previous
+      </Pagination.Previous>
+    </Pagination.Item>
+    {pageItems({ page, total }).map((item, i) =>
+      item === 'ellipsis' ? (
+        <Pagination.Item key={`gap-${i}`}>
+          <Pagination.Ellipsis />
+        </Pagination.Item>
+      ) : (
+        <Pagination.Item key={item}>
+          <Pagination.Link isActive={item === page} onPress={() => setPage(item)}>
+            {item}
+          </Pagination.Link>
+        </Pagination.Item>
+      ),
+    )}
+    <Pagination.Item>
+      <Pagination.Next isDisabled={page === total} onPress={() => setPage(page + 1)}>
+        Next
+        <Pagination.NextIcon />
+      </Pagination.Next>
+    </Pagination.Item>
+  </Pagination.Content>
+</Pagination>
+```
+
+<Parts
+  rows={[
+    ['Pagination', 'The pager: a navigation landmark, named by its aria-label; its size.'],
+    ['Pagination.Summary', 'Which rows these are, at its start.'],
+    ['Pagination.Content', 'The row of pages, 4 apart; one too long for its room wraps.'],
+    ['Pagination.Item', 'One place in the row.'],
+    [
+      'Pagination.Link',
+      'A page: a circle, 14 on 20 and medium in the fill’s text; the page shown on the fill, or on the surface on a grey card.',
+    ],
+    [
+      'Pagination.Previous, Pagination.Next',
+      'Back and on, padded 10, with a chevron 16 across, 6 from the word.',
+    ],
+    [
+      'Pagination.PreviousIcon, Pagination.NextIcon',
+      'Their chevrons, which point the other way on a Persian page.',
+    ],
+    ['Pagination.Ellipsis', 'The gap where pages are left out, muted.'],
+  ]}
+/>
+
+It draws the pages it is given. `pageItems({ page, total, siblings, boundaries })` works out which
+to show: the ends, the pages near this one, and a gap for the rest, keeping the row one width as
+the reader moves through it.
+
+## Examples
+
+### Sizes
+
+`size` is `sm`, `md` or `lg`: pages 28, 32 or 36 round from 768 wide, and a step larger on a
+phone, for a finger.
+
+<Canvas of={Stories.Sizes} />
+
+### Many pages
+
+The ends stay, with the pages either side of this one (`siblings`, one by default) and a gap for
+the rest. A gap that would hide one page shows it instead.
+
+<Canvas of={Stories.ManyPages} />
+
+### With a summary
+
+`Pagination.Summary` says which rows these are, at the start, and the pages go to the end. A
+pager without one stands at the start; `style={{ justifyContent: 'center' }}` centres it, as under
+a storefront's search.
+
+<Canvas of={Stories.WithSummary} />
+
+### Arrows alone, or pages alone
+
+Back and on can show their arrows alone, each named with an `aria-label`; or leave them out.
+
+<Canvas of={Stories.Compact} />
+
+### Off
+
+`isDisabled` on each link, while the rows load.
+
+<Canvas of={Stories.Disabled} />
+
+### Told the page
+
+Hold the page yourself, and load its rows as it changes.
+
+<Canvas of={Stories.Controlled} />
+
+## What it pages
+
+<Canvas of={Stories.OrdersFoot} />
+<Canvas of={Stories.SearchResults} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+### Pagination
+
+<PropsTable
+  rows={[
+    ['aria-label', 'string', null, 'Its name for a screen reader.'],
+    ['size', "'sm' | 'md' | 'lg'", "'md'", 'How large its pages are.'],
+  ]}
+/>
+
+### Pagination.Link
+
+<PropsTable
+  rows={[
+    ['isActive', 'boolean', 'false', 'The page shown: marked, and aria-current.'],
+    ['onPress', '() => void', null, 'Called as it is pressed.'],
+    ['isDisabled', 'boolean', 'false', 'It cannot be pressed.'],
+  ]}
+/>
+
+### pageItems
+
+<PropsTable
+  rows={[
+    ['page', 'number', null, 'The page shown, from 1.'],
+    ['total', 'number', null, 'How many pages there are.'],
+    ['siblings', 'number', '1', 'Pages either side of the one shown.'],
+    ['boundaries', 'number', '1', 'Pages kept at each end.'],
+  ]}
+/>
+
+It returns the row: each a page's number, or `'ellipsis'` for a gap.
+
+### The rest
+
+`Pagination.Previous` and `Pagination.Next` take `onPress`, `isDisabled` and an `aria-label` when
+they show no words. Each part takes a `className`.
+
+## Accessibility
+
+It is a navigation landmark, named "Pagination" in the page's language unless an `aria-label`
+says what it pages, such as "Order pages". The page shown is `aria-current="page"`. Tab moves
+through its buttons.
+
+<Keys
+  rows={[
+    ['Tab', 'To the next page or arrow.'],
+    ['Enter Space', 'Goes to it.'],
+  ]}
+/>
+
+## Styling
+
+`.pagination` with `--sm`, `--md` and `--lg`; `.pagination__summary`, `__content`, `__item`,
+`__link` (with `[data-active]` and `--nav` for back and on) and `__ellipsis`.
+
+## As a block
+
+A tree's pager works out its own row: its `total`, the page shown (`page`, or `defaultPage` for
+one the merchant moves), `siblings` and `boundaries`, back and on with their words unless
+`showControls` is off, and the page's digits. `onChange` is told the page chosen. On the web and
+in Flutter alike.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="Pagination" />

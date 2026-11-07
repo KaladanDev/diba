@@ -1,0 +1,108 @@
+{
+  "name": "Text",
+  "category": "content",
+  "description": "Words, or a number in the reader's digits.",
+  "sduiSafe": true,
+  "props": {
+    "size": {
+      "type": "enum",
+      "values": [
+        "xs",
+        "sm",
+        "md",
+        "lg",
+        "xl",
+        "2xl",
+        "3xl",
+        "4xl",
+        "5xl"
+      ],
+      "default": "md"
+    },
+    "weight": {
+      "type": "enum",
+      "values": [
+        "normal",
+        "medium",
+        "semibold",
+        "bold"
+      ],
+      "default": "normal"
+    },
+    "tone": {
+      "type": "enum",
+      "values": [
+        "default",
+        "muted",
+        "accent",
+        "success",
+        "warning",
+        "danger"
+      ],
+      "default": "default"
+    },
+    "align": {
+      "type": "enum",
+      "values": [
+        "start",
+        "center",
+        "end"
+      ]
+    },
+    "leading": {
+      "type": "enum",
+      "values": [
+        "tight",
+        "snug",
+        "normal",
+        "relaxed"
+      ],
+      "default": "normal"
+    },
+    "maxLines": {
+      "type": "number",
+      "description": "Clamped to this many lines, the last ending in an ellipsis."
+    },
+    "headingLevel": {
+      "type": "number",
+      "description": "1 to 6: a section's title a screen reader can jump to."
+    },
+    "dir": {
+      "type": "enum",
+      "values": [
+        "auto",
+        "ltr"
+      ],
+      "default": "auto",
+      "description": "ltr for a Latin code inside Persian text."
+    },
+    "isMono": {
+      "type": "boolean",
+      "default": false,
+      "description": "An id, a SKU, a handle: monospaced, its figures even."
+    },
+    "number": {
+      "type": "number",
+      "description": "Replaces the words with the figure, formatted in the reader's locale."
+    },
+    "formatStyle": {
+      "type": "enum",
+      "values": [
+        "decimal",
+        "percent",
+        "currency"
+      ],
+      "default": "decimal"
+    },
+    "currency": {
+      "type": "string",
+      "description": "ISO 4217, or IRT for toman."
+    },
+    "maximumFractionDigits": {
+      "type": "number"
+    }
+  },
+  "children": {
+    "accepts": "text"
+  }
+}

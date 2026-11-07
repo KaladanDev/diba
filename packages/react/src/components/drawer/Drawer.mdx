@@ -1,0 +1,226 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Drawer.stories'
+import { Keys, Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# Drawer
+
+A panel that slides in from an edge of the window: a record's details beside its list, the
+filters for a list, a cart. It closes with its buttons, a press outside, Escape, or a drag toward
+its edge.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **A record's details beside its list,** such as an order opened from the order list, the list
+  still there when it closes.
+- **What shapes a list,** such as its filters.
+- **A shop's cart or menu,** from the side of a storefront, or the bottom of a phone.
+
+Not for a short task in the middle of the page: use a Modal. Not for a panel the hand drags to a
+height of its own: use a Sheet.
+
+## Import
+
+```tsx
+import { Button, Drawer } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<Drawer>
+  <Button variant="secondary">Order 1041</Button>
+  <Drawer.Backdrop>
+    <Drawer.Content placement="bottom">
+      <Drawer.Dialog>
+        {({ close }) => (
+          <>
+            <Drawer.Handle />
+            <Drawer.CloseTrigger />
+            <Drawer.Header>
+              <Drawer.Heading>Order 1041</Drawer.Heading>
+            </Drawer.Header>
+            <Drawer.Body>{/* the order */}</Drawer.Body>
+            <Drawer.Footer>
+              <Button onPress={close}>Print label</Button>
+            </Drawer.Footer>
+          </>
+        )}
+      </Drawer.Dialog>
+    </Drawer.Content>
+  </Drawer.Backdrop>
+</Drawer>
+```
+
+<Parts
+  rows={[
+    ['Drawer', 'Whether it is open: its first child, a Button, opens it.'],
+    ['Drawer.Backdrop', 'What lies under it, and whether a press outside or Escape closes it.'],
+    ['Drawer.Content', 'The edge it slides in from.'],
+    [
+      'Drawer.Dialog',
+      'The panel: the overlay’s paper and shadow, 24 in. Its children may be a function given close.',
+    ],
+    ['Drawer.Handle', 'A 36 by 4 bar on a bottom drawer’s inner edge, to drag it down by.'],
+    ['Drawer.CloseTrigger', 'The close button, 16 from the top and the end.'],
+    ['Drawer.Header', 'Holds the heading.'],
+    ['Drawer.Heading', 'Its name, 16 on 24 and medium: the dialog’s name to a screen reader.'],
+    ['Drawer.Body', 'The content, 8 under the heading, 14 on 20 and muted; it scrolls.'],
+    ['Drawer.Footer', 'Its buttons, 20 under the body, at the end, 8 apart.'],
+  ]}
+/>
+
+## Examples
+
+Each example is its own frame: press its button to open it. The main ones open as they load.
+
+### Edges
+
+From the `bottom`, the default, or the `top`: the window's width, up to 85% of its height, 16 round
+at its inner edge. From a side, `left` or `right`: the window's height, square, 320 wide (384 from 640) and at most 85% of the window. `left` and `right` are the page's start and end, so on a
+Persian page `left` slides in from the right edge.
+
+<Canvas of={Stories.Placements} />
+<Canvas of={Stories.FromTheEnd} />
+
+### Backdrops
+
+<Canvas of={Stories.Backdrops} />
+
+### A long body
+
+Its body scrolls between the heading and the footer once the drawer is as tall as it may be.
+
+<Canvas of={Stories.LongBody} />
+
+### What closes it
+
+Its buttons, its close button, a press outside, Escape, and a drag toward its edge: from its
+handle, heading or footer, past 30% of its size or with a quick flick that way. A drag or a flick
+into the page leaves it where it is. On a Persian page a start drawer goes out to the right, its
+own edge. `isDismissable={false}` on the
+backdrop leaves a press outside and a drag out, and `isKeyboardDismissDisabled` leaves Escape out.
+
+<Canvas of={Stories.Dismissing} />
+
+### Controlled
+
+Hold whether it is open with `isOpen` and `onOpenChange`, to open it from a row of a list.
+
+<Canvas of={Stories.Controlled} />
+
+## What it holds
+
+<Canvas of={Stories.Filters} />
+<Canvas of={Stories.Cart} />
+<Canvas of={Stories.StoreMenu} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.Dark} />
+<Canvas of={Stories.LeftToRight} />
+<Canvas of={Stories.OnAPhone} />
+
+## Motion
+
+It slides the window's height or width in over 250ms, easing out, and back out the same way over
+250ms, the backdrop fading with it. With reduced motion it appears and goes at once.
+
+## API
+
+### Drawer
+
+<PropsTable
+  rows={[
+    ['isOpen', 'boolean', null, 'Open, controlled.'],
+    ['defaultOpen', 'boolean', 'false', 'Open at first, uncontrolled.'],
+    ['onOpenChange', '(isOpen: boolean) => void', null, 'Called as it opens and closes.'],
+    ['children', 'ReactNode', null, 'Its trigger, then its Backdrop.'],
+  ]}
+/>
+
+### Drawer.Backdrop
+
+<PropsTable
+  rows={[
+    [
+      'variant',
+      "'opaque' | 'blur' | 'transparent'",
+      "'opaque'",
+      'The page under it: dimmed, blurred, or as it is.',
+    ],
+    ['isDismissable', 'boolean', 'true', 'A press outside or a drag toward its edge closes it.'],
+    ['isKeyboardDismissDisabled', 'boolean', 'false', 'Escape does not close it.'],
+    ['className', 'string | (state) => string', null, 'Classes after the backdrop’s own.'],
+  ]}
+/>
+
+### Drawer.Content
+
+<PropsTable
+  rows={[
+    [
+      'placement',
+      "'bottom' | 'top' | 'left' | 'right'",
+      "'bottom'",
+      'The edge it slides in from; left and right are the page’s start and end.',
+    ],
+    ['className', 'string | (state) => string', null, 'Classes after its own.'],
+  ]}
+/>
+
+### Drawer.Dialog
+
+<PropsTable
+  rows={[
+    [
+      'children',
+      'ReactNode | ({ close }) => ReactNode',
+      null,
+      'Its parts; as a function it is given close.',
+    ],
+    ['aria-label', 'string', null, 'Its name, when it has no Heading.'],
+    ['className', 'string', null, 'Classes after the panel’s own.'],
+  ]}
+/>
+
+### The rest
+
+`Drawer.Header`, `.Heading`, `.Body`, `.Footer` and `.Handle` take their element's props and a
+`className`. `Drawer.CloseTrigger` is a CloseButton, named “Close” in the page's language.
+
+## Accessibility
+
+It is a `dialog`, named by its heading. Focus moves into it as it opens, stays in it while open,
+and returns to its trigger when it closes; the page under it is hidden from a screen reader and
+does not scroll. The handle is only for the hand: the close button and Escape do what it does.
+
+<Keys
+  rows={[
+    ['Tab', 'To its next control.'],
+    ['Shift Tab', 'To the control before.'],
+    ['Escape', 'Closes it, unless isKeyboardDismissDisabled.'],
+  ]}
+/>
+
+## Styling
+
+`.drawer__backdrop` and its `--opaque`, `--blur`, `--transparent`; `.drawer__content` with
+`--bottom`, `--top`, `--left`, `--right`; `.drawer__dialog` with `[data-placement]`;
+`.drawer__header`, `__heading`, `__body`, `__footer`, `__handle` and `__close-trigger`. Its paper is
+the theme's `--overlay`; its motion is `--drawer-enter-duration`, `--drawer-exit-duration`,
+`--drawer-enter-ease` and `--drawer-exit-ease`.
+
+## As a block
+
+A tree opens the same drawer, on the web and in Flutter, from the Button in its `trigger` slot and
+only from it. Its edges are `bottom`, `top`, `start` and `end`, the page's; a bottom one has its
+handle, and every one its close button.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="Drawer" />

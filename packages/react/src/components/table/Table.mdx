@@ -1,0 +1,285 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Table.stories'
+import { Keys, Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# Table
+
+Rows of records under named columns: the orders, a product's variants, a size chart. Rows can be
+chosen, sorted and opened; totals sit under their own columns.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **Records to compare,** such as orders by buyer, date and sum.
+- **Records to act on,** chosen one or several at a time, such as printing labels for the day's
+  orders.
+- **Figures in a grid,** such as a product's variants with their stock and prices, or a size
+  chart.
+
+Not for one record's details: a card with its lines reads better. Not for a few things to choose
+from: use a list. On a phone, a table wider than the screen scrolls across; for a long list a
+phone reads, cards one under the other are kinder.
+
+## Import
+
+```tsx
+import { Table } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<Table>
+  <Table.ScrollContainer>
+    <Table.Content aria-label="Orders">
+      <Table.Header>
+        <Table.Column isRowHeader>Order</Table.Column>
+        <Table.Column>Buyer</Table.Column>
+        <Table.Column align="end">Total</Table.Column>
+      </Table.Header>
+      <Table.Body>
+        <Table.Row id="1041">
+          <Table.Cell>#1041</Table.Cell>
+          <Table.Cell>Niloufar Rostami</Table.Cell>
+          <Table.Cell align="end">1,280,000 toman</Table.Cell>
+        </Table.Row>
+      </Table.Body>
+      <Table.Foot>…</Table.Foot>
+    </Table.Content>
+  </Table.ScrollContainer>
+  <Table.Footer>…</Table.Footer>
+</Table>
+```
+
+<Parts
+  rows={[
+    ['Table', 'Its look: a grey frame round a white body, or none.'],
+    ['Table.ScrollContainer', 'Scrolls the table across when its columns do not fit.'],
+    ['Table.Content', 'The table itself: what is chosen, how it is sorted, what a row opens.'],
+    ['Table.Header', 'The row of headings, on the grey.'],
+    [
+      'Table.Column',
+      'A heading, 12 on 16, medium and muted; a rule at its end but the last. One column is the row header, which names the rows.',
+    ],
+    [
+      'Table.SortableColumnHeader',
+      'A sortable heading’s words, with the chevron at its end while the column is sorted.',
+    ],
+    ['Table.Body', 'The rows, and what it says when there are none.'],
+    ['Table.Row', 'A record: 12 above and below its 14-on-20 text, a hairline under it.'],
+    ['Table.Cell', 'One value: text, or a chip, a person, the row’s buttons.'],
+    ['Table.Foot', 'Totals, inside the table under their columns: semibold on the grey.'],
+    ['Table.Footer', 'A strip under the table, for its pages.'],
+  ]}
+/>
+
+Columns share the width as a browser's table does: each takes what its widest cell asks, and room
+left over goes to each in proportion. A table its cells cannot fit scrolls across in its scroll
+container. `align="end"` on a column and its cells puts sums and counts at the end, under their
+heading.
+
+## Examples
+
+### Two looks
+
+`primary`, the default, is a grey frame 20 round, the headings on the grey and the rows on a white
+body 16 round inside it. `secondary` has no frame: its headings are a grey strip 16 round and its
+rows lie on what is under them, for a table on a card.
+
+<Canvas of={Stories.Variants} />
+
+### Choosing rows
+
+`selectionMode` on `Table.Content` is `single` or `multiple`. Put a checkbox with
+`slot="selection"` in a first column and in each row's first cell: React Aria names each box in the
+page's language after the row it chooses, and the head's box chooses every row. A chosen row is the
+brand at 8%; one in `disabledKeys` is drawn at half and cannot be chosen.
+
+<Canvas of={Stories.Choosing} />
+
+### Sorting
+
+`allowsSorting` on a column makes its heading the hand under the pointer; give it a
+`Table.SortableColumnHeader` and hold the order with `sortDescriptor` and `onSortChange`. The table
+does not sort: sort the rows you give it. The sorted column's chevron is at its heading's end; in a
+column aligned to the end, the words stay over the figures and the chevron sits just before them.
+
+<Canvas of={Stories.Sorting} />
+
+### Totals
+
+`Table.Foot` holds rows of totals, under their own columns and semibold on the table's grey. In a
+table that chooses, make a total row `isDisabled`, so a choice skips it; it keeps its full colour.
+
+<Canvas of={Stories.Totals} />
+
+### With no rows
+
+`renderEmptyState` on `Table.Body` says what is missing. In an element with `className="table__empty"`
+it is drawn as the block draws it: in the middle, muted, 24 above and below, on the white body.
+
+<Canvas of={Stories.Empty} />
+
+### Rows that open a record
+
+`onRowAction` on `Table.Content` is called with a row's id when it is pressed or Enter is pressed
+on it; or give each row an `href`, and it is a link. In a table that also chooses, a press on the
+row still opens it, and its box or Space chooses it.
+
+<Canvas of={Stories.OpeningARecord} />
+
+### What a cell holds
+
+A cell holds text or anything else: a person with a note under their name, a status chip, the
+row's buttons at the end, each icon button named and its name in a Tooltip.
+
+<Canvas of={Stories.Cells} />
+
+### Pages
+
+`Table.Footer` is a strip under the table, for a Pagination with the rows shown.
+
+<Canvas of={Stories.Pages} />
+
+### Columns to resize
+
+Inside a `Table.ResizableContainer`, a column with a `Table.ColumnResizer` is widened or narrowed
+by the handle at its end, by the pointer or by the arrow keys. Give columns a `defaultWidth` and a
+`minWidth`. On the web only: a block has no resizing.
+
+<Canvas of={Stories.Resizing} />
+
+### Loading more
+
+`Table.LoadMore` at the end of the body calls `onLoadMore` when it comes into view, and shows its
+`Table.LoadMoreContent`, a spinner, while `isLoading`. Give the scroll container a height.
+
+<Canvas of={Stories.LoadingMore} />
+
+## What it lists
+
+<Canvas of={Stories.OrdersPage} />
+<Canvas of={Stories.Stock} />
+<Canvas of={Stories.BuyerOrders} />
+<Canvas of={Stories.SizeChart} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+### Table
+
+<PropsTable
+  rows={[
+    [
+      'variant',
+      "'primary' | 'secondary'",
+      "'primary'",
+      'A grey frame round a white body, or none.',
+    ],
+    ['className', 'string', null, 'Classes after its own.'],
+  ]}
+/>
+
+### Table.Content
+
+<PropsTable
+  rows={[
+    ['aria-label', 'string', null, 'Its name for a screen reader; it is not drawn.'],
+    ['selectionMode', "'none' | 'single' | 'multiple'", "'none'", 'Whether rows can be chosen.'],
+    ['selectedKeys', "Iterable<Key> | 'all'", null, 'The chosen rows, controlled.'],
+    ['defaultSelectedKeys', "Iterable<Key> | 'all'", null, 'The chosen rows at first.'],
+    ['onSelectionChange', '(keys: Selection) => void', null, 'Called as the choice changes.'],
+    ['disabledKeys', 'Iterable<Key>', null, 'Rows that cannot be chosen or opened.'],
+    ['sortDescriptor', '{ column: Key, direction }', null, 'The sorted column and its direction.'],
+    [
+      'onSortChange',
+      '(descriptor: SortDescriptor) => void',
+      null,
+      'Called as a sortable heading is pressed.',
+    ],
+    ['onRowAction', '(key: Key) => void', null, 'Called as a row is opened.'],
+  ]}
+/>
+
+### Table.Column
+
+<PropsTable
+  rows={[
+    ['id', 'Key', null, 'Its key, which the sort names.'],
+    ['isRowHeader', 'boolean', 'false', 'Its cells name their rows.'],
+    ['allowsSorting', 'boolean', 'false', 'Its heading sorts the table.'],
+    [
+      'align',
+      "'start' | 'center' | 'end'",
+      "'start'",
+      'Where its heading sits; give its cells the same.',
+    ],
+    ['defaultWidth, width', "number | string | '1fr'", null, 'In a resizable table.'],
+    ['minWidth, maxWidth', 'number', null, 'In a resizable table.'],
+  ]}
+/>
+
+### Table.Row
+
+<PropsTable
+  rows={[
+    ['id', 'Key', null, 'Its key, which the choice and the action are told.'],
+    ['href', 'string', null, 'Makes the row a link.'],
+    ['isDisabled', 'boolean', 'false', 'It cannot be chosen or opened.'],
+  ]}
+/>
+
+### The rest
+
+`Table.Cell` takes `align`, as its column; `Table.Body` takes `renderEmptyState`;
+`Table.SortableColumnHeader` the column's `sortDirection`;
+`Table.LoadMore` `onLoadMore` and `isLoading`. Each takes a `className`.
+
+## Accessibility
+
+It is a `grid`, named by its `aria-label`; the row header's cell names each row, and a chosen row
+is `aria-selected`. Tab reaches the table once, at its last focused row, and leaves it; the arrows
+move between rows and cells.
+
+<Keys
+  rows={[
+    ['ArrowDown ArrowUp', 'To the next or the previous row.'],
+    ['ArrowLeft ArrowRight', 'Into a row’s cells and along them, as the page reads.'],
+    ['Home End', 'To the row’s first or last cell; with Ctrl, the first or last row.'],
+    ['PageDown PageUp', 'A screen’s worth of rows on or back.'],
+    ['Space', 'Chooses the row, or lets it go.'],
+    ['Shift+ArrowDown Shift+ArrowUp', 'Chooses the rows on the way.'],
+    ['Ctrl+A', 'Chooses every row.'],
+    ['Escape', 'Lets every row go.'],
+    ['Enter', 'Opens the row.'],
+    ['Tab', 'To the controls in the row, then out of the table.'],
+  ]}
+/>
+
+## Styling
+
+`.table-root` with `--primary` and `--secondary`; `.table__scroll-container`, `__content`,
+`__header`, `__column`, `__sortable-column-header`, `__body`, `__row`, `__cell`, `__foot`,
+`__footer`, `__empty` and `__column-resizer`. A chosen row's tint is the brand at 8% over
+`--surface`.
+
+## As a block
+
+A tree draws the same table, on the web and in Flutter: its columns, aligned at the start, middle
+or end, its rows with their cells, which hold text or blocks, and a TableFooter of totals. It
+chooses, sorts and opens rows as the server says, and tells it with `onSelectionChange`,
+`onSortChange` and `onRowAction`; `emptyMessage` is said when there are no rows, and `onLoadMore`
+adds a button to load more under it.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="Table" />

@@ -1,0 +1,157 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './ColorSwatchPicker.stories'
+import { Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# ColorSwatchPicker
+
+One colour from a few, as swatches: a label's colour, a theme's accent, a product's colours. The
+chosen one is ringed in its own colour, with a tick on it. It is a list: the arrow keys move
+between the colours, and Space or Enter chooses one.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **A colour from a set the app chose,** such as a label's or a theme's.
+- **A product's colours** on its page, the sold-out ones disabled.
+
+Not for any colour at all: Diba has no free colour picker. For choices that are not colours, use a
+RadioGroup or a ToggleButtonGroup.
+
+## Import
+
+```tsx
+import { ColorSwatchPicker } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<ColorSwatchPicker aria-label="Label colour" defaultValue="#1f7a5c">
+  <ColorSwatchPicker.Item color="#1f7a5c" aria-label="Emerald">
+    <ColorSwatchPicker.Swatch />
+    <ColorSwatchPicker.Indicator />
+  </ColorSwatchPicker.Item>
+</ColorSwatchPicker>
+```
+
+<Parts
+  rows={[
+    [
+      'ColorSwatchPicker',
+      'The list: a row that wraps, 8 apart, or a column. It holds the chosen colour.',
+    ],
+    [
+      'ColorSwatchPicker.Item',
+      'A colour to choose: 16 to 40 across, with a ring 1 to 3 wide that shows in its own colour once it is chosen, the field’s edge 1 outside that.',
+    ],
+    [
+      'ColorSwatchPicker.Swatch',
+      'The colour itself, filling the item; it grows to 110% under the pointer and shrinks to 77% once chosen.',
+    ],
+    ['ColorSwatchPicker.Indicator', 'The tick on the chosen one, a third of the item across.'],
+  ]}
+/>
+
+## Examples
+
+### Round or square
+
+`circle`, the default, or `square`, its corners rounded.
+
+<Canvas of={Stories.Shapes} />
+
+### Sizes
+
+`xs`, `sm`, `md`, `lg` and `xl`: 16, 24, 32, 36 and 40 across. `md` is the default. The ring is 1
+wide at `xs`, 2 at `sm` and `md`, and 3 at `lg` and `xl`.
+
+<Canvas of={Stories.Sizes} />
+
+### A row or a column
+
+`grid`, the default, is a row that wraps when it runs out of room; `stack` is a column.
+
+<Canvas of={Stories.Layouts} />
+
+### The chosen one
+
+The ring takes the colour, the swatch shrinks inside it, and the tick sits on the colour: black on
+a light one and white on the rest, whichever is clearer, so it is 4.5:1 or more on any colour.
+
+<Canvas of={Stories.Chosen} />
+
+### Its value, held by the page
+
+`value` and `onChange`, or `defaultValue` alone. A value is a colour string such as `"#2f78b5"`;
+`onChange` hands back a colour, whose `toString('hex')` says it as `#2F78B5`.
+
+<Canvas of={Stories.Controlled} />
+
+### A colour that cannot be chosen
+
+`isDisabled` on an item fades it and lets the keys pass over it.
+
+<Canvas of={Stories.Disabled} />
+
+## What it builds
+
+<Canvas of={Stories.LabelColour} />
+<Canvas of={Stories.ThemeAccent} />
+<Canvas of={Stories.ProductColours} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+### ColorSwatchPicker
+
+<PropsTable
+  rows={[
+    ['value', 'string | Color', null, 'The chosen colour, held by the page.'],
+    ['defaultValue', 'string | Color', null, 'The colour it starts on.'],
+    ['onChange', '(color: Color) => void', null, 'Called with the colour chosen.'],
+    ['variant', "'circle' | 'square'", "'circle'", 'Round swatches or square ones.'],
+    ['size', "'xs' | 'sm' | 'md' | 'lg' | 'xl'", "'md'", '16, 24, 32, 36 or 40 across.'],
+    ['layout', "'grid' | 'stack'", "'grid'", 'A row that wraps, or a column.'],
+    ['aria-label', 'string', null, 'Its name, when no label is drawn.'],
+    ['aria-labelledby', 'string', null, 'The id of the label drawn for it.'],
+    ['className', 'string', null, 'Classes after its own.'],
+  ]}
+/>
+
+### ColorSwatchPicker.Item
+
+<PropsTable
+  rows={[
+    ['color', 'string | Color', null, 'The colour it stands for. Required.'],
+    ['aria-label', 'string', null, 'The colour’s own name, such as a shop’s «زعفرانی».'],
+    ['isDisabled', 'boolean', 'false', 'It cannot be chosen.'],
+    ['className', 'string', null, 'Classes after its own.'],
+  ]}
+/>
+
+## Accessibility
+
+- **The list is named,** with `aria-label` or by the label beside it through `aria-labelledby`.
+- **Each colour is named.** Without an `aria-label`, React Aria names a swatch by what the colour
+  looks like, in the page's language, «قرمز پررنگ تیره» or "dark vibrant red". Where the colour has
+  a name of its own, as a product's do, give it.
+- The arrow keys move between the colours, passing over the disabled ones, and Space or Enter
+  chooses the one in focus.
+
+## As a block
+
+A tree sends the colours as `#rrggbb` and gets the chosen one back the same way, on the web and in
+Flutter. Each swatch is named by what its colour looks like.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="ColorSwatchPicker" />

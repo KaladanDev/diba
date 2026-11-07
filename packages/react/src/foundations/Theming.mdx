@@ -1,0 +1,51 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Theming.stories'
+
+<Meta of={Stories} />
+
+# Theming
+
+Every colour a component draws is a role (see Colours), and a role is a CSS variable. So a theme is
+a few variables set on an element: everything inside it takes them, and nothing outside does. No
+component needs a prop for it, and nothing is rebuilt.
+
+## A brand over the gilt
+
+A shop with a brand of its own sets the brand's roles: its fill, the words on it, its hover, its
+soft tint and the ink on that tint. Diba's choices are drawn in their own variables, so a shop that
+wants its checkboxes and switches in its colour too sets those, and the indicator a bar fills with.
+
+```css
+.shop-theme {
+  --accent: oklch(0.6 0.11 190);
+  --accent-foreground: oklch(0.99 0 0);
+  --accent-hover: oklch(0.55 0.11 190);
+  --accent-soft: oklch(0.95 0.03 190);
+  --accent-soft-foreground: oklch(0.42 0.08 190);
+
+  --db-control-fill: oklch(0.6 0.11 190);
+  --db-control-on-fill: oklch(0.99 0 0);
+  --db-indicator-accent: oklch(0.5 0.1 190);
+}
+```
+
+The pairs matter more than the values. `--accent` is a fill chosen to hold `--accent-foreground`
+at 4.5:1; an ink drawn on a surface is `--accent-soft-foreground` or a darker step, because a
+colour picked to sit behind words is rarely legible as words.
+
+<Canvas of={Stories.ABrand} />
+
+## Light and dark
+
+The provider's `theme` sets `data-theme` on its wrapper, and every role has a light and a dark
+value. Nothing else changes: the same components, the same props.
+
+<Canvas of={Stories.DarkMode} />
+
+## A dark panel on a light page
+
+A second provider sets its own theme for what is inside it. Give it `ownsDocument={false}`, so it
+leaves the page's `<html>` alone; overlays opened inside it take its theme from the wrapper when its
+`portalContainer` is `"self"`.
+
+<Canvas of={Stories.Nested} />

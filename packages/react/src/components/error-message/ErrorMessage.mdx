@@ -1,0 +1,100 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './ErrorMessage.stories'
+import { PropsTable } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# ErrorMessage
+
+What is wrong, under something a `FieldError` cannot serve: a group of tags, a calendar, a
+one-time code. It is 12 in the danger colour, and it shows whenever it is drawn: you decide when.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **Under a TagGroup,** which checks nothing itself: "choose one category at least".
+- **Under a Calendar or a RangeCalendar** whose day cannot be taken.
+- **Under an InputOTP,** joined to it by `aria-describedby`.
+
+In a TextField, a NumberField, a SearchField, a date field or any field that checks its value, use
+a `FieldError`: it shows only while the field is invalid, and says what its check found.
+
+## Import
+
+```tsx
+import { ErrorMessage } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<TagGroup selectionMode="multiple">
+  <Label>Categories</Label>
+  <TagGroup.List>…</TagGroup.List>
+  <Description>The product is shown in these categories.</Description>
+  {none ? <ErrorMessage>Choose one category at least.</ErrorMessage> : null}
+</TagGroup>
+```
+
+Inside a TagGroup or a calendar it takes their error's place, and they are described by it: a
+screen reader reads it with the list or with the chosen day. Elsewhere, give it an `id` and point
+the field's `aria-describedby` at it.
+
+## Examples
+
+### Under a tag group
+
+Under the help, which stays. It goes as soon as a category is chosen.
+
+<Canvas of={Stories.UnderATagGroup} />
+
+### Under a calendar
+
+With `isInvalid` on the calendar, the chosen day is drawn as wrong and read with the message.
+
+<Canvas of={Stories.UnderACalendar} />
+
+### Under a one-time code
+
+<Canvas of={Stories.UnderACode} />
+
+### Short and long
+
+It wraps under its field. Put a Latin address in `<bdi dir="ltr">` so it reads whole on a Persian
+page.
+
+<Canvas of={Stories.Wrapping} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+<PropsTable
+  rows={[
+    ['children', 'ReactNode', null, 'What is wrong, and what to do about it.'],
+    ['id', 'string', 'its own', 'For aria-describedby, where nothing joins it for you.'],
+    ['className', 'string', null, 'Added to .error-message.'],
+  ]}
+/>
+
+## Accessibility
+
+It is text, not an alert: it is read with what it describes, when the reader comes to it. Say what
+is wrong and what to do: "Choose one category at least", not "Invalid".
+
+## Styling
+
+`.error-message`: 12 on 16, in `--danger`.
+
+## As a block
+
+A tree has no ErrorMessage of its own: a field's `errorMessage` says it, here a TagGroup's, on the
+web and in Flutter.
+
+<Canvas of={Stories.ServerDriven} />

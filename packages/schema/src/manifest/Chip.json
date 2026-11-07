@@ -1,0 +1,21 @@
+{
+  "name": "Chip",
+  "category": "content",
+  "description": "A static label, such as an order status. A chip you press or remove is a Tag.",
+  "sduiSafe": true,
+  "props": {
+    "variant": {
+      "type": "enum",
+      "values": ["primary", "secondary", "soft", "tertiary"],
+      "default": "soft"
+    },
+    "color": {
+      "type": "enum",
+      "values": ["default", "accent", "success", "warning", "danger"],
+      "default": "default"
+    },
+    "size": { "type": "enum", "values": ["sm", "md", "lg"], "default": "sm" },
+    "icon": { "type": "token", "token": "icon", "description": "A name from the icon list." }
+  },
+  "children": { "accepts": "text", "description": "The chip's text (localizable)." }
+}

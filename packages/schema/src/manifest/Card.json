@@ -1,0 +1,31 @@
+{
+  "name": "Card",
+  "category": "layout",
+  "description": "A surface holding blocks. An href over interactive content is refused and the content kept; href and action exclude each other.",
+  "sduiSafe": true,
+  "props": {
+    "variant": {
+      "type": "enum",
+      "values": ["default", "secondary", "tertiary", "transparent"],
+      "default": "default",
+      "description": "secondary is a grey card inside a white one."
+    },
+    "title": { "type": "string", "i18n": true },
+    "description": { "type": "string", "i18n": true },
+    "isFlush": {
+      "type": "boolean",
+      "default": false,
+      "description": "No padding: a table edge to edge."
+    },
+    "href": {
+      "type": "string",
+      "format": "url",
+      "description": "A card that opens something. A URL, held to isSafeUrl."
+    }
+  },
+  "children": { "accepts": "*", "description": "The body. An Image block first stands for media." },
+  "slots": {
+    "action": { "accepts": ["Button", "LinkButton"], "description": "\"See all\", in the header." },
+    "footer": { "accepts": "*", "description": "Under the body." }
+  }
+}

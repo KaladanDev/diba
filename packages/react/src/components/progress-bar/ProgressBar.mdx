@@ -1,0 +1,143 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './ProgressBar.stories'
+import { Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# ProgressBar
+
+How far along something is: photos uploading, a spreadsheet's rows coming in, the way to free
+delivery. Its label and value over a track that fills from the start.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **A wait you can measure,** such as an import's rows or an upload.
+- **The way to a goal,** such as a cart's way to free delivery or a month's sales target.
+
+Not for a wait with no measure: use a Spinner, or `isIndeterminate`. Not for how much of
+something is used, such as storage: that is a Meter, which measures rather than waits.
+
+## Import
+
+```tsx
+import { Label, ProgressBar } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<ProgressBar value={60}>
+  <Label>Uploading photos</Label>
+  <ProgressBar.Output />
+  <ProgressBar.Track>
+    <ProgressBar.Fill />
+  </ProgressBar.Track>
+</ProgressBar>
+```
+
+<Parts
+  rows={[
+    ['ProgressBar', 'Its value, limits and look; a progressbar named by its Label.'],
+    ['Label', 'What it measures: 14 and medium, at the start.'],
+    ['ProgressBar.Output', 'Its value, 14 and regular, at the end, in the page’s digits.'],
+    [
+      'ProgressBar.Track',
+      'The track, 4 under them: 4, 8 or 20 tall in the off-track shade, round at its ends.',
+    ],
+    ['ProgressBar.Fill', 'How far along: from the start, square at its leading end.'],
+  ]}
+/>
+
+## Examples
+
+### Sizes
+
+`sm`, `md` and `lg`: the track 4, 8 and 20 tall.
+
+<Canvas of={Stories.Sizes} />
+
+### Colours
+
+The brand's by default, a status's solid colour, or the neutral fill for `default`. In light the brand's and the warning's
+take their deeper ink, so the fill stands 3:1 from its track.
+
+<Canvas of={Stories.Colors} />
+
+### No telling how far
+
+`isIndeterminate` runs two lines along it, each end on its own curve, as Material's does; on a
+Persian page they run from the right.
+
+<Canvas of={Stories.Indeterminate} />
+
+### Its value in words
+
+It shows a percent by default. `valueLabel` says it in words of your own, such as "84 of 120";
+`formatOptions` formats it as a number or a currency.
+
+<Canvas of={Stories.Values} />
+
+### Without a label
+
+The track alone, named with `aria-label`.
+
+<Canvas of={Stories.WithoutLabel} />
+
+## What it waits on
+
+<Canvas of={Stories.Import} />
+<Canvas of={Stories.FreeDelivery} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+<PropsTable
+  rows={[
+    ['value', 'number', '0', 'How far along.'],
+    ['minValue, maxValue', 'number', '0, 100', 'Its limits.'],
+    ['isIndeterminate', 'boolean', 'false', 'No telling how far.'],
+    ['valueLabel', 'ReactNode', null, 'Its value in words of your own.'],
+    [
+      'formatOptions',
+      'Intl.NumberFormatOptions',
+      '{ style: "percent" }',
+      'How its value is formatted.',
+    ],
+    [
+      'color',
+      "'default' | 'accent' | 'success' | 'warning' | 'danger'",
+      "'accent'",
+      'The fill’s colour.',
+    ],
+    ['size', "'sm' | 'md' | 'lg'", "'md'", 'The track 4, 8 or 20 tall.'],
+    ['aria-label', 'string', null, 'Its name when it has no Label.'],
+  ]}
+/>
+
+## Accessibility
+
+It is a `progressbar`, named by its Label, its value read with `aria-valuetext` in the words it
+shows. An indeterminate one has no value.
+
+## Styling
+
+`.progress-bar` with `--sm`, `--md`, `--lg` and its colour; `.progress-bar__output`, `__track` and
+`__fill`.
+
+## As a block
+
+A tree draws the same bar, on the web and in Flutter: its `value` and limits, `label` and
+`showValue`, `valueLabel` or `formatStyle` (`percent`, `decimal` or `currency`, a toman's in the
+page's words), `color`, `size` and `isIndeterminate`.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="ProgressBar" />

@@ -1,0 +1,22 @@
+{
+  "name": "Spacer",
+  "category": "layout",
+  "description": "Room a Stack's single gap cannot give.",
+  "sduiSafe": true,
+  "props": {
+    "size": {
+      "type": "token",
+      "token": "space",
+      "default": 4
+    },
+    "axis": {
+      "type": "enum",
+      "values": [
+        "block",
+        "inline"
+      ],
+      "default": "block",
+      "description": "block is down, inline across."
+    }
+  }
+}

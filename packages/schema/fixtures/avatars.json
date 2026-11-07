@@ -1,0 +1,85 @@
+{
+  "$comment": "An avatar's initials and hue for a name, as both platforms work them out: the first letters of the first two words, Latin ones in capitals, a zero-width non-joiner (\u200c) between them; the hue by hashing the trimmed name, h = (h * 31 + code unit) % 1000003, into saffron, garnet, emerald, sky and iris. A blank name has no hue.",
+  "cases": [
+    {
+      "name": "نیلوفر رستمی",
+      "initials": "ن\u200cر",
+      "hue": "iris"
+    },
+    {
+      "name": "امید کاظمی",
+      "initials": "ا\u200cک",
+      "hue": "garnet"
+    },
+    {
+      "name": "سارا احمدی",
+      "initials": "س\u200cا",
+      "hue": "sky"
+    },
+    {
+      "name": "رضا",
+      "initials": "ر",
+      "hue": "emerald"
+    },
+    {
+      "name": "مینا",
+      "initials": "م",
+      "hue": "iris"
+    },
+    {
+      "name": "فروشگاه کالادان",
+      "initials": "ف\u200cک",
+      "hue": "sky"
+    },
+    {
+      "name": "علی",
+      "initials": "ع",
+      "hue": "iris"
+    },
+    {
+      "name": "Nilou Rostami",
+      "initials": "N\u200cR",
+      "hue": "sky"
+    },
+    {
+      "name": "Omid Kazemi",
+      "initials": "O\u200cK",
+      "hue": "saffron"
+    },
+    {
+      "name": "Sara Ahmadi",
+      "initials": "S\u200cA",
+      "hue": "sky"
+    },
+    {
+      "name": "Reza",
+      "initials": "R",
+      "hue": "garnet"
+    },
+    {
+      "name": "Mina",
+      "initials": "M",
+      "hue": "sky"
+    },
+    {
+      "name": "Ada",
+      "initials": "A",
+      "hue": "emerald"
+    },
+    {
+      "name": "ada lovelace",
+      "initials": "A\u200cL",
+      "hue": "emerald"
+    },
+    {
+      "name": "  spaced   out  name ",
+      "initials": "S\u200cO",
+      "hue": "garnet"
+    },
+    {
+      "name": "",
+      "initials": "",
+      "hue": null
+    }
+  ]
+}

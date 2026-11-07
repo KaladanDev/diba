@@ -1,0 +1,37 @@
+{
+  "name": "Dropdown",
+  "category": "navigation",
+  "description": "A menu opened by its trigger, and only by it.",
+  "sduiSafe": true,
+  "props": {
+    "placement": {
+      "type": "enum",
+      "values": ["bottom start", "bottom end", "top start", "top end"],
+      "default": "bottom end"
+    },
+    "selectionMode": {
+      "type": "enum",
+      "values": ["none", "single", "multiple"],
+      "default": "none"
+    },
+    "defaultSelectedKeys": {
+      "type": "string[]",
+      "description": "Starts at this value; the merchant changes it."
+    },
+    "selectedKeys": {
+      "type": "string[]",
+      "description": "Pinned: shows exactly what the server sent until the next tree."
+    }
+  },
+  "children": { "accepts": ["DropdownItem", "DropdownSection"] },
+  "slots": {
+    "trigger": { "accepts": ["Button"], "description": "The button that opens the menu." }
+  },
+  "actions": {
+    "onAction": {
+      "description": "An item pressed. Its value is the item's id: send it with call's value.",
+      "payload": "Key"
+    },
+    "onSelectionChange": { "description": "The selected ids.", "payload": "Key[]" }
+  }
+}

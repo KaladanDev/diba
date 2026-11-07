@@ -1,0 +1,133 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Link.stories'
+import { Keys, Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# Link
+
+Words that go to a page: a guide from a setting's note, the return terms from a sentence, a
+storefront's policies at its foot. It is underlined in its own colour, so it reads as a link
+without relying on colour alone.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **A page to read,** named in a sentence, such as a guide or the return terms.
+- **A record's own page,** such as the staff member who last changed a setting.
+- **A row of pages,** such as a storefront's foot.
+
+Not for an action: a button does, a link goes. Not for the main way on from a page, such as "Add
+product": use a LinkButton, which draws a link as a button.
+
+## Import
+
+```tsx
+import { Link } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<Link href="/policies/returns">
+  Return terms
+  <Link.Icon />
+</Link>
+```
+
+<Parts
+  rows={[
+    [
+      'Link',
+      'The link: medium, in the link colour, underlined in that colour, 1 thick and about 4 under its words.',
+    ],
+    [
+      'Link.Icon',
+      'An icon beside its words, three quarters of their size, 4 from them on their middle; without children, the arrow of a link to another site, turned on a Persian page so it points away from them.',
+    ],
+  ]}
+/>
+
+## Examples
+
+### In a sentence
+
+It takes the size of the words round it, and wraps with them.
+
+<Canvas of={Stories.InASentence} />
+
+### To another site
+
+`target="_blank"` with `rel="noopener noreferrer"` opens it in a new tab; `Link.Icon` after its
+words says it leaves the site.
+
+<Canvas of={Stories.External} />
+
+### With an icon
+
+`Link.Icon` holds an icon of your own, before or after the words. Turn an arrow for a Persian
+page yourself: back points right there.
+
+<Canvas of={Stories.WithIcon} />
+
+### Off
+
+`isDisabled` leaves it out of reach and draws it at half.
+
+<Canvas of={Stories.Disabled} />
+
+### Something here, not a page
+
+Without an `href`, `onPress` is called as it is pressed. Prefer a button for an action; a link
+that opens a dialog here is the exception.
+
+<Canvas of={Stories.OnPress} />
+
+## Where it goes
+
+<Canvas of={Stories.InTheAdmin} />
+<Canvas of={Stories.StoreFooter} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+<PropsTable
+  rows={[
+    ['href', 'string', null, 'Where it goes.'],
+    ['target', 'string', null, "'_blank' for a new tab."],
+    ['rel', 'string', null, "'noopener noreferrer' with a new tab."],
+    ['isDisabled', 'boolean', 'false', 'It cannot be followed.'],
+    ['onPress', '(e: PressEvent) => void', null, 'Called as it is pressed.'],
+    ['routerOptions', 'object', null, 'Passed to the app’s router with the href.'],
+    ['className', 'string | (state) => string', null, 'Classes after its own.'],
+  ]}
+/>
+
+## Accessibility
+
+It is a link, named by its words, and an app's router takes it when the app has one (React Aria's
+`RouterProvider`). An off one is `aria-disabled`. Give a link to another site words that say so,
+or the icon's arrow, which a screen reader does not read.
+
+<Keys rows={[['Enter', 'Follows it.']]} />
+
+## Styling
+
+`.link`, with `.link__icon` for its icon; its colour is the theme's `--link`. With a button's
+classes (`buttonVariants`), it is drawn as a button instead: see LinkButton.
+
+## As a block
+
+A tree draws the same link, on the web and in Flutter: its words, its `href`, held to safe URLs,
+and `isExternal` for one that leaves the app, which the host opens. A block draws no arrow.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="Link" />

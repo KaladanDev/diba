@@ -1,0 +1,42 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Blocks.stories'
+
+<Meta of={Stories} />
+
+# Blocks
+
+Every component a tree may name is a block, with its props, children, slots and events in the
+manifest; each component's own page ends with its block. These are the sample trees both renderers
+are tested against, the same file the Flutter gallery draws, in the page's language. The props on
+each are in its tree; the trees are in `packages/schema/fixtures/samples.json`.
+
+## Actions
+
+<Canvas of={Stories.Actions} />
+
+## Text fields
+
+<Canvas of={Stories.TextFields} />
+
+## Pickers
+
+<Canvas of={Stories.Pickers} />
+
+## Choices
+
+<Canvas of={Stories.Choices} />
+
+## Status
+
+<Canvas of={Stories.Status} />
+
+## Containers
+
+<Canvas of={Stories.Containers} />
+
+## Every block
+
+Seventy-four blocks by kind. Some only live inside another, a `ListBoxItem` in a `Select`, a `Row`
+in a `TableBody`, and draw nothing alone; their parent reads them.
+
+<Canvas of={Stories.Catalogue} />

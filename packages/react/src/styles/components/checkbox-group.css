@@ -1,0 +1,10 @@
+/*
+ * Third-party code under the Apache License 2.0; see THIRD-PARTY-NOTICES.txt in this package.
+ */
+.checkbox-group {
+  @apply flex flex-col;
+
+  [data-slot="checkbox"] {
+    @apply mt-4;
+  }
+}

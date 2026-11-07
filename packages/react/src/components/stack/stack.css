@@ -1,0 +1,109 @@
+/**
+ * Stack — blocks in a column or a row, a gap apart.
+ *
+ * Its own rules, read from Diba's space tokens, as a tree's Stack block draws it: no utility class,
+ * so a host draws it whatever its Tailwind has seen. In `@layer components`, so a utility a
+ * consumer passes through `className` still wins.
+ */
+
+@layer components {
+  .db-stack {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: var(--db-space-4);
+    align-items: stretch;
+    justify-content: flex-start;
+  }
+
+  /* A row runs as the page reads: from the right on a Persian page. */
+  .db-stack--horizontal {
+    flex-direction: row;
+  }
+
+  .db-stack--wrap {
+    flex-wrap: wrap;
+  }
+
+  /* ------------------------------------------------------------------- gaps */
+
+  .db-stack--gap-0 {
+    gap: var(--db-space-0);
+  }
+
+  .db-stack--gap-1 {
+    gap: var(--db-space-1);
+  }
+
+  .db-stack--gap-2 {
+    gap: var(--db-space-2);
+  }
+
+  .db-stack--gap-3 {
+    gap: var(--db-space-3);
+  }
+
+  .db-stack--gap-4 {
+    gap: var(--db-space-4);
+  }
+
+  .db-stack--gap-5 {
+    gap: var(--db-space-5);
+  }
+
+  .db-stack--gap-6 {
+    gap: var(--db-space-6);
+  }
+
+  .db-stack--gap-8 {
+    gap: var(--db-space-8);
+  }
+
+  .db-stack--gap-10 {
+    gap: var(--db-space-10);
+  }
+
+  .db-stack--gap-12 {
+    gap: var(--db-space-12);
+  }
+
+  .db-stack--gap-16 {
+    gap: var(--db-space-16);
+  }
+
+  /* ------------------------------------------------------------------ across */
+
+  .db-stack--align-start {
+    align-items: flex-start;
+  }
+
+  .db-stack--align-center {
+    align-items: center;
+  }
+
+  .db-stack--align-end {
+    align-items: flex-end;
+  }
+
+  .db-stack--align-baseline {
+    align-items: baseline;
+  }
+
+  /* ------------------------------------------------------------------- along */
+
+  .db-stack--justify-center {
+    justify-content: center;
+  }
+
+  .db-stack--justify-end {
+    justify-content: flex-end;
+  }
+
+  .db-stack--justify-between {
+    justify-content: space-between;
+  }
+
+  .db-stack--justify-around {
+    justify-content: space-around;
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "name": "DropdownItem",
+  "category": "navigation",
+  "description": "One item of a Dropdown.",
+  "sduiSafe": true,
+  "props": {
+    "id": { "type": "string", "description": "Its key.", "required": true },
+    "description": {
+      "type": "string",
+      "i18n": true,
+      "description": "A second line under the text."
+    },
+    "icon": { "type": "token", "token": "icon", "description": "A name from the icon list." },
+    "variant": { "type": "enum", "values": ["default", "danger"], "default": "default" },
+    "isDisabled": { "type": "boolean", "default": false }
+  },
+  "children": { "accepts": "text", "description": "The item's text (localizable)." }
+}

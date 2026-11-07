@@ -1,0 +1,40 @@
+{
+  "name": "Menu",
+  "category": "navigation",
+  "description": "A list of actions, or a choice, standing on the page: a Dropdown's, always shown.",
+  "sduiSafe": true,
+  "props": {
+    "label": {
+      "type": "string",
+      "i18n": true,
+      "required": true,
+      "description": "Names the menu for a screen reader; it is not drawn."
+    },
+    "selectionMode": {
+      "type": "enum",
+      "values": ["none", "single", "multiple"],
+      "default": "none"
+    },
+    "defaultSelectedKeys": {
+      "type": "string[]",
+      "description": "Starts at this value; the merchant changes it."
+    },
+    "selectedKeys": {
+      "type": "string[]",
+      "description": "Pinned: shows exactly what the server sent until the next tree."
+    }
+  },
+  "children": {
+    "accepts": ["DropdownItem", "DropdownSection"]
+  },
+  "actions": {
+    "onAction": {
+      "description": "An item was pressed.",
+      "payload": "Key"
+    },
+    "onSelectionChange": {
+      "description": "The choice changed.",
+      "payload": "Key[]"
+    }
+  }
+}

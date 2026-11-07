@@ -1,0 +1,201 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './DatePicker.stories'
+import { Keys, Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# DatePicker
+
+A date field with a calendar behind an icon at its end: the reader types the date, or opens the
+month and picks a day. At rest it reads «۲۵ مهر ۱۴۰۵», in the reader's calendar.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **A date in a form,** where the reader may type it or look for it: a delivery date, a sale's start.
+- **A date and a time,** the day from the calendar and the time typed, or asked after the day.
+
+For a span, use a DateRangePicker. For a calendar open on the page, a Calendar. For a date only
+typed, never looked for, a DateField alone.
+
+## Import
+
+```tsx
+import {
+  Calendar,
+  DateField,
+  DatePicker,
+  Description,
+  FieldError,
+  Label,
+} from '@kaladan/diba-react'
+import { parseDate } from '@internationalized/date'
+```
+
+## Anatomy
+
+```tsx
+<DatePicker defaultValue={parseDate('2026-10-17')}>
+  <Label>Delivery date</Label>
+  <DateField.Group fullWidth>
+    <DateField.Input>{(segment) => <DateField.Segment segment={segment} />}</DateField.Input>
+    <DateField.Suffix>
+      <DatePicker.Trigger aria-label="Pick a date">
+        <DatePicker.TriggerIndicator />
+      </DatePicker.Trigger>
+    </DateField.Suffix>
+  </DateField.Group>
+  <Description>The day the parcel leaves the warehouse.</Description>
+  <FieldError />
+  <DatePicker.Popover>
+    <Calendar aria-label="Delivery date">{/* the Calendar's parts */}</Calendar>
+  </DatePicker.Popover>
+</DatePicker>
+```
+
+<Parts
+  rows={[
+    [
+      'DatePicker',
+      'The picker: its value, how fine it counts, its limits, its state and whether it is open.',
+    ],
+    [
+      'DateField.Group, DateField.Input',
+      'The date field inside it: see DateField for its segments and how it reads at rest.',
+    ],
+    ['DatePicker.Trigger', 'The button at the field’s end that opens the calendar.'],
+    ['DatePicker.TriggerIndicator', 'Its calendar icon.'],
+    ['DatePicker.Popover', 'The calendar’s popover, under the field and centred on it.'],
+    ['Calendar', 'The calendar inside it, with the parts its own page lists.'],
+  ]}
+/>
+
+## Values
+
+A DatePicker's values are `@internationalized/date`'s, as a DateField's are: `parseDate` for a
+day, `parseDateTime` for a day and a time. Its `toString()` is Gregorian ISO 8601 whatever calendar
+draws it, and so is what its `name` sends in a form.
+
+## Examples
+
+### Open
+
+The calendar opens on the day picked, or today. A day pressed fills the field and closes it;
+`shouldCloseOnSelect={false}` keeps it open.
+
+<Canvas of={Stories.Open} />
+
+### Persian and Gregorian
+
+<Canvas of={Stories.Calendars} />
+
+### A date and a time
+
+At a `granularity` of `hour` or `minute`, the field asks the time too, typed in its segments, and
+a day picked keeps the time.
+
+<Canvas of={Stories.DateAndTime} />
+
+### A day, then its time
+
+The block asks the time after the day, in the TimePickerDialog, as Flutter's does. Do the same by
+taking the calendar out of the picker's state, `slot={null}`, and opening the time picker when a
+day is pressed.
+
+<Canvas of={Stories.DayThenTime} />
+
+### First, last and unavailable days
+
+The calendar cannot pick a day outside `minValue` and `maxValue` or one `isDateUnavailable` names;
+typed, such a date makes the field invalid.
+
+<Canvas of={Stories.Limits} />
+
+### Disabled, read-only and on a grey surface
+
+<Canvas of={Stories.States} />
+
+### In a form
+
+<Canvas of={Stories.InAForm} />
+
+## What it builds
+
+<Canvas of={Stories.OrderFilter} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+### DatePicker
+
+It takes every DateField prop, `value`, `granularity`, `hourCycle`, `minValue` and the rest, and:
+
+<PropsTable
+  rows={[
+    ['isOpen', 'boolean', null, 'Whether the calendar is open, controlled.'],
+    ['defaultOpen', 'boolean', 'false', 'Open at first.'],
+    ['onOpenChange', '(isOpen: boolean) => void', null, 'When it opens or closes.'],
+    ['shouldCloseOnSelect', 'boolean', 'true', 'The calendar closes once a day is picked.'],
+    ['isDateUnavailable', '(date: DateValue) => boolean', null, 'Days that cannot be picked.'],
+    [
+      'firstDayOfWeek',
+      "'sun' | 'mon' | … | 'sat'",
+      'the language’s',
+      'The calendar’s first day of the week.',
+    ],
+  ]}
+/>
+
+### DatePicker.Trigger and DatePicker.Popover
+
+<PropsTable
+  rows={[
+    ['aria-label', 'string', null, 'The trigger’s name: “Pick a date”.'],
+    [
+      'placement',
+      "'bottom' | 'top' | …",
+      "'bottom'",
+      'The popover’s side of the field; it turns when there is no room.',
+    ],
+  ]}
+/>
+
+Every part takes its element's own props too, and a `className`.
+
+## Keyboard
+
+<Keys
+  rows={[
+    ['Tab', 'The field’s segments, then the calendar button.'],
+    ['Enter or Space on the button', 'Opens the calendar.'],
+    ['In the calendar', 'Its own keys: the arrows, Page Up and Down, Enter to pick.'],
+    ['Alt + Down', 'Opens the calendar from the field.'],
+    ['Escape', 'Closes the calendar, back to the field.'],
+  ]}
+/>
+
+## Accessibility
+
+The field is named by its `Label`; name the trigger, "Pick a date", since it is an icon alone. The
+calendar is a dialog: it takes the focus when it opens and gives it back when it closes.
+
+## Styling
+
+The DateField's classes, and `.date-picker`, `.date-picker__trigger`,
+`.date-picker__trigger-indicator` and `.date-picker__popover`.
+
+## As a block
+
+A tree's DateField block is this picker. At an hour or a minute, the day it picks asks its time in
+the time picker. Its dates are Gregorian ISO 8601 on the wire, whatever calendar draws them.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="DateField" />

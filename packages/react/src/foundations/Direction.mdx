@@ -1,0 +1,96 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Direction.stories'
+import { PropsTable } from '../stories/docs'
+
+<Meta of={Stories} />
+
+# Direction and language
+
+Diba is Persian first: right to left is the default, not a mode. One provider at the app's root
+sets the language, the direction, the theme and the words Diba says, and every component follows.
+
+```tsx
+import { DibaProvider } from '@kaladan/diba-react'
+
+export function App() {
+  return (
+    <DibaProvider locale="fa-IR" theme="light">
+      …
+    </DibaProvider>
+  )
+}
+```
+
+<PropsTable
+  rows={[
+    [
+      'locale',
+      'string',
+      "'fa-IR'",
+      'The page’s language: its words, digits, calendar and direction.',
+    ],
+    ['dir', "'rtl' | 'ltr'", 'the locale’s', 'The direction, when it is not the locale’s own.'],
+    [
+      'theme',
+      "'light' | 'dark'",
+      "'light'",
+      'Set on the wrapper as `data-theme`, which every role reads.',
+    ],
+    [
+      'strings',
+      'Partial<DibaStrings>',
+      null,
+      'Diba’s own words, changed, or given for a language Diba does not carry.',
+    ],
+    [
+      'ariaStrings',
+      'boolean',
+      'true',
+      'Hand React Aria Diba’s Persian for the words it says itself; page-wide.',
+    ],
+    [
+      'ownsDocument',
+      'boolean',
+      'the first provider',
+      'Reflect the language, direction and theme onto `<html>`, so overlays match. `false` inside a host you do not own.',
+    ],
+    [
+      'portalContainer',
+      "HTMLElement | 'self'",
+      null,
+      'Where overlays in it go: the page’s own layer, or `self` to keep them inside.',
+    ],
+  ]}
+/>
+
+## What turns
+
+Everything laid out by its start and end turns with the page: breadcrumbs' separators, a pager's
+arrows, a bar's and a slider's fill growing from the start, an external link's arrow. A component
+does it itself. An arrow of your own turns with the `rtl:` variant, which reads the element's own
+direction, so a left-to-right island inside a Persian page stays right.
+
+<Canvas of={Stories.Mirroring} />
+
+## What never turns
+
+Numbers someone types, addresses, keys and codes run left to right on either page: give a field
+for one `dir="ltr"`; a Snippet already is. Its label and help stay in the page's direction.
+
+<Canvas of={Stories.Steady_} />
+
+## Calendars
+
+A date follows its language's calendar: a Persian page counts the solar year, with its own month
+names and digits, and an English page the Gregorian. A value is the same `CalendarDate` either way,
+and goes to the server as an ISO date.
+
+<Canvas of={Stories.Calendars} />
+
+## Diba's own words
+
+What Diba says itself, a close button's name, a field's check, a calendar's heading, in both
+languages. The provider's `strings` changes any of them; React Aria's own words, a date segment's
+name or "Previous", come in Persian from Diba too.
+
+<Canvas of={Stories.Words} />

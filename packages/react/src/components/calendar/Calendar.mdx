@@ -1,0 +1,238 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Calendar.stories'
+import { Keys, Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# Calendar
+
+A month to pick a day from, drawn in the page. It counts in the reader's calendar, the Persian one
+in Persian, and its title opens the years and then the months, to go far in a few presses.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **A day the reader picks by looking at the month:** a delivery day, a day off, a campaign's start.
+- **Where the calendar can stay open** on the page, beside what it decides.
+
+For a date in a form, use a DatePicker: a field that opens a calendar. For a span of days, use a
+RangeCalendar.
+
+## Import
+
+```tsx
+import { Calendar } from '@kaladan/diba-react'
+import { parseDate } from '@internationalized/date'
+```
+
+## Anatomy
+
+```tsx
+<Calendar aria-label="Delivery day" defaultValue={parseDate('2026-10-17')}>
+  <Calendar.Header>
+    <Calendar.NavButton slot="previous" />
+    <Calendar.YearPickerTrigger>
+      <Calendar.YearPickerTriggerHeading />
+    </Calendar.YearPickerTrigger>
+    <Calendar.NavButton slot="next" />
+  </Calendar.Header>
+  <Calendar.Grid>
+    <Calendar.GridHeader>
+      {(day) => <Calendar.HeaderCell>{day}</Calendar.HeaderCell>}
+    </Calendar.GridHeader>
+    <Calendar.GridBody>{(date) => <Calendar.Cell date={date} />}</Calendar.GridBody>
+  </Calendar.Grid>
+  <Calendar.YearPickerGrid>
+    <Calendar.YearPickerGridBody>
+      {({ year }) => <Calendar.YearPickerCell year={year} />}
+    </Calendar.YearPickerGridBody>
+  </Calendar.YearPickerGrid>
+  <Calendar.MonthPickerGrid />
+  <Calendar.TodayButton />
+</Calendar>
+```
+
+<Parts
+  rows={[
+    ['Calendar', 'The calendar: its value, its limits and its state.'],
+    [
+      'Calendar.Header',
+      'The month arrows, and between them the title: a pill that opens the years, or a heading.',
+    ],
+    [
+      'Calendar.NavButton',
+      'The previous or next month, by its slot, turned on a right-to-left page.',
+    ],
+    [
+      'Calendar.YearPickerTrigger',
+      'The title as a pill; its heading, Calendar.YearPickerTriggerHeading, the month and year.',
+    ],
+    ['Calendar.Heading', 'The title as words alone, for a calendar without the year picker.'],
+    [
+      'Calendar.Grid',
+      'The days: the weekdays’ letters, Calendar.HeaderCell, over the days, Calendar.Cell.',
+    ],
+    [
+      'Calendar.YearPickerGrid',
+      'The years, in place of the days while the year picker is open; Calendar.YearPickerCell each.',
+    ],
+    ['Calendar.MonthPickerGrid', 'The year’s months, once a year is picked.'],
+    ['Calendar.TodayButton', 'Today in a pill under the days: it goes to today, and picks it.'],
+  ]}
+/>
+
+## Values
+
+A calendar's values are `@internationalized/date`'s: `parseDate('2026-10-17')`, or
+`today(getLocalTimeZone())`. The calendar that draws a value is the locale's, Persian on a Persian
+page, but the value itself is one day: its `toString()` is always Gregorian ISO 8601, `2026-10-17`,
+whatever calendar showed it as ۲۵ مهر ۱۴۰۵. Keep and send that.
+
+## Examples
+
+### Persian and Gregorian
+
+The locale chooses the calendar. To draw one whatever the language, give the locale a calendar
+in React Aria's `I18nProvider`: `fa-IR-u-ca-gregory` for Gregorian in Persian, `en-US-u-ca-persian`
+for Persian in English.
+
+<Canvas of={Stories.Calendars} />
+
+### Controlled
+
+<Canvas of={Stories.Controlled} />
+
+### First, last and unavailable days
+
+`minValue` and `maxValue` end the calendar: days outside them cannot be reached. `isDateUnavailable`
+says which days within them cannot be picked, a booked day or a holiday, drawn at half.
+
+<Canvas of={Stories.Limits} />
+
+### Years and months
+
+With `Calendar.YearPickerTrigger`, the title opens the years, and a year its months: years away in
+three presses. With `Calendar.Heading`, the title is words alone.
+
+<Canvas of={Stories.YearAndMonth} />
+
+### The first day of the week
+
+A week starts on the language's day, Saturday in Persian and Sunday in American English;
+`firstDayOfWeek` gives another.
+
+<Canvas of={Stories.FirstDay} />
+
+### Disabled, read-only and invalid
+
+Read-only, the days can be looked at but not picked. Invalid, put an `ErrorMessage` inside the
+calendar: it is read with the day picked.
+
+<Canvas of={Stories.States} />
+
+### A week
+
+`visibleDuration` draws a week, `{ weeks: 1 }`, or a few days, `{ days: 3 }`, instead of a month.
+
+<Canvas of={Stories.Durations} />
+
+## What it builds
+
+<Canvas of={Stories.DeliveryDay} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+<PropsTable
+  rows={[
+    ['value', 'DateValue | null', null, 'The day picked, controlled.'],
+    ['defaultValue', 'DateValue | null', null, 'The day picked at first.'],
+    ['onChange', '(value: DateValue) => void', null, 'When a day is picked.'],
+    ['minValue, maxValue', 'DateValue', null, 'The first and last days that can be reached.'],
+    [
+      'isDateUnavailable',
+      '(date: DateValue) => boolean',
+      null,
+      'Days within the limits that cannot be picked.',
+    ],
+    [
+      'focusedValue, defaultFocusedValue',
+      'DateValue',
+      null,
+      'The day with the focus, and so the month shown, without a value.',
+    ],
+    ['onFocusChange', '(date: CalendarDate) => void', null, 'When the focus moves to another day.'],
+    [
+      'firstDayOfWeek',
+      "'sun' | 'mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat'",
+      'the language’s',
+      'The day a week starts on.',
+    ],
+    [
+      'visibleDuration',
+      '{ months } | { weeks } | { days }',
+      '{ months: 1 }',
+      'How much it shows at once.',
+    ],
+    [
+      'isYearPickerOpen, defaultYearPickerOpen',
+      'boolean',
+      'false',
+      'Whether the years show in place of the days.',
+    ],
+    ['onYearPickerOpenChange', '(isOpen: boolean) => void', null, 'When the years open or close.'],
+    ['isDisabled', 'boolean', 'false', 'Nothing can be focused or picked.'],
+    ['isReadOnly', 'boolean', 'false', 'The days can be looked at, not picked.'],
+    ['isInvalid', 'boolean', 'false', 'Drawn as wrong; say why in an ErrorMessage inside it.'],
+    [
+      'aria-label',
+      'string',
+      null,
+      'What the day is for, since a calendar has no label of its own.',
+    ],
+  ]}
+/>
+
+Every part takes its element's own props too, and a `className`.
+
+## Keyboard
+
+<Keys
+  rows={[
+    [
+      'Tab',
+      'The month arrows and the title, then the days, on the day picked or today, then today’s pill.',
+    ],
+    ['Arrow keys', 'The day before or after, the week before or after.'],
+    ['Page Up, Page Down', 'The month before or after; with Shift, the year.'],
+    ['Home, End', 'The month’s first or last day; in a week, the week’s.'],
+    ['Enter or Space', 'Picks the day with the focus.'],
+  ]}
+/>
+
+## Accessibility
+
+The calendar is a grid of days, each read with its full date. Name it with `aria-label` for what
+the day is for. Unavailable days are read as such, and the arrows have their names.
+
+## Styling
+
+`.calendar`; `.calendar__header`, `.calendar__nav-button`, `.calendar__heading`; `.calendar__grid`,
+`.calendar__header-cell` and `.calendar__cell` with `[data-selected]`, `[data-today]`,
+`[data-unavailable]`, `[data-outside-month]` and `[data-disabled]`.
+
+## As a block
+
+A tree draws the same calendar, on the web and in Flutter. Its dates are Gregorian ISO 8601 on
+the wire, whatever calendar draws them, and `calendarSystem` picks one whatever the language.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="Calendar" />

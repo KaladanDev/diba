@@ -1,0 +1,88 @@
+{
+  "name": "TimeField",
+  "category": "form",
+  "description": "A time of day, typed hour by minute: opening hours, a delivery slot.",
+  "sduiSafe": true,
+  "props": {
+    "label": {
+      "type": "string",
+      "i18n": true,
+      "description": "The field's name, drawn above it.",
+      "required": true
+    },
+    "isLabelHidden": {
+      "type": "boolean",
+      "default": false,
+      "description": "Hides the label from sight; it still names the field for a screen reader."
+    },
+    "description": {
+      "type": "string",
+      "i18n": true,
+      "description": "Help drawn under the field."
+    },
+    "errorMessage": {
+      "type": "string",
+      "i18n": true,
+      "description": "Set means invalid: the field shows this message under it."
+    },
+    "isRequired": {
+      "type": "boolean",
+      "default": false
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "name": {
+      "type": "string",
+      "description": "Names the value inside a Form block."
+    },
+    "isReadOnly": {
+      "type": "boolean",
+      "default": false
+    },
+    "variant": {
+      "type": "enum",
+      "values": ["primary", "secondary"],
+      "default": "primary",
+      "description": "secondary is for a field on a grey surface."
+    },
+    "fullWidth": {
+      "type": "boolean",
+      "default": true,
+      "description": "false takes the natural field width token."
+    },
+    "defaultValue": {
+      "type": "string",
+      "description": "Starts at this time; the merchant changes it. A time of day, ISO 8601: 14:30, or 14:30:15 at seconds."
+    },
+    "value": {
+      "type": "string",
+      "description": "Pinned: shows exactly what the server sent until the next tree. A time of day, ISO 8601: 14:30, or 14:30:15 at seconds."
+    },
+    "granularity": {
+      "type": "enum",
+      "values": ["hour", "minute", "second"],
+      "default": "minute"
+    },
+    "minValue": {
+      "type": "string",
+      "description": "The earliest time. A time of day, ISO 8601: 14:30, or 14:30:15 at seconds."
+    },
+    "maxValue": {
+      "type": "string",
+      "description": "The latest time. A time of day, ISO 8601: 14:30, or 14:30:15 at seconds."
+    },
+    "hourCycle": {
+      "type": "enum",
+      "values": [12, 24],
+      "default": 24
+    }
+  },
+  "actions": {
+    "onChange": {
+      "description": "A time of day, ISO 8601: 14:30, or 14:30:15 at seconds.",
+      "payload": "string"
+    }
+  }
+}

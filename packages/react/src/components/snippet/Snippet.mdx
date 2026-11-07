@@ -1,0 +1,154 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Snippet.stories'
+import { Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# Snippet
+
+Words someone is meant to copy, with the button that copies them: a key, an address, a code, a
+command. They run left to right on a Persian page too, with the copy button at the frame's end, and
+what lands on the clipboard is exactly the words, never the prompt drawn before them. It draws with
+its own styles, so a page needs no utility classes for it.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **A key or an address** an app or a developer has to paste somewhere else.
+- **A code a buyer types elsewhere,** such as a discount code for the cart.
+- **A tracking number** to paste into the carrier's site.
+- **A command** in a developer's instructions.
+
+For words that are only read, use Text. For a value someone edits, use a TextField.
+
+## Import
+
+```tsx
+import { Snippet } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<Snippet copyText="kld_live_5f2c8a19b7e04a1d9e3c">kld_live_5f2c••••9e3c</Snippet>
+```
+
+<Parts
+  rows={[
+    [
+      '.db-snippet',
+      'The frame: left to right, 12 round, 12 by 6 in, its variant’s fill or line; the words 14 on 21 in the page’s face.',
+    ],
+    [
+      '.db-snippet__code',
+      'The words, a line each, taking the frame’s room; too long, they scroll inside it.',
+    ],
+    [
+      '.db-snippet__symbol',
+      'The prompt before each line, when one is given: drawn, but never selected or copied.',
+    ],
+    [
+      '.db-snippet__copy',
+      'The copy button, 40 round, at the frame’s top end, the right edge on either page, centred on one line and level with the first of several: Material’s copy mark 16 across in the muted colour, a tick once copied.',
+    ],
+  ]}
+/>
+
+## Examples
+
+### Variants
+
+`default` lies on the second surface; `secondary` is outlined in the border's colour, with no
+fill. The words are the page's ink on both.
+
+<Canvas of={Stories.Variants} />
+
+### On a grey card
+
+On a grey card the second surface is the card's own grey, so a default snippet takes the surface
+there and keeps its frame.
+
+<Canvas of={Stories.OnGrey} />
+
+### Sizes
+
+`sm`, `md` and `lg`: 8 by 4, 12 by 6 and 16 by 8 in. The words stay 14 on 21 at every size.
+
+<Canvas of={Stories.Sizes} />
+
+### The prompt
+
+There is none unless `symbol` gives one: `$` for a command, or another shell's. A key, an address
+or a code has none. `hideSymbol` drops one that is given.
+
+<Canvas of={Stories.Prompts} />
+
+### Several lines
+
+Give an array, a line each. They are copied as one block, the newlines kept. The copy button stays
+at the top end, level with the first line, and the last line sits as far from the frame's foot as
+the first from its head.
+
+<Canvas of={Stories.SeveralLines} />
+
+### What is copied
+
+`copyText` is copied in place of the words shown, for a key shown in part. `onCopy` is called with
+it once the browser has taken it. `hideCopyButton` leaves only the words.
+
+<Canvas of={Stories.Copying} />
+
+### Too long for its box
+
+It scrolls inside its frame rather than wrapping, since a key broken over two lines is pasted wrong,
+and the copy button stays in view.
+
+<Canvas of={Stories.Long} />
+
+## What it builds
+
+<Canvas of={Stories.AppKeys} />
+<Canvas of={Stories.Tracking} />
+<Canvas of={Stories.DiscountCode} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+<PropsTable
+  rows={[
+    ['children', 'string | string[]', null, 'The words; an array is a line each. Required.'],
+    ['variant', "'default' | 'secondary'", "'default'", 'On the second surface, or outlined.'],
+    ['size', "'sm' | 'md' | 'lg'", "'md'", 'The room round the words.'],
+    ['symbol', 'ReactNode', null, 'A prompt before each line, such as `$`; never copied.'],
+    ['hideSymbol', 'boolean', 'false', 'Drop the prompt even when one is given.'],
+    ['hideCopyButton', 'boolean', 'false', 'Only the words, nothing to press.'],
+    ['copyText', 'string', null, 'What is copied, when it differs from the words shown.'],
+    ['onCopy', '(text: string) => void', null, 'Called with what was copied, once it has been.'],
+    ['className', 'string', null, 'Classes after its own.'],
+  ]}
+/>
+
+## Accessibility
+
+- **The copy button is named** «رونوشت» or "Copy" in the page's language, with a tooltip of the
+  same words.
+- **What happened is said, not only drawn:** «رونوشت شد» or "Copied" once the words are on the
+  clipboard, and «رونوشت انجام نشد» or "Could not copy" when the browser refuses, where a tick alone
+  would say nothing. After two seconds it offers a copy again.
+- The prompt is hidden from a screen reader, as it is from the clipboard.
+
+## As a block
+
+A tree's Snippet is this one, on the web and in Flutter: the same two variants and sizes, no prompt
+unless the tree gives one. Copying happens only on a press; `onCopy` sends the words.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="Snippet" />

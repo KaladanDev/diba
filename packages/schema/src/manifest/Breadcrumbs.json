@@ -1,0 +1,16 @@
+{
+  "name": "Breadcrumbs",
+  "category": "navigation",
+  "description": "The way to a page, each step a link and the page itself last, for a page's header.",
+  "sduiSafe": true,
+  "props": {
+    "isDisabled": {
+      "type": "boolean",
+      "default": false,
+      "description": "No step can be followed."
+    }
+  },
+  "children": {
+    "accepts": ["BreadcrumbsItem"]
+  }
+}

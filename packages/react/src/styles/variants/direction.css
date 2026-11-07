@@ -1,0 +1,8 @@
+/*
+ * Tailwind's rtl and ltr variants, by the element's own direction. Tailwind's match anything
+ * inside a [dir="rtl"] element, so an English part of a Persian page took the Persian page's
+ * turns: its breadcrumbs', calendars', pagination's and tabs' arrows pointed backwards. :dir()
+ * reads the nearest direction, the one the browser lays the element out in.
+ */
+@custom-variant rtl (&:where(:dir(rtl)));
+@custom-variant ltr (&:where(:dir(ltr)));

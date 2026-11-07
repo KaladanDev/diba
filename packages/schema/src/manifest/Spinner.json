@@ -1,0 +1,20 @@
+{
+  "name": "Spinner",
+  "category": "feedback",
+  "description": "Something is loading. Its arc runs over a track.",
+  "sduiSafe": true,
+  "props": {
+    "size": { "type": "enum", "values": ["sm", "md", "lg", "xl"], "default": "md" },
+    "color": {
+      "type": "enum",
+      "values": ["accent", "current", "success", "warning", "danger"],
+      "default": "accent",
+      "description": "current is the surrounding text colour."
+    },
+    "label": {
+      "type": "string",
+      "i18n": true,
+      "description": "The accessible name. Defaults to Diba's own word for loading."
+    }
+  }
+}

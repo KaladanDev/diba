@@ -1,0 +1,86 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Colors.stories'
+
+<Meta of={Stories} />
+
+# Colours
+
+Diba draws with roles, not with paint: a component asks for "the card" or "a note", and the theme
+says which colour that is in light and in dark. The roles are the stylesheet's variable names, set from
+Diba's palette in `src/styles/themes/diba/variables.css`; an app that loads `tailwind.css` has
+them all. Every value on this page is read from the page as the browser resolved it, with the
+palette step it is and its contrast, so it cannot drift from what the components draw.
+
+## Use the role
+
+Write `var(--muted)`, or the utility `text-muted`, never `var(--db-slate-500)`. The role is what
+changes between light and dark, what a re-theme moves, and what a grey card makes a step stronger.
+A palette step is the same colour everywhere, which is right only for a picture.
+
+| What it is                    | Role                                                   | Light                    | Dark                     |
+| ----------------------------- | ------------------------------------------------------ | ------------------------ | ------------------------ |
+| The page                      | `--background`                                         | slate-50                 | slate-950                |
+| A card                        | `--surface`                                            | paper-0                  | slate-900                |
+| The second and third surfaces | `--surface-secondary`, `--surface-tertiary`            | slate-100, slate-200     | slate-800, slate-700     |
+| An overlay                    | `--overlay`                                            | paper-0                  | slate-900                |
+| Body text                     | `--foreground`                                         | slate-800                | slate-100                |
+| Secondary text                | `--default-foreground`                                 | slate-700                | slate-200                |
+| A note                        | `--muted`                                              | slate-500                | slate-400                |
+| A note on a grey card         | `--db-muted-secondary`, `--db-muted-tertiary`          | slate-600, slate-600     | slate-400, slate-300     |
+| A link                        | `--link`                                               | slate-700                | slate-300                |
+| The neutral fill              | `--default`                                            | slate-200                | slate-800                |
+| Borders and separators        | `--border`, `--separator`                              | slate-200                | slate-800                |
+| The brand                     | `--accent`, `--accent-foreground`                      | the gilt, iris-800 on it | the gilt, iris-950 on it |
+| Status                        | `--success`, `--warning`, `--danger` and `-foreground` | emerald, orange, garnet  | the same, a step lighter |
+
+## The papers and their words
+
+The page, a card, the two greys a card can be, and an overlay, each with its body text and a
+note. Body text holds 9.5:1 or more everywhere, the least on the third surface in dark. A note is a step stronger on a grey card, so it
+keeps 4.5:1 there too: a card sets `--muted` to `--db-muted-secondary` or `--db-muted-tertiary`
+for everything inside it.
+
+<Canvas of={Stories.Surfaces} />
+
+## Words
+
+On a card: body text, secondary text, a note, a link and a field's placeholder, all at 4.5:1 or
+more. A placeholder is slate-500 on a field (slate-400 in dark), and a step darker on a secondary
+field's second surface, so it holds there too.
+
+<Canvas of={Stories.Words} />
+
+## Brand and status
+
+Each has a fill, the words on it (`-foreground`), and an ink for when it is drawn on a card
+rather than filling it: the `--db-*-emphasis` step, which an alert's title, a soft chip's words and
+a link in the brand's colour take. A fill colour is chosen to hold its words, not to be read as
+words: the gilt is 1.8:1 on paper.
+
+<Canvas of={Stories.BrandAndStatus} />
+
+## Lines and fills
+
+<Canvas of={Stories.LinesAndFills} />
+
+## Controls
+
+A checkbox, a switch and a slider are on in the gilt with slate-700 on it, and off on the
+off-track shade, in both themes. A progress bar's, a meter's and a ring's fill is the brand's or a
+status's colour, but in light the gilt and the amber take their emphasis, as they were 1.2:1 and
+1.6:1 from the track and a fill must be 3:1.
+
+<Canvas of={Stories.Controls} />
+
+## The palette
+
+The scales the roles are set from: slate for every neutral, paper for white, saffron for the gilt,
+iris for the brand's ink, and emerald, orange, garnet and sky for the statuses. The `--db-bg`,
+`--db-fg` and `--db-surface` set and the warm `neutral` scale beside them are older; no component
+draws with them.
+
+<Canvas of={Stories.Palette} />
+
+## Together
+
+<Canvas of={Stories.Together} />

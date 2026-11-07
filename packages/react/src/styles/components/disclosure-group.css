@@ -1,0 +1,10 @@
+/*
+ * Third-party code under the Apache License 2.0; see THIRD-PARTY-NOTICES.txt in this package.
+ */
+/* Base disclosure-group styles */
+.disclosure-group {
+  @apply w-full;
+
+  /* Performance optimization - contain layout changes */
+  contain: layout style;
+}

@@ -1,0 +1,29 @@
+{
+  "name": "AccordionItem",
+  "category": "content",
+  "description": "A section of an Accordion: its title, which opens it, and what it holds.",
+  "sduiSafe": true,
+  "props": {
+    "id": {
+      "type": "string",
+      "required": true
+    },
+    "title": {
+      "type": "string",
+      "i18n": true,
+      "required": true
+    },
+    "icon": {
+      "type": "token",
+      "token": "icon",
+      "description": "Drawn before the title."
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "children": {
+    "accepts": "*"
+  }
+}

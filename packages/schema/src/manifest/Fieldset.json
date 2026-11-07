@@ -1,0 +1,22 @@
+{
+  "name": "Fieldset",
+  "category": "form",
+  "description": "A titled group of fields in a Form.",
+  "sduiSafe": true,
+  "props": {
+    "legend": {
+      "type": "string",
+      "i18n": true,
+      "required": true,
+      "description": "The group's title, drawn above it."
+    },
+    "description": {
+      "type": "string",
+      "i18n": true,
+      "description": "Help drawn under the title."
+    }
+  },
+  "children": {
+    "accepts": "*"
+  }
+}

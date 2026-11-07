@@ -1,0 +1,51 @@
+{
+  "name": "Modal",
+  "category": "feedback",
+  "description": "A dialog opened by its trigger, and only by it, on the overlay's paper on both platforms.",
+  "sduiSafe": true,
+  "props": {
+    "title": {
+      "type": "string",
+      "i18n": true,
+      "description": "The dialog's name.",
+      "required": true
+    },
+    "icon": { "type": "token", "token": "icon", "description": "A name from the icon list." },
+    "size": {
+      "type": "enum",
+      "values": ["xs", "sm", "md", "lg", "full", "cover"],
+      "default": "lg"
+    },
+    "scroll": {
+      "type": "enum",
+      "values": ["inside", "outside"],
+      "default": "inside",
+      "description": "Whether the body scrolls, or the dialog does."
+    },
+    "placement": {
+      "type": "enum",
+      "values": ["auto", "top", "center", "bottom"],
+      "default": "auto"
+    },
+    "backdrop": {
+      "type": "enum",
+      "values": ["opaque", "blur", "transparent"],
+      "default": "opaque"
+    },
+    "isDismissable": {
+      "type": "boolean",
+      "default": true,
+      "description": "Pressing outside closes it."
+    }
+  },
+  "fixed": { "closeButton": { "value": true, "description": "The close button in the corner." } },
+  "children": { "accepts": "*", "description": "The body; it re-renders live from the tree." },
+  "slots": {
+    "trigger": { "accepts": ["Button"], "description": "The button that opens it." },
+    "footer": {
+      "accepts": "*",
+      "description": "The actions. A Cancel button's onPress is {do: close}."
+    }
+  },
+  "actions": { "onOpenChange": { "description": "Opened or closed.", "payload": "boolean" } }
+}

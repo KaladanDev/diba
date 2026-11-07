@@ -1,0 +1,475 @@
+/*
+ * Diba's own: Material 3's time picker as Flutter draws it under Diba's theme. The numbers
+ * are Material's, measured in Flutter; the colours are its roles in Diba's tokens:
+ * primaryContainer is --accent-soft, surfaceContainerHighest --surface-tertiary, onSurface
+ * --foreground, the outline slate-500, the dial's hand the gilt --accent.
+ */
+
+.time-picker {
+  position: relative;
+  margin: auto;
+  padding: 24px;
+  border-radius: 28px;
+  background: var(--overlay);
+  color: var(--foreground);
+  box-shadow: var(--overlay-shadow);
+  outline: none;
+  pointer-events: auto;
+}
+
+.time-picker__body {
+  display: flex;
+  flex-direction: column;
+
+  /*
+   * Standing, 358 by 504 with its padding; lying, 572 by 378; typed, 328 or 296 by 264. Under a
+   * finger the buttons' row is 48, not 40, as Material pads its targets on a phone: 516 and 390.
+   */
+  &[data-layout='portrait'] {
+    width: 310px;
+    height: 456px;
+  }
+
+  &[data-layout='landscape'] {
+    width: 524px;
+    height: 330px;
+  }
+
+  &[data-entry='input'] {
+    width: 280px;
+    height: 216px;
+  }
+
+  &[data-entry='input'][data-cycle='24'] {
+    width: 248px;
+  }
+}
+
+.time-picker__main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+
+  [data-layout='landscape'] > & {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.time-picker__side {
+  display: flex;
+  flex-direction: column;
+
+  [data-layout='landscape'] & {
+    position: relative;
+    justify-content: center;
+    width: 216px;
+  }
+}
+
+/* What Flutter draws: the body's 14 on 21, in the text colour. */
+.time-picker__help {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 21px;
+  letter-spacing: 0;
+  color: var(--foreground);
+
+  [data-layout='portrait'] & {
+    margin-bottom: 12px;
+  }
+
+  [data-layout='landscape'] & {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+  }
+
+  [data-entry='input'] & {
+    margin-bottom: 20px;
+  }
+}
+
+.time-picker__header {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+
+  [data-layout='landscape'] & {
+    flex-direction: column;
+    gap: 11px;
+    align-items: stretch;
+  }
+
+  [data-entry='input'] & {
+    align-items: flex-start;
+  }
+}
+
+/* The hour stays left of the minute, and AM and PM right of both, whatever the direction. */
+.time-picker__header:dir(rtl):not([data-layout='landscape'] *),
+.time-picker__clock:dir(rtl) {
+  flex-direction: row-reverse;
+}
+
+.time-picker__clock {
+  display: flex;
+  flex: 1;
+  align-items: center;
+
+  [data-layout='landscape'] & {
+    flex: none;
+  }
+
+  [data-entry='input'] & {
+    align-items: flex-start;
+  }
+}
+
+/* The hour and the minute: 80 tall and 8 round, the one the dial shows in the brand's soft fill. */
+.time-picker__box {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  min-width: 0;
+  border-radius: 8px;
+  background: var(--surface-tertiary);
+  color: var(--foreground);
+  font-size: 57px;
+  font-weight: 400;
+  line-height: 64px;
+  letter-spacing: -0.25px;
+  cursor: var(--cursor-interactive);
+  outline: none;
+  transition: background-color 150ms var(--ease-out);
+
+  @media (hover: hover) {
+    &[data-hovered='true'] {
+      background: color-mix(in oklab, var(--foreground) 8%, var(--surface-tertiary));
+    }
+  }
+
+  &[data-selected='true'] {
+    background: var(--accent-soft);
+    color: var(--accent-soft-foreground);
+
+    @media (hover: hover) {
+      &[data-hovered='true'] {
+        background: color-mix(in oklab, var(--accent-soft-foreground) 8%, var(--accent-soft));
+      }
+    }
+  }
+
+  &[data-focus-visible='true'] {
+    @apply status-focused;
+  }
+}
+
+.time-picker__separator {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 80px;
+  font-size: 57px;
+  font-weight: 400;
+  line-height: 57px;
+  letter-spacing: -0.25px;
+  color: var(--foreground);
+
+  [data-entry='input'] & {
+    height: 72px;
+  }
+}
+
+/* AM and PM: 52 by 80 standing, 216 by 38 lying, outlined, the half of the day picked filled. */
+.time-picker__period-wrap {
+  flex: none;
+  padding-block: 8px;
+
+  [data-layout='landscape'] & {
+    padding-block: 5px;
+  }
+
+  [data-entry='input'] & {
+    padding-block: 0;
+  }
+}
+
+.time-picker__period {
+  display: flex;
+  flex-direction: column;
+  width: 52px;
+  height: 80px;
+  overflow: hidden;
+  border: 1px solid var(--db-slate-500);
+  border-radius: 8px;
+
+  [data-layout='landscape'] & {
+    flex-direction: row;
+    width: 216px;
+    height: 38px;
+  }
+
+  [data-entry='input'] & {
+    height: 72px;
+  }
+}
+
+.time-picker__period-half {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.35;
+  cursor: var(--cursor-interactive);
+  outline: none;
+
+  & + & {
+    border-block-start: 1px solid var(--db-slate-500);
+
+    [data-layout='landscape'] & {
+      border-block-start: 0;
+      border-inline-start: 1px solid var(--db-slate-500);
+    }
+  }
+
+  @media (hover: hover) {
+    &[data-hovered='true']:not([data-selected='true']) {
+      background: color-mix(in oklab, var(--muted) 8%, transparent);
+    }
+  }
+
+  &[data-selected='true'] {
+    background: var(--foreground);
+    color: var(--overlay);
+  }
+
+  &[data-focus-visible='true'] {
+    @apply status-focused;
+  }
+}
+
+.time-picker__dial-area {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+
+  [data-layout='portrait'] & {
+    margin-top: 28px;
+  }
+
+  [data-layout='landscape'] & {
+    flex: none;
+    width: 244px;
+  }
+}
+
+.time-picker__dial {
+  flex: none;
+  touch-action: none;
+  cursor: var(--cursor-interactive);
+  outline: none;
+  border-radius: 9999px;
+
+  &:focus-visible {
+    @apply status-focused;
+  }
+}
+
+.time-picker__dial-face {
+  fill: var(--surface-tertiary);
+}
+
+.time-picker__dial-label {
+  font-size: 16px;
+  font-weight: 400;
+  pointer-events: none;
+  user-select: none;
+}
+
+.time-picker__dial-hand {
+  fill: var(--accent);
+  stroke: var(--accent);
+}
+
+.time-picker__dial-dot {
+  fill: var(--accent-foreground);
+}
+
+/* Typed: a field 72 tall for each, its name under it. */
+.time-picker__column {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.time-picker__input {
+  box-sizing: border-box;
+  width: 100%;
+  height: 72px;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  background: var(--surface-tertiary);
+  color: var(--foreground);
+  font: inherit;
+  font-size: 45px;
+  font-weight: 400;
+  line-height: 52px;
+  text-align: center;
+  outline: none;
+
+  /* Focused, Material's selected field: the soft fill under a tenth of its ink, the ink on it. */
+  &:focus {
+    border-color: var(--accent);
+    background: color-mix(in oklab, var(--accent-soft-foreground) 10%, var(--accent-soft));
+    color: var(--accent-soft-foreground);
+  }
+
+  &[data-invalid='true'] {
+    border-color: var(--danger);
+  }
+}
+
+.time-picker__field-label {
+  margin-top: 10px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+  color: var(--foreground);
+}
+
+.time-picker__error {
+  margin-top: 10px;
+  font-size: 14px;
+  line-height: 21px;
+  color: var(--danger);
+}
+
+/* The buttons, 40 high: the way to type or dial at the start, Cancel and OK at the end. */
+.time-picker__footer {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: space-between;
+  height: 40px;
+  margin-top: auto;
+}
+
+.time-picker__entry {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 9999px;
+  color: var(--foreground);
+  cursor: var(--cursor-interactive);
+  outline: none;
+
+  @media (hover: hover) {
+    &[data-hovered='true'] {
+      background: color-mix(in oklab, var(--foreground) 8%, transparent);
+    }
+  }
+
+  &[data-focus-visible='true'] {
+    @apply status-focused;
+  }
+}
+
+.time-picker__actions {
+  display: flex;
+  gap: 8px;
+}
+
+.time-picker__action {
+  height: 40px;
+  min-width: 64px;
+  padding-inline: 12px;
+  border-radius: 9999px;
+  color: var(--default-foreground);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.35;
+  cursor: var(--cursor-interactive);
+  outline: none;
+
+  @media (hover: hover) {
+    &[data-hovered='true'] {
+      background: color-mix(in oklab, var(--default-foreground) 8%, transparent);
+    }
+  }
+
+  &[data-focus-visible='true'] {
+    @apply status-focused;
+  }
+}
+
+/* Under a finger, Material's 48 targets: the row 48, the icon's 40 in the middle of its 48. */
+@media (pointer: coarse) {
+  .time-picker__body[data-layout='portrait'] {
+    height: 468px;
+  }
+
+  .time-picker__body[data-layout='landscape'] {
+    height: 342px;
+  }
+
+  .time-picker__footer {
+    height: 48px;
+  }
+
+  .time-picker__entry {
+    margin: 4px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .time-picker__box {
+    transition: none;
+  }
+}
+
+/* The time field that opens it: Flutter's, a field reading the time, pressed as a whole. */
+.time-field__trigger {
+  display: flex;
+  flex: 1;
+  align-self: stretch;
+  align-items: center;
+  min-width: 0;
+  padding-inline: 0.75rem;
+  background: transparent;
+  color: var(--field-foreground);
+  text-align: start;
+  cursor: var(--cursor-interactive);
+  outline: none;
+
+  &[data-disabled='true'] {
+    cursor: default;
+  }
+}
+
+.time-field__display {
+  overflow: hidden;
+  font-size: var(--text-base);
+  white-space: nowrap;
+
+  @media (width >= 40rem) {
+    font-size: var(--text-sm);
+  }
+
+  &[data-empty='true'] {
+    color: var(--field-placeholder);
+  }
+}

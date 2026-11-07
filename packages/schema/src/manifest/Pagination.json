@@ -1,0 +1,61 @@
+{
+  "name": "Pagination",
+  "category": "navigation",
+  "description": "Pages of records: previous, the pages near this one and at the ends, next.",
+  "sduiSafe": true,
+  "props": {
+    "label": {
+      "type": "string",
+      "i18n": true,
+      "description": "Names it for a screen reader; it is not drawn."
+    },
+    "total": {
+      "type": "number",
+      "required": true,
+      "description": "How many pages there are."
+    },
+    "defaultPage": {
+      "type": "number",
+      "default": 1,
+      "description": "Starts on this page; the merchant changes it."
+    },
+    "page": {
+      "type": "number",
+      "description": "Pinned: shows exactly this page until the next tree."
+    },
+    "siblings": {
+      "type": "number",
+      "default": 1,
+      "description": "Pages shown either side of this one."
+    },
+    "boundaries": {
+      "type": "number",
+      "default": 1,
+      "description": "Pages kept at each end."
+    },
+    "size": {
+      "type": "enum",
+      "values": [
+        "sm",
+        "md",
+        "lg"
+      ],
+      "default": "md"
+    },
+    "showControls": {
+      "type": "boolean",
+      "default": true,
+      "description": "Previous and next."
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "actions": {
+    "onChange": {
+      "description": "The page chosen.",
+      "payload": "number"
+    }
+  }
+}

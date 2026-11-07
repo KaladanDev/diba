@@ -1,0 +1,161 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './TextArea.stories'
+import { Keys, Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# TextArea
+
+Several lines of text: a product's description, a note on an order, a reply to a review. It sits
+in a TextField, which gives it its label, its help, its checks and its state, as it gives an Input.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **Text that runs past a line:** a description, a note, a message, an address written out.
+- **Text the reader may break into paragraphs:** Enter starts a new line, it does not send the
+  form.
+
+For one line, use a TextField's Input; Enter there sends the form.
+
+## Import
+
+```tsx
+import { Description, FieldError, Label, TextArea, TextField } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<TextField maxLength={300}>
+  <Label>Product description</Label>
+  <TextArea rows={4} />
+  <Description>For the buyer.</Description>
+  <FieldError />
+</TextField>
+```
+
+<Parts
+  rows={[
+    ['TextField', 'The field: its value, its checks and its state, given to the TextArea.'],
+    ['Label', 'Its name, above it, 14 and medium; a star after it when required.'],
+    [
+      'TextArea',
+      'The box, 12 in at the sides and 8 above and below, with a 1 edge; as many lines tall as its rows, 20 a line, and 38 at the least.',
+    ],
+    [
+      'Description',
+      'Help under it, 12 in the muted colour; a count of the letters left goes here.',
+    ],
+    ['FieldError', 'What is wrong, in the help’s place, in the danger colour.'],
+  ]}
+/>
+
+## Examples
+
+### Rows
+
+`rows` is how many lines are drawn before it scrolls. The reader can drag its corner to make it
+taller.
+
+<Canvas of={Stories.Rows} />
+
+### Letters left
+
+`maxLength` on the TextField stops the text at that many letters. Show what is left in the
+`Description`, from the value's length, so the reader is not stopped without warning.
+
+<Canvas of={Stories.Counter} />
+
+### Direction of the text
+
+`dir="auto"` turns the text with its first letter: a Persian description reads from the right, an
+English one from the left, on either page.
+
+<Canvas of={Stories.Direction} />
+
+### Validation
+
+`validate` returns what is wrong, or nothing; `isInvalid` with your own `FieldError` words shows
+what the server said. As a TextField's, an empty `FieldError` says what the field's own checks
+found, a required field left empty or too few or too many letters, in the page's language.
+
+<Canvas of={Stories.Validation} />
+
+### Disabled, read-only, on a grey surface
+
+<Canvas of={Stories.States} />
+
+### On its own
+
+Outside a TextField it has no label: name it with `aria-label`.
+
+<Canvas of={Stories.Alone} />
+
+## What it builds
+
+<Canvas of={Stories.ReviewReply} />
+
+## Themes, directions, sizes
+
+Under 640 wide its text is 16, so a phone does not zoom into it; 14 above.
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+<PropsTable
+  rows={[
+    ['rows', 'number', '2', 'Lines drawn before it scrolls.'],
+    ['placeholder', 'string', null, 'Shown while empty.'],
+    ['dir', "'auto' | 'ltr' | 'rtl'", 'the page’s', 'The text’s direction.'],
+    [
+      'variant',
+      "'primary' | 'secondary'",
+      'the field’s',
+      'secondary for a field on a grey surface.',
+    ],
+    [
+      'fullWidth',
+      'boolean',
+      'false',
+      'On its own, as wide as its column; in a TextField it already is.',
+    ],
+    ['spellCheck, autoCapitalize', 'as a textarea’s', null, 'The browser’s spelling and capitals.'],
+  ]}
+/>
+
+Its value, `maxLength`, `minLength`, checks and state are the TextField's: see the TextField
+page. It takes a textarea's own props too, and a `className`.
+
+## Keyboard
+
+<Keys
+  rows={[
+    ['Tab', 'Into the field, and out of it.'],
+    ['Enter', 'A new line.'],
+  ]}
+/>
+
+## Accessibility
+
+The field is named by its `Label`, described by its `Description`, and its `FieldError` is read
+while it is invalid. A count of the letters left in the `Description` is read with it.
+
+## Styling
+
+`.textarea` with `--primary`, `--secondary` and `--full-width`; `[data-invalid]`,
+`[data-disabled]` and `[data-focused]`. The edge is `--field-shadow`.
+
+## As a block
+
+A tree draws the same field, on the web and in Flutter, three lines tall unless it says `rows`.
+Its own checks, required and the fewest and most letters, are written in the page's language.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="TextArea" />

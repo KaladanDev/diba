@@ -1,0 +1,114 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Form.stories'
+import { PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# Form
+
+Fields that are sent together. It checks them first, in the page's language, stops the sending
+while one is wrong, and shows what the server said under the field it was about.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **Anything a button sends,** such as a discount code, a store's details or a phone number to
+  sign in with: Enter in a field sends it too.
+- **Fields the server may refuse,** each refusal shown under its own field.
+
+Its fields carry their `name`, which is what the sending is keyed by. It draws nothing of its own:
+lay its fields out yourself, 16 apart as a block's form does, and group a long one with Fieldsets.
+
+## Import
+
+```tsx
+import { Button, FieldError, Form, Input, Label, TextField } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<Form onSubmit={save} validationErrors={serverErrors}>
+  <TextField name="code" isRequired minLength={4}>
+    <Label>Discount code</Label>
+    <Input />
+    <FieldError />
+  </TextField>
+  <Button type="submit">Create code</Button>
+</Form>
+```
+
+## Examples
+
+### When fields are checked
+
+With `validationBehavior="native"`, the default, a field is checked when the form is sent, and a
+wrong one stops the sending and takes the focus; its error is in the page's language. With
+`"aria"`, a field is marked as soon as it is wrong, and the form is sent anyway: check it yourself
+in `onSubmit`.
+
+<Canvas of={Stories.Validation} />
+
+### What the server said
+
+`validationErrors` takes the server's errors by the field's name; each shows under its field until
+it is changed. An error about the whole form, such as "could not save", goes at its foot in an
+Alert.
+
+<Canvas of={Stories.ServerErrors} />
+
+## What it submits
+
+<Canvas of={Stories.SignIn} />
+<Canvas of={Stories.StoreDetails} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+<PropsTable
+  rows={[
+    [
+      'onSubmit',
+      '(event: FormEvent) => void',
+      null,
+      'Called when it is sent and every field is right; read the fields with new FormData(event.currentTarget).',
+    ],
+    ['onReset', '(event: FormEvent) => void', null, 'Called when a reset button empties it.'],
+    [
+      'validationBehavior',
+      "'native' | 'aria'",
+      "'native'",
+      'Checked on sending, or marked as typed.',
+    ],
+    [
+      'validationErrors',
+      'Record<string, string | string[]>',
+      null,
+      'The server’s errors, by field name.',
+    ],
+    ['action', 'string | (formData) => void', null, 'Where it is sent, without onSubmit.'],
+    ['className', 'string', null, 'Classes on the form.'],
+  ]}
+/>
+
+## Accessibility
+
+It is a `form`. A wrong field is marked invalid and described by its error, and the first wrong
+one takes the focus when sending is stopped. Enter in a field sends it.
+
+## As a block
+
+A tree's form, on the web and in Flutter, lays its fields 16 apart (or its `gap`), checks them in
+the page's language, and only then calls its `onSubmit` action with the named fields' values. Its
+`errorMessage` is drawn at its foot, as a field's error is.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="Form" />

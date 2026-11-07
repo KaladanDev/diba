@@ -1,0 +1,168 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './CheckboxGroup.stories'
+import { Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# CheckboxGroup
+
+Checkboxes under one name, with one value: the list of what is on. The delivery methods a shop
+offers, the sizes in stock, the payment methods it takes.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **Several options, any number of them on:** delivery methods, sizes, payment methods.
+
+For one choice among the options, use a RadioGroup; for a long list, or one the reader searches,
+a ListBox or a Select with several choices; for settings that each take effect at once, a
+SwitchGroup.
+
+## Import
+
+```tsx
+import { Checkbox, CheckboxGroup, Description, FieldError, Label } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<CheckboxGroup defaultValue={['post']}>
+  <Label>Delivery methods</Label>
+  <Checkbox value="post">
+    <Checkbox.Content>
+      <Checkbox.Control>
+        <Checkbox.Indicator />
+      </Checkbox.Control>
+      <Label>Express post</Label>
+    </Checkbox.Content>
+  </Checkbox>
+  …<Description>The buyer picks one of these.</Description>
+  <FieldError />
+</CheckboxGroup>
+```
+
+<Parts
+  rows={[
+    [
+      'CheckboxGroup',
+      'The group: its value, the values of the checkboxes that are on, its checks and its state, given to them.',
+    ],
+    ['Label', 'Its name, above it, 14 and medium; a star after it when required.'],
+    ['Checkbox', 'An option, with a value of its own; 16 under the label, 24 apart down the page.'],
+    ['Description', 'Help under the options, 12 in the muted colour.'],
+    ['FieldError', 'What is wrong, in the help’s place, in the danger colour.'],
+  ]}
+/>
+
+## Examples
+
+### Down and across
+
+Options go one under another. For a row, put them in a wrapping flex row of their own, 16 apart:
+on a narrow page it wraps, its rows 32 apart. The label stays above them, the help under them.
+
+```tsx
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: 16 }}>{options}</div>
+```
+
+<Canvas of={Stories.Orientation} />
+
+### Help
+
+Help under the group, and help under an option of its own, 28 in under its words.
+
+<Canvas of={Stories.Help} />
+
+### Disabled and read-only
+
+`isDisabled` on the group draws all of it at half; on one checkbox, that one alone. Read-only, the
+options can be reached and not turned.
+
+<Canvas of={Stories.States} />
+
+### Validation
+
+`validate` takes the list of values and returns what is wrong, or nothing; `isInvalid` with your
+own `FieldError` words shows what the server said. The boxes' edges turn the danger colour; the
+words keep theirs.
+
+<Canvas of={Stories.Validation} />
+
+### On a grey surface
+
+The group's `variant` reaches its checkboxes: secondary fills each box with the surface inside its
+edge, so an empty one shows on a grey card.
+
+<Canvas of={Stories.OnASurface} />
+
+### In a form
+
+Its `name` sends every value that is on, once each, as a form's repeated field. A required group
+with none on stops the form and asks for one, «دست‌کم یکی را انتخاب کنید.», in the page's language
+whatever the browser's.
+
+<Canvas of={Stories.InAForm} />
+
+## What it builds
+
+<Canvas of={Stories.PaymentMethods} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+<PropsTable
+  rows={[
+    ['value, defaultValue', 'string[]', '[]', 'The values that are on, controlled or at first.'],
+    ['onChange', '(value: string[]) => void', null, 'When one is turned.'],
+    [
+      'variant',
+      "'primary' | 'secondary'",
+      "'primary'",
+      'secondary on a grey surface; its checkboxes take it.',
+    ],
+    ['isRequired', 'boolean', 'false', 'One must be on; the label says so.'],
+    ['validate', '(value: string[]) => string | string[] | true | null', null, 'Your own check.'],
+    [
+      'validationBehavior',
+      "'native' | 'aria'",
+      "'native'",
+      'native waits for the form to be sent; aria shows what is wrong at once.',
+    ],
+    ['isInvalid', 'boolean', 'false', 'Drawn as wrong, with its FieldError.'],
+    ['isDisabled', 'boolean', 'false', 'None of it can be reached; drawn at half.'],
+    ['isReadOnly', 'boolean', 'false', 'Its options can be reached, not turned.'],
+    ['name', 'string', null, 'The name each value that is on is sent under.'],
+  ]}
+/>
+
+Each `Checkbox` takes its `value` and its own `isDisabled`; the group owns whether it is on.
+
+## Keyboard
+
+Tab goes to each checkbox in turn, and Space turns it.
+
+## Accessibility
+
+The group is a group named by its `Label` and described by its `Description`; each checkbox is
+named by its own words. A required group says so on its label, not on each option.
+
+## Styling
+
+`.checkbox-group`; its checkboxes as on the Checkbox page; `[data-invalid]` and `[data-disabled]`.
+
+## As a block
+
+A tree draws the same group, on the web and in Flutter, `orientation` giving a row. Its own check,
+one on when required, is written in the page's language.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="CheckboxGroup" />

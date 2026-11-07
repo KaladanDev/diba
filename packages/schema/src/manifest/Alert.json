@@ -1,0 +1,38 @@
+{
+  "name": "Alert",
+  "category": "feedback",
+  "description": "A message tinted in its status.",
+  "sduiSafe": true,
+  "props": {
+    "status": {
+      "type": "enum",
+      "values": ["default", "accent", "success", "warning", "danger"],
+      "description": "Required: a block that forgot to say should not render red.",
+      "required": true
+    },
+    "title": { "type": "string", "i18n": true },
+    "description": { "type": "string", "i18n": true },
+    "icon": {
+      "type": "token",
+      "token": "icon",
+      "description": "A name from the icon list. Defaults to the status's own."
+    },
+    "hideIcon": { "type": "boolean", "default": false },
+    "isLive": {
+      "type": "boolean",
+      "description": "Announced when it appears. On for danger unless set."
+    },
+    "isDismissible": {
+      "type": "boolean",
+      "default": false,
+      "description": "A close button; the block hides itself and fires onClose."
+    }
+  },
+  "slots": {
+    "actions": {
+      "accepts": ["Button", "LinkButton", "Stack"],
+      "description": "A Button or a LinkButton, or a Stack of them."
+    }
+  },
+  "actions": { "onClose": { "description": "The close button pressed." } }
+}

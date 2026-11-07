@@ -1,0 +1,53 @@
+{
+  "name": "@kaladan/diba-schema",
+  "version": "0.0.0",
+  "type": "module",
+  "description": "Diba component manifest — the language-neutral contract; generates TS prop types, a JSON Schema for SDUI, and Dart allowlists.",
+  "license": "SEE LICENSE IN LICENSE",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "design-system",
+    "sdui",
+    "server-driven-ui",
+    "json-schema",
+    "contract",
+    "kaladan",
+    "diba"
+  ],
+  "files": [
+    "dist",
+    "src",
+    "!src/**/*.test.ts",
+    "README.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./validate": {
+      "types": "./dist/validate.d.ts",
+      "import": "./dist/validate.js"
+    },
+    "./schema.json": "./dist/schema.json",
+    "./manifest.json": "./dist/manifest.json",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "bun run build.ts && tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsup": "^8.5.1",
+    "vitest": "3.2.7"
+  },
+  "dependencies": {
+    "ajv": "^8.20.0"
+  }
+}

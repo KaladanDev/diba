@@ -1,0 +1,52 @@
+{
+  "name": "Stack",
+  "category": "layout",
+  "description": "Blocks in a row or a column, a gap apart. Drawn with its own styles, so a host needs no utility classes for it.",
+  "sduiSafe": true,
+  "props": {
+    "direction": {
+      "type": "enum",
+      "values": [
+        "vertical",
+        "horizontal"
+      ],
+      "default": "vertical"
+    },
+    "gap": {
+      "type": "token",
+      "token": "space",
+      "default": 4,
+      "description": "A space token, 0 to 16, a quarter of a rem each."
+    },
+    "align": {
+      "type": "enum",
+      "values": [
+        "start",
+        "center",
+        "end",
+        "stretch",
+        "baseline"
+      ],
+      "default": "stretch"
+    },
+    "justify": {
+      "type": "enum",
+      "values": [
+        "start",
+        "center",
+        "end",
+        "between",
+        "around"
+      ],
+      "default": "start"
+    },
+    "wrap": {
+      "type": "boolean",
+      "default": false,
+      "description": "Chips that run onto the next line."
+    }
+  },
+  "children": {
+    "accepts": "*"
+  }
+}

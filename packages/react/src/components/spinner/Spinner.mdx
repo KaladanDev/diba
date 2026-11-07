@@ -1,0 +1,100 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Spinner.stories'
+import { PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# Spinner
+
+Something is on its way and there is no telling how long it will take: a card's figures, a
+search's results. Two arcs turn over a ring once every 750ms.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **A part of the page loading,** such as a card's figures, where they will be.
+- **A wait with words,** small beside them, such as "Saving…".
+
+Not for a wait you can measure, such as an import's rows: use a ProgressBar. Not inside a button:
+a Button's `isPending` draws its own. Not for a whole page that is still to come: draw its shape
+with skeletons instead.
+
+## Import
+
+```tsx
+import { Spinner } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<Spinner />
+```
+
+One arc solid and fading, one clear and rising, over a ring in the off-track shade. It holds still
+when the reader asks for less motion.
+
+## Examples
+
+### Sizes
+
+`sm`, `md`, `lg` and `xl`: 16, 24, 32 and 40 across.
+
+<Canvas of={Stories.Sizes} />
+
+### Colours
+
+The brand's by default, a status's solid colour, or `current` for the colour of the words round
+it.
+
+<Canvas of={Stories.Colors} />
+
+### Beside its words
+
+Small, in the words' colour. The words say what it waits for, so hide the spinner from a screen
+reader with `aria-hidden`.
+
+<Canvas of={Stories.WithWords} />
+
+## Where it waits
+
+<Canvas of={Stories.LoadingCard} />
+<Canvas of={Stories.Searching} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+<PropsTable
+  rows={[
+    ['size', "'sm' | 'md' | 'lg' | 'xl'", "'md'", '16, 24, 32 or 40 across.'],
+    ['color', "'accent' | 'current' | 'success' | 'warning' | 'danger'", "'accent'", 'Its colour.'],
+    ['aria-label', 'string', '“Loading”', 'What it waits for, for a screen reader.'],
+    ['className', 'string', null, 'Classes after its own.'],
+  ]}
+/>
+
+## Accessibility
+
+It is a `status`, named "Loading" in the page's language unless an `aria-label` says more, such
+as what is loading.
+
+## Styling
+
+`.spinner` with `--sm` to `--xl` and its colour, `--accent` and the rest; its ring is the theme's
+off-track shade.
+
+## As a block
+
+A tree draws the same spinner, on the web and in Flutter: its `size`, `color`, and a `label` for a
+screen reader, "Loading" in the page's language when it has none.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="Spinner" />

@@ -1,0 +1,210 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Avatar.stories'
+import { Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# Avatar
+
+A person or a business at a glance: their photo, or their initials when there is none, or an icon
+for someone unnamed. Without a colour of its own, a name always takes the same one of five hues, so
+the same person looks the same on every page.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **Beside a person's name** in a list, a table row, a comment or a review.
+- **On its own** where there is no room for the name, such as who handles an order.
+- **For a shop,** with its mark as the photo.
+
+For several people at once, use an AvatarGroup. For a product's picture, use an image, not an
+avatar: an avatar is round and stands for someone.
+
+## Import
+
+```tsx
+import { Avatar } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<Avatar size="lg" data-hue="emerald" role="img" aria-label="Niloufar Rostami, Online">
+  <Avatar.Image src="/staff/niloufar.jpg" alt="" />
+  <Avatar.Fallback aria-hidden delayMs={600}>
+    NR
+  </Avatar.Fallback>
+  <span className="avatar__presence" data-presence="online" />
+</Avatar>
+```
+
+<Parts
+  rows={[
+    [
+      'Avatar',
+      'The circle, 32, 40 or 48 across: its size, colour and variant, and what it is called.',
+    ],
+    [
+      'Avatar.Image',
+      'The photo, covering the circle once it has loaded. Until then, or if it fails, the fallback shows.',
+    ],
+    [
+      'Avatar.Fallback',
+      'Initials or an icon on the fill: initials 12, 14 or 17 and medium, an icon half the circle across.',
+    ],
+    [
+      '.avatar__presence',
+      'Not a part, but the dot the theme draws: at the bottom of the end side, 10, 12 or 14 across, ringed in the surface.',
+    ],
+  ]}
+/>
+
+## Examples
+
+### A photo, initials or an icon
+
+The initials stay under the photo, so a photo that fails to load leaves them showing. An unnamed
+person, a guest, takes an icon instead.
+
+<Canvas of={Stories.Content} />
+
+### Sizes
+
+`sm`, `md` and `lg`: 32, 40 and 48 across. `md` is the default.
+
+<Canvas of={Stories.Sizes} />
+
+### A colour from the name
+
+Without a `color`, give `data-hue` one of `saffron`, `garnet`, `emerald`, `sky` or `iris`: the
+initials take that hue and the fill a tint of it. The block picks it from the name, so a name
+always has the same one, on the web and in Flutter.
+
+<Canvas of={Stories.ColourFromTheName} />
+
+### Colours and variants
+
+A `color` is a status tone, for an avatar that says something about the person: `success` for one
+who is verified, `danger` for one who is blocked. On the neutral fill its initials take the tone;
+`soft`, the fill takes the tone's tint.
+
+<Canvas of={Stories.Colours} />
+
+### Presence
+
+A `.avatar__presence` dot with `data-presence` of `online`, `away`, `busy` or `offline`, at the
+bottom of the end side. Say it after the name in the avatar's label, since the dot's colour alone
+says nothing to a screen reader.
+
+<Canvas of={Stories.PresenceDot} />
+
+### Ringed
+
+`data-ringed` draws a ring 2 outside the circle, 2 clear of it, in the accent colour: the one
+among several that matters here.
+
+<Canvas of={Stories.Ringed} />
+
+### Named, or beside its name
+
+<Canvas of={Stories.Accessible} />
+
+## What it builds
+
+<Canvas of={Stories.StaffList} />
+<Canvas of={Stories.OrderCustomer} />
+<Canvas of={Stories.Reviews} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+### Avatar
+
+<PropsTable
+  rows={[
+    ['size', "'sm' | 'md' | 'lg'", "'md'", '32, 40 or 48 across.'],
+    [
+      'color',
+      "'default' | 'accent' | 'success' | 'warning' | 'danger'",
+      "'default'",
+      'A status tone for the initials, or with soft their fill. In an AvatarGroup, the group’s when it has none.',
+    ],
+    ['variant', "'default' | 'soft'", "'default'", 'The neutral fill, or the colour’s own tint.'],
+    [
+      'data-hue',
+      "'saffron' | 'garnet' | 'emerald' | 'sky' | 'iris'",
+      null,
+      'A name’s hue, for an avatar with no colour.',
+    ],
+    ['data-ringed', 'boolean', null, 'A ring 2 outside it, to pick it out.'],
+    ['className', 'string', null, 'Classes after the avatar’s own.'],
+    ['children', 'ReactNode', null, 'Its image, its fallback and a presence dot.'],
+  ]}
+/>
+
+### Avatar.Image
+
+<PropsTable
+  rows={[
+    ['src', 'string', null, 'The photo.'],
+    [
+      'alt',
+      'string',
+      null,
+      'Empty when the avatar itself is named, as it should be; the photo then says nothing twice.',
+    ],
+    ['srcSet, sizes', 'string', null, 'Sharper photos for sharper screens.'],
+    [
+      'onLoadingStatusChange',
+      "(status: 'idle' | 'loading' | 'loaded' | 'error') => void",
+      null,
+      'Told when the photo loads or fails.',
+    ],
+  ]}
+/>
+
+### Avatar.Fallback
+
+<PropsTable
+  rows={[
+    ['children', 'ReactNode', null, 'Initials, or an icon.'],
+    [
+      'delayMs',
+      'number',
+      null,
+      'Waits this long before showing, so a photo that loads quickly never flashes the initials first.',
+    ],
+    ['color', 'Avatar’s color', null, 'Its own tone, apart from the avatar’s.'],
+  ]}
+/>
+
+Every part takes its element's own props too: `id`, `style`, `aria-*`.
+
+## Accessibility
+
+Name the avatar, not its parts: `role="img"` and the person's name in `aria-label`, with the
+presence after it ("Niloufar Rostami, Online"); the image's `alt` empty and the initials hidden.
+Beside the name in words, hide the avatar instead (`aria-hidden`), so the name is read once.
+
+## Styling
+
+`.avatar` with `.avatar--sm`, `--md`, `--lg` and `--soft`; `.avatar__image`;
+`.avatar__fallback` with `--default` to `--danger`; `.avatar__presence` with `data-presence`. Its
+size is `--avatar-size`, and its fill and initials `--avatar-fill` and `--avatar-ink`, so a theme
+or a page can set them.
+
+## As a block
+
+A tree draws the same avatar, on the web and in Flutter, from a name: the initials, the hue, the
+label and the presence come from it.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="Avatar" />

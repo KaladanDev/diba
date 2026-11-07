@@ -1,0 +1,163 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './TimeField.stories'
+import { Keys, Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# TimeField
+
+A time of day, typed hour by minute: opening hours, a delivery slot, a reminder. At rest it reads
+as a clock does, «۱۴:۳۰»; in focus, its hour and minute can each be typed or stepped.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **A time the reader knows and types:** when a shop opens, when a slot ends.
+- **Beside a date** that is asked apart, or with no date at all.
+
+To pick a time on a dial rather than type it, open the TimePickerDialog from a button: the block
+does. For a date and a time together, use a DateField or a DatePicker at a minute.
+
+## Import
+
+```tsx
+import { Description, FieldError, Label, TimeField } from '@kaladan/diba-react'
+import { parseTime } from '@internationalized/date'
+```
+
+## Anatomy
+
+```tsx
+<TimeField defaultValue={parseTime('14:30')}>
+  <Label>Delivery time</Label>
+  <TimeField.Group fullWidth>
+    <TimeField.Input>{(segment) => <TimeField.Segment segment={segment} />}</TimeField.Input>
+  </TimeField.Group>
+  <Description>Between 9 and 21.</Description>
+  <FieldError />
+</TimeField>
+```
+
+<Parts
+  rows={[
+    ['TimeField', 'The field: its time, how fine it counts, its limits and its state.'],
+    ['Label', 'Its name, above it.'],
+    ['TimeField.Group', 'The box, 36 tall: primary on a page, secondary on a grey surface.'],
+    [
+      'TimeField.Input',
+      'The time: at rest, as a clock reads; in focus, its segments, one TimeField.Segment each.',
+    ],
+    ['TimeField.Prefix, TimeField.Suffix', 'Anything before or after the time, inside the box.'],
+    ['Description, FieldError', 'Help under it, and what is wrong in its place.'],
+  ]}
+/>
+
+## Values
+
+A time is `@internationalized/date`'s `Time`: `parseTime('14:30')`. Its `toString()` is ISO 8601,
+`14:30:00`, and that is what its `name` sends in a form.
+
+## Examples
+
+### Granularity
+
+To the `hour`, the `minute` or the `second`.
+
+<Canvas of={Stories.Granularity} />
+
+### Hour cycle
+
+`hourCycle` gives 24 hours or a 12-hour clock with AM and PM; without it, the language's.
+
+<Canvas of={Stories.HourCycle} />
+
+### Earliest and latest
+
+`minValue` and `maxValue` make a time outside them invalid; with `validationBehavior="aria"` it
+says so at once.
+
+<Canvas of={Stories.Limits} />
+
+### An icon before
+
+<Canvas of={Stories.Prefix} />
+
+### Disabled, read-only and on a grey surface
+
+<Canvas of={Stories.States} />
+
+### In a form
+
+<Canvas of={Stories.InAForm} />
+
+## What it builds
+
+<Canvas of={Stories.OpeningHours} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+<PropsTable
+  rows={[
+    ['value', 'Time | null', null, 'The time, controlled.'],
+    ['defaultValue', 'Time | null', null, 'The time at first.'],
+    ['onChange', '(value: Time | null) => void', null, 'When the time changes.'],
+    ['granularity', "'hour' | 'minute' | 'second'", "'minute'", 'The smallest part it asks.'],
+    ['hourCycle', '12 | 24', 'the language’s', 'A 12-hour clock or 24 hours.'],
+    ['minValue, maxValue', 'Time', null, 'Outside them, the time is invalid.'],
+    ['placeholderValue', 'Time', 'midnight', 'Where an empty field’s segments start when stepped.'],
+    ['isRequired', 'boolean', 'false', 'It needs a time.'],
+    ['isInvalid', 'boolean', 'false', 'Drawn as wrong, with its FieldError.'],
+    [
+      'validationBehavior',
+      "'native' | 'aria'",
+      "'native'",
+      'native waits for the form to be sent; aria shows what is wrong at once.',
+    ],
+    ['isDisabled', 'boolean', 'false', 'It cannot be reached or changed.'],
+    ['isReadOnly', 'boolean', 'false', 'It can be read and focused, not changed.'],
+    ['name', 'string', null, 'Its value’s name in a form: ISO 8601.'],
+  ]}
+/>
+
+`TimeField.Group` takes `variant` and `fullWidth`, as a DateField's does.
+
+## Keyboard
+
+<Keys
+  rows={[
+    ['Tab, Shift + Tab', 'The next or previous segment, and out of the field.'],
+    ['Left, Right', 'The segment before or after.'],
+    ['Up, Down', 'The segment one more or one less.'],
+    ['Page Up, Page Down', 'An hour by two, a minute by fifteen.'],
+    ['Digits', 'Type the segment, and go on to the next.'],
+    ['Backspace', 'Clears the segment.'],
+  ]}
+/>
+
+## Accessibility
+
+Each segment is read with its name, «ساعت», «دقیقه», and its value. Typed or at rest, the field
+reads as a clock, «۱۴:۳۰», on a Persian page as on an English one.
+
+## Styling
+
+`.time-field`, and the DateField's group classes: `.date-input-group`, `__input`, `__segment`,
+`__prefix` and `__suffix`.
+
+## As a block
+
+A tree's TimeField block is a field whose press opens the TimePickerDialog, as Flutter's: the time
+picked on a dial or typed in the dialog, not in the field. Its time is ISO 8601 on the wire,
+`14:30`.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="TimeField" />

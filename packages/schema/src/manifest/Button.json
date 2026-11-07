@@ -1,0 +1,48 @@
+{
+  "name": "Button",
+  "category": "controls",
+  "description": "An action, pill-shaped on both platforms.",
+  "sduiSafe": true,
+  "props": {
+    "variant": {
+      "type": "enum",
+      "values": ["primary", "secondary", "tertiary", "outline", "ghost", "danger", "danger-soft"],
+      "default": "secondary"
+    },
+    "size": { "type": "enum", "values": ["sm", "md", "lg"], "default": "sm" },
+    "icon": { "type": "token", "token": "icon", "description": "A name from the icon list." },
+    "iconPlacement": {
+      "type": "enum",
+      "values": ["start", "end"],
+      "default": "start",
+      "description": "Mirrored in right-to-left."
+    },
+    "isIconOnly": {
+      "type": "boolean",
+      "default": false,
+      "description": "Draws the icon alone; label then names the button."
+    },
+    "label": {
+      "type": "string",
+      "i18n": true,
+      "description": "The accessible name and tooltip. Required when isIconOnly."
+    },
+    "isDisabled": { "type": "boolean", "default": false },
+    "isPending": {
+      "type": "boolean",
+      "default": false,
+      "description": "A submit in flight: a spinner takes the icon's place and the label stays."
+    },
+    "fullWidth": { "type": "boolean", "default": false },
+    "type": {
+      "type": "enum",
+      "values": ["button", "submit", "reset"],
+      "default": "button",
+      "description": "submit runs the Form's checks, then its onSubmit; reset restores every field's default."
+    }
+  },
+  "children": { "accepts": "text", "description": "The button's text (localizable)." },
+  "actions": {
+    "onPress": { "description": "Fired when the button is activated.", "payload": "PressEvent" }
+  }
+}

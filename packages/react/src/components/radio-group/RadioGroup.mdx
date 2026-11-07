@@ -1,0 +1,191 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './RadioGroup.stories'
+import { Keys, Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# RadioGroup
+
+One choice among a few, every one in sight: the delivery method, a product's type, who pays the
+fee. Its Radios are Material's on both platforms, drawn and moving as Flutter's do.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **One of two to six options** the reader should compare side by side, each with its own help.
+
+For more options, or ones the reader searches, use a Select or a ComboBox; for several at once, a
+CheckboxGroup; for two that switch a view, a ToggleButtonGroup.
+
+## Import
+
+```tsx
+import { Description, FieldError, Label, Radio, RadioGroup } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<RadioGroup defaultValue="post">
+  <Label>Delivery method</Label>
+  <Radio value="post">
+    <Radio.Content>
+      <Radio.Control>
+        <Radio.Indicator />
+      </Radio.Control>
+      <Label>Express post</Label>
+    </Radio.Content>
+    <Description>45,000 toman, 2 to 4 days</Description>
+  </Radio>
+  …
+  <FieldError />
+</RadioGroup>
+```
+
+<Parts
+  rows={[
+    [
+      'RadioGroup',
+      'The group: its value, the chosen radio’s, its checks, its direction and its state.',
+    ],
+    ['Label', 'Its name, above it, 14 and medium; a star after it when required.'],
+    [
+      'Radio',
+      'An option, with a value of its own: one target as wide as what it holds; 16 under the label, 24 apart down the page or 16 across.',
+    ],
+    [
+      'Radio.Control, Radio.Indicator',
+      'The ring, 16 with a 2 edge in the muted colour; chosen, a gilt disc with a 9 slate-700 dot, growing from the centre as Flutter’s does. A circle 40 across behind it under a hover, a press or the keyboard’s focus.',
+    ],
+    ['Radio.Content', 'The ring and its words in a row, 12 apart; the words 14 and regular.'],
+    [
+      'Description',
+      'Help: under an option, 12 in the muted colour, 28 in; under the group, its help.',
+    ],
+    ['FieldError', 'What is wrong, under the options, in the danger colour.'],
+  ]}
+/>
+
+## Examples
+
+### Down and across
+
+`orientation="horizontal"` lays the radios in a row, 16 apart; the label stays above them and the
+help under them. The arrow keys follow it.
+
+<Canvas of={Stories.Orientation} />
+
+### Help
+
+Each option's help says what it costs or what follows from it, so the reader compares them where
+they choose.
+
+<Canvas of={Stories.Help} />
+
+### None chosen, disabled, read-only
+
+A group may start with none chosen; once one is, the reader cannot clear it, only choose another.
+Start with one when there is a sensible default. A disabled option, or a disabled group, is drawn
+at half.
+
+<Canvas of={Stories.States} />
+
+### Validation
+
+`isInvalid` with your own `FieldError` words shows what the server said; the rings turn the danger
+colour, the words keep theirs.
+
+<Canvas of={Stories.Validation} />
+
+### On a grey surface
+
+`variant="secondary"` fills each ring with the surface, so an empty one shows on a grey card.
+
+<Canvas of={Stories.OnASurface} />
+
+### In a form
+
+Its `name` sends the chosen value. A required group with none chosen stops the form and says so
+under it, «این فیلد الزامی است.», in the page's language whatever the browser's.
+
+<Canvas of={Stories.InAForm} />
+
+## What it builds
+
+<Canvas of={Stories.Checkout} />
+
+## Themes, directions, sizes
+
+The ring is at each option's start on either page; across, the first option is at the page's
+start, the right on a Persian page.
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+### RadioGroup
+
+<PropsTable
+  rows={[
+    ['value, defaultValue', 'string | null', 'null', 'The chosen value, controlled or at first.'],
+    ['onChange', '(value: string) => void', null, 'When another is chosen.'],
+    [
+      'orientation',
+      "'vertical' | 'horizontal'",
+      "'vertical'",
+      'Down the page or across it; the arrow keys follow.',
+    ],
+    ['variant', "'primary' | 'secondary'", "'primary'", 'secondary on a grey surface.'],
+    ['isRequired', 'boolean', 'false', 'One must be chosen; the label says so.'],
+    ['validate, validationBehavior', 'as a TextField’s', null, 'Its own check, and when it shows.'],
+    ['isInvalid', 'boolean', 'false', 'Drawn as wrong, with its FieldError.'],
+    ['isDisabled', 'boolean', 'false', 'None of it can be reached; drawn at half.'],
+    ['isReadOnly', 'boolean', 'false', 'It can be reached, not changed.'],
+    ['name', 'string', null, 'The chosen value’s name in a form.'],
+  ]}
+/>
+
+### Radio
+
+<PropsTable
+  rows={[
+    ['value', 'string', null, 'What the group takes when it is chosen; required.'],
+    ['isDisabled', 'boolean', 'false', 'This one cannot be chosen; drawn at half.'],
+  ]}
+/>
+
+Every part takes its element's own props too, and a `className`.
+
+## Keyboard
+
+<Keys
+  rows={[
+    ['Tab', 'To the chosen radio, or the first when none is; then out of the group.'],
+    ['Down, Up', 'The next or the previous, choosing it.'],
+    ['Left, Right', 'The same across the page: Left is the next on a Persian page.'],
+    ['Space', 'Chooses the radio with the focus.'],
+  ]}
+/>
+
+## Accessibility
+
+The group is a radio group named by its `Label`; each radio is named by its words and read as one
+of how many. The keyboard reaches the group once, then moves within it.
+
+## Styling
+
+`.radio-group` with `--primary` and `--secondary`; `.radio` with `__content`, `__control` and
+`__indicator`; `[data-selected]`, `[data-invalid]` and `[data-disabled]`.
+
+## As a block
+
+A tree draws the same group, on the web and in Flutter, `orientation` giving a row and each Radio
+its `description`. Its own check, one chosen when required, is written in the page's language.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="RadioGroup" />

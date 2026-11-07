@@ -1,0 +1,39 @@
+{
+  "name": "Avatar",
+  "category": "content",
+  "description": "A person or a business: a photo over their initials, or an icon.",
+  "sduiSafe": true,
+  "props": {
+    "name": {
+      "type": "string",
+      "description": "Data, not copy: gives the initials and the accessible name."
+    },
+    "src": {
+      "type": "string",
+      "format": "image-url",
+      "description": "A photo over the initials, which stay if it fails. An image URL."
+    },
+    "icon": {
+      "type": "token",
+      "token": "icon",
+      "description": "An anonymous person. A name from the icon list."
+    },
+    "size": { "type": "enum", "values": ["sm", "md", "lg"], "default": "md" },
+    "color": {
+      "type": "enum",
+      "values": ["default", "accent", "success", "warning", "danger"],
+      "description": "Without one, a steady colour from the name; default is the neutral grey."
+    },
+    "variant": { "type": "enum", "values": ["default", "soft"], "default": "default" },
+    "presence": {
+      "type": "enum",
+      "values": ["online", "away", "busy", "offline"],
+      "description": "A dot at the bottom of the end side, read after the name. Not drawn in a stack."
+    },
+    "isRinged": {
+      "type": "boolean",
+      "default": false,
+      "description": "A gilt ring 2 outside the avatar, to pick one out. Not drawn in a stack."
+    }
+  }
+}

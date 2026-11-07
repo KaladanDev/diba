@@ -1,0 +1,68 @@
+{
+  "name": "Badge",
+  "category": "content",
+  "description": "A count or a dot on a block's corner: unread messages on an icon, a status on an avatar.",
+  "sduiSafe": true,
+  "props": {
+    "content": {
+      "type": [
+        "string",
+        "number"
+      ],
+      "description": "A number is drawn in the page's digits, past max as max and a plus; words as given; unset, a dot."
+    },
+    "max": {
+      "type": "number",
+      "default": 99
+    },
+    "label": {
+      "type": "string",
+      "i18n": true,
+      "description": "What it says to a screen reader: «۳ پیام تازه»."
+    },
+    "color": {
+      "type": "enum",
+      "values": [
+        "default",
+        "accent",
+        "success",
+        "warning",
+        "danger"
+      ],
+      "default": "danger"
+    },
+    "variant": {
+      "type": "enum",
+      "values": [
+        "primary",
+        "secondary",
+        "soft"
+      ],
+      "default": "primary"
+    },
+    "size": {
+      "type": "enum",
+      "values": [
+        "sm",
+        "md",
+        "lg"
+      ],
+      "default": "md"
+    },
+    "placement": {
+      "type": "enum",
+      "values": [
+        "top-end",
+        "top-start",
+        "bottom-end",
+        "bottom-start"
+      ],
+      "default": "top-end",
+      "description": "Its corner; start and end follow the page's direction."
+    }
+  },
+  "children": {
+    "accepts": "*",
+    "description": "What it sits on: one block."
+  }
+}

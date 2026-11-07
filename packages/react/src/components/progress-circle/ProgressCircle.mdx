@@ -1,0 +1,121 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './ProgressCircle.stories'
+import { Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# ProgressCircle
+
+How far along something is, as a ring: a shop's setup, a photo uploading. Small enough to sit
+beside words or on a thumbnail.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **Progress in little room,** such as on a photo's thumbnail while it uploads.
+- **A share of a whole beside its words,** such as a shop's setup, 3 of 5 steps.
+
+Not where there is room for a label and a value: use a ProgressBar. Not for a wait with no
+measure that needs no room of its own: a Spinner says it more plainly.
+
+## Import
+
+```tsx
+import { ProgressCircle } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<ProgressCircle value={60} aria-label="Shop setup">
+  <ProgressCircle.Track>
+    <ProgressCircle.TrackCircle />
+    <ProgressCircle.FillCircle />
+  </ProgressCircle.Track>
+</ProgressCircle>
+```
+
+<Parts
+  rows={[
+    ['ProgressCircle', 'Its value, limits and look; a progressbar, named by its aria-label.'],
+    ['ProgressCircle.Track', 'The ring’s drawing.'],
+    ['ProgressCircle.TrackCircle', 'The ring, in the neutral fill.'],
+    [
+      'ProgressCircle.FillCircle',
+      'How far along: from twelve o’clock clockwise, round at its ends.',
+    ],
+  ]}
+/>
+
+It draws no words: name it with `aria-label`, or with `aria-labelledby` the words beside it.
+
+## Examples
+
+### Sizes
+
+`sm`, `md` and `lg`: 20, 28 and 36 across, the stroke 4 on each.
+
+<Canvas of={Stories.Sizes} />
+
+### Colours
+
+The brand's by default, a status's solid colour, or the secondary text's colour for `default`. In light the brand's and the warning's
+take their deeper ink, so the fill stands 3:1 from its track.
+
+<Canvas of={Stories.Colors} />
+
+### No telling how far
+
+`isIndeterminate` turns an arc round the ring.
+
+<Canvas of={Stories.Indeterminate} />
+
+## What it rounds
+
+<Canvas of={Stories.Setup} />
+<Canvas of={Stories.Uploads} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+<PropsTable
+  rows={[
+    ['value', 'number', '0', 'How far along.'],
+    ['minValue, maxValue', 'number', '0, 100', 'Its limits.'],
+    ['isIndeterminate', 'boolean', 'false', 'No telling how far.'],
+    [
+      'color',
+      "'default' | 'accent' | 'success' | 'warning' | 'danger'",
+      "'accent'",
+      'The fill’s colour.',
+    ],
+    ['size', "'sm' | 'md' | 'lg'", "'md'", '20, 28 or 36 across.'],
+    ['aria-label, aria-labelledby', 'string', null, 'Its name.'],
+  ]}
+/>
+
+## Accessibility
+
+It is a `progressbar`, named by its `aria-label` or the words it is labelled by, its value read as
+a percent. An indeterminate one has no value.
+
+## Styling
+
+`.progress-circle` with `--sm`, `--md`, `--lg` and its colour; `.progress-circle__track`,
+`__track-circle` and `__fill-circle`.
+
+## As a block
+
+A tree draws the same ring, on the web and in Flutter: its `value` and limits, `isIndeterminate`,
+`color`, `size`, and a `label` that names it for a screen reader.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="ProgressCircle" />

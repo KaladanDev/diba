@@ -1,0 +1,80 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Typography.stories'
+
+<Meta of={Stories} />
+
+# Typography
+
+Words are set with `Text`, and every component sets its own from the same scale. Under each line
+below is what the browser drew it at: its size on its line, and its weight.
+
+```tsx
+import { Text } from '@kaladan/diba-react'
+
+export const Note = () => (
+  <Text size="sm" weight="medium" tone="muted">
+    دیروز، ۲ کالا
+  </Text>
+)
+```
+
+## The scale
+
+Nine sizes, each with its own line, so lines of text stack on a 4 grid. `md`, 16 on 24, is the
+default; forms, tables and buttons set 14 on 20.
+
+| `size` | Size on line | For                            |
+| ------ | ------------ | ------------------------------ |
+| `xs`   | 12 / 16      | captions, a note under a field |
+| `sm`   | 14 / 20      | forms, tables, buttons         |
+| `md`   | 16 / 24      | running text                   |
+| `lg`   | 18 / 28      | a large card's title           |
+| `xl`   | 20 / 28      | a section's title              |
+| `2xl`  | 24 / 32      | a page's title                 |
+| `3xl`  | 30 / 36      | a dashboard's figure           |
+| `4xl`  | 36 / 40      | a storefront's large figure    |
+| `5xl`  | 48 / 48      | a home page's headline         |
+
+<Canvas of={Stories.Scale} />
+
+## Weights
+
+`normal` 400 for running text, `medium` 500 for labels and table headings, `semibold` 600 for
+titles, and `bold` 700 sparingly.
+
+<Canvas of={Stories.Weights} />
+
+## Tones
+
+`default` is the body's colour and `muted` a note's. `primary` and `accent` are the brand's ink,
+and `success`, `warning` and `danger` the statuses' inks: the emphasis steps, which hold 4.5:1 on a
+card where the fills would not (see Colours).
+
+<Canvas of={Stories.Tones} />
+
+## Faces
+
+Diba's tokens name a face for each script: `--db-font-family-fa` (Yekan Bakh, then Vazirmatn) for
+Persian and `--db-font-family-sans` (Inter) for Latin, and `--db-font-family-mono` for code. The
+app loads the files and sets the face on its root, as admin-web does with Yekan Bakh beside Mona
+Sans; Diba's stylesheet and its provider set none. Here Storybook is the app, and sets the tokens'
+faces by the page's language. Under each line is the face this page resolved.
+
+<Canvas of={Stories.Faces} />
+
+## Numbers and digits
+
+A Persian page shows its figures in Persian digits: format them with the page's locale, as the
+components do, never by hand. What someone types may come in either digits; `toLatinDigits` turns
+it to Latin before it is checked or sent, as NumberField and InputOTP do. A column of figures takes
+`font-variant-numeric: tabular-nums`, so they line up.
+
+<Canvas of={Stories.Numbers} />
+
+## Latin inside Persian
+
+A code, an address or a brand name inside a Persian sentence keeps its own direction when wrapped in
+`<bdi>`; without it, the punctuation at its end lands on the wrong side. A field for one is
+`dir="ltr"`, and a Snippet is left to right on its own.
+
+<Canvas of={Stories.MixedDirection} />

@@ -1,0 +1,51 @@
+{
+  "name": "Snippet",
+  "category": "content",
+  "description": "A key or a URL, monospaced and left to right, with a button that copies it. Copying happens only on a press.",
+  "sduiSafe": true,
+  "props": {
+    "copyText": {
+      "type": "string",
+      "description": "What is copied, when it differs from what is shown."
+    },
+    "hideCopyButton": {
+      "type": "boolean",
+      "default": false
+    },
+    "symbol": {
+      "type": "string",
+      "description": "A prompt before each line: «$»."
+    },
+    "hideSymbol": {
+      "type": "boolean",
+      "default": false
+    },
+    "size": {
+      "type": "enum",
+      "values": [
+        "sm",
+        "md",
+        "lg"
+      ],
+      "default": "md"
+    },
+    "variant": {
+      "type": "enum",
+      "values": [
+        "default",
+        "secondary"
+      ],
+      "default": "default",
+      "description": "default is on the second surface; secondary is outlined."
+    }
+  },
+  "children": {
+    "accepts": "text"
+  },
+  "actions": {
+    "onCopy": {
+      "description": "Copied: the words.",
+      "payload": "string"
+    }
+  }
+}

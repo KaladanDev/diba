@@ -1,0 +1,102 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Fieldset.stories'
+import { Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# Fieldset
+
+A titled group of fields in a form: a product's price and stock, a buyer's delivery address. Its
+legend names the group, for the eye and for a screen reader, and its fields stand together under
+it.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **A long form in parts,** such as a product's details, then its price and stock.
+- **Fields that answer one question,** such as the parts of an address.
+
+Not for a single field: its label is enough. Not for a choice among options: a RadioGroup or a
+CheckboxGroup names its own group.
+
+## Import
+
+```tsx
+import { Description, Fieldset } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<Fieldset>
+  <Fieldset.Legend>Price and stock</Fieldset.Legend>
+  <Description>What a buyer pays, and how many are left.</Description>
+  <Fieldset.Group>{/* the fields */}</Fieldset.Group>
+  <Fieldset.Actions>{/* buttons, if the group saves alone */}</Fieldset.Actions>
+</Fieldset>
+```
+
+<Parts
+  rows={[
+    ['Fieldset', 'The group: a fieldset, its parts 24 apart.'],
+    ['Fieldset.Legend', 'Its title, 16 on 24 and medium: the group’s name to a screen reader.'],
+    ['Description', 'A line right under the legend, 12 on 16 and muted.'],
+    ['Fieldset.Group', 'The fields, 16 apart.'],
+    ['Fieldset.Actions', 'Buttons after the fields, 8 apart.'],
+  ]}
+/>
+
+## Examples
+
+### Its parts
+
+A legend alone, a legend with its description, and buttons of its own when the group saves alone.
+
+<Canvas of={Stories.Parts} />
+
+## What it groups
+
+<Canvas of={Stories.ProductForm} />
+<Canvas of={Stories.Checkout} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+### Fieldset
+
+<PropsTable
+  rows={[
+    ['disabled', 'boolean', 'false', 'The browser’s own: native fields in it cannot be used.'],
+    ['render', '(props) => ReactElement', null, 'Draws another element.'],
+    ['className', 'string', null, 'Classes after its own.'],
+  ]}
+/>
+
+### The rest
+
+`Fieldset.Legend`, `.Group` and `.Actions` take their element's props and a `className`.
+
+## Accessibility
+
+It is a `fieldset`, named by its legend: a screen reader says the group's name as it enters the
+first field. Each field still needs its own label.
+
+## Styling
+
+`.fieldset`, `.fieldset__legend`, `.fieldset__field-group` and `.fieldset__actions`.
+
+## As a block
+
+A tree draws the same group in a Form block, on the web and in Flutter: its `legend`, its
+`description`, then its fields.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="Fieldset" />

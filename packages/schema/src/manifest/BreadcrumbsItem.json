@@ -1,0 +1,17 @@
+{
+  "name": "BreadcrumbsItem",
+  "category": "navigation",
+  "description": "One step of Breadcrumbs. The last is the page itself: current, and going nowhere.",
+  "sduiSafe": true,
+  "props": {
+    "href": {
+      "type": "string",
+      "format": "url",
+      "description": "Where the step goes, held to isSafeUrl. The last item has none."
+    }
+  },
+  "children": {
+    "accepts": "text",
+    "description": "The step's name (localizable)."
+  }
+}

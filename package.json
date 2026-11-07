@@ -1,0 +1,30 @@
+{
+  "name": "diba",
+  "private": true,
+  "type": "module",
+  "description": "Diba — Kaladan's design system, component library, and cross-platform rendering contract.",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "bun run --filter '@kaladan/diba-tokens' build && bun run --filter '@kaladan/diba-schema' build && bun run --filter '@kaladan/diba-react' build",
+    "typecheck": "bun run --filter '*' typecheck",
+    "test": "bun run --filter '*' test",
+    "test:browser": "bun run --filter '@kaladan/diba-react' test:browser",
+    "tokens": "bun run --filter '@kaladan/diba-tokens' build",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "cd packages/tokens && bun publish --tolerate-republish && cd ../schema && bun publish --tolerate-republish && cd ../react && bun publish --tolerate-republish"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.27.0",
+    "prettier": "^3.4.2",
+    "prettier-plugin-tailwindcss": "^0.6.11",
+    "typescript": "~5.7.3"
+  },
+  "engines": {
+    "bun": ">=1.3.0"
+  }
+}

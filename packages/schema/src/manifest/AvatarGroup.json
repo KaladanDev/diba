@@ -1,0 +1,31 @@
+{
+  "name": "AvatarGroup",
+  "category": "content",
+  "description": "Avatars stacked or in a grid, with \"+3 more\" in the locale's digits after the first few.",
+  "sduiSafe": true,
+  "props": {
+    "max": { "type": "number", "description": "How many to draw before the count." },
+    "size": {
+      "type": "enum",
+      "values": ["sm", "md", "lg"],
+      "description": "Applied to the avatars that omit it."
+    },
+    "color": {
+      "type": "enum",
+      "values": ["default", "accent", "success", "warning", "danger"],
+      "description": "Applied to the avatars that omit it."
+    },
+    "variant": {
+      "type": "enum",
+      "values": ["default", "soft"],
+      "description": "Applied to the avatars that omit it."
+    },
+    "overlap": { "type": "enum", "values": ["clip", "ring"], "default": "clip" },
+    "isGrid": {
+      "type": "boolean",
+      "default": false,
+      "description": "A team grid instead of a stack."
+    }
+  },
+  "children": { "accepts": ["Avatar"] }
+}

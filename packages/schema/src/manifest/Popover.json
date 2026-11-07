@@ -1,0 +1,38 @@
+{
+  "name": "Popover",
+  "category": "feedback",
+  "description": "A panel opened by its trigger, and only by it.",
+  "sduiSafe": true,
+  "props": {
+    "title": { "type": "string", "i18n": true },
+    "placement": {
+      "type": "enum",
+      "values": [
+        "top",
+        "top start",
+        "top end",
+        "bottom",
+        "bottom start",
+        "bottom end",
+        "start",
+        "start start",
+        "start end",
+        "end",
+        "end start",
+        "end end"
+      ],
+      "default": "bottom",
+      "description": "A side, then where along it."
+    },
+    "offset": { "type": "number", "description": "The gap to the trigger." },
+    "showArrow": { "type": "boolean", "default": false },
+    "isNonModal": {
+      "type": "boolean",
+      "default": false,
+      "description": "Leaves the page usable: a hint."
+    }
+  },
+  "children": { "accepts": "*" },
+  "slots": { "trigger": { "accepts": ["Button"], "description": "The button that opens it." } },
+  "actions": { "onOpenChange": { "description": "Opened or closed.", "payload": "boolean" } }
+}

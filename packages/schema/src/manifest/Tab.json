@@ -1,0 +1,29 @@
+{
+  "name": "Tab",
+  "category": "navigation",
+  "description": "A tab and its panel; only inside Tabs.",
+  "sduiSafe": true,
+  "props": {
+    "id": {
+      "type": "string",
+      "required": true
+    },
+    "label": {
+      "type": "string",
+      "i18n": true,
+      "required": true
+    },
+    "icon": {
+      "type": "token",
+      "token": "icon",
+      "description": "Drawn before the label."
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "children": {
+    "accepts": "*"
+  }
+}

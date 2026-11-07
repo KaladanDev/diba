@@ -1,0 +1,7 @@
+/*
+ * Third-party code under the Apache License 2.0; see THIRD-PARTY-NOTICES.txt in this package.
+ */
+/* Base description styles */
+.description {
+  @apply text-xs text-wrap wrap-break-word text-muted;
+}

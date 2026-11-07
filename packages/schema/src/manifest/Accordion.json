@@ -1,0 +1,45 @@
+{
+  "name": "Accordion",
+  "category": "content",
+  "description": "Sections that open and close in place: questions and answers, advanced settings. One item alone is a disclosure.",
+  "sduiSafe": true,
+  "props": {
+    "variant": {
+      "type": "enum",
+      "values": [
+        "default",
+        "surface"
+      ],
+      "default": "default",
+      "description": "surface draws the items on a card's paper."
+    },
+    "allowsMultipleExpanded": {
+      "type": "boolean",
+      "default": false,
+      "description": "More than one item open at a time."
+    },
+    "defaultExpandedKeys": {
+      "type": "string[]",
+      "description": "Starts with these items open; the merchant changes it."
+    },
+    "expandedKeys": {
+      "type": "string[]",
+      "description": "Pinned: shows exactly these items open until the next tree."
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "children": {
+    "accepts": [
+      "AccordionItem"
+    ]
+  },
+  "actions": {
+    "onExpandedChange": {
+      "description": "The open items' ids.",
+      "payload": "Key[]"
+    }
+  }
+}

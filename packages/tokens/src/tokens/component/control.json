@@ -1,0 +1,58 @@
+{
+  "control": {
+    "height": {
+      "sm": { "$type": "dimension", "$value": "2rem" },
+      "md": { "$type": "dimension", "$value": "2.25rem" },
+      "lg": { "$type": "dimension", "$value": "2.5rem" }
+    },
+    "px": {
+      "md": { "$type": "dimension", "$value": "1rem" }
+    }
+  },
+
+  "field": {
+    "height": {
+      "md": { "$type": "dimension", "$value": "2.25rem" }
+    },
+    "width": { "$type": "dimension", "$value": "18rem" },
+    "helper-p": { "$type": "dimension", "$value": "0.25rem" }
+  },
+
+  "chip": {
+    "height": {
+      "sm": { "$type": "dimension", "$value": "1.5rem" },
+      "md": { "$type": "dimension", "$value": "1.75rem" },
+      "lg": { "$type": "dimension", "$value": "2rem" }
+    },
+    "gap": { "$type": "dimension", "$value": "0.25rem" },
+    "group-gap": { "$type": "dimension", "$value": "0.5rem" }
+  },
+
+  "tab": {
+    "height": {
+      "md": { "$type": "dimension", "$value": "2rem" }
+    },
+    "list-p": { "$type": "dimension", "$value": "0.25rem" }
+  },
+
+  "switch": {
+    "track-h": {
+      "sm": { "$type": "dimension", "$value": "1.5rem" },
+      "md": { "$type": "dimension", "$value": "1.75rem" },
+      "lg": { "$type": "dimension", "$value": "2rem" }
+    }
+  },
+
+  "spinner": {
+    "size": {
+      "xl": { "$type": "dimension", "$value": "3rem" }
+    }
+  },
+
+  "progress": {
+    "track": {
+      "sm": { "$type": "dimension", "$value": "0.25rem" },
+      "lg": { "$type": "dimension", "$value": "1.25rem" }
+    }
+  }
+}

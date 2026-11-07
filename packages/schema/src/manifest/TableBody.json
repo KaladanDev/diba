@@ -1,0 +1,7 @@
+{
+  "name": "TableBody",
+  "category": "data",
+  "description": "The rows.",
+  "sduiSafe": true,
+  "children": { "accepts": ["Row"] }
+}

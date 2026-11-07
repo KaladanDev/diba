@@ -1,0 +1,130 @@
+/*
+ * The stylesheet's variables, from Diba's tokens. This is the mapping admin-web drew with, moved
+ * into Diba so every app gets it.
+ *
+ * - Brand and status are Diba's roles: the accent is the gilt primary, with its fill, hover,
+ *   soft and emphasis tones.
+ * - Neutrals are slate: 800 body text, 700 secondary text, 500 notes, 400 placeholders, 200 and
+ *   300 the secondary fill and its hover. White is paper-0, Diba's own, which Flutter uses too.
+ * - Every colour the default theme writes as a literal is set here, so none of its
+ *   palette reaches a component (foundations/raw-colors.test.ts holds this). That includes the
+ *   third surface, which admin-web left at the default grey: one slate step past the second.
+ * - Differences from admin-web, all decided:
+ *   - In dark, the selected tab's pill is slate-700, lighter than its slate-800 list, as
+ *     the default dark theme draws it. The admin's slate-800 matched the list, and its selected
+ *     tab had no visible pill.
+ *   - In dark, a resting field has a 1px slate-700 hairline, drawn as its shadow so nothing
+ *     changes size. It was the card's own slate-900 with no edge at all, since the original keeps a
+ *     field's border at width 0 and gives it a shadow in light only.
+ *   - In light too, a resting field has Flutter's 1px edge, in slate-200, in place of
+ *     The original's soft shadow, which left an empty field nearly invisible on a white card.
+ *   - A secondary field is Flutter's, the second surface inside that edge and a slate step
+ *     further under a hover (`--db-field-secondary`, Diba's own). The original's was the neutral fill,
+ *     which in light is slate-200, the edge's own colour, and hid it.
+ *   - A tooltip shows after the pointer rests 500ms, as a Tooltip block and Flutter's wait.
+ * The original's 1500ms made a hand-written one three times slower.
+ *   - On a grey card the muted text is a step stronger, so a note keeps 4.5:1 there
+ *     (`--db-muted-secondary`, `--db-muted-tertiary`, Diba's own): slate-600 on either grey in
+ *     light, slate-300 on the third surface in dark. Slate-500 was 4.35:1 on slate-100 and 3.86:1
+ *     on slate-200; slate-400 was 3.94:1 on slate-700.
+ */
+
+:root,
+.light,
+.default,
+.dark,
+[data-theme='light'],
+[data-theme='default'],
+[data-theme='dark'] {
+  --accent: var(--db-primary);
+  --accent-foreground: var(--db-primary-fg);
+  --accent-hover: var(--db-primary-hover);
+  --accent-soft: var(--db-primary-soft);
+  --accent-soft-foreground: var(--db-primary-emphasis);
+  --success: var(--db-success);
+  --success-foreground: var(--db-success-fg);
+  --warning: var(--db-warning);
+  --warning-foreground: var(--db-warning-fg);
+  --danger: var(--db-danger);
+  --danger-foreground: var(--db-danger-fg);
+  --focus: var(--db-ring);
+  --backdrop: var(--db-overlay);
+  --tooltip-delay: 500ms;
+}
+
+:root,
+.light,
+.default,
+[data-theme='light'],
+[data-theme='default'] {
+  --background: var(--db-slate-50);
+  --foreground: var(--db-slate-800);
+  --surface: var(--db-paper-0);
+  --surface-foreground: var(--db-slate-800);
+  --surface-secondary: var(--db-slate-100);
+  --surface-secondary-foreground: var(--db-slate-800);
+  --surface-tertiary: var(--db-slate-200);
+  --overlay: var(--db-paper-0);
+  --overlay-foreground: var(--db-slate-800);
+  --muted: var(--db-slate-500);
+  --db-muted-secondary: var(--db-slate-600);
+  --db-muted-tertiary: var(--db-slate-600);
+  --default: var(--db-slate-200);
+  --default-foreground: var(--db-slate-700);
+  /* An indicator's fill on its track: the gilt and the amber are 1.19 and 1.59 from it in light,
+     under WCAG 1.4.11's 3, so there they take their emphasis. */
+  --db-indicator-accent: var(--db-primary-emphasis);
+  --db-indicator-warning: var(--db-warning-emphasis);
+  --default-hover: var(--db-slate-300);
+  --border: var(--db-slate-200);
+  --separator: var(--db-slate-200);
+  --link: var(--db-slate-700);
+  --field-background: var(--db-paper-0);
+  --field-foreground: var(--db-slate-800);
+  /* A placeholder holds 4.5:1 on its field: slate-500 is 4.7:1 on paper, where slate-400 had been
+     2.6:1; on a secondary field's slate-100 it is a step darker. */
+  --field-placeholder: var(--db-slate-500);
+  --db-field-secondary-placeholder: var(--db-slate-600);
+  --field-border: var(--db-slate-200);
+  --field-shadow: 0 0 0 1px var(--field-border);
+  --db-field-secondary: var(--db-slate-100);
+  --db-field-secondary-hover: var(--db-slate-200);
+  --segment: var(--db-paper-0);
+  --segment-foreground: var(--db-slate-800);
+}
+
+.dark,
+[data-theme='dark'] {
+  color-scheme: dark;
+  --background: var(--db-slate-950);
+  --foreground: var(--db-slate-100);
+  --surface: var(--db-slate-900);
+  --surface-foreground: var(--db-slate-100);
+  --surface-secondary: var(--db-slate-800);
+  --surface-secondary-foreground: var(--db-slate-100);
+  --surface-tertiary: var(--db-slate-700);
+  --overlay: var(--db-slate-900);
+  --overlay-foreground: var(--db-slate-100);
+  --muted: var(--db-slate-400);
+  --db-muted-secondary: var(--db-slate-400);
+  --db-muted-tertiary: var(--db-slate-300);
+  --default: var(--db-slate-800);
+  --db-indicator-accent: var(--db-primary);
+  --db-indicator-warning: var(--db-warning);
+  --default-foreground: var(--db-slate-200);
+  --default-hover: var(--db-slate-700);
+  --border: var(--db-slate-800);
+  --separator: var(--db-slate-800);
+  --link: var(--db-slate-300);
+  --field-background: var(--db-slate-900);
+  --field-foreground: var(--db-slate-100);
+  /* Slate-500 had been 3.7:1 on the field's slate-900. */
+  --field-placeholder: var(--db-slate-400);
+  --db-field-secondary-placeholder: var(--db-slate-400);
+  --field-border: var(--db-slate-700);
+  --field-shadow: 0 0 0 1px var(--field-border);
+  --db-field-secondary: var(--db-slate-800);
+  --db-field-secondary-hover: var(--db-slate-700);
+  --segment: var(--db-slate-700);
+  --segment-foreground: var(--db-slate-100);
+}

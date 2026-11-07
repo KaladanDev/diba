@@ -1,0 +1,139 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Menu.stories'
+import { Keys, Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# Menu
+
+A Dropdown's menu standing on the page: an order's actions in a side panel, a list's sort order,
+always in sight. Its items and sections are the Dropdown's.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **A panel's actions,** a few, always shown: print the invoice, add a note, cancel the order.
+- **A choice beside a list** that changes how it shows: sort by, what to show.
+
+For actions behind a button, use a Dropdown; for a choice that is a form's value, a ListBox, a
+RadioGroup or a Select.
+
+## Import
+
+```tsx
+import { Header, Label, Menu, Separator } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<Menu aria-label="Order actions" onAction={(key) => …}>
+  <Menu.Item id="invoice" textValue="Print the invoice">
+    <Printer />
+    <Label>Print the invoice</Label>
+  </Menu.Item>
+  <Separator />
+  <Menu.Item id="cancel" variant="danger">Cancel the order</Menu.Item>
+</Menu>
+```
+
+<Parts
+  rows={[
+    ['Menu', 'The items: actions, or one choice or several.'],
+    [
+      'Menu.Item',
+      'An item, 36 tall and rounded 16, 4 apart; an icon 16 before its words, a Label and a Description for two lines. danger in the danger colour.',
+    ],
+    [
+      'Menu.ItemIndicator',
+      'Lucide’s check, 16 and muted, at the item’s start, 8 in, drawn in when it is chosen; room kept for it when it is not.',
+    ],
+    ['Menu.Section, Header', 'A titled group of items; the title 12 in the muted colour.'],
+    ['Separator', 'A line between items, setting the last ones apart.'],
+  ]}
+/>
+
+## Examples
+
+### Actions
+
+`onAction` says which item was pressed. A `Separator` sets a dangerous item apart, in the danger
+colour, last.
+
+<Canvas of={Stories.Actions} />
+
+### Sections and disabled items
+
+`disabledKeys` keeps items from being pressed; they are drawn at half.
+
+<Canvas of={Stories.Sections} />
+
+### A choice
+
+With `selectionMode`, each item takes a `Menu.ItemIndicator`: Lucide's check at its start when it
+is chosen, as on Flutter. In a Dropdown, a choice is the neutral fill instead.
+
+<Canvas of={Stories.Choice} />
+
+## What it builds
+
+<Canvas of={Stories.OrderPanel} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+<PropsTable
+  rows={[
+    ['onAction', '(key: Key) => void', null, 'When an item is pressed.'],
+    ['selectionMode', "'none' | 'single' | 'multiple'", "'none'", 'Actions, or choices.'],
+    [
+      'selectedKeys, defaultSelectedKeys',
+      'Iterable<Key>',
+      null,
+      'What is chosen, controlled or at first.',
+    ],
+    ['onSelectionChange', '(keys: Selection) => void', null, 'When the choice changes.'],
+    ['disabledKeys', 'Iterable<Key>', null, 'Items that cannot be pressed.'],
+    ['aria-label', 'string', null, 'Its name; required, as it has no label of its own.'],
+  ]}
+/>
+
+`Menu.Item` takes its `id`, `textValue`, `variant` and `isDisabled`, as a Dropdown's. Every part
+takes its element's own props too, and a `className`.
+
+## Keyboard
+
+<Keys
+  rows={[
+    ['Tab', 'Into the menu, and out of it.'],
+    ['Down, Up', 'The next or the previous item.'],
+    ['A letter', 'The next item that begins with it.'],
+    ['Enter, Space', 'Does the item’s action, or chooses it.'],
+  ]}
+/>
+
+## Accessibility
+
+The menu is named by its `aria-label`; each item is a menu item, and a chosen one is read as
+checked. The keyboard reaches the menu once, then moves within it.
+
+## Styling
+
+`.menu`; `.menu-item` with `--default` and `--danger`, and `__indicator`; `.menu-section`;
+`[data-selected]`, `[data-focus-visible]`, `[data-hovered]` and `[data-disabled]`.
+
+## As a block
+
+A tree draws the same menu, on the web and in Flutter, with the Dropdown's `DropdownItem`s and
+`DropdownSection`s.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="Menu" />

@@ -1,0 +1,198 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Popover.stories'
+import { Keys, Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# Popover
+
+A small panel beside its trigger: what a term means, a field to change in place, a link to copy.
+It opens from its trigger and closes with a press outside, Escape, or whatever it holds.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **A term explained where it is used,** such as the platform's fee beside the total.
+- **A quick change in place,** such as a product's stock in its row of the list.
+- **A few things to do with one item,** such as sharing a product's link.
+
+Not for a list of actions: use a Dropdown. Not for a few words that need no pressing: use a
+Tooltip. Not for a form of more than a field or two: use a Modal.
+
+## Import
+
+```tsx
+import { Button, Popover } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<Popover>
+  <Button variant="ghost">Fee</Button>
+  <Popover.Content placement="bottom">
+    <Popover.Dialog>
+      <Popover.Arrow />
+      <Popover.Heading>What is the fee?</Popover.Heading>
+      <p>2% of each order, after settlement.</p>
+    </Popover.Dialog>
+  </Popover.Content>
+</Popover>
+```
+
+<Parts
+  rows={[
+    ['Popover', 'Whether it is open: its first child, a Button, opens it.'],
+    [
+      'Popover.Trigger',
+      'Makes anything else its trigger, such as an underlined word: pressable and focusable.',
+    ],
+    [
+      'Popover.Content',
+      'The panel: the overlay’s paper and shadow, 24 round, as wide as what it holds; where it opens and how far from its trigger.',
+    ],
+    ['Popover.Dialog', 'What it holds, 16 in: named by its heading for a screen reader.'],
+    ['Popover.Arrow', 'A point toward the trigger, 12 by 6, at the trigger’s middle.'],
+    ['Popover.Heading', 'Its name, 14 on 20 and medium.'],
+  ]}
+/>
+
+## Examples
+
+Each example is its own frame: press its button to open it. The main ones open as they load.
+
+### Open
+
+<Canvas of={Stories.Open} />
+
+### Placements
+
+A side of its trigger: `top`, `bottom`, `start` or `end`. Start and end follow the page's
+direction, so `start` is the right of a Persian page. It turns to the other side only when it does
+not fit on its own and the other has more room, and keeps 8 clear of the window's edges.
+
+<Canvas of={Stories.Placements} />
+
+### Where along the side
+
+After the side, where along it: `bottom start` lines its start up with the trigger's start,
+`bottom end` its end with the trigger's end, and `bottom` centres it.
+
+<Canvas of={Stories.Alignment} />
+
+### An arrow
+
+It sits 8 from its trigger; with `Popover.Arrow` the arrow fills that gap, pointing at the trigger's
+middle.
+
+<Canvas of={Stories.Arrow} />
+
+### Leaving the page usable
+
+By default it keeps the focus and covers the page until it closes, as a task does. `isNonModal`
+leaves the page usable while it is open, as a hint does; a press outside still closes it.
+
+<Canvas of={Stories.NonModal} />
+
+### Controlled
+
+Hold whether it is open with `isOpen` and `onOpenChange`.
+
+<Canvas of={Stories.Controlled} />
+
+### From any element
+
+A Button is its trigger as it is. Anything else goes in `Popover.Trigger`, which makes it pressable
+and lets the keyboard reach it.
+
+<Canvas of={Stories.CustomTrigger} />
+
+## What it holds
+
+<Canvas of={Stories.QuickEdit} />
+<Canvas of={Stories.DeliveryEstimate} />
+<Canvas of={Stories.ShareProduct} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.Dark} />
+<Canvas of={Stories.LeftToRight} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+### Popover
+
+<PropsTable
+  rows={[
+    ['isOpen', 'boolean', null, 'Open, controlled.'],
+    ['defaultOpen', 'boolean', 'false', 'Open at first, uncontrolled.'],
+    ['onOpenChange', '(isOpen: boolean) => void', null, 'Called as it opens and closes.'],
+    ['children', 'ReactNode', null, 'Its trigger, then its Content.'],
+  ]}
+/>
+
+### Popover.Content
+
+<PropsTable
+  rows={[
+    [
+      'placement',
+      "'top' | 'bottom' | 'start' | 'end', then ' start' | ' end' (or ' top' | ' bottom' for a side)",
+      "'bottom'",
+      'A side of the trigger, then where along it.',
+    ],
+    ['offset', 'number', '8', 'The gap to the trigger.'],
+    ['crossOffset', 'number', '0', 'A shift along the side.'],
+    ['shouldFlip', 'boolean', 'true', 'Turns to the other side when it does not fit.'],
+    ['containerPadding', 'number', '8', 'How near the window’s edges it may come.'],
+    ['isNonModal', 'boolean', 'false', 'Leaves the page usable while it is open.'],
+    ['triggerRef', 'RefObject<Element>', null, 'Another element to open beside.'],
+    ['className', 'string | (state) => string', null, 'Classes after the panel’s own.'],
+  ]}
+/>
+
+### Popover.Dialog
+
+<PropsTable
+  rows={[
+    ['aria-label', 'string', null, 'Its name, when it has no Heading.'],
+    ['className', 'string', null, 'Classes after its own.'],
+  ]}
+/>
+
+### The rest
+
+`Popover.Heading` and `Popover.Arrow` take their element's props and a `className`; give the arrow
+an element of your own as its child to draw another. `Popover.Trigger` takes a `div`'s props.
+
+## Accessibility
+
+It is a `dialog`, named by its heading. Focus moves into it as it opens and returns to its trigger
+when it closes; while it is open, unless it is non-modal, the page outside is hidden from a screen
+reader.
+
+<Keys
+  rows={[
+    ['Enter Space', 'On the trigger: opens it.'],
+    ['Tab', 'To its next control.'],
+    ['Escape', 'Closes it.'],
+  ]}
+/>
+
+## Styling
+
+`.popover` with `[data-placement]`, `.popover__dialog`, `.popover__heading`, `.popover__trigger`;
+the arrow is `[data-slot="popover-overlay-arrow"]`, filled with the theme's `--overlay`. Its shadow
+is `--overlay-shadow`.
+
+## As a block
+
+A tree opens the same popover, on the web and in Flutter, from the Button in its `trigger` slot and
+only from it. Its placements are the schema's: a side and then `start` or `end` along it.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="Popover" />

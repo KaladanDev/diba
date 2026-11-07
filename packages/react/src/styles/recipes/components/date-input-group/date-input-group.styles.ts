@@ -1,0 +1,39 @@
+/*
+ * Third-party code under the Apache License 2.0; see THIRD-PARTY-NOTICES.txt in this package.
+ */
+import type {VariantProps} from "tailwind-variants";
+
+import {tv} from "tailwind-variants";
+
+export const dateInputGroupVariants = tv({
+  defaultVariants: {
+    fullWidth: false,
+    variant: "primary",
+  },
+  slots: {
+    base: "date-input-group",
+    input: "date-input-group__input",
+    inputContainer: "date-input-group__input-container",
+    prefix: "date-input-group__prefix",
+    segment: "date-input-group__segment",
+    suffix: "date-input-group__suffix",
+  },
+  variants: {
+    fullWidth: {
+      false: {},
+      true: {
+        base: "date-input-group--full-width",
+      },
+    },
+    variant: {
+      primary: {
+        base: "date-input-group--primary",
+      },
+      secondary: {
+        base: "date-input-group--secondary",
+      },
+    },
+  },
+});
+
+export type DateInputGroupVariants = VariantProps<typeof dateInputGroupVariants>;

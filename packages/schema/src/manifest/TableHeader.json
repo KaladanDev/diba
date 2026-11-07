@@ -1,0 +1,7 @@
+{
+  "name": "TableHeader",
+  "category": "data",
+  "description": "The columns.",
+  "sduiSafe": true,
+  "children": { "accepts": ["Column"] }
+}

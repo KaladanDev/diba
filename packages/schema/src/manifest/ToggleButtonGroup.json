@@ -1,0 +1,49 @@
+{
+  "name": "ToggleButtonGroup",
+  "category": "controls",
+  "description": "Toggles, attached as segments or detached. A selected toggle is gilt with slate-700 on it.",
+  "sduiSafe": true,
+  "props": {
+    "label": {
+      "type": "string",
+      "i18n": true,
+      "description": "The group's accessible name.",
+      "required": true
+    },
+    "isLabelHidden": { "type": "boolean", "default": true },
+    "name": { "type": "string", "description": "Names the value inside a Form block." },
+    "selectionMode": { "type": "enum", "values": ["single", "multiple"], "default": "single" },
+    "disallowEmptySelection": {
+      "type": "boolean",
+      "default": true,
+      "description": "The requirement: React Aria has no isRequired here."
+    },
+    "isDetached": {
+      "type": "boolean",
+      "default": true,
+      "description": "false attaches the toggles as segments."
+    },
+    "size": { "type": "enum", "values": ["sm", "md", "lg"], "default": "sm" },
+    "orientation": {
+      "type": "enum",
+      "values": ["horizontal", "vertical"],
+      "default": "horizontal"
+    },
+    "fullWidth": {
+      "type": "boolean",
+      "default": false,
+      "description": "The toggles share the width."
+    },
+    "defaultSelectedKeys": {
+      "type": "string[]",
+      "description": "Starts at this value; the merchant changes it."
+    },
+    "selectedKeys": {
+      "type": "string[]",
+      "description": "Pinned: shows exactly what the server sent until the next tree."
+    },
+    "isDisabled": { "type": "boolean", "default": false }
+  },
+  "children": { "accepts": ["ToggleButton"] },
+  "actions": { "onSelectionChange": { "description": "The selected ids.", "payload": "Key[]" } }
+}

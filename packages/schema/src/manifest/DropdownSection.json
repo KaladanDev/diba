@@ -1,0 +1,8 @@
+{
+  "name": "DropdownSection",
+  "category": "navigation",
+  "description": "A titled group of items.",
+  "sduiSafe": true,
+  "props": { "title": { "type": "string", "i18n": true } },
+  "children": { "accepts": ["DropdownItem"] }
+}

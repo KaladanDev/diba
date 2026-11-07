@@ -1,0 +1,125 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Meter.stories'
+import { Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# Meter
+
+How much of something is used: the shop's storage, its plan's products, the stock left. Its label
+and value over a track it fills from the start.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **What is used of a limit,** such as a plan's products or its storage.
+- **How much is left,** such as the few of a product still in stock.
+
+Not for a wait, such as an upload: that is a ProgressBar, which is waited on, where a meter
+measures.
+
+## Import
+
+```tsx
+import { Label, Meter } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<Meter value={80}>
+  <Label>Storage</Label>
+  <Meter.Output />
+  <Meter.Track>
+    <Meter.Fill />
+  </Meter.Track>
+</Meter>
+```
+
+<Parts
+  rows={[
+    ['Meter', 'Its value, limits and look; a meter named by its Label.'],
+    ['Label', 'What it measures: 14 on 20 and medium, at the start.'],
+    ['Meter.Output', 'Its value, 14 on 20 and medium, at the end, in the page’s digits.'],
+    ['Meter.Track', 'The track, 4 under them: 4, 8 or 12 tall in the neutral fill, round.'],
+    ['Meter.Fill', 'How much is used: from the start, as round.'],
+  ]}
+/>
+
+## Examples
+
+### Sizes
+
+`sm`, `md` and `lg`: the track 4, 8 and 12 tall, 2, 4 and 6 round.
+
+<Canvas of={Stories.Sizes} />
+
+### Colours
+
+The brand's by default, a status's solid colour, or the secondary text's colour for `default`. In light the brand's and the warning's
+take their deeper ink, so the fill stands 3:1 from its track.
+As a limit fills, choose its colour by how full it is: green, then amber, then red.
+
+<Canvas of={Stories.Colors} />
+
+### Its value in words
+
+It shows a percent by default. `valueLabel` says it in words of your own, such as "86 of 100";
+`formatOptions` formats it as a number or a currency.
+
+<Canvas of={Stories.Values} />
+
+## What it measures
+
+<Canvas of={Stories.PlanUsage} />
+<Canvas of={Stories.FewLeft} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+<PropsTable
+  rows={[
+    ['value', 'number', '0', 'How much is used.'],
+    ['minValue, maxValue', 'number', '0, 100', 'Its limits.'],
+    ['valueLabel', 'ReactNode', null, 'Its value in words of your own.'],
+    [
+      'formatOptions',
+      'Intl.NumberFormatOptions',
+      '{ style: "percent" }',
+      'How its value is formatted.',
+    ],
+    [
+      'color',
+      "'default' | 'accent' | 'success' | 'warning' | 'danger'",
+      "'accent'",
+      'The fill’s colour.',
+    ],
+    ['size', "'sm' | 'md' | 'lg'", "'md'", 'The track 4, 8 or 12 tall.'],
+    ['aria-label', 'string', null, 'Its name when it has no Label.'],
+  ]}
+/>
+
+## Accessibility
+
+It is a `meter`, named by its Label, its value read in the words it shows.
+
+## Styling
+
+`.meter` with `--sm`, `--md`, `--lg` and its colour; `.meter__output`, `__track` and `__fill`.
+
+## As a block
+
+A tree draws the same meter, on the web and in Flutter: its `value` and limits, `label` and
+`showValue`, `valueLabel` or `formatStyle` (`percent`, `decimal` or `currency`, a toman's in the
+page's words), `color` and `size`.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="Meter" />

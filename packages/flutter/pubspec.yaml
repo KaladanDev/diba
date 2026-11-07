@@ -1,0 +1,25 @@
+name: diba
+description: Diba — Kaladan's design system and SDUI renderer for Flutter.
+version: 0.0.0
+publish_to: none
+
+environment:
+  sdk: ^3.8.0
+  flutter: ">=3.35.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  characters: ^1.4.0
+  # Pinned by flutter_localizations at 0.20.2, so a looser range only invites
+  # a resolver conflict in every host that also localizes.
+  intl: ^0.20.2
+  # The icon list: Lucide's names, the same icons lucide-react draws on the web.
+  lucide_icons_flutter: ^4.0.0
+  shamsi_date: ^1.1.1
+
+dev_dependencies:
+  flutter_localizations:
+    sdk: flutter
+  flutter_test:
+    sdk: flutter

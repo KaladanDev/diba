@@ -1,0 +1,130 @@
+/**
+ * Text — words in the type scale.
+ *
+ * Its own rules, the scale and colours a tree's Text block draws: each size with its own line, and
+ * each tone a colour that reads on a surface (a status's soft foreground, not its fill). The
+ * copy's variables first, Diba's tokens behind them for a page on the earlier stylesheet. In
+ * `@layer components`, so a utility a consumer passes through `className` still wins.
+ */
+
+@layer components {
+  .db-text {
+    margin: 0;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+    color: var(--foreground, var(--db-fg));
+  }
+
+  /* ------------------------------------------------------------------ sizes */
+
+  .db-text--xs {
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .db-text--sm {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .db-text--lg {
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  .db-text--xl {
+    font-size: 20px;
+    line-height: 28px;
+  }
+
+  .db-text--2xl {
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  .db-text--3xl {
+    font-size: 30px;
+    line-height: 36px;
+  }
+
+  .db-text--4xl {
+    font-size: 36px;
+    line-height: 40px;
+  }
+
+  .db-text--5xl {
+    font-size: 48px;
+    line-height: 48px;
+  }
+
+  /* ---------------------------------------------------------------- weights */
+
+  .db-text--medium {
+    font-weight: 500;
+  }
+
+  .db-text--semibold {
+    font-weight: 600;
+  }
+
+  .db-text--bold {
+    font-weight: 700;
+  }
+
+  /* ------------------------------------------------------------------ tones */
+
+  .db-text--muted {
+    color: var(--muted, var(--db-fg-muted));
+  }
+
+  .db-text--accent,
+  .db-text--primary {
+    color: var(--accent-soft-foreground, var(--db-primary-emphasis));
+  }
+
+  .db-text--success {
+    color: var(--success-soft-foreground, var(--db-success-emphasis));
+  }
+
+  .db-text--warning {
+    color: var(--warning-soft-foreground, var(--db-warning-emphasis));
+  }
+
+  .db-text--danger {
+    color: var(--danger-soft-foreground, var(--db-danger-emphasis));
+  }
+
+  /* -------------------------------------------- alignment, lines, one line */
+
+  .db-text--start {
+    text-align: start;
+  }
+
+  .db-text--center {
+    text-align: center;
+  }
+
+  .db-text--end {
+    text-align: end;
+  }
+
+  .db-text--tight {
+    line-height: 1.25;
+  }
+
+  .db-text--snug {
+    line-height: 1.375;
+  }
+
+  .db-text--relaxed {
+    line-height: 1.625;
+  }
+
+  .db-text--truncate {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}

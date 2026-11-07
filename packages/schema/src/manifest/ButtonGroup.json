@@ -1,0 +1,53 @@
+{
+  "name": "ButtonGroup",
+  "category": "controls",
+  "description": "Buttons joined into one: «−» and «+», previous and next.",
+  "sduiSafe": true,
+  "props": {
+    "orientation": {
+      "type": "enum",
+      "values": [
+        "horizontal",
+        "vertical"
+      ],
+      "default": "horizontal"
+    },
+    "fullWidth": {
+      "type": "boolean",
+      "default": false
+    },
+    "size": {
+      "type": "enum",
+      "values": [
+        "sm",
+        "md",
+        "lg"
+      ],
+      "default": "sm",
+      "description": "Its buttons' size, where a button sets none."
+    },
+    "variant": {
+      "type": "enum",
+      "values": [
+        "primary",
+        "secondary",
+        "tertiary",
+        "outline",
+        "ghost",
+        "danger",
+        "danger-soft"
+      ],
+      "default": "secondary",
+      "description": "Its buttons' variant, where a button sets none."
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "children": {
+    "accepts": [
+      "Button"
+    ]
+  }
+}

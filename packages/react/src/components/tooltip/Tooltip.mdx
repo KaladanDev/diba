@@ -1,0 +1,187 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Tooltip.stories'
+import { Keys, Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# Tooltip
+
+A few words about what is under the pointer or the keyboard's focus: what an icon button does, what
+a term means. It shows after the pointer rests a moment, at once on focus, and goes when either
+leaves.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **An icon button's name,** for the eye as its `aria-label` is for a screen reader.
+- **A term or a short rule,** such as when delivery is free.
+- **The whole of something cut short,** such as a long product name in a narrow column.
+
+Not for anything a reader must know to go on: a phone has no pointer to rest, so say it on the page
+too. Not for anything to press: use a Popover.
+
+## Import
+
+```tsx
+import { Button, Tooltip } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<Tooltip>
+  <Button variant="secondary">Free delivery</Button>
+  <Tooltip.Content placement="top">
+    <Tooltip.Arrow />
+    Delivery is free on orders over 500,000 toman.
+  </Tooltip.Content>
+</Tooltip>
+```
+
+<Parts
+  rows={[
+    [
+      'Tooltip',
+      'What it describes, its first child, and when it shows: a Button or anything the keyboard reaches.',
+    ],
+    [
+      'Tooltip.Trigger',
+      'Makes anything else what it describes, such as a word or a picture, and lets the keyboard reach it.',
+    ],
+    [
+      'Tooltip.Content',
+      'The words: the overlay’s paper and shadow, 12 round, 8 in, 12 on 16, at most 320 across, 3 from what it describes.',
+    ],
+    ['Tooltip.Arrow', 'A point toward what it describes; with it the words sit 7 away.'],
+  ]}
+/>
+
+## Examples
+
+The main examples show as they load; rest the pointer on the others.
+
+### Showing
+
+<Canvas of={Stories.Open} />
+
+### Placements
+
+Above what it describes by default; below, or at its `start` or `end`, which follow the page's
+direction. It turns to the other side when there is no room.
+
+<Canvas of={Stories.Placements} />
+
+### An arrow
+
+<Canvas of={Stories.Arrow} />
+
+### Long words
+
+At most 320 across, its words wrapping between words, never in the middle of one.
+
+<Canvas of={Stories.LongWords} />
+
+### How long the pointer rests
+
+`delay` is how long the pointer rests before it shows, 500 milliseconds by default; once one
+tooltip has shown, the next shows at once. The keyboard's focus shows it at once. `closeDelay` is
+how long it stays once the pointer leaves, 500 by default.
+
+<Canvas of={Stories.Delay} />
+
+### What it describes
+
+A Button, a LinkButton or a Link is described as it is. Anything else, a word or a picture, goes in
+`Tooltip.Trigger`, which the keyboard can reach; give a picture an `aria-label`.
+
+<Canvas of={Stories.Triggers} />
+
+### On focus only, or off
+
+`trigger="focus"` shows it only on the keyboard's focus, not under the pointer; `isDisabled` never
+shows it.
+
+<Canvas of={Stories.FocusAndDisabled} />
+
+## Where it is used
+
+<Canvas of={Stories.RowActions} />
+<Canvas of={Stories.FreeDelivery} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.Dark} />
+<Canvas of={Stories.LeftToRight} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+### Tooltip
+
+<PropsTable
+  rows={[
+    ['delay', 'number', '500', 'Milliseconds under the pointer before it shows.'],
+    ['closeDelay', 'number', '500', 'Milliseconds it stays once the pointer leaves.'],
+    ['trigger', "'focus'", null, 'Shows it on focus only, not under the pointer.'],
+    ['isDisabled', 'boolean', 'false', 'It never shows.'],
+    ['shouldCloseOnPress', 'boolean', 'true', 'Pressing what it describes hides it.'],
+    ['isOpen', 'boolean', null, 'Showing, controlled.'],
+    ['defaultOpen', 'boolean', 'false', 'Showing at first, uncontrolled.'],
+    ['onOpenChange', '(isOpen: boolean) => void', null, 'Called as it shows and hides.'],
+    ['children', 'ReactNode', null, 'What it describes, then its Content.'],
+  ]}
+/>
+
+### Tooltip.Content
+
+<PropsTable
+  rows={[
+    [
+      'placement',
+      "'top' | 'bottom' | 'start' | 'end', then ' start' | ' end' along it",
+      "'top'",
+      'A side of what it describes.',
+    ],
+    ['showArrow', 'boolean', 'false', 'Sets it 7 from what it describes, room for the arrow.'],
+    ['offset', 'number', '3, or 7 with an arrow', 'The gap to what it describes.'],
+    ['crossOffset', 'number', '0', 'A shift along the side.'],
+    ['shouldFlip', 'boolean', 'true', 'Turns to the other side when there is no room.'],
+    ['className', 'string | (state) => string', null, 'Classes after its own.'],
+  ]}
+/>
+
+### The rest
+
+`Tooltip.Arrow` draws a point 12 wide; give it an element of your own as its child to draw another.
+`Tooltip.Trigger` takes a `div`'s props.
+
+## Accessibility
+
+Its words describe what it is on: a screen reader reads them after its name. It never takes the
+focus and holds nothing to press. An icon button still needs its own `aria-label`: the tooltip
+describes it, it does not name it.
+
+<Keys
+  rows={[
+    ['Tab', 'To what it describes: shows it.'],
+    ['Escape', 'Hides it.'],
+  ]}
+/>
+
+## Styling
+
+`.tooltip` with `[data-placement]`, `.tooltip__trigger`; the arrow is
+`[data-slot="overlay-arrow"]`, filled with the theme's `--overlay`. Its shadow is
+`--overlay-shadow`; how long it waits is `--tooltip-delay` and `--tooltip-close-delay`.
+
+## As a block
+
+A tree puts the same words on one block, on the web and in Flutter. A block that cannot take the
+focus, such as Text or an Image, is made one the keyboard reaches. It waits 500 milliseconds, as
+one written by hand does, unless the tree says otherwise, and shows above or below only.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="Tooltip" />

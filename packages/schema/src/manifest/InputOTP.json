@@ -1,0 +1,73 @@
+{
+  "name": "InputOTP",
+  "category": "form",
+  "description": "A one-time code, a box a digit: confirming a phone inside an app. Persian digits typed or pasted are sent as Latin ones.",
+  "sduiSafe": true,
+  "props": {
+    "label": {
+      "type": "string",
+      "i18n": true,
+      "required": true,
+      "description": "The field's name, drawn above it."
+    },
+    "isLabelHidden": {
+      "type": "boolean",
+      "default": false,
+      "description": "Hides the label from sight; it still names the field for a screen reader."
+    },
+    "description": {
+      "type": "string",
+      "i18n": true,
+      "description": "Help drawn under the field."
+    },
+    "errorMessage": {
+      "type": "string",
+      "i18n": true,
+      "description": "Set means invalid: the field shows this message under it."
+    },
+    "isRequired": {
+      "type": "boolean",
+      "default": false
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "default": false
+    },
+    "name": {
+      "type": "string",
+      "description": "Names the value inside a Form block."
+    },
+    "length": {
+      "type": "number",
+      "default": 6,
+      "description": "How many boxes; six are drawn as two threes."
+    },
+    "defaultValue": {
+      "type": "string",
+      "description": "Starts with these digits; the merchant changes them."
+    },
+    "value": {
+      "type": "string",
+      "description": "Pinned: shows exactly what the server sent until the next tree."
+    },
+    "variant": {
+      "type": "enum",
+      "values": [
+        "primary",
+        "secondary"
+      ],
+      "default": "primary",
+      "description": "secondary is for a field on a grey surface."
+    }
+  },
+  "actions": {
+    "onChange": {
+      "description": "The digits so far, Latin.",
+      "payload": "string"
+    },
+    "onComplete": {
+      "description": "Every box filled: the code, Latin.",
+      "payload": "string"
+    }
+  }
+}

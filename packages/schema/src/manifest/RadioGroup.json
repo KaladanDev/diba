@@ -1,0 +1,44 @@
+{
+  "name": "RadioGroup",
+  "category": "controls",
+  "description": "One choice among radios, drawn as Flutter's on both platforms.",
+  "sduiSafe": true,
+  "props": {
+    "label": {
+      "type": "string",
+      "i18n": true,
+      "description": "The field's name, drawn above it.",
+      "required": true
+    },
+    "isLabelHidden": {
+      "type": "boolean",
+      "default": false,
+      "description": "Hides the label from sight; it still names the field for a screen reader."
+    },
+    "description": { "type": "string", "i18n": true, "description": "Help drawn under the field." },
+    "errorMessage": {
+      "type": "string",
+      "i18n": true,
+      "description": "Set means invalid: the field shows this message under it."
+    },
+    "defaultValue": {
+      "type": "string",
+      "description": "Starts at this value; the merchant changes it."
+    },
+    "value": {
+      "type": "string",
+      "description": "Pinned: shows exactly what the server sent until the next tree."
+    },
+    "orientation": { "type": "enum", "values": ["vertical", "horizontal"], "default": "vertical" },
+    "isRequired": {
+      "type": "boolean",
+      "default": false,
+      "description": "The star is on the group's label only."
+    },
+    "variant": { "type": "enum", "values": ["primary", "secondary"], "default": "primary" },
+    "isDisabled": { "type": "boolean", "default": false },
+    "name": { "type": "string", "description": "Names the value inside a Form block." }
+  },
+  "children": { "accepts": ["Radio"] },
+  "actions": { "onChange": { "description": "The chosen value.", "payload": "string" } }
+}

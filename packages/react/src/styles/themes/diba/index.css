@@ -1,0 +1,7 @@
+/*
+ * Diba's theme: the stylesheet's variables, set from Diba's tokens. It sits over the default theme,
+ * so anything not set here keeps the default value. The variables go in the theme layer, the one
+ * component override after the components that it overrides.
+ */
+@import './variables.css' layer(theme);
+@import './components.css' layer(components);

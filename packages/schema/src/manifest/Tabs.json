@@ -1,0 +1,45 @@
+{
+  "name": "Tabs",
+  "category": "navigation",
+  "description": "Sections of a card, one shown at a time; each Tab carries its label and its panel.",
+  "sduiSafe": true,
+  "props": {
+    "label": {
+      "type": "string",
+      "i18n": true,
+      "description": "Names the tab list for a screen reader; it is not drawn."
+    },
+    "variant": {
+      "type": "enum",
+      "values": [
+        "primary",
+        "secondary"
+      ],
+      "default": "primary",
+      "description": "primary is a segmented pill on a track; secondary a line under the chosen tab."
+    },
+    "defaultSelectedKey": {
+      "type": "string",
+      "description": "Starts on this tab's id; the merchant changes it. The first tab when unset."
+    },
+    "selectedKey": {
+      "type": "string",
+      "description": "Pinned: shows exactly this tab until the next tree."
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "children": {
+    "accepts": [
+      "Tab"
+    ]
+  },
+  "actions": {
+    "onChange": {
+      "description": "The chosen tab's id.",
+      "payload": "Key"
+    }
+  }
+}

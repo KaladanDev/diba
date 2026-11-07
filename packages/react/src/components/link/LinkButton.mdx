@@ -1,0 +1,148 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './LinkButton.stories'
+import { Keys, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# LinkButton
+
+A link drawn as a button: the main way on from a page, such as "Add product", or a cart's way to
+checkout. It goes somewhere, as a link does, and can be opened in a new tab; it looks like the
+button it stands in for.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **The page's main way on,** at the end of its title, such as "Add product".
+- **A step to another page,** such as a cart's "Go to checkout".
+- **A page elsewhere, given weight,** such as a gateway's own panel.
+
+Not for an action on this page, such as saving or deleting: use a Button. Not for a link in a
+sentence: use a Link.
+
+## Import
+
+```tsx
+import { buttonVariants, Link } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+A Link with a button's classes: `buttonVariants` takes a Button's `variant`, `size`, `fullWidth`
+and `isIconOnly`.
+
+```tsx
+<Link href="/products/new" className={buttonVariants({ variant: 'primary' })}>
+  <Plus />
+  Add product
+</Link>
+```
+
+It is drawn as a Button is, with no underline: 32, 36 or 40 tall by size from 768 wide and a
+step taller on a phone, its icon 8 from its words.
+
+## Examples
+
+### Looks
+
+A Button's seven: `primary` for the page's one main way on, `secondary` and `tertiary` for the
+rest, `outline` and `ghost` quieter still, `danger` and `danger-soft` for a way to something
+that cannot be undone.
+
+<Canvas of={Stories.Variants} />
+
+### Sizes
+
+<Canvas of={Stories.Sizes} />
+
+### With icons
+
+An icon before or after its words. Turn an arrow for a Persian page yourself: on points left
+there.
+
+<Canvas of={Stories.WithIcons} />
+
+### Icon only
+
+`isIconOnly` makes it a circle. Name it with `aria-label`, and put that name in a Tooltip.
+
+<Canvas of={Stories.IconOnly} />
+
+### To another site
+
+`target="_blank"` with `rel="noopener noreferrer"`, and an icon that says it leaves, turned on a
+Persian page so it points away from the words, as a Link's own arrow is.
+
+<Canvas of={Stories.External} />
+
+### Off, and full width
+
+`isDisabled` on the Link draws it at half and leaves it out of reach; `fullWidth` makes it as
+wide as its room.
+
+<Canvas of={Stories.States} />
+
+## Where it goes
+
+<Canvas of={Stories.PageActions} />
+<Canvas of={Stories.CartActions} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+### Link
+
+<PropsTable
+  rows={[
+    ['href', 'string', null, 'Where it goes.'],
+    ['target, rel', 'string', null, "'_blank' and 'noopener noreferrer' for a new tab."],
+    ['isDisabled', 'boolean', 'false', 'It cannot be followed.'],
+    ['aria-label', 'string', null, 'Its name, when it shows only an icon.'],
+  ]}
+/>
+
+### buttonVariants
+
+<PropsTable
+  rows={[
+    [
+      'variant',
+      "'primary' | 'secondary' | 'tertiary' | 'outline' | 'ghost' | 'danger' | 'danger-soft'",
+      "'primary'",
+      'Its look.',
+    ],
+    ['size', "'sm' | 'md' | 'lg'", "'md'", '32, 36 or 40 tall; on a phone 36, 40 or 44.'],
+    ['fullWidth', 'boolean', 'false', 'As wide as its room.'],
+    ['isIconOnly', 'boolean', 'false', 'A circle for an icon alone.'],
+  ]}
+/>
+
+## Accessibility
+
+It is a link, named by its words or its `aria-label`, and an app's router takes it. A screen
+reader calls it a link, so its words should say where it goes.
+
+<Keys rows={[['Enter', 'Follows it.']]} />
+
+## Styling
+
+`.link` with a Button's `.button` classes: `.button--primary` and the rest, `--sm`, `--md`,
+`--lg`, `--icon-only` and `--full-width`.
+
+## As a block
+
+A tree draws the same, on the web and in Flutter: a Button's `variant`, `size`, `icon` before or
+after its words, `isIconOnly` with a `label` that is its name and tooltip, and `fullWidth`. Its
+`href` is held to safe URLs, and `isExternal` marks one that leaves the app, which the host opens.
+Its `variant` is `secondary` and its `size` `sm` unless the tree says otherwise.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="LinkButton" />

@@ -1,0 +1,202 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Breadcrumbs.stories'
+import { Keys, Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# Breadcrumbs
+
+The way down to a page, over its title: each step a link back up, and the page itself last,
+current and going nowhere. It tells the reader where they are, and takes them back a level or
+three in one press.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **Over a page's title, two or more levels down:** an order under Orders, a product under its
+  category, a settings section.
+- **In a library the reader walks down,** such as folders of files, to come back up.
+
+On a top-level page, there is nothing to go back to: leave it out. For moving between pages of the
+same level, use Tabs or the side menu.
+
+## Import
+
+```tsx
+import { Breadcrumbs } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<nav aria-label="Breadcrumb">
+  <Breadcrumbs>
+    <Breadcrumbs.Item href="/orders">Orders</Breadcrumbs.Item>
+    <Breadcrumbs.Item>Order 1041</Breadcrumbs.Item>
+  </Breadcrumbs>
+</nav>
+```
+
+<Parts
+  rows={[
+    [
+      'nav',
+      'Not a part, but the landmark the page gives the trail, named “Breadcrumb”, so a screen reader can find it. The block brings its own.',
+    ],
+    [
+      'Breadcrumbs',
+      'The list of steps, 6 apart, running onto the next line when there is no room.',
+    ],
+    [
+      'Breadcrumbs.Item',
+      'One step: a link, 14 on 20 and medium in the muted colour. The last is the page itself, in the link colour.',
+    ],
+    [
+      'separator',
+      'Between steps: a 12 chevron by default, turned on a right-to-left page, or any element of yours.',
+    ],
+  ]}
+/>
+
+## Examples
+
+### A trail
+
+Each step but the last has an `href`. The last is the page itself: marked current and going
+nowhere, it needs none.
+
+<Canvas of={Stories.ATrail} />
+
+### Separators
+
+Give `separator` any element: it takes the separator's place, its size and its colour, and is
+turned on a right-to-left page as the chevron is.
+
+<Canvas of={Stories.Separators} />
+
+### Icons
+
+An icon before a step's name, or in place of it. An icon alone needs the step's name in
+`aria-label`.
+
+<Canvas of={Stories.Icons} />
+
+### Disabled
+
+`isDisabled` keeps the trail to read, but no step goes anywhere: for a page that is busy saving.
+
+<Canvas of={Stories.Disabled} />
+
+### A long trail
+
+On a narrow page, the steps run onto the next line, 4 under the first.
+
+<Canvas of={Stories.LongTrail} />
+
+### Going back with onAction
+
+Steps without an `href` but with an `id` tell `onAction` which was pressed, and the page goes there
+itself: for a trail that is state, not addresses.
+
+<Canvas of={Stories.OnAction} />
+
+## What it builds
+
+<Canvas of={Stories.OrderHeader} />
+<Canvas of={Stories.SettingsHeader} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+### Breadcrumbs
+
+<PropsTable
+  rows={[
+    [
+      'separator',
+      'ReactNode',
+      'a chevron',
+      'Between the steps; it is given the separator’s class and size.',
+    ],
+    ['isDisabled', 'boolean', 'false', 'No step can be followed.'],
+    [
+      'onAction',
+      '(key: Key) => void',
+      null,
+      'Told the id of the step that was pressed, for steps that are not links.',
+    ],
+    ['items', 'Iterable<T>', null, 'The steps as data, with a function as children to draw each.'],
+    ['className', 'string', null, 'Classes after the list’s own.'],
+  ]}
+/>
+
+### Breadcrumbs.Item
+
+<PropsTable
+  rows={[
+    ['href', 'string', null, 'Where the step goes. The last step, the page itself, has none.'],
+    [
+      'id',
+      'Key',
+      null,
+      'Its key, given to onAction. It is the link’s id on the page too, so keep it unique.',
+    ],
+    ['target, rel, download', 'string', null, 'As a link’s.'],
+    [
+      'routerOptions',
+      'object',
+      null,
+      'Passed to your router with href, under React Aria’s RouterProvider.',
+    ],
+    ['aria-label', 'string', null, 'The step’s name, when its content is an icon alone.'],
+    ['children', 'ReactNode', null, 'The step’s name, and an icon before it.'],
+  ]}
+/>
+
+Every part takes its element's own props too: `style`, `aria-*`.
+
+## Keyboard
+
+<Keys
+  rows={[
+    ['Tab', 'The next step. The page itself, the last, is passed over.'],
+    ['Shift + Tab', 'The step before.'],
+    ['Enter', 'Follows the step.'],
+  ]}
+/>
+
+## Accessibility
+
+The trail is a list: put it in a `nav` named "Breadcrumb" («مسیر صفحه»), the landmark a screen reader
+lists. The last step is marked `aria-current="page"`, so it is read as the page the reader is on.
+The separators are hidden from a screen reader.
+
+## Links
+
+`href` is an address. To follow it through your router rather than the browser, wrap the app in
+React Aria's `RouterProvider` with your router's `navigate`, and every Diba link, a step's
+included, uses it.
+
+## Styling
+
+`.breadcrumbs`; `.breadcrumbs__item`, `.breadcrumbs__link` with `[data-current]`, and
+`.breadcrumbs__separator`.
+
+## As a block
+
+A tree draws the same trail, on the web and in Flutter: its items' names and addresses, the last
+item without one. An address is held to the safe ones, and Flutter follows it through the host. On
+the web the block is its own landmark, a `nav` named «مسیر صفحه» ("Breadcrumb"), since a tree has
+no block to give it one: put no `nav` round it.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="Breadcrumbs" />
+<SchemaProps name="BreadcrumbsItem" />

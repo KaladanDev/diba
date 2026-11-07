@@ -1,0 +1,118 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Toolbar.stories'
+import { Keys, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# Toolbar
+
+A row of controls that belong together, which the Tab key reaches once and the arrow keys move
+along: the bulk actions over a list's chosen rows, an editor's formatting.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **Actions over what is chosen,** such as printing labels for three orders at once.
+- **A set of tools,** such as bold, italic and a link over a description.
+- **How a list is shown,** such as grid or list, and its sort.
+
+Not for a page's few actions at the end of its title: buttons are enough. Not for a choice that is
+one value: use a ToggleButtonGroup on its own.
+
+## Import
+
+```tsx
+import { Button, Separator, Toolbar } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<Toolbar aria-label="Bulk actions">
+  <Button variant="secondary">Print labels</Button>
+  <Button variant="secondary">Mark shipped</Button>
+  <Separator />
+  <Button variant="danger-soft">Delete</Button>
+</Toolbar>
+```
+
+Its controls are 8 apart. A Separator in it runs across it, whatever it is told: down in a row,
+half its height, and across in a column, half its width.
+
+## Examples
+
+### A row
+
+<Canvas of={Stories.Horizontal} />
+
+### A column
+
+`orientation="vertical"`: the controls down its start, the up and down arrows moving along them,
+and a ToggleButtonGroup in it a column too.
+
+<Canvas of={Stories.Vertical} />
+
+### On a bar of its own
+
+`isAttached` lays it on the surface, 24 round and 4 in, with the overlay's shadow: a bar that
+floats over a list.
+
+<Canvas of={Stories.Attached} />
+
+### What it holds
+
+Buttons, LinkButtons, ButtonGroups, ToggleButtonGroups, Dropdowns and Separators.
+
+<Canvas of={Stories.WhatItHolds} />
+
+## What it builds
+
+<Canvas of={Stories.OverAList} />
+<Canvas of={Stories.Editor} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+<PropsTable
+  rows={[
+    ['aria-label', 'string', null, 'Its name for a screen reader; it is not drawn.'],
+    ['orientation', "'horizontal' | 'vertical'", "'horizontal'", 'A row, or a column.'],
+    ['isAttached', 'boolean', 'false', 'On a bar of its own.'],
+    ['className', 'string | (state) => string', null, 'Classes after its own.'],
+  ]}
+/>
+
+## Accessibility
+
+It is a `toolbar`, named by its `aria-label`. Tab reaches its first control and leaves after it;
+the arrow keys move from control to control, as the page reads, so on a Persian page the left
+arrow moves onward.
+
+<Keys
+  rows={[
+    ['ArrowLeft ArrowRight', 'To the next or the previous control in a row, as the page reads.'],
+    ['ArrowDown ArrowUp', 'The same, in a column.'],
+    ['Home End', 'To the first or the last control.'],
+    ['Tab', 'Out of the toolbar.'],
+  ]}
+/>
+
+## Styling
+
+`.toolbar` with `--horizontal`, `--vertical` and `--attached`.
+
+## As a block
+
+A tree draws the same toolbar, on the web and in Flutter, with the same keys; a Separator block in
+it runs across it.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="Toolbar" />

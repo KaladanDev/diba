@@ -1,0 +1,166 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './InputOTP.stories'
+import { Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# InputOTP
+
+A one-time code, a box a digit: the code a text message brings to confirm a phone or a sign-in.
+It reads left to right on either page, as a code is written, and sits at the page's start.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **A code sent to the reader,** four to eight digits, typed or pasted at once.
+
+For a code the reader makes up or keeps, a gift card's number or a discount code, use a TextField.
+
+## Import
+
+```tsx
+import { ErrorMessage, InputOTP, Label } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<Label>Confirmation code</Label>
+<InputOTP maxLength={6} aria-label="Confirmation code" value={code} onChange={setCode}>
+  <InputOTP.Group>
+    <InputOTP.Slot index={0} />
+    <InputOTP.Slot index={1} />
+    <InputOTP.Slot index={2} />
+  </InputOTP.Group>
+  <InputOTP.Separator />
+  <InputOTP.Group>
+    <InputOTP.Slot index={3} />
+    <InputOTP.Slot index={4} />
+    <InputOTP.Slot index={5} />
+  </InputOTP.Group>
+</InputOTP>
+```
+
+<Parts
+  rows={[
+    [
+      'InputOTP',
+      'The code: one hidden input over its boxes, which takes the typing and the pasting.',
+    ],
+    ['InputOTP.Group', 'Boxes in a row, 8 apart.'],
+    [
+      'InputOTP.Slot',
+      'A box, 38 wide and 40 tall with a 1 edge, rounded 12; its digit 18 and semibold. The box being typed into takes the focus ring.',
+    ],
+    ['InputOTP.Separator', 'A dash, 6 by 2, between groups.'],
+  ]}
+/>
+
+It holds no label and no error of its own: put a `Label` above it, name the input with
+`aria-label`, and an `ErrorMessage` under it joined by `aria-describedby`.
+
+## Examples
+
+### Four and six
+
+`maxLength` is how many digits. Six read more easily as two threes, a group either side of a
+separator; four sit in one group.
+
+<Canvas of={Stories.Lengths} />
+
+### Persian and Latin digits
+
+A phone's Persian keyboard types Persian digits, and a message may bring either. The code is held
+in Latin digits, as a server reads it, whichever were typed or pasted, and its boxes show the
+page's. `value`, `defaultValue`, `onChange`, `onComplete` and the value a form sends are all
+Latin. `pattern` is matched against the Latin code, so `pattern="^\d+$"` lets Persian digits in
+and keeps letters out. `inputMode="numeric"`, its own, shows a phone's digit keyboard.
+
+```tsx
+const [code, setCode] = useState('')
+
+<InputOTP maxLength={6} pattern="^\d+$" value={code} onChange={setCode} onComplete={check}>
+```
+
+<Canvas of={Stories.Digits} />
+
+### Invalid, disabled, on a grey surface
+
+`isInvalid` draws every box in the danger colour; say what is wrong in an `ErrorMessage` under
+it. Disabled boxes are dimmed.
+
+<Canvas of={Stories.States} />
+
+## What it builds
+
+`autoComplete="one-time-code"`, which it has by default, lets a phone offer the code from the
+message it just received. `onComplete` fires when the last box is filled.
+
+<Canvas of={Stories.ConfirmPhone} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+<PropsTable
+  rows={[
+    ['maxLength', 'number', null, 'How many digits; required.'],
+    ['value, defaultValue', 'string', null, 'The code, controlled or at first, in Latin digits.'],
+    ['onChange', '(value: string) => void', null, 'Every digit typed, pasted or removed; Latin.'],
+    ['onComplete', '(value: string) => void', null, 'When the last box is filled; Latin.'],
+    [
+      'pattern',
+      'string',
+      null,
+      'A regular expression the Latin code must match after each change, or the change is refused.',
+    ],
+    ['inputMode', "'numeric' | 'text'", "'numeric'", 'The keyboard a phone shows.'],
+    ['variant', "'primary' | 'secondary'", "'primary'", 'secondary for a field on a grey surface.'],
+    ['isInvalid', 'boolean', 'false', 'Every box in the danger colour, and read as invalid.'],
+    ['isDisabled', 'boolean', 'false', 'It cannot be reached or changed; its boxes are dimmed.'],
+    ['name', 'string', null, 'Its code’s name in a form, which is sent it in Latin digits.'],
+    ['autoComplete', 'string', "'one-time-code'", 'What the browser may fill in.'],
+    [
+      'pasteTransformer',
+      '(pasted: string) => string',
+      null,
+      'Cleans what is pasted: spaces, a dash.',
+    ],
+    ['aria-label, aria-describedby', 'string', null, 'Its name, and its ErrorMessage’s id.'],
+  ]}
+/>
+
+`InputOTP.Slot` takes its `index`, from 0. Every part takes its element's own props too, and a
+`className`; `inputClassName` styles the hidden input.
+
+## Keyboard
+
+The code is one input: Tab enters it at the first empty box and leaves it; the arrow keys,
+Backspace and pasting work as in any text box.
+
+## Accessibility
+
+A screen reader meets one text box, named by its `aria-label`, holding the whole code; the boxes
+are drawn, not read. With `isInvalid` it is read as invalid; join an `ErrorMessage` to it with
+`aria-describedby`, so the reason is read with it.
+
+## Styling
+
+`.input-otp` with `--primary` and `--secondary`; `__group`, `__slot`, `__slot-value`, `__caret`
+and `__separator`; `[data-active]`, `[data-filled]`, `[data-invalid]` and `[data-disabled]` on a
+slot.
+
+## As a block
+
+A tree draws the same code, on the web and in Flutter, six as two threes. Persian digits typed or
+pasted are let in and sent as Latin ones, and the boxes show the page's digits.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="InputOTP" />

@@ -1,0 +1,41 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Motion.stories'
+
+<Meta of={Stories} />
+
+# Motion
+
+Motion says what changed, never decorates. A control answers a press at once and settles quickly;
+a colour eases over a quarter of a second; something that arrives slides in from where it comes
+from. Every component carries its own motion, and all of it stops when the reader asks for less.
+
+## What moves, and how long
+
+Under each control is what its stylesheet moves and for how long, read from the page. A press
+answers within 100 to 250ms, a bar fills over 300ms, a picture fades in over 400ms, and a drawer
+slides in over 250ms. A switch moves as Flutter's does, by keyframes rather than a transition, so
+it has no line here. A tooltip waits 500ms for the pointer to rest before it shows.
+
+<Canvas of={Stories.Durations} />
+
+## The curves
+
+Four curves do nearly everything, each a variable of the theme. Press Run to see them side by side.
+
+| Curve              | Shape                                | Who uses it                        |
+| ------------------ | ------------------------------------ | ---------------------------------- |
+| `--ease-out`       | `cubic-bezier(0, 0, 0.2, 1)`         | most things: fills, ticks, colours |
+| `--ease-smooth`    | `ease`                               | a button's press, fields, links    |
+| `--ease-out-quart` | `cubic-bezier(0.165, 0.84, 0.44, 1)` | dialogs, drawers, menus            |
+| `--ease-out-fluid` | `cubic-bezier(0.32, 0.72, 0, 1)`     | a tab's pill, a toast              |
+
+<Canvas of={Stories.Curves} />
+
+## Less motion
+
+When the reader's system asks for less motion, every component's transitions and animations stop,
+and things simply appear. A page can ask for it too, for everything inside an element: set
+`data-reduce-motion="true"` on it. `"false"` asks for motion even where the system would stop it.
+Turn the switch below, and the bar's fill loses its transition: press Further to see it jump.
+
+<Canvas of={Stories.LessMotion} />

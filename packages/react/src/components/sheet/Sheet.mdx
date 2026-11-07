@@ -1,0 +1,215 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Sheet.stories'
+import { Keys, Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# Sheet
+
+A panel from an edge of the window that the hand moves: swiped away toward its edge, or dragged
+from one stop to the next. Made for a phone, where a thumb does the work: a size to choose, a list
+to sort, an order to look over.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **A choice on a phone,** such as a size before adding to the cart, or how to sort a list.
+- **A long list that need not cover the page at once,** opening at a third of its height and
+  dragged up for all of it.
+- **A record's details on a phone,** where a Drawer would do on a wider window.
+
+Not for a panel that only opens and closes: a Drawer is simpler. Not for a short task in the middle
+of the page: use a Modal.
+
+## Import
+
+```tsx
+import { Button, Sheet } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<Sheet>
+  <Sheet.Trigger>
+    <Button variant="secondary">Order 1041</Button>
+  </Sheet.Trigger>
+  <Sheet.Backdrop>
+    <Sheet.Content>
+      <Sheet.Dialog>
+        <Sheet.Handle />
+        <Sheet.CloseTrigger />
+        <Sheet.Header>
+          <Sheet.Heading>Order 1041</Sheet.Heading>
+        </Sheet.Header>
+        <Sheet.Body>{/* the order */}</Sheet.Body>
+        <Sheet.Footer>
+          <Sheet.Close>
+            <Button>Print label</Button>
+          </Sheet.Close>
+        </Sheet.Footer>
+      </Sheet.Dialog>
+    </Sheet.Content>
+  </Sheet.Backdrop>
+</Sheet>
+```
+
+<Parts
+  rows={[
+    ['Sheet', 'Whether it is open, the edge it comes from, its stops, and whether it floats.'],
+    ['Sheet.Trigger', 'The button that opens it: a direct child of the Sheet.'],
+    ['Sheet.Backdrop', 'What lies under it, dimming as it rises.'],
+    ['Sheet.Content', 'What the hand moves.'],
+    ['Sheet.Dialog', 'The panel: the overlay’s paper and shadow, 16 round at its inner edge.'],
+    ['Sheet.Handle', 'A 36 by 4 bar, 12 from its edge, to drag it by.'],
+    ['Sheet.CloseTrigger', 'The close button, 16 from the top and the end.'],
+    ['Sheet.Header', 'Holds the heading, 24 in; 36 from the edge after a handle.'],
+    ['Sheet.Heading', 'Its name, 16 on 24 and medium: the dialog’s name to a screen reader.'],
+    ['Sheet.Body', 'The content, 16 under the heading, 14 on 20 and muted; it scrolls.'],
+    ['Sheet.Footer', 'Its buttons, 20 under the body, 24 from the bottom, at the end.'],
+    ['Sheet.Close', 'Makes its child, a Button, close the sheet when pressed.'],
+  ]}
+/>
+
+## Examples
+
+Each example is its own frame: press its button to open it. The main ones open as they load.
+
+### Edges
+
+From the `bottom`, the default, or the `top`: the window's width, up to 32 short of its height.
+From the `left` or the `right`: the window's height, 384 wide or 96% of a narrower one. These are
+the window's own edges, whatever the page's direction.
+
+<Canvas of={Stories.Placements} />
+
+### Stops on the way
+
+`snapPoints` are where it stops on its way up, each a share of its height such as `'33%'`, or a
+length. It opens on the first, and all of it is always the last; the page under it dims only as it
+rises to all of it.
+
+<Canvas of={Stories.SnapPoints} />
+
+### Floating
+
+`isDetached` holds it 8 from every side of the window, round all round.
+
+<Canvas of={Stories.Detached} />
+
+### Backdrops
+
+<Canvas of={Stories.Backdrops} />
+
+### What closes it
+
+A swipe toward its edge, a press outside, Escape, its close button and any button in `Sheet.Close`.
+`isDismissable={false}` leaves only its buttons.
+
+<Canvas of={Stories.Dismissing} />
+
+### Controlled
+
+Hold whether it is open with `isOpen` and `onOpenChange`; a sheet with no `Sheet.Trigger` is opened
+only so.
+
+<Canvas of={Stories.Controlled} />
+
+## What it holds
+
+<Canvas of={Stories.ChooseSize} />
+<Canvas of={Stories.PhoneFilters} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.Dark} />
+<Canvas of={Stories.LeftToRight} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+### Sheet
+
+<PropsTable
+  rows={[
+    [
+      'placement',
+      "'bottom' | 'top' | 'left' | 'right'",
+      "'bottom'",
+      'The window’s edge it comes from.',
+    ],
+    [
+      'snapPoints',
+      'Array<string | number>',
+      null,
+      'Where it stops on the way: a share of its height, a length, or pixels; it opens on the first.',
+    ],
+    ['isDetached', 'boolean', 'false', 'Floats 8 from the window’s edges, round all round.'],
+    ['isDismissable', 'boolean', 'true', 'A swipe away, a press outside or Escape closes it.'],
+    ['isOpen', 'boolean', null, 'Open, controlled.'],
+    ['defaultOpen', 'boolean', 'false', 'Open at first, uncontrolled.'],
+    ['onOpenChange', '(isOpen: boolean) => void', null, 'Called as it opens and closes.'],
+    ['onClose', '() => void', null, 'Called as it closes.'],
+    [
+      'onAnimationEnd',
+      '(isOpen: boolean) => void',
+      null,
+      'Called once it has finished coming in or going out.',
+    ],
+  ]}
+/>
+
+### Sheet.Backdrop
+
+<PropsTable
+  rows={[
+    [
+      'variant',
+      "'opaque' | 'blur' | 'transparent'",
+      "'opaque'",
+      'The page under it: dimmed, blurred, or as it is.',
+    ],
+    ['className', 'string', null, 'Classes after the backdrop’s own.'],
+  ]}
+/>
+
+### The rest
+
+`Sheet.Content`, `.Dialog`, `.Header`, `.Heading`, `.Body`, `.Footer` and `.Handle` take their
+element's props and a `className`. `Sheet.CloseTrigger` is a CloseButton, named “Close” in the
+page's language. `Sheet.Trigger` and `Sheet.Close` each take one Button. `Sheet.NestedRoot` opens a
+sheet from inside another.
+
+## Accessibility
+
+It is a `dialog`, named by its heading. Focus moves into it as it opens, stays in it while open,
+and returns to its trigger when it closes; the page under it is hidden from a screen reader. The
+handle is only for the hand: the close button and Escape do what a swipe does.
+
+<Keys
+  rows={[
+    ['Tab', 'To its next control.'],
+    ['Shift Tab', 'To the control before.'],
+    ['Escape', 'Closes it, unless isDismissable is false.'],
+  ]}
+/>
+
+## Styling
+
+`.sheet__overlay`; `.sheet__backdrop` and its `--opaque`, `--blur`, `--transparent`;
+`.sheet__content` with `--bottom`, `--top`, `--left`, `--right`, `[data-detached]` and
+`[data-snap-points]`; `.sheet__dialog` with the same four edges; `.sheet__header`, `__heading`,
+`__body`, `__footer`, `__handle`, `__handle-bar` and `__close-trigger`. Its paper is the theme's
+`--overlay`.
+
+## As a block
+
+A tree opens the same sheet, on the web and in Flutter, from the Button in its `trigger` slot and
+only from it. Its edges are `bottom`, `top`, `start` and `end`, the page's, so `start` is the right
+edge of a Persian page; a bottom or top one has its handle, and every one its close button.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="Sheet" />

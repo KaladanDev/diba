@@ -1,0 +1,81 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Spacer.stories'
+import { PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# Spacer
+
+Room between two things, on purpose: where a stack's single gap is not the space you want, such as
+before a form's buttons. It draws with its own styles, so a page needs no utility classes for it.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **One space larger than the rest,** such as a form's buttons set apart from its fields.
+- **A push across a row,** between two things that a gap would not separate enough.
+
+Not for even spacing: a Stack's `gap` does that. Not to push something to the far end: use a
+Stack's `justify`.
+
+## Import
+
+```tsx
+import { Spacer } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<Field />
+<Spacer size={4} />
+<Button>Save</Button>
+```
+
+## Examples
+
+### Sizes
+
+A step of 4, as a Stack's gap: `4`, the default, is 16.
+
+<Canvas of={Stories.Sizes} />
+
+### Across a row
+
+`axis="inline"` pushes along a row, as the row reads: on a Persian page, toward the left. It never
+shrinks, even in a tight row.
+
+<Canvas of={Stories.Inline} />
+
+## Where it pushes
+
+<Canvas of={Stories.BeforeButtons} />
+
+## Directions and sizes
+
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+<PropsTable
+  rows={[
+    ['size', '0 | 1 | 2 | 3 | 4 | 5 | 6 | 8 | 10 | 12 | 16', '4', 'How much room, a step of 4.'],
+    ['axis', "'block' | 'inline'", "'block'", 'Down, or across a row.'],
+    ['className', 'string', null, 'Classes after its own.'],
+  ]}
+/>
+
+## Accessibility
+
+It is empty and hidden from a screen reader.
+
+## As a block
+
+A tree's Spacer is the same room, on the web and in Flutter.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="Spacer" />

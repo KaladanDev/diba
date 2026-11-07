@@ -1,0 +1,214 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './NumberField.stories'
+import { Keys, Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# NumberField
+
+A number the reader types or steps: a quantity, a price, a discount. It is written in the page's
+digits and formatted as it is typed, kept between its least and most, and snapped to its step when
+the reader leaves it.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **A count stepped by one:** a quantity, a stock level, a number of days.
+- **An amount typed in full:** a price in toman, a weight, a percent off.
+
+For a code or a phone number, which are digits but not amounts, use a TextField with
+`inputMode="numeric"`; for a choice along a scale, a Slider.
+
+## Import
+
+```tsx
+import { Description, FieldError, Label, NumberField } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<NumberField defaultValue={1} minValue={1}>
+  <Label>Quantity</Label>
+  <NumberField.Group>
+    <NumberField.DecrementButton />
+    <NumberField.Input />
+    <NumberField.IncrementButton />
+  </NumberField.Group>
+  <FieldError />
+</NumberField>
+
+<NumberField defaultValue={1250000} formatOptions={{ maximumFractionDigits: 0 }}>
+  <Label>Price</Label>
+  <NumberField.Group>
+    <NumberField.Input />
+    <span data-slot="unit">toman</span>
+  </NumberField.Group>
+</NumberField>
+```
+
+<Parts
+  rows={[
+    ['NumberField', 'The field: its number, its format, its least, most and step, and its state.'],
+    [
+      'NumberField.Group',
+      'The box, 36 tall with a 1 edge; primary on a page, secondary on a grey surface.',
+    ],
+    [
+      'NumberField.Input',
+      'The figure, 14, in the page’s digits; centred between − and +, at the start without them.',
+    ],
+    ['NumberField.DecrementButton', '−, 40 wide, at the start; dimmed at the least.'],
+    ['NumberField.IncrementButton', '+, 40 wide, at the end; dimmed at the most.'],
+    [
+      'span data-slot="unit"',
+      'A word after the figure, «تومان»: 14 in the muted colour, 12 from the figure and from the end or the +.',
+    ],
+    ['Label, Description, FieldError', 'As a TextField’s.'],
+  ]}
+/>
+
+## Examples
+
+### With and without steppers
+
+− and + suit a count changed by one or two. Leave them out for an amount typed in full, a price or
+a weight, and the figure sits at the start.
+
+<Canvas of={Stories.Steppers} />
+
+### Formats
+
+`formatOptions` are `Intl.NumberFormat`'s. A percent takes a fraction: 0.15 is shown as 15%.
+Toman has no currency code: format it as a whole number, `maximumFractionDigits: 0`, and put its
+word after the figure in a `span` with `data-slot="unit"`. The figure is in the page's digits,
+with its separators: digits typed are the page's as they are typed, Latin or Persian, and a decimal
+mark with them, so 12.5 typed on a Persian page reads «۱۲٫۵».
+
+<Canvas of={Stories.Formats} />
+
+### Least, most and step
+
+`minValue` and `maxValue` keep it in range; `step` is what − and + and the arrow keys add. A
+typed figure is kept in range, and snapped to the nearest step, when the reader leaves the field:
+600 becomes 500 with a step of 250. A button is dimmed when its next step would leave the range.
+
+<Canvas of={Stories.RangeAndStep} />
+
+### Validation
+
+`validate` takes the number and returns what is wrong, or nothing. `isInvalid` with your own
+`FieldError` words shows what the server said. Left empty, a required field's `FieldError` says
+so in the page's language, whatever the browser's.
+
+<Canvas of={Stories.Validation} />
+
+### Disabled, read-only, on a grey surface
+
+<Canvas of={Stories.States} />
+
+### In a form
+
+Its `name` sends the number in Latin digits, without separators, whatever the page shows: 1250000.
+
+<Canvas of={Stories.InAForm} />
+
+## What it builds
+
+<Canvas of={Stories.PriceAndStock} />
+
+## Themes, directions, sizes
+
+− is at the start and + at the end, on either page. Under 640 wide the box is 40 tall and its
+figure 16, so a phone does not zoom into it.
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+<PropsTable
+  rows={[
+    ['value, defaultValue', 'number', null, 'The number, controlled or at first; NaN for none.'],
+    [
+      'onChange',
+      '(value: number) => void',
+      null,
+      'When the number is committed: a step, or leaving the field.',
+    ],
+    [
+      'formatOptions',
+      'Intl.NumberFormatOptions',
+      null,
+      'How it is written: fraction digits, percent, currency.',
+    ],
+    ['minValue, maxValue', 'number', null, 'Its least and most.'],
+    ['step', 'number', '1', 'What a step adds; a typed figure snaps to it.'],
+    ['variant', "'primary' | 'secondary'", "'primary'", 'secondary for a field on a grey surface.'],
+    [
+      'fullWidth',
+      'boolean',
+      'false',
+      'In a row, the width the rest of the row leaves; in a column it already fills it.',
+    ],
+    ['isRequired', 'boolean', 'false', 'It needs a number; the label says so.'],
+    ['validate', '(value: number) => string | string[] | true | null', null, 'Your own check.'],
+    [
+      'validationBehavior',
+      "'native' | 'aria'",
+      "'native'",
+      'native waits for the form to be sent; aria shows what is wrong at once.',
+    ],
+    ['isInvalid', 'boolean', 'false', 'Drawn as wrong, with its FieldError.'],
+    ['isDisabled', 'boolean', 'false', 'It cannot be reached or changed.'],
+    ['isReadOnly', 'boolean', 'false', 'It can be read, not changed; − and + are dimmed.'],
+    [
+      'isWheelDisabled',
+      'boolean',
+      'false',
+      'The mouse wheel over the focused field does not step it.',
+    ],
+    ['name', 'string', null, 'Its number’s name in a form.'],
+  ]}
+/>
+
+`NumberField.DecrementButton` and `NumberField.IncrementButton` take an icon as their child in
+place of − and +. Every part takes its element's own props too, and a `className`.
+
+## Keyboard
+
+<Keys
+  rows={[
+    ['Tab', 'Into the field, and out of it; − and + are not stops.'],
+    ['Up, Down', 'A step up or down.'],
+    ['Page Up, Page Down', 'As Up and Down.'],
+    ['Home, End', 'Its least, and its most.'],
+  ]}
+/>
+
+## Accessibility
+
+The input is a spin button's text box, named by its `Label`. − and + are named «کاهش» and
+«افزایش», Decrease and Increase, in the page's language, and are left out of the Tab order: the
+arrow keys do their work from the keyboard. A unit's word is drawn beside the figure, not read
+with it; name the field with its unit, «قیمت (تومان)», where the label alone does not say it.
+
+## Styling
+
+`.number-field` with `--primary`, `--secondary` and `--full-width`; `__group`, `__input`,
+`__decrement-button` and `__increment-button`; `[data-invalid]`, `[data-disabled]` and
+`[data-focus-within]` on the group.
+
+## As a block
+
+A tree draws the same field, on the web and in Flutter. `formatStyle` is `decimal`, `percent` or
+`currency`; `currency: "IRT"` is toman, drawn as a whole number and its word. `hideSteppers`
+leaves out − and +. Its own checks, required and the least and most, are written in the page's
+language.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="NumberField" />

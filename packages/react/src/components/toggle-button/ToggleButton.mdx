@@ -1,0 +1,126 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './ToggleButton.stories'
+import { Keys, Parts, PropsTable } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# ToggleButton
+
+A button that stays pressed: a product featured, a row pinned, bold on. Pressed, it is gilt with
+slate-700 on it, as a checked box is.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **A state shown on a button,** where the button is where the reader looks: featured, pinned,
+  bold.
+
+For one of several toggles, or several at once from a set, use a ToggleButtonGroup; for a setting
+in a form or a list of settings, a Switch or a Checkbox.
+
+## Import
+
+```tsx
+import { ToggleButton } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<ToggleButton defaultSelected>
+  <Heart />
+  Featured
+</ToggleButton>
+```
+
+<Parts
+  rows={[
+    [
+      'ToggleButton',
+      'A pill, 36 tall at md and 16 in from each side, 12 at sm; its words 14 and medium, 16 at lg, and an icon 16 before them, 6 apart. Off, the secondary fill; pressed, gilt with slate-700 on it.',
+    ],
+  ]}
+/>
+
+## Examples
+
+### Off, on, disabled
+
+`default` lies on the secondary fill when off; `ghost` has no fill until it is pressed. Pressed,
+both are gilt. Disabled, it is drawn at half.
+
+<Canvas of={Stories.States} />
+
+### Sizes
+
+`sm`, `md` and `lg` are 32, 36 and 40 tall, as a Button's are.
+
+<Canvas of={Stories.Sizes} />
+
+### Icon only
+
+`isIconOnly` makes it a circle as wide as it is tall. Name it with `aria-label`, and say the name
+in a Tooltip too, for a reader who cannot guess the icon. An icon that changes with the state, an
+eye open or shut, says it twice.
+
+<Canvas of={Stories.IconOnly} />
+
+## What it builds
+
+<Canvas of={Stories.ProductFlags} />
+
+## Themes, directions, sizes
+
+The icon is before its words on either page.
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+<PropsTable
+  rows={[
+    ['isSelected, defaultSelected', 'boolean', 'false', 'Pressed, controlled or at first.'],
+    ['onChange', '(isSelected: boolean) => void', null, 'When it is pressed.'],
+    [
+      'variant',
+      "'default' | 'ghost'",
+      "'default'",
+      'On the secondary fill, or on none until pressed.',
+    ],
+    ['size', "'sm' | 'md' | 'lg'", "'md'", '32, 36 or 40 tall; a ToggleButtonGroup’s when in one.'],
+    ['isIconOnly', 'boolean', 'false', 'A circle holding an icon alone.'],
+    ['isDisabled', 'boolean', 'false', 'It cannot be reached or pressed; drawn at half.'],
+    ['id', 'string', null, 'Its key in a ToggleButtonGroup.'],
+    ['aria-label', 'string', null, 'Its name, where it has no words.'],
+  ]}
+/>
+
+It takes a button's own props too, and a `className`.
+
+## Keyboard
+
+<Keys
+  rows={[
+    ['Tab', 'To the button, and on.'],
+    ['Space, Enter', 'Presses it, or lets it go.'],
+  ]}
+/>
+
+## Accessibility
+
+A screen reader meets a button read as pressed or not pressed. Its name stays the same whatever
+its state: "Featured", not "Make featured" and "Unfeature".
+
+## Styling
+
+`.toggle-button` with `--default`, `--ghost`, `--sm`, `--md`, `--lg` and `--icon-only`;
+`[data-selected]`, `[data-hovered]`, `[data-pressed]`, `[data-focus-visible]` and
+`[data-disabled]`.
+
+## As a block
+
+A tree has no ToggleButton of its own: it draws one inside a ToggleButtonGroup. See that page.

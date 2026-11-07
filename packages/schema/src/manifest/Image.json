@@ -1,0 +1,46 @@
+{
+  "name": "Image",
+  "category": "content",
+  "description": "A picture; if it fails, Diba's own placeholder.",
+  "sduiSafe": true,
+  "props": {
+    "src": {
+      "type": "string",
+      "format": "image-url"
+    },
+    "alt": {
+      "type": "string",
+      "i18n": true,
+      "required": true,
+      "description": "What it shows; empty means it is decorative."
+    },
+    "ratio": {
+      "type": "string",
+      "description": "Width to height: \"16/9\", \"1\"."
+    },
+    "fit": {
+      "type": "enum",
+      "values": [
+        "cover",
+        "contain"
+      ],
+      "default": "cover"
+    },
+    "radius": {
+      "type": "enum",
+      "values": [
+        "none",
+        "sm",
+        "md",
+        "lg",
+        "full"
+      ],
+      "default": "md"
+    },
+    "isZoomable": {
+      "type": "boolean",
+      "default": false,
+      "description": "A product photo, opened larger on a press."
+    }
+  }
+}

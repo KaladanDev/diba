@@ -1,0 +1,89 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Commerce.stories'
+
+<Meta of={Stories} />
+
+# Commerce
+
+A storefront's pieces, composed from Diba's basics: a price, a score, a quantity, a product's
+card, a line of the cart, an order's summary and a product's page. None is a component of its
+own; each is a few basics, and each is written out here to copy.
+
+## A price
+
+The amount in figures of one width, `Text` at `xl` and semibold, with its unit after it in the
+muted colour; on sale, the amount in the danger's ink and the old one, struck through in a
+`<del>`, over it. Three sizes.
+
+<Canvas of={Stories.Prices} />
+
+```tsx
+<Stack gap={0} align="start">
+  <del>
+    <Text size="xs" tone="muted">
+      1,600,000
+    </Text>
+  </del>
+  <Stack direction="horizontal" gap={1} align="baseline">
+    <Text size="xl" weight="semibold" tone="danger" style={{ fontVariantNumeric: 'tabular-nums' }}>
+      1,240,000
+    </Text>
+    <Text size="sm" tone="muted">
+      toman
+    </Text>
+  </Stack>
+</Stack>
+```
+
+## A score
+
+Five stars, as many filled in the gilt as the score rounds to and the rest outlined, with the score
+and its count beside them; one `role="img"` names them all, "4.6 out of 5, 124 reviews". A
+review's own score is a `ToggleButtonGroup` of five, one chosen.
+
+<Canvas of={Stories.Scores} />
+
+## A quantity
+
+A `NumberField` with its − and +, from one up to what is in stock: at the stock, + is off. Name it
+with an `aria-label`, or show its `Label`.
+
+<Canvas of={Stories.Quantities} />
+
+## A product's card
+
+A `Card` with no padding: an `Image` flush along its top, its corners square (`radius="none"`)
+under the card's own, with a `Chip` on it for what is special
+(a discount, sold out); then, 16 in, its `Card.Title` and `Card.Description`, the price and the
+score, and a `Button` across it, off when it is sold out. A picture that does not come says what it
+was of. Side by side, each card is as tall as its row, so the buttons line up.
+
+<Canvas of={Stories.ProductCards} />
+
+## A line of the cart
+
+A small `Image`, the name and price, a quantity, and an icon `Button` that removes it, its name in
+a `Tooltip`; lines a `Separator` apart, in a `Card`.
+
+<Canvas of={Stories.CartLines} />
+
+## An order's summary
+
+Each line a name and an amount at either end, the total semibold under a `Separator`, and the way
+to pay across the card's foot.
+
+<Canvas of={Stories.OrderSummary} />
+
+## A product's page
+
+The picture beside the rest: a `Link` back to its shelf, the name as the page's heading, the
+score, the price at `lg`, a `Chip` for free delivery and what is left, the quantity with the way to
+the cart, and a quieter link to the buying guide.
+
+<Canvas of={Stories.ProductPage} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />

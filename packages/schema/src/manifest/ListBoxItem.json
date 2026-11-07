@@ -1,0 +1,23 @@
+{
+  "name": "ListBoxItem",
+  "category": "controls",
+  "description": "One option of a Select, a ComboBox or a ListBox.",
+  "sduiSafe": true,
+  "props": {
+    "id": { "type": "string", "description": "Its key.", "required": true },
+    "description": {
+      "type": "string",
+      "i18n": true,
+      "description": "A second line under the text."
+    },
+    "icon": { "type": "token", "token": "icon", "description": "A name from the icon list." },
+    "image": {
+      "type": "string",
+      "format": "image-url",
+      "description": "An image URL: http(s), relative or data:image."
+    },
+    "variant": { "type": "enum", "values": ["default", "danger"], "default": "default" },
+    "isDisabled": { "type": "boolean", "default": false }
+  },
+  "children": { "accepts": "text", "description": "The option's text (localizable)." }
+}

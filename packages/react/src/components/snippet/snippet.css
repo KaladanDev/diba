@@ -1,0 +1,168 @@
+/**
+ * Snippet — a command someone is meant to copy.
+ *
+ * Three things decide the shape.
+ *
+ * The command runs left to right whatever the page does, and the frame around
+ * it turns with the page. So the code and the button live on opposite axes:
+ * `.db-snippet` is a logical row that mirrors, `.db-snippet__code` is an
+ * isolated LTR run that does not. Getting this the other way round puts the
+ * copy button on the wrong side in Persian, or reverses `npm i` — both are
+ * only visible once someone reads the result out loud.
+ *
+ * A long command scrolls inside its own box rather than stretching the page,
+ * for the same reason a table does.
+ *
+ * And the prompt symbol is drawn but never copied. `$` is a picture of a
+ * shell, not part of the command; pasting it back into one is an error, which
+ * is why it is a separate element and not part of the text.
+ */
+
+@layer components {
+  .db-snippet {
+    /* ---- reassigned by .db-snippet--<variant> (default is baked in) ---- */
+    /* The block's words, on both platforms: default on the second surface, secondary outlined. */
+    --db-snippet-bg: var(--surface-secondary, var(--db-surface-2));
+    --db-snippet-line: transparent;
+
+    /* ---- reassigned by .db-snippet--<size> (md is the default) ---- */
+    /* Flutter's look: 12 by 6 in (8 by 4 small, 16 by 8 large), 12 round,
+       the page's face 14 on 21 at every size, the copy a 40 round icon button. */
+    --db-snippet-px: 12px;
+    --db-snippet-py: 6px;
+    --db-snippet-text: 14px;
+
+    display: flex;
+    /* The copy button at the top end: on one line it is centred on the words, on several it stays
+       by the first. */
+    align-items: flex-start;
+    /* Nothing between the words and the copy button but its own 12, as Flutter's. */
+    gap: 0;
+    box-sizing: border-box;
+    max-inline-size: 100%;
+    padding-inline: var(--db-snippet-px);
+    padding-block: var(--db-snippet-py);
+    /* An edge only when it shows, the outline's, as Flutter's soft box has none. */
+    border: 0 solid var(--db-snippet-line);
+    border-radius: 12px;
+    background-color: var(--db-snippet-bg);
+    color: var(--foreground, var(--db-fg));
+    font-family: inherit;
+    font-size: var(--db-snippet-text);
+    line-height: 21px;
+    /* The whole row left to right, the copy after the words, on a Persian page too. */
+    direction: ltr;
+  }
+
+  /*
+   * The command itself: its own left-to-right run, isolated from the frame so
+   * the surrounding page can turn without turning it. Scrolls rather than
+   * wraps — a command broken across lines can be pasted wrong.
+   */
+  /* The words take the frame's room, so the copy button sits at its end, the right edge on either
+     page; it had followed the words. */
+  .db-snippet__code {
+    flex: 1 1 auto;
+    /*
+     * Also what lets this shrink below its own content. A flex item normally
+     * refuses to — which would push the frame past the width its container
+     * gave it — but a scroll container's automatic minimum size is zero, so
+     * `overflow` covers both jobs and an explicit `min-inline-size: 0` beside
+     * it does nothing.
+     */
+    overflow-x: auto;
+    direction: ltr;
+    unicode-bidi: isolate;
+    text-align: left;
+    /* The scrollbar is the frame's business, not a line of type's. */
+    scrollbar-width: thin;
+  }
+
+  /* Beside the copy button the words take half of what the 40 button has over a 21 line above and
+     below them: one line sits centred on the button, and several start level with it. */
+  .db-snippet:has(> .db-snippet__copy) .db-snippet__code {
+    padding-block: calc((40px - 21px) / 2);
+  }
+
+  /* More than one line: each on its own, still one scrolling column. */
+  .db-snippet__line {
+    display: block;
+    white-space: pre;
+  }
+
+  /*
+   * Drawn, never copied. Dimmed because it is not part of what is being said —
+   * and unselectable, so dragging across the command does not pick it up
+   * either.
+   */
+  .db-snippet__symbol {
+    user-select: none;
+  }
+
+  .db-snippet__symbol::after {
+    content: ' ';
+  }
+
+  /* Material's icon button: 40 round, the muted colour, its wash that colour's 8% under the
+     pointer and 10% pressed or focused by keys. */
+  .db-snippet__copy {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    inline-size: 40px;
+    block-size: 40px;
+    border-radius: 9999px;
+    color: var(--muted, var(--db-fg-muted));
+    background-color: transparent;
+    cursor: var(--cursor-interactive, pointer);
+    outline: none;
+    transition: background-color 150ms var(--ease-out, cubic-bezier(0, 0, 0.2, 1));
+
+    &[data-hovered] {
+      background-color: color-mix(in srgb, var(--muted, var(--db-fg-muted)) 8%, transparent);
+    }
+
+    &[data-pressed],
+    &[data-focus-visible] {
+      background-color: color-mix(in srgb, var(--muted, var(--db-fg-muted)) 10%, transparent);
+    }
+  }
+
+  /* ------------------------------------------------------------------ sizes */
+
+  .db-snippet--sm {
+    --db-snippet-px: 8px;
+    --db-snippet-py: 4px;
+  }
+
+  .db-snippet--md {
+    /* no rules — md is baked into .db-snippet so an unsized snippet is never broken */
+  }
+
+  .db-snippet--lg {
+    --db-snippet-px: 16px;
+    --db-snippet-py: 8px;
+  }
+
+  /* --------------------------------------------------------------- variants */
+
+  .db-snippet--default {
+    /* no rules — default is baked into .db-snippet */
+  }
+
+  .db-snippet--secondary {
+    border-width: var(--db-divider-weight);
+    --db-snippet-bg: transparent;
+    --db-snippet-line: var(--border, var(--db-border));
+  }
+
+  /*
+   * On a grey card the second surface is the card's own grey, so a default snippet had no frame
+   * there; it takes the surface, as a pager's page shown does (2026-11-06).
+   */
+  :is(.card--secondary, .card--tertiary, .surface--secondary, .surface--tertiary)
+    .db-snippet--default {
+    --db-snippet-bg: var(--surface, var(--db-surface));
+  }
+}

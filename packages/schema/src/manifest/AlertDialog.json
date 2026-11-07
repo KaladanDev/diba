@@ -1,0 +1,32 @@
+{
+  "name": "AlertDialog",
+  "category": "feedback",
+  "description": "A confirmation. While onConfirm's call runs, the confirm button shows pending.",
+  "sduiSafe": true,
+  "props": {
+    "status": {
+      "type": "enum",
+      "values": ["default", "accent", "success", "warning", "danger"],
+      "default": "danger"
+    },
+    "title": { "type": "string", "i18n": true, "required": true },
+    "description": { "type": "string", "i18n": true },
+    "confirmLabel": { "type": "string", "i18n": true, "required": true },
+    "cancelLabel": {
+      "type": "string",
+      "i18n": true,
+      "description": "Defaults to Diba's own word in the reader's language: «انصراف», \"Cancel\"."
+    },
+    "size": { "type": "enum", "values": ["xs", "sm", "md", "lg", "cover"], "default": "md" },
+    "backdrop": {
+      "type": "enum",
+      "values": ["opaque", "blur", "transparent"],
+      "default": "opaque"
+    }
+  },
+  "slots": { "trigger": { "accepts": ["Button"], "description": "The button that opens it." } },
+  "actions": {
+    "onConfirm": { "description": "The confirm button pressed." },
+    "onCancel": { "description": "The cancel button pressed, or the dialog dismissed." }
+  }
+}

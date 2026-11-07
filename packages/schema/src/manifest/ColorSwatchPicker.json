@@ -1,0 +1,61 @@
+{
+  "name": "ColorSwatchPicker",
+  "category": "form",
+  "description": "A colour from the ones the app sends, as swatches: a theme's or a label's colour. The free colour picker is left out until an app needs one.",
+  "sduiSafe": true,
+  "props": {
+    "label": {
+      "type": "string",
+      "i18n": true,
+      "required": true,
+      "description": "Names it for a screen reader; it is not drawn."
+    },
+    "colors": {
+      "type": "string[]",
+      "required": true,
+      "description": "The swatches, as #rrggbb."
+    },
+    "defaultValue": {
+      "type": "string",
+      "description": "Starts on this colour; the merchant changes it."
+    },
+    "value": {
+      "type": "string",
+      "description": "Pinned: shows exactly this colour until the next tree."
+    },
+    "variant": {
+      "type": "enum",
+      "values": [
+        "circle",
+        "square"
+      ],
+      "default": "circle"
+    },
+    "size": {
+      "type": "enum",
+      "values": [
+        "xs",
+        "sm",
+        "md",
+        "lg",
+        "xl"
+      ],
+      "default": "md"
+    },
+    "layout": {
+      "type": "enum",
+      "values": [
+        "grid",
+        "stack"
+      ],
+      "default": "grid",
+      "description": "grid wraps the swatches into rows; stack sets them in a column."
+    }
+  },
+  "actions": {
+    "onChange": {
+      "description": "The colour chosen, as #rrggbb.",
+      "payload": "string"
+    }
+  }
+}

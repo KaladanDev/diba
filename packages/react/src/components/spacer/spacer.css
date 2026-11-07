@@ -1,0 +1,80 @@
+/**
+ * Spacer — empty space, on purpose.
+ *
+ * Sized on the block axis by default and on the inline axis when asked, both
+ * logical, so a spacer in a Persian row pushes the way the row reads without
+ * a mirrored rule.
+ *
+ * `flex: 0 0 auto` is the load-bearing part. Inside a flex row — which is
+ * where an inline spacer is nearly always used — a flex item shrinks to fit,
+ * and a spacer's whole content is nothing, so a shrinkable one collapses to
+ * zero exactly when the row is tight enough to need it.
+ */
+
+@layer components {
+  .db-spacer {
+    /* ---- reassigned by .db-spacer--<size> (4 is the default) ---- */
+    --db-spacer-size: var(--db-space-4);
+
+    display: block;
+    flex: 0 0 auto;
+    inline-size: 1px;
+    block-size: var(--db-spacer-size);
+  }
+
+  /* A push along the row rather than down the page. */
+  .db-spacer--inline {
+    inline-size: var(--db-spacer-size);
+    block-size: 1px;
+  }
+
+  .db-spacer--block {
+    /* no rules — block is baked into .db-spacer so an unsized spacer works */
+  }
+
+  /* ------------------------------------------------------------------ sizes */
+
+  .db-spacer--0 {
+    --db-spacer-size: var(--db-space-0);
+  }
+
+  .db-spacer--1 {
+    --db-spacer-size: var(--db-space-1);
+  }
+
+  .db-spacer--2 {
+    --db-spacer-size: var(--db-space-2);
+  }
+
+  .db-spacer--3 {
+    --db-spacer-size: var(--db-space-3);
+  }
+
+  .db-spacer--4 {
+    /* no rules — 4 is baked into .db-spacer so an unsized spacer is never broken */
+  }
+
+  .db-spacer--5 {
+    --db-spacer-size: var(--db-space-5);
+  }
+
+  .db-spacer--6 {
+    --db-spacer-size: var(--db-space-6);
+  }
+
+  .db-spacer--8 {
+    --db-spacer-size: var(--db-space-8);
+  }
+
+  .db-spacer--10 {
+    --db-spacer-size: var(--db-space-10);
+  }
+
+  .db-spacer--12 {
+    --db-spacer-size: var(--db-space-12);
+  }
+
+  .db-spacer--16 {
+    --db-spacer-size: var(--db-space-16);
+  }
+}

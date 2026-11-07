@@ -1,0 +1,288 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Accordion.stories'
+import { Keys, Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# Accordion
+
+Sections that open and close in place: a page's questions and answers, an order's details, settings
+grouped by what they touch. Each item is a heading whose trigger shows or hides its panel, so a
+long page reads as a list of titles until the reader opens the one they want.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **A long page the reader scans:** help pages, product details, settings, filters on a phone.
+- **Details on demand:** an order's history or a product's specifications, under what matters most.
+
+Not for the content most readers need: keep that open, or in a Card. To switch between views of
+the same thing use Tabs, and for one section on its own an Accordion of one item (a disclosure).
+
+## Import
+
+```tsx
+import { Accordion } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<Accordion>
+  <Accordion.Item id="shipping">
+    <Accordion.Heading>
+      <Accordion.Trigger>
+        How long does delivery take?
+        <Accordion.Indicator />
+      </Accordion.Trigger>
+    </Accordion.Heading>
+    <Accordion.Panel>
+      <Accordion.Body>Two to four working days.</Accordion.Body>
+    </Accordion.Panel>
+  </Accordion.Item>
+</Accordion>
+```
+
+<Parts
+  rows={[
+    ['Accordion', "The group, React Aria's DisclosureGroup: which items are open, and its look."],
+    ['Accordion.Item', 'One section, a Disclosure, keyed by its id.'],
+    ['Accordion.Heading', 'The heading the trigger sits in, h3 unless level says otherwise.'],
+    [
+      'Accordion.Trigger',
+      'The button that opens and closes the item: its title, any icon or chip, and the chevron.',
+    ],
+    [
+      'Accordion.Indicator',
+      'The chevron at its end, turning over as the item opens, or any element of yours.',
+    ],
+    [
+      'Accordion.Panel',
+      'What opens: its height animates, and it is hidden from the page while closed.',
+    ],
+    ['Accordion.Body', "The panel's padding and type: 16 across, muted, 14 on 20."],
+  ]}
+/>
+
+## Examples
+
+### Variants
+
+`default` lies on the page, a line between its items. `surface` lies on a card's paper, 24 round,
+for a section of its own or a page with a grey background.
+
+<Canvas of={Stories.Variants} />
+
+### One open, or several
+
+By default opening one item closes the one open; `allowsMultipleExpanded` lets the reader keep as
+many open as they want. `defaultExpandedKeys` names the items open at first.
+
+<Canvas of={Stories.Expansion} />
+
+### Controlled
+
+Hold the open items yourself with `expandedKeys` and `onExpandedChange`, to open them all from a
+button, keep them in the address or restore them on return.
+
+<Canvas of={Stories.Controlled} />
+
+### Disabled
+
+`isDisabled` on the accordion stops every item; on an item, only that one. A disabled item's
+trigger is faded and skipped by the Tab key.
+
+<Canvas of={Stories.Disabled} />
+
+### Without separators
+
+<Canvas of={Stories.WithoutSeparators} />
+
+### Icons and descriptions
+
+An icon is 16 across and muted, 12 before the title; a description is a second line, 12 and muted.
+
+<Canvas of={Stories.IconsAndDescriptions} />
+
+### Beside the title
+
+Anything can sit in the trigger: a count, a status chip. Give it `margin-inline-start: auto` and
+the indicator none, so the two keep to the end.
+
+<Canvas of={Stories.TriggerExtras} />
+
+### A custom indicator
+
+Pass any element to `Accordion.Indicator`: it takes the indicator's class and `data-expanded`, so
+it turns as the item opens, or as your own class says. Put it first to draw it at the start.
+
+<Canvas of={Stories.CustomIndicator} />
+
+### Rich content
+
+A panel holds anything: fields and their buttons, lists, another accordion.
+
+<Canvas of={Stories.RichContent} />
+
+### Many items
+
+<Canvas of={Stories.ManyItems} />
+
+## What it builds
+
+<Canvas of={Stories.FAQPage} />
+<Canvas of={Stories.OrderDetails} />
+<Canvas of={Stories.SettingsSections} />
+<Canvas of={Stories.ProductFilters} />
+<Canvas of={Stories.ProductDetails} />
+
+## Themes, directions, sizes
+
+The same accordion in the light theme and the dark; on a Persian page, where it reads from the
+right with the chevron on the left, and on an English one; and on a phone.
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+### Accordion
+
+<PropsTable
+  rows={[
+    [
+      'variant',
+      "'default' | 'surface'",
+      "'default'",
+      "surface draws the items on a card's paper, 24 round.",
+    ],
+    ['allowsMultipleExpanded', 'boolean', 'false', 'More than one item open at a time.'],
+    ['defaultExpandedKeys', 'Iterable<Key>', null, 'The items open at first, uncontrolled.'],
+    ['expandedKeys', 'Iterable<Key>', null, 'The items open, controlled.'],
+    [
+      'onExpandedChange',
+      '(keys: Set<Key>) => void',
+      null,
+      'Called with the open items when one opens or closes.',
+    ],
+    ['isDisabled', 'boolean', 'false', 'No item opens or closes.'],
+    ['hideSeparator', 'boolean', 'false', 'No line between items.'],
+    ['className', 'string | (state) => string', null, 'Classes after the accordion’s own.'],
+    ['children', 'ReactNode', null, 'Its Accordion.Item elements.'],
+  ]}
+/>
+
+### Accordion.Item
+
+<PropsTable
+  rows={[
+    ['id', 'Key', null, 'Its key in expandedKeys.'],
+    ['isDisabled', 'boolean', 'false', 'It does not open or close, and the Tab key passes it.'],
+    [
+      'defaultExpanded',
+      'boolean',
+      'false',
+      'Open at first, when it is not in an accordion that says.',
+    ],
+    ['isExpanded', 'boolean', null, 'Open, controlled, when it is not in an accordion that says.'],
+    ['onExpandedChange', '(isExpanded: boolean) => void', null, 'Called as it opens or closes.'],
+    ['className', 'string | (state) => string', null, 'Classes after the item’s own.'],
+  ]}
+/>
+
+### Accordion.Heading
+
+<PropsTable
+  rows={[
+    ['level', 'number', '3', 'The heading level: h3 by default.'],
+    ['className', 'string', null, 'Classes after the heading’s own.'],
+  ]}
+/>
+
+### Accordion.Trigger
+
+React Aria's `Button`: everything a button takes.
+
+<PropsTable
+  rows={[
+    [
+      'children',
+      'ReactNode | (state) => ReactNode',
+      null,
+      'The title, any icon or chip, and the Accordion.Indicator. As a function it is given isExpanded, isHovered, isPressed and isFocusVisible.',
+    ],
+    ['className', 'string | (state) => string', null, 'Classes after the trigger’s own.'],
+  ]}
+/>
+
+### Accordion.Indicator
+
+<PropsTable
+  rows={[
+    [
+      'children',
+      'ReactElement',
+      'the chevron',
+      'Your own indicator, given the indicator’s class and data-expanded.',
+    ],
+    ['className', 'string', null, 'Classes after the indicator’s own.'],
+  ]}
+/>
+
+### Accordion.Panel and Accordion.Body
+
+<PropsTable
+  rows={[
+    [
+      'role (Panel)',
+      "'group' | 'region'",
+      "'group'",
+      'The panel’s role: region for a landmark a screen reader lists.',
+    ],
+    ['className (Panel)', 'string | (state) => string', null, 'Classes after the panel’s own.'],
+    ['children (Body)', 'ReactNode', null, 'What the item holds, 16 in from each side.'],
+    ['className (Body)', 'string', null, 'Classes on the body’s inner box.'],
+  ]}
+/>
+
+## Accessibility
+
+Each trigger is a button with `aria-expanded`, controlling its panel, which is labelled by it; the
+trigger sits in a heading, so a screen reader lists the sections among the page's headings. A
+closed panel is hidden from it. Motion stops for a reader who asks for less.
+
+<Keys
+  rows={[
+    ['Tab', 'To the next trigger, past a disabled one.'],
+    ['Shift Tab', 'To the trigger before.'],
+    ['Enter Space', 'Opens or closes the focused item.'],
+  ]}
+/>
+
+## Styling
+
+Every part has a class and the states it is in as data attributes, so a stylesheet can reach any
+of them: `.accordion` and `.accordion--surface`, `.accordion__item` (its line is its
+`::after`, gone under `[data-hide-separator]`), `.accordion__heading`, `.accordion__trigger`
+(`[aria-expanded]`, `[data-focus-visible]`, `[aria-disabled]`), `.accordion__indicator`
+(`[data-expanded]`), `.accordion__panel` (`[data-expanded]`, its height in
+`--disclosure-panel-height`), `.accordion__body` and `.accordion__body-inner`. Colours are the
+theme's: `--foreground`, `--muted`, `--separator`, `--surface`.
+
+## As a block
+
+A tree draws the same accordion, on the web and in Flutter: `Accordion` holding `AccordionItem`s,
+each with its title, an icon from the icon list and any blocks.
+
+<Canvas of={Stories.ServerDriven} />
+
+### Accordion
+
+<SchemaProps name="Accordion" />
+
+### AccordionItem
+
+<SchemaProps name="AccordionItem" />

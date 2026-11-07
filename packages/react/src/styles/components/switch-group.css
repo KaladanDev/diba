@@ -1,0 +1,24 @@
+/*
+ * Third-party code under the Apache License 2.0; see THIRD-PARTY-NOTICES.txt in this package.
+ * Modified by Kaladan: switches 24 apart down a group and 16 across, as a checkbox group's and a
+ * radio group's options are.
+ */
+/* Switch Group styles */
+.switch-group {
+  @apply flex flex-col gap-6;
+}
+
+.switch-group__items {
+  @apply flex gap-4;
+}
+
+/* Orientation modifiers */
+.switch-group--horizontal .switch-group__items {
+  @apply flex-row;
+}
+
+.switch-group--vertical .switch-group__items {
+  @apply flex-col;
+  /* Kaladan: 24 apart down, as the checkbox and radio groups' rows are; the original's were 16. */
+  @apply gap-6;
+}

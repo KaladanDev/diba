@@ -1,0 +1,66 @@
+{
+  "name": "Meter",
+  "category": "feedback",
+  "description": "How much of something is used: «۸۰٪ فضای ذخیره». Display only; unlike a progress bar it measures, and is not waited on.",
+  "sduiSafe": true,
+  "props": {
+    "value": {
+      "type": "number"
+    },
+    "minValue": {
+      "type": "number",
+      "default": 0
+    },
+    "maxValue": {
+      "type": "number",
+      "default": 100
+    },
+    "label": {
+      "type": "string",
+      "i18n": true,
+      "description": "Drawn above it, at the start."
+    },
+    "showValue": {
+      "type": "boolean",
+      "default": true
+    },
+    "valueLabel": {
+      "type": "string",
+      "i18n": true,
+      "description": "Replaces the drawn value: «۸ از ۱۰ گیگ»."
+    },
+    "formatStyle": {
+      "type": "enum",
+      "values": [
+        "decimal",
+        "percent",
+        "currency"
+      ],
+      "default": "percent",
+      "description": "percent is the fraction used."
+    },
+    "currency": {
+      "type": "string"
+    },
+    "color": {
+      "type": "enum",
+      "values": [
+        "default",
+        "accent",
+        "success",
+        "warning",
+        "danger"
+      ],
+      "default": "accent"
+    },
+    "size": {
+      "type": "enum",
+      "values": [
+        "sm",
+        "md",
+        "lg"
+      ],
+      "default": "md"
+    }
+  }
+}

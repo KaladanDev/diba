@@ -1,0 +1,16 @@
+{
+  "name": "Row",
+  "category": "data",
+  "description": "One record.",
+  "sduiSafe": true,
+  "props": {
+    "id": { "type": "string", "description": "Its key.", "required": true },
+    "href": {
+      "type": "string",
+      "format": "url",
+      "description": "Opens the record. A URL, held to isSafeUrl."
+    },
+    "isDisabled": { "type": "boolean", "default": false }
+  },
+  "children": { "accepts": ["Cell"] }
+}

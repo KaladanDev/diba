@@ -1,0 +1,185 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Button.stories'
+import { Keys, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# Button
+
+An action: what the reader presses to do something on this page. A pill, its words 14 and medium,
+in one of seven variants from the page's main action down to what destroys.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **To do something:** save, add, send, delete.
+- **To submit or reset a form,** with `type`.
+
+To go to another page, use a LinkButton or a Link: a button does, a link goes. To switch something
+on and off, use a ToggleButton or a Switch.
+
+## Import
+
+```tsx
+import { Button } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<Button variant="primary" onPress={save}>
+  <Plus aria-hidden />
+  Add a product
+</Button>
+```
+
+A Button is one part: its children are its icon and its words, 8 apart, in reading order.
+
+## Examples
+
+### Variants
+
+One `primary` in a place, for what the page is for. `secondary` beside it, `tertiary` and `ghost`
+for quieter actions, `outline` on a coloured ground. `danger` for what cannot be undone,
+`danger-soft` for what is lost but can come back.
+
+<Canvas of={Stories.Variants} />
+
+### Sizes
+
+`sm`, `md` and `lg`: 32, 36 and 40 tall from 768 wide. Under it, on a phone, each is a step
+taller, 36, 40 and 44, a bigger target for a finger.
+
+<Canvas of={Stories.Sizes} />
+
+### With icons
+
+An icon before the words says what the action is; after them, where it takes the reader. Lucide's
+icons are sized for you. An arrow that points onward should point the way the page reads: left on
+a Persian page.
+
+<Canvas of={Stories.WithIcons} />
+
+### Icon only
+
+`isIconOnly` makes it a circle for an icon alone. Name it with `aria-label`, and put that name in a
+Tooltip, so a mouse can read it too.
+
+```tsx
+<Tooltip delay={500}>
+  <Button isIconOnly variant="outline" aria-label="Edit">
+    <Pencil aria-hidden />
+  </Button>
+  <Tooltip.Content placement="top" showArrow>
+    <Tooltip.Arrow />
+    Edit
+  </Tooltip.Content>
+</Tooltip>
+```
+
+<Canvas of={Stories.IconOnly} />
+
+### Disabled and pending
+
+Disabled, it fades and cannot be pressed or reached. Pending, while its work is in flight, it
+cannot be pressed but keeps its focus, and a screen reader hears that it is busy. Put a Spinner in
+the icon's place, so the button's width does not jump.
+
+<Canvas of={Stories.States} />
+
+### Full width
+
+<Canvas of={Stories.FullWidth} />
+
+### In a form
+
+`type="submit"` sends the form it is in, `type="reset"` puts every field back.
+
+<Canvas of={Stories.InAForm} />
+
+## What it builds
+
+<Canvas of={Stories.PageActions} />
+<Canvas of={Stories.DestructiveActions} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+<PropsTable
+  rows={[
+    [
+      'variant',
+      "'primary' | 'secondary' | 'tertiary' | 'outline' | 'ghost' | 'danger' | 'danger-soft'",
+      "'primary'",
+      'How much it asks for attention, and whether it destroys.',
+    ],
+    ['size', "'sm' | 'md' | 'lg'", "'md'", '32, 36 or 40 tall; on a phone 36, 40 or 44.'],
+    ['isIconOnly', 'boolean', 'false', 'A circle for an icon alone; name it with aria-label.'],
+    ['fullWidth', 'boolean', 'false', 'As wide as its container.'],
+    ['isDisabled', 'boolean', 'false', 'Faded, and it cannot be pressed or reached.'],
+    [
+      'isPending',
+      'boolean',
+      'false',
+      'Its work in flight: it cannot be pressed, keeps its focus, and says it is busy.',
+    ],
+    [
+      'onPress',
+      '(e: PressEvent) => void',
+      null,
+      'When it is pressed: by a pointer, a finger, Enter or Space.',
+    ],
+    ['type', "'button' | 'submit' | 'reset'", "'button'", 'What it does in a form.'],
+    ['form', 'string', null, 'The id of the form it submits, when it is outside it.'],
+    ['autoFocus', 'boolean', null, 'Focused when it first shows.'],
+    [
+      'children',
+      'ReactNode | (state) => ReactNode',
+      null,
+      'Its icon and words, or a function of its state: isPressed, isHovered, isPending and the rest.',
+    ],
+    ['className', 'string | (state) => string', null, 'Classes after the button’s own.'],
+  ]}
+/>
+
+It takes React Aria's other press events too, `onPressStart`, `onPressEnd`, `onPressChange` and
+`onPressUp`, and its element's own props: `id`, `style`, `aria-*`, `name`, `value`.
+
+## Keyboard
+
+<Keys
+  rows={[
+    ['Tab', 'Reaches it, unless it is disabled.'],
+    ['Enter or Space', 'Presses it.'],
+  ]}
+/>
+
+## Accessibility
+
+A button's words are its name. Give an icon-only button `aria-label`, and keep icons beside words
+`aria-hidden`. A pending button stays focused, so the reader is not lost when it is done.
+
+## Styling
+
+`.button` with `.button--primary` to `--danger-soft`, `--sm`, `--md`, `--lg`, `--icon-only` and
+`--full-width`; `[data-hovered]`, `[data-pressed]`, `[data-focus-visible]` and `[data-pending]`.
+Its colours are `--button-bg`, `--button-bg-hover`, `--button-bg-pressed` and `--button-fg`.
+
+## As a block
+
+A tree draws the same button, on the web and in Flutter, with its icon by name before or after
+its words. An arrow is named as for left-to-right, `chevron-right` for "next", and turned on a
+Persian page for you. An icon-only button's `label` is its name and its tooltip, and a pending
+one shows a spinner in its icon's place. Its `variant` is `secondary` and its `size` `sm` unless
+the tree says otherwise.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="Button" />

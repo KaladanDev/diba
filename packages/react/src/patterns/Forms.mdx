@@ -1,0 +1,46 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Forms.stories'
+
+<Meta of={Stories} />
+
+# Forms
+
+Forms a shop and its buyers fill in, composed from Diba's basics: signing in with a phone, an
+address, a discount code and a review. Each is a `Form`, which checks its fields in the page's
+language before it is sent.
+
+## Signing in with a phone
+
+A `TextField` for the number, typed left to right, and a button that sends the code; then an
+`InputOTP` for the code, the button off until it is whole, and a `Link` to send it again.
+
+<Canvas of={Stories.SignIn} />
+
+## An address
+
+Fields in pairs where they belong together, the pairs one under the other on a phone: who receives
+it and their number, the province from a `Select` and the city, the address in a `TextArea` with
+what it holds described, and a `Checkbox` to keep it for next time. Save is primary, cancel
+quieter.
+
+<Canvas of={Stories.Address} />
+
+## A discount code
+
+The code and its button side by side, their foot on one line; what the shop says of it in an
+`Alert` under them.
+
+<Canvas of={Stories.DiscountCode} />
+
+## A review
+
+A score chosen from five in a `ToggleButtonGroup`, the words in a `TextArea`, and the way to send
+it, off until there is a score.
+
+<Canvas of={Stories.Review} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />

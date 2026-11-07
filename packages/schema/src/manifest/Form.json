@@ -1,0 +1,27 @@
+{
+  "name": "Form",
+  "category": "form",
+  "description": "Fields that submit together. isRequired, lengths, email and url and number ranges are checked first, with Diba's own messages.",
+  "sduiSafe": true,
+  "props": {
+    "errorMessage": {
+      "type": "string",
+      "i18n": true,
+      "description": "For the whole form: \"could not save\"."
+    },
+    "gap": { "type": "token", "token": "space", "description": "The space between fields." }
+  },
+  "fixed": {
+    "validationBehavior": {
+      "value": "aria",
+      "description": "native would be the browser's own bubbles, which Flutter has none of."
+    }
+  },
+  "children": { "accepts": "*", "description": "Fields carry their name." },
+  "actions": {
+    "onSubmit": {
+      "description": "The named fields' values, merged with any with keys.",
+      "payload": "FormValues"
+    }
+  }
+}

@@ -1,0 +1,84 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Introduction.stories'
+
+<Meta of={Stories} />
+
+# Server-driven UI
+
+A server-driven surface is a part of a page the host did not write: a tree of Diba's blocks, sent
+as JSON, which the host draws with its own components. A third-party app's panel in the admin is
+one; a layout the server decides is another. The tree names components and says what they do; it
+never carries code, styles or markup, so what it draws always looks and behaves like the rest of
+the page, in its language, direction and theme.
+
+The same tree draws the same way on the web, with `@kaladan/diba-react/sdui`, and in Flutter, with
+the `diba` package: the same blocks, the same props, the same six things an action can do.
+
+<Canvas of={Stories.FirstTree} />
+
+Type a weight and press the button: typing stays in the browser, and only the press reaches the
+host, carrying exactly the value the action named. Then the toast follows.
+
+## Drawing a tree
+
+```tsx
+import { DibaSurface } from '@kaladan/diba-react/sdui'
+import { validateTree } from '@kaladan/diba-schema/validate'
+
+const checked = validateTree(tree)
+if (checked.ok)
+  return (
+    <DibaSurface
+      tree={tree}
+      handlers={{
+        call: (action, payload) => api.post(`/actions/${action}`, payload),
+        navigate: (to) => router.push(to),
+        open: (target) => openPanel(target),
+        toast: (t) => showToast(t),
+      }}
+      onRefuse={(reason) => log.warn(reason)}
+    />
+  )
+```
+
+Validate first, then draw. The renderer refuses what it must never do: an undeclared prop or
+event, an unsafe address, a type it has no block for. The schema sees what the renderer cannot: a
+value of the wrong kind, a missing required prop, a child of the wrong type. Safety has both.
+
+For a panel fetched from a third-party app, `DibaExtension` does the fetching, the validating and
+the sending back: see Extensions.
+
+## In Flutter
+
+```dart
+import 'package:diba/diba.dart';
+
+DibaSurface(
+  tree: tree,
+  handlers: DibaHandlers(
+    call: (action, payload) => api.post('/actions/$action', payload),
+    navigate: (to) => router.go(to),
+    open: (target) => openPanel(target),
+    external: (url) => launchUrl(Uri.parse(url)),
+  ),
+  onRefuse: (reason) => log.warning(reason),
+)
+```
+
+Two differences: Flutter hands an external link to `external`, and with no `toast` handler it
+shows a toast as a snackbar. On the web a link's `href` is a real link, which the browser follows.
+
+## The contract
+
+`@kaladan/diba-schema` is the contract both renderers read: a manifest of every block, its props,
+the values each may take, its children and slots, and the events it may fire, with the JSON Schema
+and the TypeScript types made from it (`DibaNode`). Every component page here ends with its block's
+props, read from the same manifest.
+
+## On these pages
+
+- **Trees**: what a node is made of, its children and slots, and what its props may be.
+- **Actions and state**: the six verbs, what a field holds, and forms.
+- **Safety**: what the renderer refuses, the rule for addresses, and what only the schema sees.
+- **Extensions**: a third-party app's panel, fetched, validated and sent back to.
+- **Blocks**: every block, drawn from the samples both platforms are tested against.

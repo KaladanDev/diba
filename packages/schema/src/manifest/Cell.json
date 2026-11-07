@@ -1,0 +1,7 @@
+{
+  "name": "Cell",
+  "category": "data",
+  "description": "One value of a row: text, or blocks such as a Chip or a Button.",
+  "sduiSafe": true,
+  "children": { "accepts": "*", "text": true }
+}

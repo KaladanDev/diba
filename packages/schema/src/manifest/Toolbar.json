@@ -1,0 +1,27 @@
+{
+  "name": "Toolbar",
+  "category": "controls",
+  "description": "A row of controls the arrow keys move along, one stop for the Tab key, such as bulk actions over a list.",
+  "sduiSafe": true,
+  "props": {
+    "label": {
+      "type": "string",
+      "i18n": true,
+      "required": true,
+      "description": "Names the toolbar for a screen reader; it is not drawn."
+    },
+    "orientation": {
+      "type": "enum",
+      "values": ["horizontal", "vertical"],
+      "default": "horizontal"
+    },
+    "isAttached": {
+      "type": "boolean",
+      "default": false,
+      "description": "On its own bar: the surface, 24 round, with the overlay's shadow."
+    }
+  },
+  "children": {
+    "accepts": ["Button", "LinkButton", "ButtonGroup", "ToggleButtonGroup", "Dropdown", "Separator"]
+  }
+}

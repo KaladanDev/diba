@@ -1,0 +1,22 @@
+{
+  "name": "ToggleButton",
+  "category": "controls",
+  "description": "One toggle in a ToggleButtonGroup.",
+  "sduiSafe": true,
+  "props": {
+    "id": {
+      "type": "string",
+      "description": "Its key in the group's selection.",
+      "required": true
+    },
+    "isDisabled": { "type": "boolean", "default": false },
+    "icon": { "type": "token", "token": "icon", "description": "A name from the icon list." },
+    "isIconOnly": { "type": "boolean", "default": false },
+    "label": {
+      "type": "string",
+      "i18n": true,
+      "description": "The accessible name and tooltip. Required when isIconOnly."
+    }
+  },
+  "children": { "accepts": "text", "description": "The toggle's text (localizable)." }
+}

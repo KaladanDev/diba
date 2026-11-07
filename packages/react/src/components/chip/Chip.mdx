@@ -1,0 +1,121 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Chip.stories'
+import { Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# Chip
+
+A short label that says what something is: an order's status, a product's discount. It does
+nothing when pressed.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **A status,** such as an order's, in its tone: waiting, paid, shipped, cancelled.
+- **What is special about something,** such as a product's discount or its free delivery.
+
+Not for something to choose or remove, such as a filter: use a TagGroup. Not for a count on an
+icon: use a Badge.
+
+## Import
+
+```tsx
+import { Chip } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<Chip variant="soft" color="success">
+  <Truck />
+  <Chip.Label>Shipped</Chip.Label>
+</Chip>
+```
+
+<Parts
+  rows={[
+    [
+      'Chip',
+      'The chip: 24, 28 or 32 tall and round, a third of its height in at each end; its look and tone.',
+    ],
+    ['Chip.Label', 'Its words, 12 (14 at lg) and medium. Words alone are wrapped in one for you.'],
+  ]}
+/>
+
+An icon before the words is 0.55 of its height, 4 from them.
+
+## Examples
+
+### Looks
+
+`soft`, the default, is the status at 12% over the surface (22% in dark) with its ink, the one to
+use for a status. `secondary` is the second surface with the ink; `primary` the solid fill;
+`tertiary` clear inside a hairline.
+
+<Canvas of={Stories.Variants} />
+
+### Tones
+
+`color` is a status's, the brand's for `accent`, or `default` for none.
+
+<Canvas of={Stories.Colors} />
+<Canvas of={Stories.AllLooks} />
+
+### Sizes
+
+`sm`, `md` and `lg`: 24, 28 and 32 tall.
+
+<Canvas of={Stories.Sizes} />
+
+### With icons
+
+<Canvas of={Stories.WithIcons} />
+
+## What it labels
+
+<Canvas of={Stories.OrderStatus} />
+<Canvas of={Stories.OnAProduct} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+<PropsTable
+  rows={[
+    [
+      'variant',
+      "'primary' | 'secondary' | 'soft' | 'tertiary'",
+      "'soft'",
+      'Solid, on the second surface, tinted, or clear inside a hairline.',
+    ],
+    ['color', "'default' | 'accent' | 'success' | 'warning' | 'danger'", "'default'", 'Its tone.'],
+    ['size', "'sm' | 'md' | 'lg'", "'sm'", '24, 28 or 32 tall.'],
+    ['className', 'string', null, 'Classes after its own.'],
+  ]}
+/>
+
+## Accessibility
+
+It is words, read where they stand. Its colour says nothing a screen reader hears, so its words
+must say it: "Cancelled", not a red chip alone.
+
+## Styling
+
+`.chip` with `--primary`, `--secondary`, `--soft`, `--tertiary`, its tone (`--success` and the
+rest) and `--sm`, `--md`, `--lg`; `.chip__label`.
+
+## As a block
+
+A tree draws the same chip, on the web and in Flutter: its words, an `icon` from the icon list,
+`variant`, `color` and `size`. It is `soft` and `sm` unless the tree says otherwise, as by hand.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="Chip" />

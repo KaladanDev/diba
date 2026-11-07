@@ -1,0 +1,8 @@
+{
+  "name": "ListBoxSection",
+  "category": "controls",
+  "description": "A titled group of options.",
+  "sduiSafe": true,
+  "props": { "title": { "type": "string", "i18n": true } },
+  "children": { "accepts": ["ListBoxItem"] }
+}

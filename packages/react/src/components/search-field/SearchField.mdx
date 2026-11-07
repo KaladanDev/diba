@@ -1,0 +1,165 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './SearchField.stories'
+import { Keys, Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# SearchField
+
+A field for searching: a search icon at its start, the words, and a button at its end that empties
+it. Enter sends the words; Escape empties the field.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **Narrowing a list or a table:** products by name or code, orders by number or buyer.
+- **Searching a page or a store,** sent with Enter.
+
+For words the reader writes to keep, a name or a note, use a TextField.
+
+## Import
+
+```tsx
+import { SearchField } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<SearchField aria-label="Search products">
+  <SearchField.Group>
+    <SearchField.SearchIcon />
+    <SearchField.Input placeholder="Name or code" />
+    <SearchField.ClearButton />
+  </SearchField.Group>
+</SearchField>
+```
+
+<Parts
+  rows={[
+    ['SearchField', 'The field: its words, its state, and what Enter and Escape do.'],
+    [
+      'SearchField.Group',
+      'The box, 36 tall with a 1 edge; primary on a page, secondary on a grey surface.',
+    ],
+    ['SearchField.SearchIcon', 'The search icon, 16, 12 in from the start; decorative.'],
+    ['SearchField.Input', 'The words, 14, between the icon and the button.'],
+    [
+      'SearchField.ClearButton',
+      'A 20 button, 8 in from the end, that empties the field; hidden while it is empty. Named «پاک کردن», Clear.',
+    ],
+    ['Label, Description, FieldError', 'As a TextField’s, when the field has them.'],
+  ]}
+/>
+
+## Examples
+
+### With and without a label
+
+Where the page already says what is searched, above a list of products, name the field with
+`aria-label` and leave the label out. In a form, give it a `Label`, and help in a `Description`.
+
+<Canvas of={Stories.WithLabel} />
+
+### Enter and clear
+
+`onSubmit` takes the words when Enter is pressed. The clear button and Escape empty the field and
+call `onClear`; the focus stays in it.
+
+<Canvas of={Stories.SubmitAndClear} />
+
+### Empty, written in, disabled, read-only, invalid, on a grey surface
+
+Read-only, its words can be selected but not changed, and the clear button is dimmed.
+
+<Canvas of={Stories.States} />
+
+### Width
+
+In a column it is the column's width. In a row beside a button it is as wide as its parts, about
+230; `fullWidth` gives it what the rest of the row leaves.
+
+<Canvas of={Stories.Width} />
+
+## What it builds
+
+<Canvas of={Stories.FilterAList} />
+
+## Themes, directions, sizes
+
+The icon is at the start and the clear button at the end, on either page. Under 640 wide the box
+is 40 tall and its words 16, so a phone does not zoom into it.
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+### SearchField
+
+<PropsTable
+  rows={[
+    ['value, defaultValue', 'string', null, 'The words, controlled or at first.'],
+    ['onChange', '(value: string) => void', null, 'When the words change.'],
+    ['onSubmit', '(value: string) => void', null, 'When Enter is pressed.'],
+    ['onClear', '() => void', null, 'When the field is emptied by its button or by Escape.'],
+    ['variant', "'primary' | 'secondary'", "'primary'", 'secondary for a field on a grey surface.'],
+    [
+      'fullWidth',
+      'boolean',
+      'false',
+      'In a row, the width the rest of the row leaves; in a column it already fills it.',
+    ],
+    ['isDisabled', 'boolean', 'false', 'It cannot be reached or changed.'],
+    ['isReadOnly', 'boolean', 'false', 'It can be read and selected, not changed.'],
+    ['isInvalid', 'boolean', 'false', 'Drawn as wrong, with its FieldError.'],
+    ['isRequired, validate, validationBehavior', 'as a TextField’s', null, 'Its checks.'],
+    ['name', 'string', null, 'Its value’s name in a form.'],
+  ]}
+/>
+
+### Its parts
+
+<PropsTable
+  rows={[
+    ['SearchField.Input placeholder', 'string', null, 'Shown while empty: what can be searched.'],
+    ['SearchField.SearchIcon children', 'ReactNode', 'a magnifier', 'Another icon in its place.'],
+    ['SearchField.ClearButton aria-label', 'string', '«پاک کردن», Clear', 'Its name.'],
+  ]}
+/>
+
+Every part takes its element's own props too, and a `className`.
+
+## Keyboard
+
+<Keys
+  rows={[
+    ['Tab', 'Into the field, and out of it; the clear button is not a stop.'],
+    ['Enter', 'Sends the words to onSubmit.'],
+    ['Escape', 'Empties the field.'],
+  ]}
+/>
+
+## Accessibility
+
+The input is a search box, named by its `Label` or its `aria-label`. The icon is hidden from a
+screen reader. The clear button is named in the page's language and is left out of the Tab order:
+Escape does its work from the keyboard.
+
+## Styling
+
+`.search-field` with `--primary`, `--secondary` and `--full-width`; `__group`, `__input`,
+`__search-icon` and `__clear-button`; `[data-empty]`, `[data-invalid]`, `[data-disabled]` and
+`[data-focus-within]` on the group.
+
+## As a block
+
+A tree draws the same field, on the web and in Flutter, its label hidden unless it says
+`isLabelHidden: false`. The icon and the clear button are always there.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="SearchField" />

@@ -1,0 +1,39 @@
+{
+  "name": "ProgressBar",
+  "category": "feedback",
+  "description": "How far along something is. Display only, so one value and no pair.",
+  "sduiSafe": true,
+  "props": {
+    "value": { "type": "number" },
+    "minValue": { "type": "number", "default": 0 },
+    "maxValue": { "type": "number", "default": 100 },
+    "isIndeterminate": {
+      "type": "boolean",
+      "default": false,
+      "description": "Waiting on the server."
+    },
+    "label": { "type": "string", "i18n": true },
+    "showValue": { "type": "boolean", "default": true },
+    "valueLabel": {
+      "type": "string",
+      "i18n": true,
+      "description": "Replaces the drawn value: \"3 of 10\"."
+    },
+    "formatStyle": {
+      "type": "enum",
+      "values": ["decimal", "percent", "currency"],
+      "default": "percent",
+      "description": "percent is the fraction done."
+    },
+    "currency": {
+      "type": "string",
+      "description": "An ISO 4217 code, or IRT for toman, drawn as the amount and «تومان»."
+    },
+    "color": {
+      "type": "enum",
+      "values": ["default", "accent", "success", "warning", "danger"],
+      "default": "accent"
+    },
+    "size": { "type": "enum", "values": ["sm", "md", "lg"], "default": "md" }
+  }
+}

@@ -1,0 +1,18 @@
+/*
+ * Third-party code under the Apache License 2.0; see THIRD-PARTY-NOTICES.txt in this package.
+ */
+import type {VariantProps} from "tailwind-variants";
+
+import {tv} from "tailwind-variants";
+
+export const fieldsetVariants = tv({
+  slots: {
+    actions: "fieldset__actions",
+    base: "fieldset",
+    description: "fieldset__description",
+    fieldGroup: "fieldset__field-group",
+    legend: "fieldset__legend",
+  },
+});
+
+export type FieldsetVariants = VariantProps<typeof fieldsetVariants>;

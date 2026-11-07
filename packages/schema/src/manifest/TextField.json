@@ -1,0 +1,99 @@
+{
+  "name": "TextField",
+  "category": "form",
+  "description": "A one-line text field, its label above it.",
+  "sduiSafe": true,
+  "props": {
+    "label": {
+      "type": "string",
+      "i18n": true,
+      "description": "The field's name, drawn above it.",
+      "required": true
+    },
+    "isLabelHidden": {
+      "type": "boolean",
+      "default": false,
+      "description": "Hides the label from sight; it still names the field for a screen reader."
+    },
+    "description": { "type": "string", "i18n": true, "description": "Help drawn under the field." },
+    "errorMessage": {
+      "type": "string",
+      "i18n": true,
+      "description": "Set means invalid: the field shows this message under it."
+    },
+    "isRequired": { "type": "boolean", "default": false },
+    "isDisabled": { "type": "boolean", "default": false },
+    "name": { "type": "string", "description": "Names the value inside a Form block." },
+    "isReadOnly": { "type": "boolean", "default": false },
+    "variant": {
+      "type": "enum",
+      "values": ["primary", "secondary"],
+      "default": "primary",
+      "description": "secondary is for a field on a grey surface."
+    },
+    "fullWidth": {
+      "type": "boolean",
+      "default": true,
+      "description": "false takes the natural field width token."
+    },
+    "defaultValue": {
+      "type": "string",
+      "description": "Starts at this value; the merchant changes it."
+    },
+    "value": {
+      "type": "string",
+      "description": "Pinned: shows exactly what the server sent until the next tree. Pair it with isReadOnly: rewriting a field on every keystroke fights a Persian keyboard."
+    },
+    "placeholder": { "type": "string", "i18n": true },
+    "type": {
+      "type": "enum",
+      "values": ["text", "email", "tel", "url", "password"],
+      "default": "text",
+      "description": "email and url are checked by Diba's own rules before a Form submits."
+    },
+    "inputMode": {
+      "type": "enum",
+      "values": ["text", "numeric", "decimal", "tel", "url", "email"]
+    },
+    "dir": {
+      "type": "enum",
+      "values": ["auto", "ltr"],
+      "default": "auto",
+      "description": "auto follows the first strong character, worked out again on every change."
+    },
+    "prefix": {
+      "type": "string",
+      "i18n": true,
+      "description": "Text before the value, in the field's own direction: a unit, a currency."
+    },
+    "suffix": {
+      "type": "string",
+      "i18n": true,
+      "description": "Text after the value, in the field's own direction."
+    },
+    "maxLength": { "type": "number" },
+    "minLength": { "type": "number" },
+    "autoComplete": {
+      "type": "enum",
+      "values": [
+        "name",
+        "email",
+        "tel",
+        "tel-national",
+        "street-address",
+        "postal-code",
+        "organization",
+        "one-time-code",
+        "new-password",
+        "current-password",
+        "off"
+      ]
+    },
+    "autoCapitalize": { "type": "enum", "values": ["none", "sentences", "words", "characters"] },
+    "spellCheck": { "type": "boolean", "description": "false for handles and codes." }
+  },
+  "actions": {
+    "onChange": { "description": "The text, as typed.", "payload": "string" },
+    "onBlur": { "description": "Leaving the field: check a value on the server." }
+  }
+}

@@ -1,0 +1,23 @@
+name: diba_gallery
+description: Every approved block of Diba's schema, drawn by the Flutter renderer in Persian and English.
+publish_to: none
+version: 0.0.0
+
+environment:
+  sdk: ^3.8.0
+
+dependencies:
+  diba:
+    path: ..
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_lints: ^6.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true

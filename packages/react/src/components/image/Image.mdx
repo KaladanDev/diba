@@ -1,0 +1,165 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Image.stories'
+import { Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# Image
+
+A picture that holds its place before it comes: its box is sized from a ratio and lies on the
+second paper, 12 round, and the picture fades in over it. One that does not come says what it was
+of, in the muted colour, where a browser would draw a torn picture. A zoomable one opens larger on
+a press. It draws with its own styles, so a page needs no utility classes for it.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **A product's picture,** on a shelf, in a cart, on its own page.
+- **A small picture in a row,** such as a product's in the admin's tables.
+- **A shop's banner** or a collection's cover.
+
+For a person or a shop's mark, use an Avatar: it is round and falls back to initials. For an icon,
+use the icon.
+
+## Import
+
+```tsx
+import { Image } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<Image src="/goods/tea.png" alt="Lahijan tea" ratio="4 / 3" radius="lg" isZoomable />
+```
+
+<Parts
+  rows={[
+    [
+      '.db-image',
+      'The box: as wide as its container, as tall as its ratio makes it, on the second paper, its corners its radius.',
+    ],
+    ['.db-image__img', 'The picture, filling the box; it fades in over 400ms once it has loaded.'],
+    ['.db-image__placeholder', 'While it comes, the skeleton’s sweep over the whole box.'],
+    [
+      '.db-image__fallback',
+      'If it fails, or has no `src`: its `alt` (or its `fallback`), centred, 14 on 21 in the muted colour, 12 in.',
+    ],
+    [
+      '.db-image__zoom',
+      'Zoomable, the button round the box: the zoom-in pointer, and a press opens the whole picture in a Modal.',
+    ],
+  ]}
+/>
+
+## Examples
+
+### Ratios
+
+`ratio` is the box's width to its height, as CSS writes an aspect ratio: `"1 / 1"`, the default,
+`"4 / 3"`, `"16 / 9"`. The box is that shape before the picture comes, so the page does not jump
+when it does. `"auto"` takes the picture's own shape once it has come, as a tree's picture with no
+ratio does.
+
+<Canvas of={Stories.Ratios} />
+
+### Cover or contain
+
+`cover`, the default, fills the box and crops what does not fit. `contain` shows the whole picture,
+the second paper round it.
+
+<Canvas of={Stories.Fit} />
+
+### Loaded, failed, or its own fallback
+
+A picture fades in over 400ms. One that fails shows its `alt`; a decorative one, with an empty
+`alt`, shows nothing but the paper. `fallback` puts something of your own there instead.
+
+<Canvas of={Stories.States} />
+
+### Corners
+
+`radius` is `none`, `sm`, `md`, `lg` or `full`: 0, 8, 12, 16 or round. `md`, 12, is the default.
+Flush along a card's edge, give it `none`, so the card's own corners round it.
+
+<Canvas of={Stories.Corners} />
+
+### Zoomable
+
+`isZoomable` makes the box a button, with the zoom-in pointer: a press, or Enter or Space, opens
+the whole picture in a large Modal, no taller than three quarters of the window, closed by its
+close button, Escape or a press outside. For a product's photo on its own page; not for a picture
+inside a link, which already goes somewhere. A picture that failed has nothing to open.
+
+<Canvas of={Stories.Zoomable} />
+
+## What it builds
+
+<Canvas of={Stories.Shelf} />
+<Canvas of={Stories.ProductsTable} />
+<Canvas of={Stories.ShopBanner} />
+
+## Themes, directions, sizes
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+<PropsTable
+  rows={[
+    ['src', 'string', null, 'The picture. Without one, the box shows its fallback.'],
+    [
+      'alt',
+      'string',
+      null,
+      'What it shows; an empty string when the words beside it say it. Required.',
+    ],
+    [
+      'ratio',
+      'string | number',
+      "'1 / 1'",
+      'The box’s width to its height; `auto`, the picture’s own.',
+    ],
+    ['fit', "'cover' | 'contain'", "'cover'", 'Fill the box and crop, or show it all.'],
+    [
+      'radius',
+      "'none' | 'sm' | 'md' | 'lg' | 'full'",
+      "'md'",
+      'Its corners: 0, 8, 12, 16 or round.',
+    ],
+    ['isZoomable', 'boolean', 'false', 'A press opens it larger, in a Modal.'],
+    ['fallback', 'ReactNode', null, 'Shown if the picture never comes, in place of its `alt`.'],
+    [
+      'loading',
+      "'lazy' | 'eager'",
+      "'lazy'",
+      'The browser’s loading hint: eager for the first picture on a page.',
+    ],
+    ['className', 'string', null, 'Classes after its own.'],
+    ['style', 'CSSProperties', null, 'Its width; after its ratio.'],
+  ]}
+/>
+
+## Accessibility
+
+- **`alt` is required.** Say what the picture shows. Where the words beside it already say it, as
+  a product's name under its picture, give an empty `alt`, so a screen reader does not say it twice.
+- **A picture that is a link** takes its name on the link, as the shelf's do, and an empty `alt`.
+- **A picture that fails** is still named by its `alt`, so its words, drawn in its place, are said
+  once. With no `src` at all, the words are what is said. A decorative one says nothing.
+- **A zoomable picture** is a button named «بزرگ‌نمایی» or "Enlarge" and what it shows, «بزرگ‌نمایی
+  شال ابریشم»; the dialog it opens is named after the picture.
+
+## As a block
+
+A tree's picture is the same box, on the web and in Flutter: its corners by `radius`, 12 unless it
+says otherwise; its shape by `ratio`, or the picture's own without one; and `isZoomable` opens it
+larger on a press.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="Image" />

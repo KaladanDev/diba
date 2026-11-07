@@ -1,0 +1,29 @@
+{
+  "opacity": {
+    "disabled":      { "$type": "number", "$value": "0.5" },
+    "muted":         { "$type": "number", "$value": "0.7" },
+    "faint":         { "$type": "number", "$value": "0.3" },
+    "backdrop":      { "$type": "number", "$value": "0.5" },
+    "backdrop-blur": { "$type": "number", "$value": "0.3" }
+  },
+
+  "blur": {
+    "xs": { "$type": "dimension", "$value": "4px" },
+    "sm": { "$type": "dimension", "$value": "8px" },
+    "md": { "$type": "dimension", "$value": "12px" }
+  },
+
+  "saturate": {
+    "backdrop": { "$type": "number", "$value": "1.5" }
+  },
+
+  "z": {
+    "base":    { "$type": "number", "$value": "0" },
+    "raised":  { "$type": "number", "$value": "10" },
+    "docked":  { "$type": "number", "$value": "20" },
+    "sticky":  { "$type": "number", "$value": "30" },
+    "banner":  { "$type": "number", "$value": "40" },
+    "overlay": { "$type": "number", "$value": "50" },
+    "toast":   { "$type": "number", "$value": "100" }
+  }
+}

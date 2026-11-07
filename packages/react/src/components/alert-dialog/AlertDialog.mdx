@@ -1,0 +1,275 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './AlertDialog.stories'
+import { Keys, Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# AlertDialog
+
+A question asked before something that matters: deleting, discarding, publishing. It covers the
+page until it is answered, and only its buttons answer it: a press outside or Escape does nothing
+unless you let them.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **Before something that cannot be undone,** such as deleting a product or a store.
+- **Before something that loses work,** such as leaving a page with unsaved changes.
+- **Before something others will see at once,** such as publishing a theme.
+
+Not for telling the reader something: use an Alert on the page, or a Toast. Not for a form or a
+detail: use a Modal or a Drawer.
+
+## Import
+
+```tsx
+import { AlertDialog, Button } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<AlertDialog>
+  <Button variant="danger-soft">Delete product</Button>
+  <AlertDialog.Backdrop>
+    <AlertDialog.Container>
+      <AlertDialog.Dialog>
+        {({ close }) => (
+          <>
+            <AlertDialog.Header>
+              <AlertDialog.Icon status="danger" />
+              <AlertDialog.Heading>Delete “Silk scarf”?</AlertDialog.Heading>
+            </AlertDialog.Header>
+            <AlertDialog.Body>Its pictures and stock are removed for good.</AlertDialog.Body>
+            <AlertDialog.Footer>
+              <Button variant="tertiary" onPress={close}>
+                Cancel
+              </Button>
+              <Button variant="danger" onPress={close}>
+                Delete
+              </Button>
+            </AlertDialog.Footer>
+          </>
+        )}
+      </AlertDialog.Dialog>
+    </AlertDialog.Container>
+  </AlertDialog.Backdrop>
+</AlertDialog>
+```
+
+<Parts
+  rows={[
+    ['AlertDialog', 'Whether it is open: its first child, a Button, opens it.'],
+    [
+      'AlertDialog.Backdrop',
+      'What lies under it, and whether a press outside or Escape closes it.',
+    ],
+    ['AlertDialog.Container', 'Its size and where it opens.'],
+    [
+      'AlertDialog.Dialog',
+      'The panel: the overlay’s paper and shadow, 32 round, 24 in. Its children may be a function given close.',
+    ],
+    ['AlertDialog.Header', 'The mark beside the heading, 12 before it and centred on it.'],
+    [
+      'AlertDialog.Icon',
+      'The status’s mark: a 40 circle in its soft colour, its sign 20 across; or any icon of yours.',
+    ],
+    [
+      'AlertDialog.Heading',
+      'What it asks, 16 on 24 and medium: the dialog’s name to a screen reader.',
+    ],
+    ['AlertDialog.Body', 'The detail, 8 under the heading, 14 on 20 and muted; any content.'],
+    [
+      'AlertDialog.Footer',
+      'The answers, 20 under the detail, at the end, 8 apart: cancel (tertiary) then confirm.',
+    ],
+    [
+      'AlertDialog.CloseTrigger',
+      'A close button in its corner, when you want one; there is none by default.',
+    ],
+  ]}
+/>
+
+## Examples
+
+Each example is its own frame: press its button to open it. The main ones open as they load.
+
+### Statuses
+
+The status sets the mark's colour and sign; confirm is `danger` for danger and `primary` for the
+rest.
+
+<Canvas of={Stories.Statuses} />
+
+### Sizes
+
+`md`, 448 wide, by default; `cover` fills the window.
+
+<Canvas of={Stories.Sizes} />
+
+### Placements
+
+`auto` opens it at the bottom of a phone, where a thumb reaches, and in the middle from 640 wide.
+
+<Canvas of={Stories.Placements} />
+
+### Backdrops
+
+<Canvas of={Stories.Backdrops} />
+
+### Confirming takes a moment
+
+While its work runs, confirm shows a spinner and cancel waits; it closes when the work is done.
+
+<Canvas of={Stories.PendingConfirm} />
+
+### Controlled
+
+Hold whether it is open with `isOpen` and `onOpenChange`, to open it from anywhere and know what
+was answered.
+
+<Canvas of={Stories.Controlled} />
+
+### What closes it
+
+By default only its buttons. `isDismissable` on the backdrop lets a press outside close it, and
+`isKeyboardDismissDisabled={false}` lets Escape.
+
+<Canvas of={Stories.Dismissing} />
+
+### Its mark and a close button
+
+<Canvas of={Stories.IconAndCloseButton} />
+
+### A body that asks for more
+
+A confirmation typed out before the button wakes, a choice to make while answering.
+
+<Canvas of={Stories.RichBody} />
+
+## What it asks
+
+<Canvas of={Stories.DiscardChanges} />
+<Canvas of={Stories.PublishTheme} />
+<Canvas of={Stories.SignOutEverywhere} />
+
+## Themes and directions
+
+<Canvas of={Stories.Dark} />
+<Canvas of={Stories.LeftToRight} />
+
+## API
+
+### AlertDialog
+
+<PropsTable
+  rows={[
+    ['isOpen', 'boolean', null, 'Open, controlled.'],
+    ['defaultOpen', 'boolean', 'false', 'Open at first, uncontrolled.'],
+    ['onOpenChange', '(isOpen: boolean) => void', null, 'Called as it opens and closes.'],
+    ['children', 'ReactNode', null, 'Its trigger, then its Backdrop.'],
+  ]}
+/>
+
+### AlertDialog.Backdrop
+
+<PropsTable
+  rows={[
+    [
+      'variant',
+      "'opaque' | 'blur' | 'transparent'",
+      "'opaque'",
+      'The page under it: dimmed, blurred, or as it is.',
+    ],
+    ['isDismissable', 'boolean', 'false', 'A press outside closes it.'],
+    ['isKeyboardDismissDisabled', 'boolean', 'true', 'Escape does not close it.'],
+    ['className', 'string | (state) => string', null, 'Classes after the backdrop’s own.'],
+  ]}
+/>
+
+### AlertDialog.Container
+
+<PropsTable
+  rows={[
+    ['size', "'xs' | 'sm' | 'md' | 'lg' | 'cover'", "'md'", 'How wide it is.'],
+    [
+      'placement',
+      "'auto' | 'top' | 'center' | 'bottom'",
+      "'auto'",
+      'Where it opens; auto is the bottom of a phone and the middle from 640.',
+    ],
+    ['className', 'string | (state) => string', null, 'Classes after the container’s own.'],
+  ]}
+/>
+
+### AlertDialog.Dialog
+
+<PropsTable
+  rows={[
+    [
+      'children',
+      'ReactNode | ({ close }) => ReactNode',
+      null,
+      'Its parts; as a function it is given close.',
+    ],
+    ['aria-label', 'string', null, 'Its name, when it has no Heading.'],
+    ['className', 'string', null, 'Classes after the panel’s own.'],
+  ]}
+/>
+
+### AlertDialog.Icon
+
+<PropsTable
+  rows={[
+    [
+      'status',
+      "'default' | 'accent' | 'success' | 'warning' | 'danger'",
+      "'danger'",
+      'Its colour and sign.',
+    ],
+    [
+      'children',
+      'ReactNode',
+      'the status’s sign',
+      'Your own icon, in the sign’s place and colour.',
+    ],
+  ]}
+/>
+
+### The rest
+
+`AlertDialog.Header`, `.Heading`, `.Body` and `.Footer` take their element's props and a
+`className`. `AlertDialog.CloseTrigger` is a CloseButton: give it an `aria-label`.
+
+## Accessibility
+
+It is an `alertdialog`, named by its heading and described by its body. Focus moves into it as it
+opens, stays in it while open, and returns to its trigger when it closes; the page under it is
+hidden from a screen reader.
+
+<Keys
+  rows={[
+    ['Tab', 'To its next button.'],
+    ['Shift Tab', 'To the button before.'],
+    ['Enter Space', 'Presses the focused button.'],
+    ['Escape', 'Closes it, only when isKeyboardDismissDisabled is false.'],
+  ]}
+/>
+
+## Styling
+
+`.alert-dialog__backdrop` and its `--opaque`, `--blur`, `--transparent`;
+`.alert-dialog__container`; `.alert-dialog__dialog` with `--xs` to `--cover` and
+`[data-placement]`; `.alert-dialog__header`, `__icon` with `--default` to `--danger`, `__heading`,
+`__body`, `__footer` and `__close-trigger`. Its paper is the theme's `--overlay`.
+
+## As a block
+
+A tree asks the same question, on the web and in Flutter: its words, its status and its
+trigger, and `onConfirm` and `onCancel`. While `onConfirm`'s work runs, its confirm button spins.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="AlertDialog" />

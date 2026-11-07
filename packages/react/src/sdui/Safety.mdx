@@ -1,0 +1,59 @@
+import { Canvas, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './Safety.stories'
+
+<Meta of={Stories} />
+
+# Safety
+
+A tree comes from somewhere the host does not control, so two things check it, and neither is
+enough alone. The renderer refuses, while it draws, anything it must never do, and reports each
+refusal to `onRefuse`. The schema, `validateTree` from `@kaladan/diba-schema/validate`, sees what
+the renderer cannot: a value of the wrong kind, a missing prop, a child of the wrong type.
+Validate, then draw.
+
+## What the renderer refuses
+
+It draws only what the manifest declares, and drops the rest, a part at a time, so a panel with
+one bad prop still draws:
+
+- **A type with no block** (`ScriptTag`), refused and drawn as nothing.
+- **A prop the block does not declare**, `className` and `style` among them: dropped, so no tree
+  can restyle the page.
+- **An event the block does not fire**, or a slot it does not have: dropped.
+- **An address that breaks the rule**, in a prop or in `navigate`: the prop is dropped, the step is
+  refused.
+- **An action it does not know**, or a toast with no words: the step is refused, and the list goes
+  on.
+
+Here the `className` would have covered the admin, the button would have run a script, `ScriptTag`
+is not a block, and a `Text` fires no press. All four are refused; the words still draw. The schema
+catches three of them, but not the script in an address, which is a string to it: only the renderer
+holds addresses to the rule.
+
+<Canvas of={Stories.WhatItRefuses} />
+
+## What only the schema sees
+
+Every prop here is declared, so the renderer passes them on and reports nothing: a size that is not
+one, a button variant that is not one (it draws with no fill and no colour), a text field with no
+label. The schema names each.
+
+<Canvas of={Stories.WhatOnlyValidationCatches} />
+
+## The address rule
+
+One rule for every address a tree carries, a link's `href`, a picture's `src`, a `navigate`'s `to`:
+
+- a relative address, `/orders/1041`, `#`, `?page=2`, is allowed;
+- an absolute one is allowed when it is `https:`, `http:`, `mailto:` or `tel:`;
+- a picture may also be `data:image/png`, `jpeg`, `gif`, `webp` or `svg+xml`;
+- everything else, `javascript:`, `data:text/html`, `ftp:`, is refused.
+
+<Canvas of={Stories.Addresses} />
+
+## Limits
+
+A tree deeper than 32 levels or with more than 500 nodes is refused whole, before anything draws:
+a runaway tree cannot stall the page. A host sets its own with `limits`; this one allows 4 levels.
+
+<Canvas of={Stories.Limits} />

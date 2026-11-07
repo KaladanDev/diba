@@ -1,0 +1,65 @@
+{
+  "bg":            { "$type": "color", "$value": "{paper.50}",    "$extensions": { "diba": { "dark": "{neutral.950}" } } },
+  "surface":       { "$type": "color", "$value": "{paper.0}",     "$extensions": { "diba": { "dark": "{neutral.900}" } } },
+  "surface-2":     { "$type": "color", "$value": "{paper.100}",   "$extensions": { "diba": { "dark": "{neutral.850}" } } },
+  "surface-3":     { "$type": "color", "$value": "{paper.200}",   "$extensions": { "diba": { "dark": "{neutral.800}" } } },
+
+  "fg":            { "$type": "color", "$value": "{neutral.ink}", "$extensions": { "diba": { "dark": "{neutral.50}" } } },
+  "fg-muted":      { "$type": "color", "$value": "{neutral.600}", "$extensions": { "diba": { "dark": "{neutral.400}" } } },
+
+  "border":        { "$type": "color", "$value": "{neutral.200}", "$extensions": { "diba": { "dark": "{neutral.800}", "role": "line" } } },
+  "border-strong": { "$type": "color", "$value": "{neutral.500}", "$extensions": { "diba": { "dark": "{neutral.500}", "role": "line" } } },
+
+  "primary":          { "$type": "color", "$value": "{saffron.400}", "$extensions": { "diba": { "dark": "{saffron.400}" } } },
+  "primary-hover":    { "$type": "color", "$value": "{saffron.300}", "$extensions": { "diba": { "dark": "{saffron.300}" } } },
+  "primary-fg":       { "$type": "color", "$value": "{iris.800}",    "$extensions": { "diba": { "dark": "{iris.950}" } } },
+  "primary-soft":     { "$type": "color", "$value": "{saffron.50}",  "$extensions": { "diba": { "dark": "{saffron.900}" } } },
+  "primary-emphasis": { "$type": "color", "$value": "{saffron.700}", "$extensions": { "diba": { "dark": "{saffron.300}" } } },
+
+  "accent":           { "$type": "color", "$value": "{iris.800}",    "$extensions": { "diba": { "dark": "{iris.400}" } } },
+  "accent-hover":     { "$type": "color", "$value": "{iris.900}",    "$extensions": { "diba": { "dark": "{iris.300}" } } },
+  "accent-fg":        { "$type": "color", "$value": "{saffron.400}", "$extensions": { "diba": { "dark": "{iris.950}" } } },
+  "accent-soft":      { "$type": "color", "$value": "{iris.50}",     "$extensions": { "diba": { "dark": "{iris.900}" } } },
+  "accent-emphasis":  { "$type": "color", "$value": "{iris.700}",    "$extensions": { "diba": { "dark": "{iris.300}" } } },
+
+  "success":          { "$type": "color", "$value": "{emerald.600}", "$extensions": { "diba": { "dark": "{emerald.400}" } } },
+  "success-fg":       { "$type": "color", "$value": "{paper.0}",     "$extensions": { "diba": { "dark": "{neutral.950}" } } },
+  "success-emphasis": { "$type": "color", "$value": "{emerald.700}", "$extensions": { "diba": { "dark": "{emerald.400}" } } },
+
+  "danger":          { "$type": "color", "$value": "{garnet.500}",  "$extensions": { "diba": { "dark": "{garnet.400}" } } },
+  "danger-fg":       { "$type": "color", "$value": "{paper.0}",     "$extensions": { "diba": { "dark": "{neutral.950}" } } },
+  "danger-emphasis": { "$type": "color", "$value": "{garnet.600}",  "$extensions": { "diba": { "dark": "{garnet.300}" } } },
+
+  "warning":          { "$type": "color", "$value": "{orange.500}",  "$extensions": { "diba": { "dark": "{orange.400}" } } },
+  "warning-fg":       { "$type": "color", "$value": "{neutral.ink}", "$extensions": { "diba": { "dark": "{neutral.950}" } } },
+  "warning-emphasis": { "$type": "color", "$value": "{orange.800}",  "$extensions": { "diba": { "dark": "{orange.400}" } } },
+
+  "info":          { "$type": "color", "$value": "{sky.600}",     "$extensions": { "diba": { "dark": "{sky.400}" } } },
+  "info-fg":       { "$type": "color", "$value": "{paper.0}",     "$extensions": { "diba": { "dark": "{neutral.950}" } } },
+  "info-emphasis": { "$type": "color", "$value": "{sky.700}",     "$extensions": { "diba": { "dark": "{sky.400}" } } },
+
+  "neutral-solid":       { "$type": "color", "$value": "{neutral.200}", "$extensions": { "diba": { "dark": "{neutral.800}" } } },
+  "neutral-solid-hover": { "$type": "color", "$value": "{neutral.300}", "$extensions": { "diba": { "dark": "{neutral.700}" } } },
+
+  "control-fill":      { "$type": "color", "$value": "{saffron.400}", "$extensions": { "diba": { "dark": "{saffron.400}" } } },
+  "control-on-fill":   { "$type": "color", "$value": "{slate.700}",   "$extensions": { "diba": { "dark": "{slate.700}" } } },
+  "control-track":     { "$type": "color", "$value": "{slate.300}",   "$extensions": { "diba": { "dark": "{slate.700}" } } },
+  "control-thumb-off": { "$type": "color", "$value": "{slate.700}",   "$extensions": { "diba": { "dark": "{slate.200}" } } },
+
+  "segment":           { "$type": "color", "$value": "{paper.0}",     "$extensions": { "diba": { "dark": "{slate.700}" } } },
+  "segment-fg":        { "$type": "color", "$value": "{slate.800}",   "$extensions": { "diba": { "dark": "{slate.100}" } } },
+  "segment-fg-muted":  { "$type": "color", "$value": "{slate.600}",   "$extensions": { "diba": { "dark": "{slate.400}" } } },
+  "segment-list":      { "$type": "color", "$value": "{slate.200}",   "$extensions": { "diba": { "dark": "{slate.800}" } } },
+  "plain-fg":          { "$type": "color", "$value": "{slate.700}",   "$extensions": { "diba": { "dark": "{slate.200}" } } },
+  "plain-hover":       { "$type": "color", "$value": "{slate.200}",   "$extensions": { "diba": { "dark": "{slate.800}" } } },
+  "link":              { "$type": "color", "$value": "{slate.700}",   "$extensions": { "diba": { "dark": "{slate.300}" } } },
+
+  "ring":          { "$type": "color", "$value": "oklch(0.472 0.069 288 / 0.75)", "$extensions": { "diba": { "dark": "oklch(0.781 0.038 291 / 0.90)" } } },
+
+  "overlay":       { "$type": "color", "$value": "oklch(0.235 0.030 285 / 0.5)", "$extensions": { "diba": { "dark": "oklch(0 0 0 / 0.65)" } } },
+
+  "state-hover":   { "$type": "color", "$value": "oklch(0 0 0 / 0.04)",     "$extensions": { "diba": { "dark": "oklch(1 0 0 / 0.04)" } } },
+  "state-focus":   { "$type": "color", "$value": "oklch(0 0 0 / 0.12)",     "$extensions": { "diba": { "dark": "oklch(1 0 0 / 0.12)" } } },
+  "state-press":   { "$type": "color", "$value": "oklch(0.795 0 0 / 0.4)",  "$extensions": { "diba": { "dark": "oklch(0.845 0 0 / 0.25)" } } },
+  "scrim":         { "$type": "color", "$value": "oklch(0.213 0 0 / 0.376)", "$extensions": { "diba": { "dark": "oklch(0.213 0 0 / 0.376)" } } }
+}

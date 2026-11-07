@@ -1,0 +1,173 @@
+import { Canvas, Controls, Meta } from '@storybook/addon-docs/blocks'
+import * as Stories from './ToggleButtonGroup.stories'
+import { Keys, Parts, PropsTable, SchemaProps } from '../../stories/docs'
+
+<Meta of={Stories} />
+
+# ToggleButtonGroup
+
+Toggles that belong together: a report's span, a list's view, the payment statuses to show. One
+pressed at a time, or several; joined into one pill, or each apart. A pressed toggle is gilt with
+slate-700 on it.
+
+<Canvas of={Stories.Playground} />
+<Controls of={Stories.Playground} />
+
+## When to use it
+
+- **Switching a view:** a report by day, week, month or year; a list as a grid or as rows.
+- **A quick filter of a few values:** paid, unpaid, refunded.
+
+For one choice in a form, with help under each option, use a RadioGroup; for several, a
+CheckboxGroup; for tabs that change the page's content below them, Tabs.
+
+## Import
+
+```tsx
+import { ToggleButton, ToggleButtonGroup } from '@kaladan/diba-react'
+```
+
+## Anatomy
+
+```tsx
+<ToggleButtonGroup aria-label="Report span" selectionMode="single" defaultSelectedKeys={['week']}>
+  <ToggleButton id="day">Day</ToggleButton>
+  <ToggleButton id="week">
+    <ToggleButtonGroup.Separator />
+    Week
+  </ToggleButton>
+</ToggleButtonGroup>
+```
+
+<Parts
+  rows={[
+    [
+      'ToggleButtonGroup',
+      'The group: which toggles are pressed, how many may be, and how they are laid out; its size and state given to them.',
+    ],
+    [
+      'ToggleButton',
+      'A toggle, with an id of its own; joined, square inside and round only at the group’s ends.',
+    ],
+    [
+      'ToggleButtonGroup.Separator',
+      'A hairline before a joined toggle, half its height, in the text colour at 15%; hidden when apart.',
+    ],
+  ]}
+/>
+
+## Examples
+
+### Joined and apart
+
+Joined, the toggles are one pill, round only at its ends. `isDetached` makes each a pill of its
+own, 4 apart.
+
+<Canvas of={Stories.AttachedAndDetached} />
+
+### One or several
+
+`selectionMode="single"` keeps one pressed, and the group is read as a set of radio buttons;
+`disallowEmptySelection` stops the pressed one from being let go. `multiple` lets any number be
+pressed.
+
+<Canvas of={Stories.OneOrSeveral} />
+
+### Sizes
+
+The group's `size` reaches its toggles: 32, 36 or 40 tall.
+
+<Canvas of={Stories.Sizes} />
+
+### Down, and the whole width
+
+`orientation="vertical"` stacks them, each as wide as the widest, an icon-only one keeping its
+square; `fullWidth` stretches the group
+across its column, the toggles sharing it equally.
+
+<Canvas of={Stories.Layout} />
+
+### Icons only
+
+Give each toggle `isIconOnly` and an `aria-label`, and a Tooltip with the same words.
+`ToggleButtonGroup.Separator` inside each toggle after the first draws a hairline between them.
+
+<Canvas of={Stories.Icons} />
+
+### Disabled
+
+Disabled, the whole group is drawn at half; a toggle may be disabled alone.
+
+<Canvas of={Stories.States} />
+
+## What it builds
+
+<Canvas of={Stories.ListHeader} />
+
+## Themes, directions, sizes
+
+The first toggle is at the page's start: the right on a Persian page.
+
+<Canvas of={Stories.LightAndDark} />
+<Canvas of={Stories.RightToLeft} />
+<Canvas of={Stories.OnAPhone} />
+
+## API
+
+<PropsTable
+  rows={[
+    [
+      'selectedKeys, defaultSelectedKeys',
+      'Iterable<Key>',
+      null,
+      'The pressed toggles’ ids, controlled or at first.',
+    ],
+    ['onSelectionChange', '(keys: Set<Key>) => void', null, 'When one is pressed or let go.'],
+    ['selectionMode', "'single' | 'multiple'", "'single'", 'One pressed at a time, or any number.'],
+    ['disallowEmptySelection', 'boolean', 'false', 'One always stays pressed.'],
+    ['isDetached', 'boolean', 'false', 'Each toggle a pill of its own, 4 apart.'],
+    ['size', "'sm' | 'md' | 'lg'", "'md'", 'Its toggles 32, 36 or 40 tall.'],
+    [
+      'orientation',
+      "'horizontal' | 'vertical'",
+      "'horizontal'",
+      'Across or down; the arrow keys follow.',
+    ],
+    ['fullWidth', 'boolean', 'false', 'Across its whole column, the toggles sharing it.'],
+    ['isDisabled', 'boolean', 'false', 'None can be pressed; drawn at half.'],
+    ['aria-label', 'string', null, 'Its name; required, as it has no label of its own.'],
+  ]}
+/>
+
+Each `ToggleButton` takes its `id`, its own `isDisabled` and `isIconOnly`; see the ToggleButton
+page. Every part takes its element's own props too, and a `className`.
+
+## Keyboard
+
+<Keys
+  rows={[
+    ['Tab', 'To each toggle in turn.'],
+    ['Left, Right', 'Along the toggles: Left is the next on a Persian page.'],
+    ['Space, Enter', 'Presses the toggle with the focus.'],
+  ]}
+/>
+
+## Accessibility
+
+One at a time, the group is a radio group and each toggle a radio, read as checked or not;
+several, a toolbar of toggle buttons, each read as pressed or not. Name the group with
+`aria-label`.
+
+## Styling
+
+`.toggle-button-group` with `--horizontal`, `--vertical`, `--detached` and `--full-width`, and
+`__separator`; its toggles as on the ToggleButton page.
+
+## As a block
+
+A tree draws the same group, on the web and in Flutter. Its `label` names it, and is shown above
+it with `isLabelHidden: false`; an `isIconOnly` toggle's `label` is its name and its tooltip.
+
+<Canvas of={Stories.ServerDriven} />
+
+<SchemaProps name="ToggleButtonGroup" />

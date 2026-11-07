@@ -1,0 +1,16 @@
+{
+  "name": "SwitchGroup",
+  "category": "form",
+  "description": "Switches laid out together, 24 apart down or 16 across, as a checkbox group's rows are. Each sends its own value; a Fieldset gives the group a name.",
+  "sduiSafe": true,
+  "props": {
+    "orientation": {
+      "type": "enum",
+      "values": ["vertical", "horizontal"],
+      "default": "vertical"
+    }
+  },
+  "children": {
+    "accepts": ["Switch"]
+  }
+}

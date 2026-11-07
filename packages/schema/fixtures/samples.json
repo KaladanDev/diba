@@ -1,0 +1,5892 @@
+{
+  "fa": [
+    {
+      "id": "actions",
+      "title": "۱ · کنش‌ها",
+      "samples": [
+        {
+          "id": "button-variants",
+          "title": "Button · variant",
+          "note": "هفت گونه روی چهار دکمهٔ متریال",
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "horizontal",
+              "gap": 3,
+              "wrap": true,
+              "align": "center"
+            },
+            "children": [
+              {
+                "type": "Button",
+                "props": {
+                  "variant": "primary"
+                },
+                "children": "primary"
+              },
+              {
+                "type": "Button",
+                "props": {
+                  "variant": "secondary"
+                },
+                "children": "secondary"
+              },
+              {
+                "type": "Button",
+                "props": {
+                  "variant": "tertiary"
+                },
+                "children": "tertiary"
+              },
+              {
+                "type": "Button",
+                "props": {
+                  "variant": "outline"
+                },
+                "children": "outline"
+              },
+              {
+                "type": "Button",
+                "props": {
+                  "variant": "ghost"
+                },
+                "children": "ghost"
+              },
+              {
+                "type": "Button",
+                "props": {
+                  "variant": "danger"
+                },
+                "children": "danger"
+              },
+              {
+                "type": "Button",
+                "props": {
+                  "variant": "danger-soft"
+                },
+                "children": "danger-soft"
+              }
+            ]
+          }
+        },
+        {
+          "id": "button-sizes",
+          "title": "Button · size, icon, iconPlacement, isIconOnly, isPending",
+          "note": null,
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "vertical",
+              "gap": 3
+            },
+            "children": [
+              {
+                "type": "Stack",
+                "props": {
+                  "direction": "horizontal",
+                  "gap": 3,
+                  "wrap": true,
+                  "align": "center"
+                },
+                "children": [
+                  {
+                    "type": "Button",
+                    "props": {
+                      "size": "sm",
+                      "variant": "primary"
+                    },
+                    "children": "کوچک"
+                  },
+                  {
+                    "type": "Button",
+                    "props": {
+                      "size": "md",
+                      "variant": "primary"
+                    },
+                    "children": "متوسط"
+                  },
+                  {
+                    "type": "Button",
+                    "props": {
+                      "size": "lg",
+                      "variant": "primary"
+                    },
+                    "children": "بزرگ"
+                  }
+                ]
+              },
+              {
+                "type": "Stack",
+                "props": {
+                  "direction": "horizontal",
+                  "gap": 3,
+                  "wrap": true,
+                  "align": "center"
+                },
+                "children": [
+                  {
+                    "type": "Button",
+                    "props": {
+                      "icon": "plus",
+                      "variant": "primary"
+                    },
+                    "children": "افزودن"
+                  },
+                  {
+                    "type": "Button",
+                    "props": {
+                      "icon": "arrow-right",
+                      "iconPlacement": "end"
+                    },
+                    "children": "بعدی"
+                  },
+                  {
+                    "type": "Button",
+                    "props": {
+                      "icon": "pencil",
+                      "isIconOnly": true,
+                      "label": "ویرایش"
+                    },
+                    "children": ""
+                  },
+                  {
+                    "type": "Button",
+                    "props": {
+                      "icon": "trash-2",
+                      "isIconOnly": true,
+                      "variant": "danger-soft",
+                      "label": "حذف"
+                    },
+                    "children": ""
+                  },
+                  {
+                    "type": "Button",
+                    "props": {
+                      "isPending": true,
+                      "variant": "primary"
+                    },
+                    "children": "در حال ذخیره"
+                  },
+                  {
+                    "type": "Button",
+                    "props": {
+                      "isDisabled": true
+                    },
+                    "children": "غیرفعال"
+                  }
+                ]
+              },
+              {
+                "type": "Button",
+                "props": {
+                  "fullWidth": true,
+                  "variant": "primary",
+                  "size": "md"
+                },
+                "children": "ادامهٔ پرداخت"
+              }
+            ]
+          }
+        },
+        {
+          "id": "linkbutton-link",
+          "title": "LinkButton · Link",
+          "note": null,
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "vertical",
+              "gap": 3
+            },
+            "children": [
+              {
+                "type": "Stack",
+                "props": {
+                  "direction": "horizontal",
+                  "gap": 3,
+                  "wrap": true,
+                  "align": "center"
+                },
+                "children": [
+                  {
+                    "type": "LinkButton",
+                    "props": {
+                      "href": "/orders/DB-1041",
+                      "variant": "outline",
+                      "icon": "external-link"
+                    },
+                    "children": "دیدن سفارش"
+                  },
+                  {
+                    "type": "LinkButton",
+                    "props": {
+                      "href": "https://kaladan.shop/help",
+                      "isExternal": true,
+                      "variant": "ghost"
+                    },
+                    "children": "راهنمای کالادان"
+                  }
+                ]
+              },
+              {
+                "type": "Link",
+                "props": {
+                  "href": "/settings/shipping"
+                },
+                "children": "تنظیمات ارسال"
+              },
+              {
+                "type": "Link",
+                "props": {
+                  "href": "/x",
+                  "isDisabled": true
+                },
+                "children": "پیوند غیرفعال"
+              }
+            ]
+          }
+        },
+        {
+          "id": "toggle-group",
+          "title": "ToggleButtonGroup · ToggleButton",
+          "note": null,
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "vertical",
+              "gap": 3
+            },
+            "children": [
+              {
+                "type": "ToggleButtonGroup",
+                "props": {
+                  "label": "بازهٔ گزارش",
+                  "name": "span",
+                  "isDetached": false,
+                  "defaultSelectedKeys": [
+                    "week"
+                  ]
+                },
+                "actions": {
+                  "onSelectionChange": {
+                    "do": "setState",
+                    "key": "span"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "ToggleButton",
+                    "props": {
+                      "id": "day"
+                    },
+                    "children": "روز"
+                  },
+                  {
+                    "type": "ToggleButton",
+                    "props": {
+                      "id": "week"
+                    },
+                    "children": "هفته"
+                  },
+                  {
+                    "type": "ToggleButton",
+                    "props": {
+                      "id": "month"
+                    },
+                    "children": "ماه"
+                  }
+                ]
+              },
+              {
+                "type": "ToggleButtonGroup",
+                "props": {
+                  "label": "وضعیت پرداخت",
+                  "isLabelHidden": false,
+                  "selectionMode": "multiple",
+                  "disallowEmptySelection": false
+                },
+                "children": [
+                  {
+                    "type": "ToggleButton",
+                    "props": {
+                      "id": "paid",
+                      "icon": "circle-check"
+                    },
+                    "children": "پرداخت‌شده"
+                  },
+                  {
+                    "type": "ToggleButton",
+                    "props": {
+                      "id": "unpaid"
+                    },
+                    "children": "پرداخت‌نشده"
+                  },
+                  {
+                    "type": "ToggleButton",
+                    "props": {
+                      "id": "refunded",
+                      "isDisabled": true
+                    },
+                    "children": "بازپرداخت"
+                  }
+                ]
+              },
+              {
+                "type": "ToggleButtonGroup",
+                "props": {
+                  "label": "قلم",
+                  "isDetached": false,
+                  "defaultSelectedKeys": [
+                    "bold"
+                  ]
+                },
+                "children": [
+                  {
+                    "type": "ToggleButton",
+                    "props": {
+                      "id": "bold",
+                      "icon": "bold",
+                      "isIconOnly": true,
+                      "label": "پررنگ"
+                    }
+                  },
+                  {
+                    "type": "ToggleButton",
+                    "props": {
+                      "id": "italic",
+                      "icon": "italic",
+                      "isIconOnly": true,
+                      "label": "کج"
+                    }
+                  },
+                  {
+                    "type": "ToggleButton",
+                    "props": {
+                      "id": "underline",
+                      "icon": "underline",
+                      "isIconOnly": true,
+                      "label": "زیرخط"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "fields",
+      "title": "۲ · فیلدهای متن",
+      "samples": [
+        {
+          "id": "textfield",
+          "title": "TextField",
+          "note": "ستاره ترکیب شده؛ متریال نشانه‌ای برای الزامی ندارد",
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "vertical",
+              "gap": 3
+            },
+            "children": [
+              {
+                "type": "TextField",
+                "props": {
+                  "label": "نام محصول",
+                  "defaultValue": "شال ابریشمی",
+                  "description": "همان‌طور که در فروشگاه دیده می‌شود.",
+                  "isRequired": true,
+                  "maxLength": 60
+                },
+                "actions": {
+                  "onChange": {
+                    "do": "setState",
+                    "key": "name"
+                  }
+                }
+              },
+              {
+                "type": "TextField",
+                "props": {
+                  "label": "ایمیل",
+                  "type": "email",
+                  "defaultValue": "not-an-email",
+                  "errorMessage": "نشانی ایمیل درست نیست.",
+                  "autoComplete": "email"
+                }
+              },
+              {
+                "type": "TextField",
+                "props": {
+                  "label": "قیمت",
+                  "inputMode": "numeric",
+                  "suffix": "تومان",
+                  "placeholder": "0"
+                }
+              },
+              {
+                "type": "TextField",
+                "props": {
+                  "label": "شناسهٔ کالا (SKU)",
+                  "dir": "ltr",
+                  "prefix": "SKU-",
+                  "defaultValue": "SCARF-07",
+                  "autoCapitalize": "characters",
+                  "spellCheck": false,
+                  "variant": "secondary"
+                }
+              },
+              {
+                "type": "TextField",
+                "props": {
+                  "label": "کد پیگیری (از سرور)",
+                  "value": "DB-1041",
+                  "isReadOnly": true
+                }
+              },
+              {
+                "type": "TextField",
+                "props": {
+                  "label": "رمز",
+                  "type": "password",
+                  "autoComplete": "new-password",
+                  "minLength": 8,
+                  "fullWidth": false
+                }
+              },
+              {
+                "type": "TextField",
+                "props": {
+                  "label": "غیرفعال",
+                  "defaultValue": "—",
+                  "isDisabled": true
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "textarea-search",
+          "title": "TextArea · SearchField",
+          "note": null,
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "vertical",
+              "gap": 3
+            },
+            "children": [
+              {
+                "type": "TextArea",
+                "props": {
+                  "label": "توضیح",
+                  "rows": 4,
+                  "placeholder": "دربارهٔ جنس و اندازه بنویسید",
+                  "description": "چهار سطر، مثل وب"
+                }
+              },
+              {
+                "type": "SearchField",
+                "props": {
+                  "label": "جستجوی سفارش",
+                  "placeholder": "شماره یا نام مشتری"
+                },
+                "actions": {
+                  "onSubmit": {
+                    "do": "call",
+                    "action": "orders.search"
+                  },
+                  "onChange": {
+                    "do": "setState",
+                    "key": "q"
+                  }
+                }
+              },
+              {
+                "type": "SearchField",
+                "props": {
+                  "label": "جستجو",
+                  "defaultValue": "شال",
+                  "variant": "secondary"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "numberfield",
+          "title": "NumberField",
+          "note": "تومان (IRT) ساخته می‌شود: مبلغ و «تومان»",
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "vertical",
+              "gap": 3
+            },
+            "children": [
+              {
+                "type": "NumberField",
+                "props": {
+                  "label": "وزن (گرم)",
+                  "defaultValue": 1250,
+                  "minValue": 0,
+                  "maxValue": 30000,
+                  "step": 50
+                },
+                "actions": {
+                  "onChange": {
+                    "do": "setState",
+                    "key": "weight"
+                  }
+                }
+              },
+              {
+                "type": "NumberField",
+                "props": {
+                  "label": "تخفیف",
+                  "formatStyle": "percent",
+                  "defaultValue": 0.15,
+                  "minValue": 0,
+                  "maxValue": 1,
+                  "step": 0.05
+                }
+              },
+              {
+                "type": "NumberField",
+                "props": {
+                  "label": "قیمت به دلار",
+                  "formatStyle": "currency",
+                  "currency": "USD",
+                  "defaultValue": 1234.5,
+                  "hideSteppers": true
+                }
+              },
+              {
+                "type": "NumberField",
+                "props": {
+                  "label": "قیمت به تومان",
+                  "formatStyle": "currency",
+                  "currency": "IRT",
+                  "defaultValue": 1250000,
+                  "hideSteppers": true
+                }
+              },
+              {
+                "type": "NumberField",
+                "props": {
+                  "label": "قیمت به ریال",
+                  "formatStyle": "currency",
+                  "currency": "IRR",
+                  "defaultValue": 1250000,
+                  "hideSteppers": true,
+                  "isRequired": true
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "datefield",
+          "title": "DateField",
+          "note": "مقدار همیشه ISO میلادی است؛ تقویم فقط نمایش است",
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "vertical",
+              "gap": 3
+            },
+            "children": [
+              {
+                "type": "DateField",
+                "props": {
+                  "label": "تاریخ ارسال",
+                  "defaultValue": "2026-10-16",
+                  "isRequired": true
+                },
+                "actions": {
+                  "onChange": {
+                    "do": "setState",
+                    "key": "shipDate"
+                  }
+                }
+              },
+              {
+                "type": "DateField",
+                "props": {
+                  "label": "زمان تحویل",
+                  "granularity": "hour",
+                  "defaultValue": "2026-10-17T14:00",
+                  "hourCycle": 24
+                }
+              },
+              {
+                "type": "DateField",
+                "props": {
+                  "label": "تاریخ انقضای گذرنامه (میلادی)",
+                  "calendarSystem": "gregorian",
+                  "defaultValue": "2031-03-21"
+                }
+              },
+              {
+                "type": "DateField",
+                "props": {
+                  "label": "تاریخ تولد (شمسی)",
+                  "calendarSystem": "persian",
+                  "defaultValue": "1990-06-01",
+                  "maxValue": "2026-10-16"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "pickers",
+      "title": "۳ · انتخاب‌گرها",
+      "samples": [
+        {
+          "id": "select",
+          "title": "Select · ListBoxItem · ListBoxSection",
+          "note": null,
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "vertical",
+              "gap": 3
+            },
+            "children": [
+              {
+                "type": "Select",
+                "props": {
+                  "label": "روش ارسال",
+                  "placeholder": "انتخاب کنید",
+                  "isRequired": true,
+                  "defaultSelectedKey": "tipax"
+                },
+                "actions": {
+                  "onSelectionChange": {
+                    "do": "setState",
+                    "key": "carrier"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "ListBoxSection",
+                    "props": {
+                      "title": "پیک"
+                    },
+                    "children": [
+                      {
+                        "type": "ListBoxItem",
+                        "props": {
+                          "id": "tipax",
+                          "icon": "truck",
+                          "description": "۲ تا ۳ روز"
+                        },
+                        "children": "تیپاکس"
+                      },
+                      {
+                        "type": "ListBoxItem",
+                        "props": {
+                          "id": "snapp",
+                          "icon": "package",
+                          "description": "همان روز"
+                        },
+                        "children": "اسنپ‌باکس"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "ListBoxSection",
+                    "props": {
+                      "title": "پست"
+                    },
+                    "children": [
+                      {
+                        "type": "ListBoxItem",
+                        "props": {
+                          "id": "post",
+                          "icon": "mail"
+                        },
+                        "children": "پست پیشتاز"
+                      },
+                      {
+                        "type": "ListBoxItem",
+                        "props": {
+                          "id": "pickup",
+                          "icon": "store",
+                          "isDisabled": true
+                        },
+                        "children": "تحویل حضوری"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "Select",
+                "props": {
+                  "label": "برچسب‌ها",
+                  "selectionMode": "multiple",
+                  "defaultSelectedKeys": [
+                    "new",
+                    "sale"
+                  ],
+                  "variant": "secondary"
+                },
+                "children": [
+                  {
+                    "type": "ListBoxItem",
+                    "props": {
+                      "id": "new"
+                    },
+                    "children": "تازه"
+                  },
+                  {
+                    "type": "ListBoxItem",
+                    "props": {
+                      "id": "sale"
+                    },
+                    "children": "حراج"
+                  },
+                  {
+                    "type": "ListBoxItem",
+                    "props": {
+                      "id": "gift"
+                    },
+                    "children": "هدیه"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "combobox",
+          "title": "ComboBox",
+          "note": null,
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "vertical",
+              "gap": 3
+            },
+            "children": [
+              {
+                "type": "ComboBox",
+                "props": {
+                  "label": "شهر",
+                  "placeholder": "بنویسید…",
+                  "emptyMessage": "شهری پیدا نشد",
+                  "menuTrigger": "focus"
+                },
+                "actions": {
+                  "onSelectionChange": {
+                    "do": "setState",
+                    "key": "city"
+                  },
+                  "onInputChange": {
+                    "do": "setState",
+                    "key": "cityText"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "ListBoxItem",
+                    "props": {
+                      "id": "thr"
+                    },
+                    "children": "تهران"
+                  },
+                  {
+                    "type": "ListBoxItem",
+                    "props": {
+                      "id": "isf"
+                    },
+                    "children": "اصفهان"
+                  },
+                  {
+                    "type": "ListBoxItem",
+                    "props": {
+                      "id": "shz"
+                    },
+                    "children": "شیراز"
+                  },
+                  {
+                    "type": "ListBoxItem",
+                    "props": {
+                      "id": "tbz"
+                    },
+                    "children": "تبریز"
+                  }
+                ]
+              },
+              {
+                "type": "ComboBox",
+                "props": {
+                  "label": "برچسب آزاد",
+                  "allowsCustomValue": true,
+                  "defaultInputValue": "پاییزه"
+                },
+                "children": [
+                  {
+                    "type": "ListBoxItem",
+                    "props": {
+                      "id": "summer"
+                    },
+                    "children": "تابستانه"
+                  },
+                  {
+                    "type": "ListBoxItem",
+                    "props": {
+                      "id": "winter"
+                    },
+                    "children": "زمستانه"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "listbox",
+          "title": "ListBox",
+          "note": null,
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "horizontal",
+              "gap": 3,
+              "wrap": true,
+              "align": "center"
+            },
+            "children": [
+              {
+                "type": "ListBox",
+                "props": {
+                  "label": "کارها",
+                  "selectionMode": "none"
+                },
+                "actions": {
+                  "onAction": {
+                    "do": "call",
+                    "action": "row.open",
+                    "value": "row"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "ListBoxItem",
+                    "props": {
+                      "id": "edit",
+                      "icon": "pencil"
+                    },
+                    "children": "ویرایش"
+                  },
+                  {
+                    "type": "ListBoxItem",
+                    "props": {
+                      "id": "copy",
+                      "icon": "copy",
+                      "description": "با همهٔ گونه‌ها"
+                    },
+                    "children": "رونوشت"
+                  },
+                  {
+                    "type": "ListBoxItem",
+                    "props": {
+                      "id": "delete",
+                      "icon": "trash-2",
+                      "variant": "danger"
+                    },
+                    "children": "حذف"
+                  }
+                ]
+              },
+              {
+                "type": "ListBox",
+                "props": {
+                  "label": "اندازه",
+                  "selectionMode": "single",
+                  "defaultSelectedKeys": [
+                    "m"
+                  ]
+                },
+                "children": [
+                  {
+                    "type": "ListBoxItem",
+                    "props": {
+                      "id": "s"
+                    },
+                    "children": "S"
+                  },
+                  {
+                    "type": "ListBoxItem",
+                    "props": {
+                      "id": "m"
+                    },
+                    "children": "M"
+                  },
+                  {
+                    "type": "ListBoxItem",
+                    "props": {
+                      "id": "l"
+                    },
+                    "children": "L"
+                  }
+                ]
+              },
+              {
+                "type": "ListBox",
+                "props": {
+                  "label": "ستون‌ها",
+                  "selectionMode": "multiple",
+                  "defaultSelectedKeys": [
+                    "price",
+                    "stock"
+                  ]
+                },
+                "children": [
+                  {
+                    "type": "ListBoxItem",
+                    "props": {
+                      "id": "price"
+                    },
+                    "children": "قیمت"
+                  },
+                  {
+                    "type": "ListBoxItem",
+                    "props": {
+                      "id": "stock"
+                    },
+                    "children": "موجودی"
+                  },
+                  {
+                    "type": "ListBoxItem",
+                    "props": {
+                      "id": "sku"
+                    },
+                    "children": "SKU"
+                  }
+                ]
+              },
+              {
+                "type": "ListBox",
+                "props": {
+                  "label": "خالی",
+                  "emptyMessage": "هنوز چیزی نیست"
+                },
+                "children": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "dropdown",
+          "title": "Dropdown · DropdownItem · DropdownSection",
+          "note": null,
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "horizontal",
+              "gap": 3,
+              "wrap": true,
+              "align": "center"
+            },
+            "children": [
+              {
+                "type": "Dropdown",
+                "props": {
+                  "placement": "bottom end"
+                },
+                "slots": {
+                  "trigger": {
+                    "type": "Button",
+                    "props": {
+                      "icon": "ellipsis-vertical",
+                      "variant": "outline"
+                    },
+                    "children": "کارها"
+                  }
+                },
+                "actions": {
+                  "onAction": {
+                    "do": "call",
+                    "action": "order.menu",
+                    "value": "item"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "DropdownSection",
+                    "props": {
+                      "title": "سفارش"
+                    },
+                    "children": [
+                      {
+                        "type": "DropdownItem",
+                        "props": {
+                          "id": "print",
+                          "icon": "printer"
+                        },
+                        "children": "چاپ برچسب"
+                      },
+                      {
+                        "type": "DropdownItem",
+                        "props": {
+                          "id": "invoice",
+                          "icon": "receipt",
+                          "description": "با مالیات"
+                        },
+                        "children": "صورت‌حساب"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "DropdownSection",
+                    "props": {
+                      "title": "خطرناک"
+                    },
+                    "children": [
+                      {
+                        "type": "DropdownItem",
+                        "props": {
+                          "id": "cancel",
+                          "icon": "circle-x",
+                          "variant": "danger"
+                        },
+                        "children": "لغو سفارش"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "Dropdown",
+                "props": {
+                  "selectionMode": "multiple",
+                  "defaultSelectedKeys": [
+                    "price"
+                  ],
+                  "placement": "bottom start"
+                },
+                "slots": {
+                  "trigger": {
+                    "type": "Button",
+                    "props": {
+                      "icon": "sliders-horizontal"
+                    },
+                    "children": "ستون‌ها"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "DropdownItem",
+                    "props": {
+                      "id": "price"
+                    },
+                    "children": "قیمت"
+                  },
+                  {
+                    "type": "DropdownItem",
+                    "props": {
+                      "id": "stock"
+                    },
+                    "children": "موجودی"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "choices",
+      "title": "۴ · گزینه‌ها",
+      "samples": [
+        {
+          "id": "checkbox",
+          "title": "Checkbox",
+          "note": null,
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "vertical",
+              "gap": 3
+            },
+            "children": [
+              {
+                "type": "Checkbox",
+                "props": {
+                  "label": "بیمهٔ مرسوله",
+                  "defaultSelected": true,
+                  "description": "تا ۵۰ میلیون تومان"
+                }
+              },
+              {
+                "type": "Checkbox",
+                "props": {
+                  "label": "همهٔ محصولات",
+                  "isIndeterminate": true
+                }
+              },
+              {
+                "type": "Checkbox",
+                "props": {
+                  "label": "شرایط را می‌پذیرم",
+                  "isRequired": true,
+                  "errorMessage": "برای ادامه لازم است."
+                }
+              },
+              {
+                "type": "Checkbox",
+                "props": {
+                  "label": "غیرفعال",
+                  "isDisabled": true
+                }
+              },
+              {
+                "type": "Checkbox",
+                "props": {
+                  "label": "روی کارت خاکستری",
+                  "variant": "secondary"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "checkboxgroup",
+          "title": "CheckboxGroup",
+          "note": null,
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "vertical",
+              "gap": 3
+            },
+            "children": [
+              {
+                "type": "CheckboxGroup",
+                "props": {
+                  "label": "روزهای کاری",
+                  "defaultValue": [
+                    "sat",
+                    "sun"
+                  ],
+                  "isRequired": true,
+                  "description": "دست‌کم یک روز"
+                },
+                "actions": {
+                  "onChange": {
+                    "do": "setState",
+                    "key": "days"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "Checkbox",
+                    "props": {
+                      "value": "sat",
+                      "label": "شنبه"
+                    }
+                  },
+                  {
+                    "type": "Checkbox",
+                    "props": {
+                      "value": "sun",
+                      "label": "یکشنبه"
+                    }
+                  },
+                  {
+                    "type": "Checkbox",
+                    "props": {
+                      "value": "fri",
+                      "label": "جمعه",
+                      "isDisabled": true
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "CheckboxGroup",
+                "props": {
+                  "label": "کانال‌ها",
+                  "orientation": "horizontal"
+                },
+                "children": [
+                  {
+                    "type": "Checkbox",
+                    "props": {
+                      "value": "store",
+                      "label": "فروشگاه"
+                    }
+                  },
+                  {
+                    "type": "Checkbox",
+                    "props": {
+                      "value": "torob",
+                      "label": "ترب"
+                    }
+                  },
+                  {
+                    "type": "Checkbox",
+                    "props": {
+                      "value": "emalls",
+                      "label": "ایمالز"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "radiogroup",
+          "title": "RadioGroup · Radio",
+          "note": null,
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "vertical",
+              "gap": 3
+            },
+            "children": [
+              {
+                "type": "RadioGroup",
+                "props": {
+                  "label": "پرداخت",
+                  "defaultValue": "online",
+                  "isRequired": true
+                },
+                "actions": {
+                  "onChange": {
+                    "do": "setState",
+                    "key": "pay"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "Radio",
+                    "props": {
+                      "value": "online",
+                      "label": "درگاه بانکی",
+                      "description": "شاپرک"
+                    }
+                  },
+                  {
+                    "type": "Radio",
+                    "props": {
+                      "value": "cod",
+                      "label": "پرداخت در محل"
+                    }
+                  },
+                  {
+                    "type": "Radio",
+                    "props": {
+                      "value": "credit",
+                      "label": "اعتباری",
+                      "isDisabled": true
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "RadioGroup",
+                "props": {
+                  "label": "اندازه",
+                  "orientation": "horizontal",
+                  "errorMessage": "یکی را انتخاب کنید."
+                },
+                "children": [
+                  {
+                    "type": "Radio",
+                    "props": {
+                      "value": "s",
+                      "label": "S"
+                    }
+                  },
+                  {
+                    "type": "Radio",
+                    "props": {
+                      "value": "m",
+                      "label": "M"
+                    }
+                  },
+                  {
+                    "type": "Radio",
+                    "props": {
+                      "value": "l",
+                      "label": "L"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "switch",
+          "title": "Switch",
+          "note": null,
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "vertical",
+              "gap": 3
+            },
+            "children": [
+              {
+                "type": "Switch",
+                "props": {
+                  "label": "فروشگاه باز است",
+                  "defaultSelected": true,
+                  "size": "sm"
+                }
+              },
+              {
+                "type": "Switch",
+                "props": {
+                  "label": "ارسال رایگان",
+                  "description": "بالای ۲ میلیون تومان"
+                }
+              },
+              {
+                "type": "Switch",
+                "props": {
+                  "label": "حالت آزمایشی (از سرور)",
+                  "isSelected": true,
+                  "size": "lg"
+                }
+              },
+              {
+                "type": "Switch",
+                "props": {
+                  "label": "غیرفعال",
+                  "isDisabled": true
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "slider",
+          "title": "Slider",
+          "note": null,
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "vertical",
+              "gap": 3
+            },
+            "children": [
+              {
+                "type": "Slider",
+                "props": {
+                  "label": "حداقل سفارش",
+                  "minValue": 0,
+                  "maxValue": 5000000,
+                  "step": 100000,
+                  "defaultValue": 1500000,
+                  "formatStyle": "currency",
+                  "currency": "IRT"
+                },
+                "actions": {
+                  "onChangeEnd": {
+                    "do": "setState",
+                    "key": "min"
+                  }
+                }
+              },
+              {
+                "type": "Slider",
+                "props": {
+                  "label": "بازهٔ قیمت",
+                  "isRange": true,
+                  "minValue": 0,
+                  "maxValue": 100,
+                  "defaultValue": [
+                    20,
+                    70
+                  ],
+                  "description": "هزار تومان"
+                }
+              },
+              {
+                "type": "Slider",
+                "props": {
+                  "label": "شفافیت",
+                  "formatStyle": "percent",
+                  "defaultValue": 60,
+                  "isDisabled": true
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "status",
+      "title": "۵ · وضعیت",
+      "samples": [
+        {
+          "id": "alert",
+          "title": "Alert",
+          "note": "سبز و نارنجی از توکن‌ها؛ متریال نقش success و warning ندارد",
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "vertical",
+              "gap": 3
+            },
+            "children": [
+              {
+                "type": "Alert",
+                "props": {
+                  "status": "danger",
+                  "title": "پرداخت ناموفق بود",
+                  "description": "درگاه پاسخ نداد. دوباره تلاش کنید."
+                },
+                "slots": {
+                  "actions": {
+                    "type": "Stack",
+                    "props": {
+                      "direction": "horizontal",
+                      "gap": 2,
+                      "wrap": true,
+                      "align": "center"
+                    },
+                    "children": [
+                      {
+                        "type": "Button",
+                        "props": {
+                          "variant": "danger",
+                          "size": "sm"
+                        },
+                        "children": "تلاش دوباره"
+                      },
+                      {
+                        "type": "LinkButton",
+                        "props": {
+                          "href": "/settings/payments",
+                          "variant": "ghost"
+                        },
+                        "children": "تنظیمات"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "type": "Alert",
+                "props": {
+                  "status": "warning",
+                  "title": "موجودی کم است",
+                  "isDismissible": true
+                }
+              },
+              {
+                "type": "Alert",
+                "props": {
+                  "status": "success",
+                  "title": "دامنه تأیید شد"
+                }
+              },
+              {
+                "type": "Alert",
+                "props": {
+                  "status": "accent",
+                  "title": "ویژگی تازه",
+                  "icon": "sparkles",
+                  "description": "کالادان حالا کارت‌های برنامه دارد."
+                }
+              },
+              {
+                "type": "Alert",
+                "props": {
+                  "status": "default",
+                  "title": "یادداشت",
+                  "hideIcon": true
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "chip",
+          "title": "Chip",
+          "note": null,
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "vertical",
+              "gap": 3
+            },
+            "children": [
+              {
+                "type": "Stack",
+                "props": {
+                  "direction": "horizontal",
+                  "gap": 2,
+                  "wrap": true,
+                  "align": "center"
+                },
+                "children": [
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "variant": "soft",
+                      "color": "default"
+                    },
+                    "children": "soft·default"
+                  },
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "variant": "soft",
+                      "color": "accent"
+                    },
+                    "children": "soft·accent"
+                  },
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "variant": "soft",
+                      "color": "success"
+                    },
+                    "children": "soft·success"
+                  },
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "variant": "soft",
+                      "color": "warning"
+                    },
+                    "children": "soft·warning"
+                  },
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "variant": "soft",
+                      "color": "danger"
+                    },
+                    "children": "soft·danger"
+                  }
+                ]
+              },
+              {
+                "type": "Stack",
+                "props": {
+                  "direction": "horizontal",
+                  "gap": 2,
+                  "wrap": true,
+                  "align": "center"
+                },
+                "children": [
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "variant": "primary",
+                      "color": "default"
+                    },
+                    "children": "primary·default"
+                  },
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "variant": "primary",
+                      "color": "accent"
+                    },
+                    "children": "primary·accent"
+                  },
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "variant": "primary",
+                      "color": "success"
+                    },
+                    "children": "primary·success"
+                  },
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "variant": "primary",
+                      "color": "warning"
+                    },
+                    "children": "primary·warning"
+                  },
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "variant": "primary",
+                      "color": "danger"
+                    },
+                    "children": "primary·danger"
+                  }
+                ]
+              },
+              {
+                "type": "Stack",
+                "props": {
+                  "direction": "horizontal",
+                  "gap": 2,
+                  "wrap": true,
+                  "align": "center"
+                },
+                "children": [
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "variant": "secondary",
+                      "color": "default"
+                    },
+                    "children": "secondary·default"
+                  },
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "variant": "secondary",
+                      "color": "accent"
+                    },
+                    "children": "secondary·accent"
+                  },
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "variant": "secondary",
+                      "color": "success"
+                    },
+                    "children": "secondary·success"
+                  },
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "variant": "secondary",
+                      "color": "warning"
+                    },
+                    "children": "secondary·warning"
+                  },
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "variant": "secondary",
+                      "color": "danger"
+                    },
+                    "children": "secondary·danger"
+                  }
+                ]
+              },
+              {
+                "type": "Stack",
+                "props": {
+                  "direction": "horizontal",
+                  "gap": 2,
+                  "wrap": true,
+                  "align": "center"
+                },
+                "children": [
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "variant": "tertiary",
+                      "color": "default"
+                    },
+                    "children": "tertiary·default"
+                  },
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "variant": "tertiary",
+                      "color": "accent"
+                    },
+                    "children": "tertiary·accent"
+                  },
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "variant": "tertiary",
+                      "color": "success"
+                    },
+                    "children": "tertiary·success"
+                  },
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "variant": "tertiary",
+                      "color": "warning"
+                    },
+                    "children": "tertiary·warning"
+                  },
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "variant": "tertiary",
+                      "color": "danger"
+                    },
+                    "children": "tertiary·danger"
+                  }
+                ]
+              },
+              {
+                "type": "Stack",
+                "props": {
+                  "direction": "horizontal",
+                  "gap": 2,
+                  "wrap": true,
+                  "align": "center"
+                },
+                "children": [
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "size": "sm",
+                      "color": "success",
+                      "icon": "circle-check"
+                    },
+                    "children": "پرداخت‌شده"
+                  },
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "size": "md",
+                      "color": "warning"
+                    },
+                    "children": "در انتظار"
+                  },
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "size": "lg",
+                      "color": "danger"
+                    },
+                    "children": "لغوشده"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "taggroup",
+          "title": "TagGroup · Tag",
+          "note": null,
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "vertical",
+              "gap": 3
+            },
+            "children": [
+              {
+                "type": "TagGroup",
+                "props": {
+                  "label": "کلیدواژه‌ها"
+                },
+                "actions": {
+                  "onRemove": {
+                    "do": "call",
+                    "action": "keyword.remove",
+                    "value": "tag"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "Tag",
+                    "props": {
+                      "id": "silk"
+                    },
+                    "children": "ابریشم"
+                  },
+                  {
+                    "type": "Tag",
+                    "props": {
+                      "id": "scarf",
+                      "icon": "tag"
+                    },
+                    "children": "شال"
+                  },
+                  {
+                    "type": "Tag",
+                    "props": {
+                      "id": "gift",
+                      "isDisabled": true
+                    },
+                    "children": "هدیه"
+                  }
+                ]
+              },
+              {
+                "type": "TagGroup",
+                "props": {
+                  "label": "وضعیت",
+                  "selectionMode": "single",
+                  "defaultSelectedKeys": [
+                    "open"
+                  ],
+                  "size": "sm"
+                },
+                "children": [
+                  {
+                    "type": "Tag",
+                    "props": {
+                      "id": "open"
+                    },
+                    "children": "باز"
+                  },
+                  {
+                    "type": "Tag",
+                    "props": {
+                      "id": "closed"
+                    },
+                    "children": "بسته"
+                  }
+                ]
+              },
+              {
+                "type": "TagGroup",
+                "props": {
+                  "label": "فیلترها",
+                  "selectionMode": "multiple",
+                  "defaultSelectedKeys": [
+                    "a",
+                    "c"
+                  ],
+                  "variant": "surface",
+                  "size": "lg"
+                },
+                "children": [
+                  {
+                    "type": "Tag",
+                    "props": {
+                      "id": "a"
+                    },
+                    "children": "موجود"
+                  },
+                  {
+                    "type": "Tag",
+                    "props": {
+                      "id": "b"
+                    },
+                    "children": "حراج"
+                  },
+                  {
+                    "type": "Tag",
+                    "props": {
+                      "id": "c",
+                      "href": "/products?new=1"
+                    },
+                    "children": "تازه"
+                  }
+                ]
+              },
+              {
+                "type": "TagGroup",
+                "props": {
+                  "label": "بدون برچسب",
+                  "emptyMessage": "هنوز کلیدواژه‌ای نیست"
+                },
+                "children": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "spinner-progress",
+          "title": "Spinner · ProgressBar",
+          "note": null,
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "vertical",
+              "gap": 3
+            },
+            "children": [
+              {
+                "type": "Stack",
+                "props": {
+                  "direction": "horizontal",
+                  "gap": 3,
+                  "wrap": true,
+                  "align": "center"
+                },
+                "children": [
+                  {
+                    "type": "Spinner",
+                    "props": {
+                      "size": "sm"
+                    }
+                  },
+                  {
+                    "type": "Spinner",
+                    "props": {
+                      "size": "md"
+                    }
+                  },
+                  {
+                    "type": "Spinner",
+                    "props": {
+                      "size": "lg"
+                    }
+                  },
+                  {
+                    "type": "Spinner",
+                    "props": {
+                      "size": "xl"
+                    }
+                  },
+                  {
+                    "type": "Spinner",
+                    "props": {
+                      "color": "success",
+                      "size": "sm"
+                    }
+                  },
+                  {
+                    "type": "Spinner",
+                    "props": {
+                      "color": "warning",
+                      "size": "sm"
+                    }
+                  },
+                  {
+                    "type": "Spinner",
+                    "props": {
+                      "color": "danger",
+                      "size": "sm"
+                    }
+                  },
+                  {
+                    "type": "Spinner",
+                    "props": {
+                      "color": "current",
+                      "size": "sm"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "ProgressBar",
+                "props": {
+                  "label": "درون‌ریزی محصولات",
+                  "value": 64
+                }
+              },
+              {
+                "type": "ProgressBar",
+                "props": {
+                  "label": "ارسال‌شده",
+                  "value": 3,
+                  "maxValue": 10,
+                  "valueLabel": "۳ از ۱۰",
+                  "color": "success",
+                  "size": "sm"
+                }
+              },
+              {
+                "type": "ProgressBar",
+                "props": {
+                  "label": "فضای ذخیره",
+                  "value": 0.92,
+                  "maxValue": 1,
+                  "color": "danger",
+                  "size": "lg"
+                }
+              },
+              {
+                "type": "ProgressBar",
+                "props": {
+                  "label": "در انتظار سرور",
+                  "isIndeterminate": true,
+                  "color": "default"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "avatar",
+          "title": "Avatar · AvatarGroup",
+          "note": "«+۲» با رقم فارسی",
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "vertical",
+              "gap": 3
+            },
+            "children": [
+              {
+                "type": "Stack",
+                "props": {
+                  "direction": "horizontal",
+                  "gap": 3,
+                  "wrap": true,
+                  "align": "center"
+                },
+                "children": [
+                  {
+                    "type": "Avatar",
+                    "props": {
+                      "name": "نیلوفر رستمی",
+                      "size": "sm"
+                    }
+                  },
+                  {
+                    "type": "Avatar",
+                    "props": {
+                      "name": "امید کاظمی",
+                      "color": "accent"
+                    }
+                  },
+                  {
+                    "type": "Avatar",
+                    "props": {
+                      "name": "سارا",
+                      "color": "success",
+                      "variant": "soft",
+                      "size": "lg"
+                    }
+                  },
+                  {
+                    "type": "Avatar",
+                    "props": {
+                      "icon": "user",
+                      "color": "default"
+                    }
+                  },
+                  {
+                    "type": "Avatar",
+                    "props": {
+                      "name": "Broken image",
+                      "src": "https://invalid.kaladan.test/x.png",
+                      "color": "warning",
+                      "variant": "soft"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "AvatarGroup",
+                "props": {
+                  "max": 3,
+                  "color": "accent",
+                  "variant": "soft"
+                },
+                "children": [
+                  {
+                    "type": "Avatar",
+                    "props": {
+                      "name": "نیلوفر رستمی"
+                    }
+                  },
+                  {
+                    "type": "Avatar",
+                    "props": {
+                      "name": "امید کاظمی"
+                    }
+                  },
+                  {
+                    "type": "Avatar",
+                    "props": {
+                      "name": "سارا احمدی"
+                    }
+                  },
+                  {
+                    "type": "Avatar",
+                    "props": {
+                      "name": "رضا"
+                    }
+                  },
+                  {
+                    "type": "Avatar",
+                    "props": {
+                      "name": "مینا"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "AvatarGroup",
+                "props": {
+                  "overlap": "ring",
+                  "size": "sm"
+                },
+                "children": [
+                  {
+                    "type": "Avatar",
+                    "props": {
+                      "name": "A B",
+                      "color": "danger"
+                    }
+                  },
+                  {
+                    "type": "Avatar",
+                    "props": {
+                      "name": "C D",
+                      "color": "success"
+                    }
+                  },
+                  {
+                    "type": "Avatar",
+                    "props": {
+                      "name": "E F",
+                      "color": "warning"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "AvatarGroup",
+                "props": {
+                  "isGrid": true,
+                  "size": "sm"
+                },
+                "children": [
+                  {
+                    "type": "Avatar",
+                    "props": {
+                      "name": "A"
+                    }
+                  },
+                  {
+                    "type": "Avatar",
+                    "props": {
+                      "name": "B"
+                    }
+                  },
+                  {
+                    "type": "Avatar",
+                    "props": {
+                      "name": "C"
+                    }
+                  },
+                  {
+                    "type": "Avatar",
+                    "props": {
+                      "name": "D"
+                    }
+                  },
+                  {
+                    "type": "Avatar",
+                    "props": {
+                      "name": "E"
+                    }
+                  },
+                  {
+                    "type": "Avatar",
+                    "props": {
+                      "name": "F"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "toast",
+          "title": "toast (verb)",
+          "note": null,
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "horizontal",
+              "gap": 3,
+              "wrap": true,
+              "align": "center"
+            },
+            "children": [
+              {
+                "type": "Button",
+                "props": {},
+                "children": "default",
+                "actions": {
+                  "onPress": {
+                    "do": "toast",
+                    "status": "default",
+                    "title": "ذخیره شد",
+                    "description": "تغییرها ثبت شد.",
+                    "actionLabel": "برگرداندن",
+                    "onAction": {
+                      "do": "call",
+                      "action": "undo"
+                    }
+                  }
+                }
+              },
+              {
+                "type": "Button",
+                "props": {},
+                "children": "accent",
+                "actions": {
+                  "onPress": {
+                    "do": "toast",
+                    "status": "accent",
+                    "title": "ذخیره شد",
+                    "description": "تغییرها ثبت شد."
+                  }
+                }
+              },
+              {
+                "type": "Button",
+                "props": {},
+                "children": "success",
+                "actions": {
+                  "onPress": {
+                    "do": "toast",
+                    "status": "success",
+                    "title": "ذخیره شد",
+                    "description": "تغییرها ثبت شد."
+                  }
+                }
+              },
+              {
+                "type": "Button",
+                "props": {},
+                "children": "warning",
+                "actions": {
+                  "onPress": {
+                    "do": "toast",
+                    "status": "warning",
+                    "title": "ذخیره شد",
+                    "description": "تغییرها ثبت شد."
+                  }
+                }
+              },
+              {
+                "type": "Button",
+                "props": {},
+                "children": "danger",
+                "actions": {
+                  "onPress": {
+                    "do": "toast",
+                    "status": "danger",
+                    "title": "ذخیره شد",
+                    "description": "تغییرها ثبت شد."
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "guard",
+          "title": "متن ساده، نشانی‌ها به‌ازای prop",
+          "note": "پیش‌تر عنوان انگلیسی رد می‌شد",
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "vertical",
+              "gap": 3
+            },
+            "children": [
+              {
+                "type": "Alert",
+                "props": {
+                  "status": "warning",
+                  "title": "هشدار: موجودی کم است"
+                }
+              },
+              {
+                "type": "Alert",
+                "props": {
+                  "status": "default",
+                  "title": "پاسخ: سفارش شما",
+                  "description": "sku:123"
+                }
+              },
+              {
+                "type": "Text",
+                "props": {
+                  "tone": "muted",
+                  "size": "sm"
+                },
+                "children": "این‌ها متن‌اند و رد نمی‌شوند. فقط propهای نشانی (href، src، image) قاعدهٔ نشانی دارند."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "containers",
+      "title": "۶ · ظرف‌ها",
+      "samples": [
+        {
+          "id": "card",
+          "title": "Card",
+          "note": "سومی سطح ۳ است، توکن تازه",
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "vertical",
+              "gap": 3
+            },
+            "children": [
+              {
+                "type": "Card",
+                "props": {
+                  "title": "فروش امروز",
+                  "description": "تا ساعت ۱۴"
+                },
+                "slots": {
+                  "action": {
+                    "type": "LinkButton",
+                    "props": {
+                      "href": "/analytics",
+                      "variant": "ghost"
+                    },
+                    "children": "همه"
+                  },
+                  "footer": {
+                    "type": "Text",
+                    "props": {
+                      "tone": "muted",
+                      "size": "sm"
+                    },
+                    "children": "۱۲ سفارش"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "Text",
+                    "props": {
+                      "size": "2xl"
+                    },
+                    "children": "۲۴٬۵۰۰٬۰۰۰ تومان"
+                  }
+                ]
+              },
+              {
+                "type": "Stack",
+                "props": {
+                  "direction": "horizontal",
+                  "gap": 3,
+                  "wrap": true,
+                  "align": "center"
+                },
+                "children": [
+                  {
+                    "type": "Card",
+                    "props": {
+                      "variant": "secondary",
+                      "title": "secondary"
+                    },
+                    "children": [
+                      {
+                        "type": "Text",
+                        "props": {},
+                        "children": "…"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Card",
+                    "props": {
+                      "variant": "tertiary",
+                      "title": "tertiary"
+                    },
+                    "children": [
+                      {
+                        "type": "Text",
+                        "props": {},
+                        "children": "…"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Card",
+                    "props": {
+                      "variant": "transparent",
+                      "title": "transparent"
+                    },
+                    "children": [
+                      {
+                        "type": "Text",
+                        "props": {},
+                        "children": "…"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "Card",
+                "props": {
+                  "title": "کارت پیوندی",
+                  "description": "کل کارت باز می‌شود",
+                  "href": "/orders/DB-1041"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "tabs",
+          "title": "Tabs · Tab",
+          "note": "ظاهرش قرص روی فهرست است",
+          "tree": {
+            "type": "Tabs",
+            "props": {
+              "selectedKey": "orders"
+            },
+            "actions": {
+              "onChange": {
+                "do": "setState",
+                "key": "tab"
+              }
+            },
+            "children": [
+              {
+                "type": "Tab",
+                "props": {
+                  "id": "orders",
+                  "label": "سفارش‌ها"
+                },
+                "children": [
+                  {
+                    "type": "Text",
+                    "props": {},
+                    "children": "۱۲ سفارش تازه"
+                  }
+                ]
+              },
+              {
+                "type": "Tab",
+                "props": {
+                  "id": "customers",
+                  "label": "مشتری‌ها"
+                },
+                "children": [
+                  {
+                    "type": "Text",
+                    "props": {},
+                    "children": "۳ مشتری تازه"
+                  }
+                ]
+              },
+              {
+                "type": "Tab",
+                "props": {
+                  "id": "returns",
+                  "label": "مرجوعی‌ها"
+                },
+                "children": [
+                  {
+                    "type": "Text",
+                    "props": {},
+                    "children": "مرجوعی ندارید"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "table",
+          "title": "Table · Column · Row · Cell · TableFooter",
+          "note": "جمع پایانی ردیف آخر DataTable است",
+          "tree": {
+            "type": "Table",
+            "props": {
+              "label": "سفارش‌ها",
+              "selectionMode": "multiple",
+              "defaultSelectedKeys": [
+                "1041"
+              ],
+              "defaultSortColumn": "total",
+              "defaultSortDirection": "descending",
+              "emptyMessage": "سفارشی نیست"
+            },
+            "actions": {
+              "onSortChange": {
+                "do": "call",
+                "action": "orders.sort",
+                "value": "sort"
+              },
+              "onSelectionChange": {
+                "do": "setState",
+                "key": "rows"
+              },
+              "onRowAction": {
+                "do": "call",
+                "action": "order.open",
+                "value": "order"
+              },
+              "onLoadMore": {
+                "do": "call",
+                "action": "orders.more"
+              }
+            },
+            "children": [
+              {
+                "type": "TableHeader",
+                "children": [
+                  {
+                    "type": "Column",
+                    "props": {
+                      "id": "code",
+                      "isRowHeader": true
+                    },
+                    "children": "سفارش"
+                  },
+                  {
+                    "type": "Column",
+                    "props": {
+                      "id": "customer"
+                    },
+                    "children": "مشتری"
+                  },
+                  {
+                    "type": "Column",
+                    "props": {
+                      "id": "status",
+                      "align": "center"
+                    },
+                    "children": "وضعیت"
+                  },
+                  {
+                    "type": "Column",
+                    "props": {
+                      "id": "total",
+                      "allowsSorting": true,
+                      "align": "end"
+                    },
+                    "children": "مبلغ"
+                  }
+                ]
+              },
+              {
+                "type": "TableBody",
+                "children": [
+                  {
+                    "type": "Row",
+                    "props": {
+                      "id": "1041",
+                      "isDisabled": false
+                    },
+                    "children": [
+                      {
+                        "type": "Cell",
+                        "children": "DB-1041"
+                      },
+                      {
+                        "type": "Cell",
+                        "children": "نیلوفر رستمی"
+                      },
+                      {
+                        "type": "Cell",
+                        "children": [
+                          {
+                            "type": "Chip",
+                            "props": {
+                              "color": "success"
+                            },
+                            "children": "پرداخت‌شده"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "Cell",
+                        "children": "۱٬۲۴۰٬۰۰۰"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Row",
+                    "props": {
+                      "id": "1042",
+                      "isDisabled": false
+                    },
+                    "children": [
+                      {
+                        "type": "Cell",
+                        "children": "DB-1042"
+                      },
+                      {
+                        "type": "Cell",
+                        "children": "امید کاظمی"
+                      },
+                      {
+                        "type": "Cell",
+                        "children": [
+                          {
+                            "type": "Chip",
+                            "props": {
+                              "color": "warning"
+                            },
+                            "children": "در انتظار"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "Cell",
+                        "children": "۸۹۰٬۰۰۰"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Row",
+                    "props": {
+                      "id": "1043",
+                      "isDisabled": true
+                    },
+                    "children": [
+                      {
+                        "type": "Cell",
+                        "children": "DB-1043"
+                      },
+                      {
+                        "type": "Cell",
+                        "children": "سارا احمدی"
+                      },
+                      {
+                        "type": "Cell",
+                        "children": [
+                          {
+                            "type": "Chip",
+                            "props": {
+                              "color": "danger"
+                            },
+                            "children": "لغوشده"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "Cell",
+                        "children": "۴۵۰٬۰۰۰"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "TableFooter",
+                "children": [
+                  {
+                    "type": "Row",
+                    "props": {
+                      "id": "sum"
+                    },
+                    "children": [
+                      {
+                        "type": "Cell",
+                        "children": "جمع"
+                      },
+                      {
+                        "type": "Cell",
+                        "children": ""
+                      },
+                      {
+                        "type": "Cell",
+                        "children": ""
+                      },
+                      {
+                        "type": "Cell",
+                        "children": "۲٬۵۸۰٬۰۰۰"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "overlays",
+          "title": "Modal · AlertDialog · Popover",
+          "note": null,
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "horizontal",
+              "gap": 3,
+              "wrap": true,
+              "align": "center"
+            },
+            "children": [
+              {
+                "type": "Modal",
+                "props": {
+                  "title": "ویرایش نشانی",
+                  "icon": "map-pin",
+                  "size": "md"
+                },
+                "slots": {
+                  "trigger": {
+                    "type": "Button",
+                    "props": {
+                      "icon": "pencil"
+                    },
+                    "children": "ویرایش نشانی"
+                  },
+                  "footer": {
+                    "type": "Stack",
+                    "props": {
+                      "direction": "horizontal",
+                      "gap": 2,
+                      "wrap": true,
+                      "align": "center"
+                    },
+                    "children": [
+                      {
+                        "type": "Button",
+                        "props": {
+                          "variant": "ghost"
+                        },
+                        "children": "انصراف",
+                        "actions": {
+                          "onPress": {
+                            "do": "close"
+                          }
+                        }
+                      },
+                      {
+                        "type": "Button",
+                        "props": {
+                          "variant": "primary"
+                        },
+                        "children": "ذخیره",
+                        "actions": {
+                          "onPress": [
+                            {
+                              "do": "call",
+                              "action": "address.save",
+                              "with": [
+                                "city",
+                                "street"
+                              ]
+                            },
+                            {
+                              "do": "close"
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                "children": [
+                  {
+                    "type": "TextField",
+                    "props": {
+                      "label": "شهر",
+                      "defaultValue": "تهران"
+                    },
+                    "actions": {
+                      "onChange": {
+                        "do": "setState",
+                        "key": "city"
+                      }
+                    }
+                  },
+                  {
+                    "type": "TextArea",
+                    "props": {
+                      "label": "نشانی",
+                      "rows": 2
+                    },
+                    "actions": {
+                      "onChange": {
+                        "do": "setState",
+                        "key": "street"
+                      }
+                    }
+                  },
+                  {
+                    "type": "Checkbox",
+                    "props": {
+                      "label": "نشانی پیش‌فرض"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "AlertDialog",
+                "props": {
+                  "status": "danger",
+                  "title": "حذف این محصول؟",
+                  "description": "این کار برگشت‌پذیر نیست.",
+                  "confirmLabel": "حذف"
+                },
+                "slots": {
+                  "trigger": {
+                    "type": "Button",
+                    "props": {
+                      "variant": "danger-soft",
+                      "icon": "trash-2"
+                    },
+                    "children": "حذف محصول"
+                  }
+                },
+                "actions": {
+                  "onConfirm": {
+                    "do": "call",
+                    "action": "product.delete"
+                  }
+                }
+              },
+              {
+                "type": "Popover",
+                "props": {
+                  "title": "کارمزد چیست؟",
+                  "placement": "bottom start",
+                  "showArrow": true
+                },
+                "slots": {
+                  "trigger": {
+                    "type": "Button",
+                    "props": {
+                      "icon": "circle-help",
+                      "variant": "ghost"
+                    },
+                    "children": "کارمزد"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "Text",
+                    "props": {
+                      "size": "sm"
+                    },
+                    "children": "۲٪ از هر سفارش، پس از تسویه."
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "form",
+          "title": "Form · Button type",
+          "note": "ذخیره را بزنید: بررسی‌ها پیش از onSubmit",
+          "tree": {
+            "type": "Form",
+            "props": {
+              "gap": 3
+            },
+            "actions": {
+              "onSubmit": {
+                "do": "call",
+                "action": "profile.save"
+              }
+            },
+            "children": [
+              {
+                "type": "TextField",
+                "props": {
+                  "label": "نام فروشگاه",
+                  "name": "store",
+                  "isRequired": true,
+                  "defaultValue": "کالادان"
+                }
+              },
+              {
+                "type": "TextField",
+                "props": {
+                  "label": "ایمیل",
+                  "name": "email",
+                  "type": "email",
+                  "isRequired": true
+                }
+              },
+              {
+                "type": "NumberField",
+                "props": {
+                  "label": "حداقل سفارش",
+                  "name": "min",
+                  "minValue": 0,
+                  "maxValue": 1000000,
+                  "isRequired": true
+                }
+              },
+              {
+                "type": "Checkbox",
+                "props": {
+                  "label": "خبرنامه",
+                  "name": "news",
+                  "defaultSelected": true
+                }
+              },
+              {
+                "type": "Stack",
+                "props": {
+                  "direction": "horizontal",
+                  "gap": 2,
+                  "wrap": true,
+                  "align": "center"
+                },
+                "children": [
+                  {
+                    "type": "Button",
+                    "props": {
+                      "type": "submit",
+                      "variant": "primary"
+                    },
+                    "children": "ذخیره"
+                  },
+                  {
+                    "type": "Button",
+                    "props": {
+                      "type": "reset",
+                      "variant": "ghost"
+                    },
+                    "children": "از نو"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "en": [
+    {
+      "id": "actions",
+      "title": "1 · Actions",
+      "samples": [
+        {
+          "id": "button-variants",
+          "title": "Button · variant",
+          "note": "seven variants on four Material buttons",
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "horizontal",
+              "gap": 3,
+              "wrap": true,
+              "align": "center"
+            },
+            "children": [
+              {
+                "type": "Button",
+                "props": {
+                  "variant": "primary"
+                },
+                "children": "primary"
+              },
+              {
+                "type": "Button",
+                "props": {
+                  "variant": "secondary"
+                },
+                "children": "secondary"
+              },
+              {
+                "type": "Button",
+                "props": {
+                  "variant": "tertiary"
+                },
+                "children": "tertiary"
+              },
+              {
+                "type": "Button",
+                "props": {
+                  "variant": "outline"
+                },
+                "children": "outline"
+              },
+              {
+                "type": "Button",
+                "props": {
+                  "variant": "ghost"
+                },
+                "children": "ghost"
+              },
+              {
+                "type": "Button",
+                "props": {
+                  "variant": "danger"
+                },
+                "children": "danger"
+              },
+              {
+                "type": "Button",
+                "props": {
+                  "variant": "danger-soft"
+                },
+                "children": "danger-soft"
+              }
+            ]
+          }
+        },
+        {
+          "id": "button-sizes",
+          "title": "Button · size, icon, iconPlacement, isIconOnly, isPending",
+          "note": null,
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "vertical",
+              "gap": 3
+            },
+            "children": [
+              {
+                "type": "Stack",
+                "props": {
+                  "direction": "horizontal",
+                  "gap": 3,
+                  "wrap": true,
+                  "align": "center"
+                },
+                "children": [
+                  {
+                    "type": "Button",
+                    "props": {
+                      "size": "sm",
+                      "variant": "primary"
+                    },
+                    "children": "Small"
+                  },
+                  {
+                    "type": "Button",
+                    "props": {
+                      "size": "md",
+                      "variant": "primary"
+                    },
+                    "children": "Medium"
+                  },
+                  {
+                    "type": "Button",
+                    "props": {
+                      "size": "lg",
+                      "variant": "primary"
+                    },
+                    "children": "Large"
+                  }
+                ]
+              },
+              {
+                "type": "Stack",
+                "props": {
+                  "direction": "horizontal",
+                  "gap": 3,
+                  "wrap": true,
+                  "align": "center"
+                },
+                "children": [
+                  {
+                    "type": "Button",
+                    "props": {
+                      "icon": "plus",
+                      "variant": "primary"
+                    },
+                    "children": "Add"
+                  },
+                  {
+                    "type": "Button",
+                    "props": {
+                      "icon": "arrow-right",
+                      "iconPlacement": "end"
+                    },
+                    "children": "Next"
+                  },
+                  {
+                    "type": "Button",
+                    "props": {
+                      "icon": "pencil",
+                      "isIconOnly": true,
+                      "label": "Edit"
+                    },
+                    "children": ""
+                  },
+                  {
+                    "type": "Button",
+                    "props": {
+                      "icon": "trash-2",
+                      "isIconOnly": true,
+                      "variant": "danger-soft",
+                      "label": "Delete"
+                    },
+                    "children": ""
+                  },
+                  {
+                    "type": "Button",
+                    "props": {
+                      "isPending": true,
+                      "variant": "primary"
+                    },
+                    "children": "Saving"
+                  },
+                  {
+                    "type": "Button",
+                    "props": {
+                      "isDisabled": true
+                    },
+                    "children": "Disabled"
+                  }
+                ]
+              },
+              {
+                "type": "Button",
+                "props": {
+                  "fullWidth": true,
+                  "variant": "primary",
+                  "size": "md"
+                },
+                "children": "Continue to payment"
+              }
+            ]
+          }
+        },
+        {
+          "id": "linkbutton-link",
+          "title": "LinkButton · Link",
+          "note": null,
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "vertical",
+              "gap": 3
+            },
+            "children": [
+              {
+                "type": "Stack",
+                "props": {
+                  "direction": "horizontal",
+                  "gap": 3,
+                  "wrap": true,
+                  "align": "center"
+                },
+                "children": [
+                  {
+                    "type": "LinkButton",
+                    "props": {
+                      "href": "/orders/DB-1041",
+                      "variant": "outline",
+                      "icon": "external-link"
+                    },
+                    "children": "View order"
+                  },
+                  {
+                    "type": "LinkButton",
+                    "props": {
+                      "href": "https://kaladan.shop/help",
+                      "isExternal": true,
+                      "variant": "ghost"
+                    },
+                    "children": "Kaladan help"
+                  }
+                ]
+              },
+              {
+                "type": "Link",
+                "props": {
+                  "href": "/settings/shipping"
+                },
+                "children": "Shipping settings"
+              },
+              {
+                "type": "Link",
+                "props": {
+                  "href": "/x",
+                  "isDisabled": true
+                },
+                "children": "Disabled link"
+              }
+            ]
+          }
+        },
+        {
+          "id": "toggle-group",
+          "title": "ToggleButtonGroup · ToggleButton",
+          "note": null,
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "vertical",
+              "gap": 3
+            },
+            "children": [
+              {
+                "type": "ToggleButtonGroup",
+                "props": {
+                  "label": "Report span",
+                  "name": "span",
+                  "isDetached": false,
+                  "defaultSelectedKeys": [
+                    "week"
+                  ]
+                },
+                "actions": {
+                  "onSelectionChange": {
+                    "do": "setState",
+                    "key": "span"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "ToggleButton",
+                    "props": {
+                      "id": "day"
+                    },
+                    "children": "Day"
+                  },
+                  {
+                    "type": "ToggleButton",
+                    "props": {
+                      "id": "week"
+                    },
+                    "children": "Week"
+                  },
+                  {
+                    "type": "ToggleButton",
+                    "props": {
+                      "id": "month"
+                    },
+                    "children": "Month"
+                  }
+                ]
+              },
+              {
+                "type": "ToggleButtonGroup",
+                "props": {
+                  "label": "Payment status",
+                  "isLabelHidden": false,
+                  "selectionMode": "multiple",
+                  "disallowEmptySelection": false
+                },
+                "children": [
+                  {
+                    "type": "ToggleButton",
+                    "props": {
+                      "id": "paid",
+                      "icon": "circle-check"
+                    },
+                    "children": "Paid"
+                  },
+                  {
+                    "type": "ToggleButton",
+                    "props": {
+                      "id": "unpaid"
+                    },
+                    "children": "Unpaid"
+                  },
+                  {
+                    "type": "ToggleButton",
+                    "props": {
+                      "id": "refunded",
+                      "isDisabled": true
+                    },
+                    "children": "Refunded"
+                  }
+                ]
+              },
+              {
+                "type": "ToggleButtonGroup",
+                "props": {
+                  "label": "Text style",
+                  "isDetached": false,
+                  "defaultSelectedKeys": [
+                    "bold"
+                  ]
+                },
+                "children": [
+                  {
+                    "type": "ToggleButton",
+                    "props": {
+                      "id": "bold",
+                      "icon": "bold",
+                      "isIconOnly": true,
+                      "label": "Bold"
+                    }
+                  },
+                  {
+                    "type": "ToggleButton",
+                    "props": {
+                      "id": "italic",
+                      "icon": "italic",
+                      "isIconOnly": true,
+                      "label": "Italic"
+                    }
+                  },
+                  {
+                    "type": "ToggleButton",
+                    "props": {
+                      "id": "underline",
+                      "icon": "underline",
+                      "isIconOnly": true,
+                      "label": "Underline"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "fields",
+      "title": "2 · Text fields",
+      "samples": [
+        {
+          "id": "textfield",
+          "title": "TextField",
+          "note": "the asterisk is composed: M3 has no required mark",
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "vertical",
+              "gap": 3
+            },
+            "children": [
+              {
+                "type": "TextField",
+                "props": {
+                  "label": "Product name",
+                  "defaultValue": "Silk scarf",
+                  "description": "As shown in the store.",
+                  "isRequired": true,
+                  "maxLength": 60
+                },
+                "actions": {
+                  "onChange": {
+                    "do": "setState",
+                    "key": "name"
+                  }
+                }
+              },
+              {
+                "type": "TextField",
+                "props": {
+                  "label": "Email",
+                  "type": "email",
+                  "defaultValue": "not-an-email",
+                  "errorMessage": "Enter a valid email address.",
+                  "autoComplete": "email"
+                }
+              },
+              {
+                "type": "TextField",
+                "props": {
+                  "label": "Price",
+                  "inputMode": "numeric",
+                  "suffix": "Toman",
+                  "placeholder": "0"
+                }
+              },
+              {
+                "type": "TextField",
+                "props": {
+                  "label": "SKU",
+                  "dir": "ltr",
+                  "prefix": "SKU-",
+                  "defaultValue": "SCARF-07",
+                  "autoCapitalize": "characters",
+                  "spellCheck": false,
+                  "variant": "secondary"
+                }
+              },
+              {
+                "type": "TextField",
+                "props": {
+                  "label": "Tracking code (pinned)",
+                  "value": "DB-1041",
+                  "isReadOnly": true
+                }
+              },
+              {
+                "type": "TextField",
+                "props": {
+                  "label": "Password",
+                  "type": "password",
+                  "autoComplete": "new-password",
+                  "minLength": 8,
+                  "fullWidth": false
+                }
+              },
+              {
+                "type": "TextField",
+                "props": {
+                  "label": "Disabled",
+                  "defaultValue": "—",
+                  "isDisabled": true
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "textarea-search",
+          "title": "TextArea · SearchField",
+          "note": null,
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "vertical",
+              "gap": 3
+            },
+            "children": [
+              {
+                "type": "TextArea",
+                "props": {
+                  "label": "Description",
+                  "rows": 4,
+                  "placeholder": "Material and sizing",
+                  "description": "Four rows, as on the web"
+                }
+              },
+              {
+                "type": "SearchField",
+                "props": {
+                  "label": "Search orders",
+                  "placeholder": "Number or customer"
+                },
+                "actions": {
+                  "onSubmit": {
+                    "do": "call",
+                    "action": "orders.search"
+                  },
+                  "onChange": {
+                    "do": "setState",
+                    "key": "q"
+                  }
+                }
+              },
+              {
+                "type": "SearchField",
+                "props": {
+                  "label": "Search",
+                  "defaultValue": "scarf",
+                  "variant": "secondary"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "numberfield",
+          "title": "NumberField",
+          "note": "IRT is composed: the amount and «تومان»",
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "vertical",
+              "gap": 3
+            },
+            "children": [
+              {
+                "type": "NumberField",
+                "props": {
+                  "label": "Weight (g)",
+                  "defaultValue": 1250,
+                  "minValue": 0,
+                  "maxValue": 30000,
+                  "step": 50
+                },
+                "actions": {
+                  "onChange": {
+                    "do": "setState",
+                    "key": "weight"
+                  }
+                }
+              },
+              {
+                "type": "NumberField",
+                "props": {
+                  "label": "Discount",
+                  "formatStyle": "percent",
+                  "defaultValue": 0.15,
+                  "minValue": 0,
+                  "maxValue": 1,
+                  "step": 0.05
+                }
+              },
+              {
+                "type": "NumberField",
+                "props": {
+                  "label": "Price in USD",
+                  "formatStyle": "currency",
+                  "currency": "USD",
+                  "defaultValue": 1234.5,
+                  "hideSteppers": true
+                }
+              },
+              {
+                "type": "NumberField",
+                "props": {
+                  "label": "Price in toman",
+                  "formatStyle": "currency",
+                  "currency": "IRT",
+                  "defaultValue": 1250000,
+                  "hideSteppers": true
+                }
+              },
+              {
+                "type": "NumberField",
+                "props": {
+                  "label": "Price in rials",
+                  "formatStyle": "currency",
+                  "currency": "IRR",
+                  "defaultValue": 1250000,
+                  "hideSteppers": true,
+                  "isRequired": true
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "datefield",
+          "title": "DateField",
+          "note": "the value is always Gregorian ISO; the calendar is only display",
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "vertical",
+              "gap": 3
+            },
+            "children": [
+              {
+                "type": "DateField",
+                "props": {
+                  "label": "Ship date",
+                  "defaultValue": "2026-10-16",
+                  "isRequired": true
+                },
+                "actions": {
+                  "onChange": {
+                    "do": "setState",
+                    "key": "shipDate"
+                  }
+                }
+              },
+              {
+                "type": "DateField",
+                "props": {
+                  "label": "Delivery slot",
+                  "granularity": "hour",
+                  "defaultValue": "2026-10-17T14:00",
+                  "hourCycle": 24
+                }
+              },
+              {
+                "type": "DateField",
+                "props": {
+                  "label": "Passport expiry (Gregorian)",
+                  "calendarSystem": "gregorian",
+                  "defaultValue": "2031-03-21"
+                }
+              },
+              {
+                "type": "DateField",
+                "props": {
+                  "label": "Birthday (Jalali)",
+                  "calendarSystem": "persian",
+                  "defaultValue": "1990-06-01",
+                  "maxValue": "2026-10-16"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "pickers",
+      "title": "3 · Pickers",
+      "samples": [
+        {
+          "id": "select",
+          "title": "Select · ListBoxItem · ListBoxSection",
+          "note": null,
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "vertical",
+              "gap": 3
+            },
+            "children": [
+              {
+                "type": "Select",
+                "props": {
+                  "label": "Shipping method",
+                  "placeholder": "Choose one",
+                  "isRequired": true,
+                  "defaultSelectedKey": "tipax"
+                },
+                "actions": {
+                  "onSelectionChange": {
+                    "do": "setState",
+                    "key": "carrier"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "ListBoxSection",
+                    "props": {
+                      "title": "Courier"
+                    },
+                    "children": [
+                      {
+                        "type": "ListBoxItem",
+                        "props": {
+                          "id": "tipax",
+                          "icon": "truck",
+                          "description": "2–3 days"
+                        },
+                        "children": "Tipax"
+                      },
+                      {
+                        "type": "ListBoxItem",
+                        "props": {
+                          "id": "snapp",
+                          "icon": "package",
+                          "description": "Same day"
+                        },
+                        "children": "Snapp Box"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "ListBoxSection",
+                    "props": {
+                      "title": "Post"
+                    },
+                    "children": [
+                      {
+                        "type": "ListBoxItem",
+                        "props": {
+                          "id": "post",
+                          "icon": "mail"
+                        },
+                        "children": "Express post"
+                      },
+                      {
+                        "type": "ListBoxItem",
+                        "props": {
+                          "id": "pickup",
+                          "icon": "store",
+                          "isDisabled": true
+                        },
+                        "children": "In-store pickup"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "Select",
+                "props": {
+                  "label": "Tags",
+                  "selectionMode": "multiple",
+                  "defaultSelectedKeys": [
+                    "new",
+                    "sale"
+                  ],
+                  "variant": "secondary"
+                },
+                "children": [
+                  {
+                    "type": "ListBoxItem",
+                    "props": {
+                      "id": "new"
+                    },
+                    "children": "New"
+                  },
+                  {
+                    "type": "ListBoxItem",
+                    "props": {
+                      "id": "sale"
+                    },
+                    "children": "Sale"
+                  },
+                  {
+                    "type": "ListBoxItem",
+                    "props": {
+                      "id": "gift"
+                    },
+                    "children": "Gift"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "combobox",
+          "title": "ComboBox",
+          "note": null,
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "vertical",
+              "gap": 3
+            },
+            "children": [
+              {
+                "type": "ComboBox",
+                "props": {
+                  "label": "City",
+                  "placeholder": "Type…",
+                  "emptyMessage": "No city found",
+                  "menuTrigger": "focus"
+                },
+                "actions": {
+                  "onSelectionChange": {
+                    "do": "setState",
+                    "key": "city"
+                  },
+                  "onInputChange": {
+                    "do": "setState",
+                    "key": "cityText"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "ListBoxItem",
+                    "props": {
+                      "id": "thr"
+                    },
+                    "children": "Tehran"
+                  },
+                  {
+                    "type": "ListBoxItem",
+                    "props": {
+                      "id": "isf"
+                    },
+                    "children": "Isfahan"
+                  },
+                  {
+                    "type": "ListBoxItem",
+                    "props": {
+                      "id": "shz"
+                    },
+                    "children": "Shiraz"
+                  },
+                  {
+                    "type": "ListBoxItem",
+                    "props": {
+                      "id": "tbz"
+                    },
+                    "children": "Tabriz"
+                  }
+                ]
+              },
+              {
+                "type": "ComboBox",
+                "props": {
+                  "label": "Free-text tag",
+                  "allowsCustomValue": true,
+                  "defaultInputValue": "autumn"
+                },
+                "children": [
+                  {
+                    "type": "ListBoxItem",
+                    "props": {
+                      "id": "summer"
+                    },
+                    "children": "summer"
+                  },
+                  {
+                    "type": "ListBoxItem",
+                    "props": {
+                      "id": "winter"
+                    },
+                    "children": "winter"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "listbox",
+          "title": "ListBox",
+          "note": null,
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "horizontal",
+              "gap": 3,
+              "wrap": true,
+              "align": "center"
+            },
+            "children": [
+              {
+                "type": "ListBox",
+                "props": {
+                  "label": "Actions",
+                  "selectionMode": "none"
+                },
+                "actions": {
+                  "onAction": {
+                    "do": "call",
+                    "action": "row.open",
+                    "value": "row"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "ListBoxItem",
+                    "props": {
+                      "id": "edit",
+                      "icon": "pencil"
+                    },
+                    "children": "Edit"
+                  },
+                  {
+                    "type": "ListBoxItem",
+                    "props": {
+                      "id": "copy",
+                      "icon": "copy",
+                      "description": "With all variants"
+                    },
+                    "children": "Duplicate"
+                  },
+                  {
+                    "type": "ListBoxItem",
+                    "props": {
+                      "id": "delete",
+                      "icon": "trash-2",
+                      "variant": "danger"
+                    },
+                    "children": "Delete"
+                  }
+                ]
+              },
+              {
+                "type": "ListBox",
+                "props": {
+                  "label": "Size",
+                  "selectionMode": "single",
+                  "defaultSelectedKeys": [
+                    "m"
+                  ]
+                },
+                "children": [
+                  {
+                    "type": "ListBoxItem",
+                    "props": {
+                      "id": "s"
+                    },
+                    "children": "S"
+                  },
+                  {
+                    "type": "ListBoxItem",
+                    "props": {
+                      "id": "m"
+                    },
+                    "children": "M"
+                  },
+                  {
+                    "type": "ListBoxItem",
+                    "props": {
+                      "id": "l"
+                    },
+                    "children": "L"
+                  }
+                ]
+              },
+              {
+                "type": "ListBox",
+                "props": {
+                  "label": "Columns",
+                  "selectionMode": "multiple",
+                  "defaultSelectedKeys": [
+                    "price",
+                    "stock"
+                  ]
+                },
+                "children": [
+                  {
+                    "type": "ListBoxItem",
+                    "props": {
+                      "id": "price"
+                    },
+                    "children": "Price"
+                  },
+                  {
+                    "type": "ListBoxItem",
+                    "props": {
+                      "id": "stock"
+                    },
+                    "children": "Stock"
+                  },
+                  {
+                    "type": "ListBoxItem",
+                    "props": {
+                      "id": "sku"
+                    },
+                    "children": "SKU"
+                  }
+                ]
+              },
+              {
+                "type": "ListBox",
+                "props": {
+                  "label": "Empty",
+                  "emptyMessage": "Nothing yet"
+                },
+                "children": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "dropdown",
+          "title": "Dropdown · DropdownItem · DropdownSection",
+          "note": null,
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "horizontal",
+              "gap": 3,
+              "wrap": true,
+              "align": "center"
+            },
+            "children": [
+              {
+                "type": "Dropdown",
+                "props": {
+                  "placement": "bottom end"
+                },
+                "slots": {
+                  "trigger": {
+                    "type": "Button",
+                    "props": {
+                      "icon": "ellipsis-vertical",
+                      "variant": "outline"
+                    },
+                    "children": "Actions"
+                  }
+                },
+                "actions": {
+                  "onAction": {
+                    "do": "call",
+                    "action": "order.menu",
+                    "value": "item"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "DropdownSection",
+                    "props": {
+                      "title": "Order"
+                    },
+                    "children": [
+                      {
+                        "type": "DropdownItem",
+                        "props": {
+                          "id": "print",
+                          "icon": "printer"
+                        },
+                        "children": "Print label"
+                      },
+                      {
+                        "type": "DropdownItem",
+                        "props": {
+                          "id": "invoice",
+                          "icon": "receipt",
+                          "description": "With VAT"
+                        },
+                        "children": "Invoice"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "DropdownSection",
+                    "props": {
+                      "title": "Danger zone"
+                    },
+                    "children": [
+                      {
+                        "type": "DropdownItem",
+                        "props": {
+                          "id": "cancel",
+                          "icon": "circle-x",
+                          "variant": "danger"
+                        },
+                        "children": "Cancel order"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "Dropdown",
+                "props": {
+                  "selectionMode": "multiple",
+                  "defaultSelectedKeys": [
+                    "price"
+                  ],
+                  "placement": "bottom start"
+                },
+                "slots": {
+                  "trigger": {
+                    "type": "Button",
+                    "props": {
+                      "icon": "sliders-horizontal"
+                    },
+                    "children": "Columns"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "DropdownItem",
+                    "props": {
+                      "id": "price"
+                    },
+                    "children": "Price"
+                  },
+                  {
+                    "type": "DropdownItem",
+                    "props": {
+                      "id": "stock"
+                    },
+                    "children": "Stock"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "choices",
+      "title": "4 · Choices",
+      "samples": [
+        {
+          "id": "checkbox",
+          "title": "Checkbox",
+          "note": null,
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "vertical",
+              "gap": 3
+            },
+            "children": [
+              {
+                "type": "Checkbox",
+                "props": {
+                  "label": "Insure the parcel",
+                  "defaultSelected": true,
+                  "description": "Up to 50M Toman"
+                }
+              },
+              {
+                "type": "Checkbox",
+                "props": {
+                  "label": "All products",
+                  "isIndeterminate": true
+                }
+              },
+              {
+                "type": "Checkbox",
+                "props": {
+                  "label": "I accept the terms",
+                  "isRequired": true,
+                  "errorMessage": "Required to continue."
+                }
+              },
+              {
+                "type": "Checkbox",
+                "props": {
+                  "label": "Disabled",
+                  "isDisabled": true
+                }
+              },
+              {
+                "type": "Checkbox",
+                "props": {
+                  "label": "On a grey card",
+                  "variant": "secondary"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "checkboxgroup",
+          "title": "CheckboxGroup",
+          "note": null,
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "vertical",
+              "gap": 3
+            },
+            "children": [
+              {
+                "type": "CheckboxGroup",
+                "props": {
+                  "label": "Working days",
+                  "defaultValue": [
+                    "sat",
+                    "sun"
+                  ],
+                  "isRequired": true,
+                  "description": "At least one"
+                },
+                "actions": {
+                  "onChange": {
+                    "do": "setState",
+                    "key": "days"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "Checkbox",
+                    "props": {
+                      "value": "sat",
+                      "label": "Saturday"
+                    }
+                  },
+                  {
+                    "type": "Checkbox",
+                    "props": {
+                      "value": "sun",
+                      "label": "Sunday"
+                    }
+                  },
+                  {
+                    "type": "Checkbox",
+                    "props": {
+                      "value": "fri",
+                      "label": "Friday",
+                      "isDisabled": true
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "CheckboxGroup",
+                "props": {
+                  "label": "Channels",
+                  "orientation": "horizontal"
+                },
+                "children": [
+                  {
+                    "type": "Checkbox",
+                    "props": {
+                      "value": "store",
+                      "label": "Store"
+                    }
+                  },
+                  {
+                    "type": "Checkbox",
+                    "props": {
+                      "value": "torob",
+                      "label": "Torob"
+                    }
+                  },
+                  {
+                    "type": "Checkbox",
+                    "props": {
+                      "value": "emalls",
+                      "label": "Emalls"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "radiogroup",
+          "title": "RadioGroup · Radio",
+          "note": null,
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "vertical",
+              "gap": 3
+            },
+            "children": [
+              {
+                "type": "RadioGroup",
+                "props": {
+                  "label": "Payment",
+                  "defaultValue": "online",
+                  "isRequired": true
+                },
+                "actions": {
+                  "onChange": {
+                    "do": "setState",
+                    "key": "pay"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "Radio",
+                    "props": {
+                      "value": "online",
+                      "label": "Card gateway",
+                      "description": "Shaparak"
+                    }
+                  },
+                  {
+                    "type": "Radio",
+                    "props": {
+                      "value": "cod",
+                      "label": "Cash on delivery"
+                    }
+                  },
+                  {
+                    "type": "Radio",
+                    "props": {
+                      "value": "credit",
+                      "label": "Credit",
+                      "isDisabled": true
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "RadioGroup",
+                "props": {
+                  "label": "Size",
+                  "orientation": "horizontal",
+                  "errorMessage": "Choose one."
+                },
+                "children": [
+                  {
+                    "type": "Radio",
+                    "props": {
+                      "value": "s",
+                      "label": "S"
+                    }
+                  },
+                  {
+                    "type": "Radio",
+                    "props": {
+                      "value": "m",
+                      "label": "M"
+                    }
+                  },
+                  {
+                    "type": "Radio",
+                    "props": {
+                      "value": "l",
+                      "label": "L"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "switch",
+          "title": "Switch",
+          "note": null,
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "vertical",
+              "gap": 3
+            },
+            "children": [
+              {
+                "type": "Switch",
+                "props": {
+                  "label": "Store is open",
+                  "defaultSelected": true,
+                  "size": "sm"
+                }
+              },
+              {
+                "type": "Switch",
+                "props": {
+                  "label": "Free shipping",
+                  "description": "Over 2M Toman"
+                }
+              },
+              {
+                "type": "Switch",
+                "props": {
+                  "label": "Test mode (pinned)",
+                  "isSelected": true,
+                  "size": "lg"
+                }
+              },
+              {
+                "type": "Switch",
+                "props": {
+                  "label": "Disabled",
+                  "isDisabled": true
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "slider",
+          "title": "Slider",
+          "note": null,
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "vertical",
+              "gap": 3
+            },
+            "children": [
+              {
+                "type": "Slider",
+                "props": {
+                  "label": "Minimum order",
+                  "minValue": 0,
+                  "maxValue": 5000000,
+                  "step": 100000,
+                  "defaultValue": 1500000,
+                  "formatStyle": "currency",
+                  "currency": "IRT"
+                },
+                "actions": {
+                  "onChangeEnd": {
+                    "do": "setState",
+                    "key": "min"
+                  }
+                }
+              },
+              {
+                "type": "Slider",
+                "props": {
+                  "label": "Price range",
+                  "isRange": true,
+                  "minValue": 0,
+                  "maxValue": 100,
+                  "defaultValue": [
+                    20,
+                    70
+                  ],
+                  "description": "thousand Toman"
+                }
+              },
+              {
+                "type": "Slider",
+                "props": {
+                  "label": "Opacity",
+                  "formatStyle": "percent",
+                  "defaultValue": 60,
+                  "isDisabled": true
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "status",
+      "title": "5 · Status",
+      "samples": [
+        {
+          "id": "alert",
+          "title": "Alert",
+          "note": "green and orange come from tokens: M3 has no success or warning role",
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "vertical",
+              "gap": 3
+            },
+            "children": [
+              {
+                "type": "Alert",
+                "props": {
+                  "status": "danger",
+                  "title": "Payment failed",
+                  "description": "The gateway did not answer. Try again."
+                },
+                "slots": {
+                  "actions": {
+                    "type": "Stack",
+                    "props": {
+                      "direction": "horizontal",
+                      "gap": 2,
+                      "wrap": true,
+                      "align": "center"
+                    },
+                    "children": [
+                      {
+                        "type": "Button",
+                        "props": {
+                          "variant": "danger",
+                          "size": "sm"
+                        },
+                        "children": "Retry"
+                      },
+                      {
+                        "type": "LinkButton",
+                        "props": {
+                          "href": "/settings/payments",
+                          "variant": "ghost"
+                        },
+                        "children": "Settings"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "type": "Alert",
+                "props": {
+                  "status": "warning",
+                  "title": "Stock is low",
+                  "isDismissible": true
+                }
+              },
+              {
+                "type": "Alert",
+                "props": {
+                  "status": "success",
+                  "title": "Domain verified"
+                }
+              },
+              {
+                "type": "Alert",
+                "props": {
+                  "status": "accent",
+                  "title": "New feature",
+                  "icon": "sparkles",
+                  "description": "Kaladan now has app cards."
+                }
+              },
+              {
+                "type": "Alert",
+                "props": {
+                  "status": "default",
+                  "title": "A note",
+                  "hideIcon": true
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "chip",
+          "title": "Chip",
+          "note": null,
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "vertical",
+              "gap": 3
+            },
+            "children": [
+              {
+                "type": "Stack",
+                "props": {
+                  "direction": "horizontal",
+                  "gap": 2,
+                  "wrap": true,
+                  "align": "center"
+                },
+                "children": [
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "variant": "soft",
+                      "color": "default"
+                    },
+                    "children": "soft·default"
+                  },
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "variant": "soft",
+                      "color": "accent"
+                    },
+                    "children": "soft·accent"
+                  },
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "variant": "soft",
+                      "color": "success"
+                    },
+                    "children": "soft·success"
+                  },
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "variant": "soft",
+                      "color": "warning"
+                    },
+                    "children": "soft·warning"
+                  },
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "variant": "soft",
+                      "color": "danger"
+                    },
+                    "children": "soft·danger"
+                  }
+                ]
+              },
+              {
+                "type": "Stack",
+                "props": {
+                  "direction": "horizontal",
+                  "gap": 2,
+                  "wrap": true,
+                  "align": "center"
+                },
+                "children": [
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "variant": "primary",
+                      "color": "default"
+                    },
+                    "children": "primary·default"
+                  },
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "variant": "primary",
+                      "color": "accent"
+                    },
+                    "children": "primary·accent"
+                  },
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "variant": "primary",
+                      "color": "success"
+                    },
+                    "children": "primary·success"
+                  },
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "variant": "primary",
+                      "color": "warning"
+                    },
+                    "children": "primary·warning"
+                  },
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "variant": "primary",
+                      "color": "danger"
+                    },
+                    "children": "primary·danger"
+                  }
+                ]
+              },
+              {
+                "type": "Stack",
+                "props": {
+                  "direction": "horizontal",
+                  "gap": 2,
+                  "wrap": true,
+                  "align": "center"
+                },
+                "children": [
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "variant": "secondary",
+                      "color": "default"
+                    },
+                    "children": "secondary·default"
+                  },
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "variant": "secondary",
+                      "color": "accent"
+                    },
+                    "children": "secondary·accent"
+                  },
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "variant": "secondary",
+                      "color": "success"
+                    },
+                    "children": "secondary·success"
+                  },
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "variant": "secondary",
+                      "color": "warning"
+                    },
+                    "children": "secondary·warning"
+                  },
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "variant": "secondary",
+                      "color": "danger"
+                    },
+                    "children": "secondary·danger"
+                  }
+                ]
+              },
+              {
+                "type": "Stack",
+                "props": {
+                  "direction": "horizontal",
+                  "gap": 2,
+                  "wrap": true,
+                  "align": "center"
+                },
+                "children": [
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "variant": "tertiary",
+                      "color": "default"
+                    },
+                    "children": "tertiary·default"
+                  },
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "variant": "tertiary",
+                      "color": "accent"
+                    },
+                    "children": "tertiary·accent"
+                  },
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "variant": "tertiary",
+                      "color": "success"
+                    },
+                    "children": "tertiary·success"
+                  },
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "variant": "tertiary",
+                      "color": "warning"
+                    },
+                    "children": "tertiary·warning"
+                  },
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "variant": "tertiary",
+                      "color": "danger"
+                    },
+                    "children": "tertiary·danger"
+                  }
+                ]
+              },
+              {
+                "type": "Stack",
+                "props": {
+                  "direction": "horizontal",
+                  "gap": 2,
+                  "wrap": true,
+                  "align": "center"
+                },
+                "children": [
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "size": "sm",
+                      "color": "success",
+                      "icon": "circle-check"
+                    },
+                    "children": "Paid"
+                  },
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "size": "md",
+                      "color": "warning"
+                    },
+                    "children": "Pending"
+                  },
+                  {
+                    "type": "Chip",
+                    "props": {
+                      "size": "lg",
+                      "color": "danger"
+                    },
+                    "children": "Cancelled"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "taggroup",
+          "title": "TagGroup · Tag",
+          "note": null,
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "vertical",
+              "gap": 3
+            },
+            "children": [
+              {
+                "type": "TagGroup",
+                "props": {
+                  "label": "Keywords"
+                },
+                "actions": {
+                  "onRemove": {
+                    "do": "call",
+                    "action": "keyword.remove",
+                    "value": "tag"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "Tag",
+                    "props": {
+                      "id": "silk"
+                    },
+                    "children": "silk"
+                  },
+                  {
+                    "type": "Tag",
+                    "props": {
+                      "id": "scarf",
+                      "icon": "tag"
+                    },
+                    "children": "scarf"
+                  },
+                  {
+                    "type": "Tag",
+                    "props": {
+                      "id": "gift",
+                      "isDisabled": true
+                    },
+                    "children": "gift"
+                  }
+                ]
+              },
+              {
+                "type": "TagGroup",
+                "props": {
+                  "label": "Status",
+                  "selectionMode": "single",
+                  "defaultSelectedKeys": [
+                    "open"
+                  ],
+                  "size": "sm"
+                },
+                "children": [
+                  {
+                    "type": "Tag",
+                    "props": {
+                      "id": "open"
+                    },
+                    "children": "Open"
+                  },
+                  {
+                    "type": "Tag",
+                    "props": {
+                      "id": "closed"
+                    },
+                    "children": "Closed"
+                  }
+                ]
+              },
+              {
+                "type": "TagGroup",
+                "props": {
+                  "label": "Filters",
+                  "selectionMode": "multiple",
+                  "defaultSelectedKeys": [
+                    "a",
+                    "c"
+                  ],
+                  "variant": "surface",
+                  "size": "lg"
+                },
+                "children": [
+                  {
+                    "type": "Tag",
+                    "props": {
+                      "id": "a"
+                    },
+                    "children": "In stock"
+                  },
+                  {
+                    "type": "Tag",
+                    "props": {
+                      "id": "b"
+                    },
+                    "children": "On sale"
+                  },
+                  {
+                    "type": "Tag",
+                    "props": {
+                      "id": "c",
+                      "href": "/products?new=1"
+                    },
+                    "children": "New"
+                  }
+                ]
+              },
+              {
+                "type": "TagGroup",
+                "props": {
+                  "label": "No tags",
+                  "emptyMessage": "No keywords yet"
+                },
+                "children": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "spinner-progress",
+          "title": "Spinner · ProgressBar",
+          "note": null,
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "vertical",
+              "gap": 3
+            },
+            "children": [
+              {
+                "type": "Stack",
+                "props": {
+                  "direction": "horizontal",
+                  "gap": 3,
+                  "wrap": true,
+                  "align": "center"
+                },
+                "children": [
+                  {
+                    "type": "Spinner",
+                    "props": {
+                      "size": "sm"
+                    }
+                  },
+                  {
+                    "type": "Spinner",
+                    "props": {
+                      "size": "md"
+                    }
+                  },
+                  {
+                    "type": "Spinner",
+                    "props": {
+                      "size": "lg"
+                    }
+                  },
+                  {
+                    "type": "Spinner",
+                    "props": {
+                      "size": "xl"
+                    }
+                  },
+                  {
+                    "type": "Spinner",
+                    "props": {
+                      "color": "success",
+                      "size": "sm"
+                    }
+                  },
+                  {
+                    "type": "Spinner",
+                    "props": {
+                      "color": "warning",
+                      "size": "sm"
+                    }
+                  },
+                  {
+                    "type": "Spinner",
+                    "props": {
+                      "color": "danger",
+                      "size": "sm"
+                    }
+                  },
+                  {
+                    "type": "Spinner",
+                    "props": {
+                      "color": "current",
+                      "size": "sm"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "ProgressBar",
+                "props": {
+                  "label": "Importing products",
+                  "value": 64
+                }
+              },
+              {
+                "type": "ProgressBar",
+                "props": {
+                  "label": "Shipped",
+                  "value": 3,
+                  "maxValue": 10,
+                  "valueLabel": "3 of 10",
+                  "color": "success",
+                  "size": "sm"
+                }
+              },
+              {
+                "type": "ProgressBar",
+                "props": {
+                  "label": "Storage",
+                  "value": 0.92,
+                  "maxValue": 1,
+                  "color": "danger",
+                  "size": "lg"
+                }
+              },
+              {
+                "type": "ProgressBar",
+                "props": {
+                  "label": "Waiting on the server",
+                  "isIndeterminate": true,
+                  "color": "default"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "avatar",
+          "title": "Avatar · AvatarGroup",
+          "note": "\"+2\" in the reader's digits",
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "vertical",
+              "gap": 3
+            },
+            "children": [
+              {
+                "type": "Stack",
+                "props": {
+                  "direction": "horizontal",
+                  "gap": 3,
+                  "wrap": true,
+                  "align": "center"
+                },
+                "children": [
+                  {
+                    "type": "Avatar",
+                    "props": {
+                      "name": "Niloufar Rostami",
+                      "size": "sm"
+                    }
+                  },
+                  {
+                    "type": "Avatar",
+                    "props": {
+                      "name": "Omid Kazemi",
+                      "color": "accent"
+                    }
+                  },
+                  {
+                    "type": "Avatar",
+                    "props": {
+                      "name": "Sara",
+                      "color": "success",
+                      "variant": "soft",
+                      "size": "lg"
+                    }
+                  },
+                  {
+                    "type": "Avatar",
+                    "props": {
+                      "icon": "user",
+                      "color": "default"
+                    }
+                  },
+                  {
+                    "type": "Avatar",
+                    "props": {
+                      "name": "Broken image",
+                      "src": "https://invalid.kaladan.test/x.png",
+                      "color": "warning",
+                      "variant": "soft"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "AvatarGroup",
+                "props": {
+                  "max": 3,
+                  "color": "accent",
+                  "variant": "soft"
+                },
+                "children": [
+                  {
+                    "type": "Avatar",
+                    "props": {
+                      "name": "Niloufar R"
+                    }
+                  },
+                  {
+                    "type": "Avatar",
+                    "props": {
+                      "name": "Omid K"
+                    }
+                  },
+                  {
+                    "type": "Avatar",
+                    "props": {
+                      "name": "Sara A"
+                    }
+                  },
+                  {
+                    "type": "Avatar",
+                    "props": {
+                      "name": "Reza"
+                    }
+                  },
+                  {
+                    "type": "Avatar",
+                    "props": {
+                      "name": "Mina"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "AvatarGroup",
+                "props": {
+                  "overlap": "ring",
+                  "size": "sm"
+                },
+                "children": [
+                  {
+                    "type": "Avatar",
+                    "props": {
+                      "name": "A B",
+                      "color": "danger"
+                    }
+                  },
+                  {
+                    "type": "Avatar",
+                    "props": {
+                      "name": "C D",
+                      "color": "success"
+                    }
+                  },
+                  {
+                    "type": "Avatar",
+                    "props": {
+                      "name": "E F",
+                      "color": "warning"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "AvatarGroup",
+                "props": {
+                  "isGrid": true,
+                  "size": "sm"
+                },
+                "children": [
+                  {
+                    "type": "Avatar",
+                    "props": {
+                      "name": "A"
+                    }
+                  },
+                  {
+                    "type": "Avatar",
+                    "props": {
+                      "name": "B"
+                    }
+                  },
+                  {
+                    "type": "Avatar",
+                    "props": {
+                      "name": "C"
+                    }
+                  },
+                  {
+                    "type": "Avatar",
+                    "props": {
+                      "name": "D"
+                    }
+                  },
+                  {
+                    "type": "Avatar",
+                    "props": {
+                      "name": "E"
+                    }
+                  },
+                  {
+                    "type": "Avatar",
+                    "props": {
+                      "name": "F"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "toast",
+          "title": "toast (verb)",
+          "note": null,
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "horizontal",
+              "gap": 3,
+              "wrap": true,
+              "align": "center"
+            },
+            "children": [
+              {
+                "type": "Button",
+                "props": {},
+                "children": "default",
+                "actions": {
+                  "onPress": {
+                    "do": "toast",
+                    "status": "default",
+                    "title": "Saved",
+                    "description": "Your changes are in.",
+                    "actionLabel": "Undo",
+                    "onAction": {
+                      "do": "call",
+                      "action": "undo"
+                    }
+                  }
+                }
+              },
+              {
+                "type": "Button",
+                "props": {},
+                "children": "accent",
+                "actions": {
+                  "onPress": {
+                    "do": "toast",
+                    "status": "accent",
+                    "title": "Saved",
+                    "description": "Your changes are in."
+                  }
+                }
+              },
+              {
+                "type": "Button",
+                "props": {},
+                "children": "success",
+                "actions": {
+                  "onPress": {
+                    "do": "toast",
+                    "status": "success",
+                    "title": "Saved",
+                    "description": "Your changes are in."
+                  }
+                }
+              },
+              {
+                "type": "Button",
+                "props": {},
+                "children": "warning",
+                "actions": {
+                  "onPress": {
+                    "do": "toast",
+                    "status": "warning",
+                    "title": "Saved",
+                    "description": "Your changes are in."
+                  }
+                }
+              },
+              {
+                "type": "Button",
+                "props": {},
+                "children": "danger",
+                "actions": {
+                  "onPress": {
+                    "do": "toast",
+                    "status": "danger",
+                    "title": "Saved",
+                    "description": "Your changes are in."
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "guard",
+          "title": "Plain text, URLs by prop",
+          "note": "the English title used to be refused",
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "vertical",
+              "gap": 3
+            },
+            "children": [
+              {
+                "type": "Alert",
+                "props": {
+                  "status": "warning",
+                  "title": "Warning: stock is low"
+                }
+              },
+              {
+                "type": "Alert",
+                "props": {
+                  "status": "default",
+                  "title": "Re: your order",
+                  "description": "sku:123"
+                }
+              },
+              {
+                "type": "Text",
+                "props": {
+                  "tone": "muted",
+                  "size": "sm"
+                },
+                "children": "These are text and render. Only URL props (href, src, image) are held to a URL rule."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "containers",
+      "title": "6 · Containers",
+      "samples": [
+        {
+          "id": "card",
+          "title": "Card",
+          "note": "tertiary is surface-3, a new token",
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "vertical",
+              "gap": 3
+            },
+            "children": [
+              {
+                "type": "Card",
+                "props": {
+                  "title": "Today's sales",
+                  "description": "As of 2 pm"
+                },
+                "slots": {
+                  "action": {
+                    "type": "LinkButton",
+                    "props": {
+                      "href": "/analytics",
+                      "variant": "ghost"
+                    },
+                    "children": "See all"
+                  },
+                  "footer": {
+                    "type": "Text",
+                    "props": {
+                      "tone": "muted",
+                      "size": "sm"
+                    },
+                    "children": "12 orders"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "Text",
+                    "props": {
+                      "size": "2xl"
+                    },
+                    "children": "24,500,000 Toman"
+                  }
+                ]
+              },
+              {
+                "type": "Stack",
+                "props": {
+                  "direction": "horizontal",
+                  "gap": 3,
+                  "wrap": true,
+                  "align": "center"
+                },
+                "children": [
+                  {
+                    "type": "Card",
+                    "props": {
+                      "variant": "secondary",
+                      "title": "secondary"
+                    },
+                    "children": [
+                      {
+                        "type": "Text",
+                        "props": {},
+                        "children": "…"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Card",
+                    "props": {
+                      "variant": "tertiary",
+                      "title": "tertiary"
+                    },
+                    "children": [
+                      {
+                        "type": "Text",
+                        "props": {},
+                        "children": "…"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Card",
+                    "props": {
+                      "variant": "transparent",
+                      "title": "transparent"
+                    },
+                    "children": [
+                      {
+                        "type": "Text",
+                        "props": {},
+                        "children": "…"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "Card",
+                "props": {
+                  "title": "A linked card",
+                  "description": "The whole card opens",
+                  "href": "/orders/DB-1041"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "tabs",
+          "title": "Tabs · Tab",
+          "note": "its look is a pill on a list",
+          "tree": {
+            "type": "Tabs",
+            "props": {
+              "selectedKey": "orders"
+            },
+            "actions": {
+              "onChange": {
+                "do": "setState",
+                "key": "tab"
+              }
+            },
+            "children": [
+              {
+                "type": "Tab",
+                "props": {
+                  "id": "orders",
+                  "label": "Orders"
+                },
+                "children": [
+                  {
+                    "type": "Text",
+                    "props": {},
+                    "children": "12 new orders"
+                  }
+                ]
+              },
+              {
+                "type": "Tab",
+                "props": {
+                  "id": "customers",
+                  "label": "Customers"
+                },
+                "children": [
+                  {
+                    "type": "Text",
+                    "props": {},
+                    "children": "3 new customers"
+                  }
+                ]
+              },
+              {
+                "type": "Tab",
+                "props": {
+                  "id": "returns",
+                  "label": "Returns"
+                },
+                "children": [
+                  {
+                    "type": "Text",
+                    "props": {},
+                    "children": "No returns"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "table",
+          "title": "Table · Column · Row · Cell · TableFooter",
+          "note": "the footer is DataTable's last row",
+          "tree": {
+            "type": "Table",
+            "props": {
+              "label": "Orders",
+              "selectionMode": "multiple",
+              "defaultSelectedKeys": [
+                "1041"
+              ],
+              "defaultSortColumn": "total",
+              "defaultSortDirection": "descending",
+              "emptyMessage": "No orders"
+            },
+            "actions": {
+              "onSortChange": {
+                "do": "call",
+                "action": "orders.sort",
+                "value": "sort"
+              },
+              "onSelectionChange": {
+                "do": "setState",
+                "key": "rows"
+              },
+              "onRowAction": {
+                "do": "call",
+                "action": "order.open",
+                "value": "order"
+              },
+              "onLoadMore": {
+                "do": "call",
+                "action": "orders.more"
+              }
+            },
+            "children": [
+              {
+                "type": "TableHeader",
+                "children": [
+                  {
+                    "type": "Column",
+                    "props": {
+                      "id": "code",
+                      "isRowHeader": true
+                    },
+                    "children": "Order"
+                  },
+                  {
+                    "type": "Column",
+                    "props": {
+                      "id": "customer"
+                    },
+                    "children": "Customer"
+                  },
+                  {
+                    "type": "Column",
+                    "props": {
+                      "id": "status",
+                      "align": "center"
+                    },
+                    "children": "Status"
+                  },
+                  {
+                    "type": "Column",
+                    "props": {
+                      "id": "total",
+                      "allowsSorting": true,
+                      "align": "end"
+                    },
+                    "children": "Total"
+                  }
+                ]
+              },
+              {
+                "type": "TableBody",
+                "children": [
+                  {
+                    "type": "Row",
+                    "props": {
+                      "id": "1041",
+                      "isDisabled": false
+                    },
+                    "children": [
+                      {
+                        "type": "Cell",
+                        "children": "DB-1041"
+                      },
+                      {
+                        "type": "Cell",
+                        "children": "Niloufar Rostami"
+                      },
+                      {
+                        "type": "Cell",
+                        "children": [
+                          {
+                            "type": "Chip",
+                            "props": {
+                              "color": "success"
+                            },
+                            "children": "Paid"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "Cell",
+                        "children": "1,240,000"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Row",
+                    "props": {
+                      "id": "1042",
+                      "isDisabled": false
+                    },
+                    "children": [
+                      {
+                        "type": "Cell",
+                        "children": "DB-1042"
+                      },
+                      {
+                        "type": "Cell",
+                        "children": "Omid Kazemi"
+                      },
+                      {
+                        "type": "Cell",
+                        "children": [
+                          {
+                            "type": "Chip",
+                            "props": {
+                              "color": "warning"
+                            },
+                            "children": "Pending"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "Cell",
+                        "children": "890,000"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Row",
+                    "props": {
+                      "id": "1043",
+                      "isDisabled": true
+                    },
+                    "children": [
+                      {
+                        "type": "Cell",
+                        "children": "DB-1043"
+                      },
+                      {
+                        "type": "Cell",
+                        "children": "Sara Ahmadi"
+                      },
+                      {
+                        "type": "Cell",
+                        "children": [
+                          {
+                            "type": "Chip",
+                            "props": {
+                              "color": "danger"
+                            },
+                            "children": "Cancelled"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "Cell",
+                        "children": "450,000"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "TableFooter",
+                "children": [
+                  {
+                    "type": "Row",
+                    "props": {
+                      "id": "sum"
+                    },
+                    "children": [
+                      {
+                        "type": "Cell",
+                        "children": "Total"
+                      },
+                      {
+                        "type": "Cell",
+                        "children": ""
+                      },
+                      {
+                        "type": "Cell",
+                        "children": ""
+                      },
+                      {
+                        "type": "Cell",
+                        "children": "2,580,000"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "overlays",
+          "title": "Modal · AlertDialog · Popover",
+          "note": null,
+          "tree": {
+            "type": "Stack",
+            "props": {
+              "direction": "horizontal",
+              "gap": 3,
+              "wrap": true,
+              "align": "center"
+            },
+            "children": [
+              {
+                "type": "Modal",
+                "props": {
+                  "title": "Edit address",
+                  "icon": "map-pin",
+                  "size": "md"
+                },
+                "slots": {
+                  "trigger": {
+                    "type": "Button",
+                    "props": {
+                      "icon": "pencil"
+                    },
+                    "children": "Edit address"
+                  },
+                  "footer": {
+                    "type": "Stack",
+                    "props": {
+                      "direction": "horizontal",
+                      "gap": 2,
+                      "wrap": true,
+                      "align": "center"
+                    },
+                    "children": [
+                      {
+                        "type": "Button",
+                        "props": {
+                          "variant": "ghost"
+                        },
+                        "children": "Cancel",
+                        "actions": {
+                          "onPress": {
+                            "do": "close"
+                          }
+                        }
+                      },
+                      {
+                        "type": "Button",
+                        "props": {
+                          "variant": "primary"
+                        },
+                        "children": "Save",
+                        "actions": {
+                          "onPress": [
+                            {
+                              "do": "call",
+                              "action": "address.save",
+                              "with": [
+                                "city",
+                                "street"
+                              ]
+                            },
+                            {
+                              "do": "close"
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                "children": [
+                  {
+                    "type": "TextField",
+                    "props": {
+                      "label": "City",
+                      "defaultValue": "Tehran"
+                    },
+                    "actions": {
+                      "onChange": {
+                        "do": "setState",
+                        "key": "city"
+                      }
+                    }
+                  },
+                  {
+                    "type": "TextArea",
+                    "props": {
+                      "label": "Street",
+                      "rows": 2
+                    },
+                    "actions": {
+                      "onChange": {
+                        "do": "setState",
+                        "key": "street"
+                      }
+                    }
+                  },
+                  {
+                    "type": "Checkbox",
+                    "props": {
+                      "label": "Default address"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "AlertDialog",
+                "props": {
+                  "status": "danger",
+                  "title": "Delete this product?",
+                  "description": "This cannot be undone.",
+                  "confirmLabel": "Delete"
+                },
+                "slots": {
+                  "trigger": {
+                    "type": "Button",
+                    "props": {
+                      "variant": "danger-soft",
+                      "icon": "trash-2"
+                    },
+                    "children": "Delete product"
+                  }
+                },
+                "actions": {
+                  "onConfirm": {
+                    "do": "call",
+                    "action": "product.delete"
+                  }
+                }
+              },
+              {
+                "type": "Popover",
+                "props": {
+                  "title": "What is the fee?",
+                  "placement": "bottom start",
+                  "showArrow": true
+                },
+                "slots": {
+                  "trigger": {
+                    "type": "Button",
+                    "props": {
+                      "icon": "circle-help",
+                      "variant": "ghost"
+                    },
+                    "children": "Fee"
+                  }
+                },
+                "children": [
+                  {
+                    "type": "Text",
+                    "props": {
+                      "size": "sm"
+                    },
+                    "children": "2% of each order, after settlement."
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "form",
+          "title": "Form · Button type",
+          "note": "press Save: the checks run before onSubmit",
+          "tree": {
+            "type": "Form",
+            "props": {
+              "gap": 3
+            },
+            "actions": {
+              "onSubmit": {
+                "do": "call",
+                "action": "profile.save"
+              }
+            },
+            "children": [
+              {
+                "type": "TextField",
+                "props": {
+                  "label": "Store name",
+                  "name": "store",
+                  "isRequired": true,
+                  "defaultValue": "Kaladan"
+                }
+              },
+              {
+                "type": "TextField",
+                "props": {
+                  "label": "Email",
+                  "name": "email",
+                  "type": "email",
+                  "isRequired": true
+                }
+              },
+              {
+                "type": "NumberField",
+                "props": {
+                  "label": "Minimum order",
+                  "name": "min",
+                  "minValue": 0,
+                  "maxValue": 1000000,
+                  "isRequired": true
+                }
+              },
+              {
+                "type": "Checkbox",
+                "props": {
+                  "label": "Newsletter",
+                  "name": "news",
+                  "defaultSelected": true
+                }
+              },
+              {
+                "type": "Stack",
+                "props": {
+                  "direction": "horizontal",
+                  "gap": 2,
+                  "wrap": true,
+                  "align": "center"
+                },
+                "children": [
+                  {
+                    "type": "Button",
+                    "props": {
+                      "type": "submit",
+                      "variant": "primary"
+                    },
+                    "children": "Save"
+                  },
+                  {
+                    "type": "Button",
+                    "props": {
+                      "type": "reset",
+                      "variant": "ghost"
+                    },
+                    "children": "Reset"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
